@@ -1,2 +1,0 @@
-# dealersdirect
-Dealers Direct Project

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Dealer Request List</title>
+ 
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link href="css/mainstyle.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/carousel.css" rel="stylesheet">
+
+<!-- <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<script src="js/ie-emulation-modes-warning.js"></script> -->
+
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+
+<link rel="stylesheet" href="css/selectrick/style.css">
+<link rel="stylesheet" href="css/selectrick/selectric.css">
+<link rel="stylesheet" href="css/selectrick/customoptions.css">
+<link rel="stylesheet" href="css/selectrick/lib/prism.css">
+
+
+<link rel="shortcut icon" href="images/favicon.ico">
+</head> 
+<body class="">
+	<header id="header">
+		<div class="top-bar">
+		    <div class="container">
+				<div class="row">
+				  	<div class="col-sm-4 col-xs-4">
+						<!-- <form class="form-inline">
+						  <div class="form-group">
+						    <label class="sr-only" for="exampleInputEmail3">Member Login</label>
+						    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Member Login">
+						  </div>
+						</form> -->
+				  	</div>
+				    <div class="col-sm-8 col-xs-8">
+						<div class="social">
+						  	<ul class="social-share">
+							    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-phone-square"> </i></a><span style="color:#fff">+382.0800.222.333</span></li>
+								<li><a href="#"><i class="fa fa-user"> </i></a><span style="color:#fff">Dealer's login</span></li>
+								<li><a href="#"><img src="images/pic1.png" class="img-circle" alt="" width="20" height="20"></a><span style="color:#fff">Client Name</span></li>
+						  	</ul>
+						</div>
+				    </div>
+				</div>
+		    </div> 
+		</div> 
+		<nav class="navbar navbar-inverse" role="banner">
+		    <div class="container">
+				<div class="navbar-header">
+				 	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				 	</button>
+				 	<a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+				</div>
+				<div class="collapse navbar-collapse navbar-right">
+				  	<ul class="nav navbar-nav">
+						<li class="active"><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="#">Car Listing</a></li>
+						<li><a href="#">Services</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Contact</a></li>
+				  	</ul>
+				  <a href="#"><i class="fa fa-search search_icon"></i></a>
+				</div>
+		    </div> 
+		</nav> 
+	</header> 
+
+<section class="dealer_request_area">
+    <div class="container">
+	    <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 list_request">
+				<div class="btn-new">
+				    <h3>Search By Make</h3>
+				    <div class="request-list">
+					    <select>
+							<option value="">Select </option>
+							<option value="apple">Apple</option>
+							<option selected value="apricot">Apricot</option>
+							<option value="banana">Banana</option>
+							<option value="bilberry">Bilberry</option>
+							<option value="blackberry">Blackberry</option>
+							<option value="blackcurrant">Blackcurrant</option>
+							<option value="blueberry">Blueberry</option>
+							<option value="cantaloupe">Cantaloupe</option>
+							<option value="cherimoya">Cherimoya</option>
+							<option value="cherry">Cherry</option>
+							<option value="clementine">Clementine</option>
+							<option value="coconut">Coconut</option>
+							<option value="currant">Currant</option>
+							<option value="damson">Damson</option>
+							<option value="date">Date</option>
+					    </select>
+				    </div>
+				</div>
+
+					<div class="border"></div>
+					<div class="btn-new">
+					    <h3>Search By Status</h3>
+					    <select>
+							<option value="">Select </option>
+							<option value="apple">Apple</option>
+							<option selected value="apricot">Apricot</option>
+							<option value="banana">Banana</option>
+							<option value="bilberry">Bilberry</option>
+							<option value="blackberry">Blackberry</option>
+							<option value="blackcurrant">Blackcurrant</option>
+							<option value="blueberry">Blueberry</option>
+							<option value="cantaloupe">Cantaloupe</option>
+							<option value="cherimoya">Cherimoya</option>
+							<option value="cherry">Cherry</option>
+							<option value="clementine">Clementine</option>
+							<option value="coconut">Coconut</option>
+							<option value="currant">Currant</option>
+							<option value="damson">Damson</option>
+							<option value="date">Date</option>
+					    </select>
+					</div>
+					<div class="border"></div>
+					<div class="text-new-area">
+					    <h3>One Time Payment</h3>
+					    <input type="text" class="form-control form-in-control" placeholder="Min Price"><br>
+					    <input type="text" class="form-control form-in-control f-c" placeholder="Max Price">
+					</div>
+					<div class="border"></div>
+					<ul class="nav nav-pills nav-stacked submit_btn">
+						<li><a href="">Submit
+							<i class="fa fa-chevron-circle-right pull-right i-c"></i>
+						</a></li>
+					</ul>
+					<div class="border"></div>
+					<div class="text-new-area">
+					    <h3>Monthly Payment</h3>
+					    <input type="text" class="form-control form-in-control" placeholder="Direct"><br>
+					    <input type="text" class="form-control form-in-control f-c" placeholder="Direct">
+					</div>
+					<div class="border"></div>	
+					<ul class="nav nav-pills nav-stacked submit_btn">
+						<li><a href="">Submit
+							<i class="fa fa-chevron-circle-right pull-right i-c"></i>
+						</a></li>
+					</ul>
+					
+	        </div>
+	 
+			<div class="col-xs-12 col-sm-9 col-md-9">
+				<div class="brand-section">
+					<div class="container">
+						<!-- <div class="row"> --> <!-- edited on 13-04-2016 -->
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->	
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel1" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel1" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel1" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel1" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel1" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel1" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel2" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel2" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel2" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel2" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel2" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel2" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel3" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel3" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel3" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel3" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel3" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel3" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel4" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel4" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel4" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel4" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel4" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel4" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->
+							<div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+								<div class="brand_request">
+									<!-- Carousel ============ -->
+								<div id = "myCarousel5" class = "carousel slide">
+								   
+								   <!-- Carousel indicators -->
+								    <ol class = "carousel-indicators">
+									    <li data-target = "#myCarousel5" data-slide-to = "0" class = "active"></li>
+									    <li data-target = "#myCarousel5" data-slide-to = "1"></li>
+									    <li data-target = "#myCarousel5" data-slide-to = "2"></li>
+								    </ol>   
+								   
+								   <!-- Carousel items -->
+								   <div class = "carousel-inner">
+									    <div class = "item active">
+									        <img src = "/bootstrap/images/slide1.png" alt = "First slide">
+								        </div>
+									    <div class = "item">
+								            <img src = "/bootstrap/images/slide2.png" alt = "Second slide">
+								        </div>
+								        <div class = "item">
+								            <img src = "/bootstrap/images/slide3.png" alt = "Third slide">
+								        </div>
+								   </div>
+								   
+								   <!-- Carousel nav -->
+								   <a class = "carousel-control left" href = "#myCarousel5" data-slide = "prev">&lsaquo;</a>
+								   <a class = "carousel-control right" href = "#myCarousel5" data-slide = "next">&rsaquo;</a>
+								   
+								</div> <!-- /.carousel -->
+									<!-- <img src="images/bmw.png" class="img-responsive" alt="Responsive image"> -->
+									<h2>Heading</h2>
+									<div class="btns">
+										<button type="button" class="btn btn-default c-p-b accept">1990</button>
+										<button type="button" class="btn btn-default c-p-b decline">4C</button>
+										<button type="button" class="btn btn-default c-p-b warning">OneTime:3000</button>
+										<button type="button" class="btn btn-default c-p-b block">Monthly:250</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success">OPEN</button>
+										<button type="button" class="btn btn-warning">
+											<i class="fa fa-long-arrow-right"></i>
+										</button>
+									</div>
+								</div>
+							</div>	<!-- /col-xs-12 col-md-4-->
+						<!-- </div> --> <!-- edited on 13-04-2016 -->
+					</div>
+				</div>
+			</div>
+		</div> <!-- /row col-xs-12 select_option -->	
+    </div><!--  /container --> 
+</section> <!--  /dealer_request_area -->
+
+                                     
+<!-- ---------------footer section ------------------>
+<footer id="home_footer" class="midnight-blue navbar-fixed-bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<a href="#"><img src="images/edmundslogo.png" alt="image"></a><br>
+				&copy; 2016- <a target="_blank" href="https://www.tier5.us/">DealersDirect</a>. All Rights Reserved.
+			</div>
+			<div class="col-sm-6">
+				<ul class="pull-right">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Car Listing</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer> 
+
+<script src="js/bootstrap.min.js"></script>
+
+<script src="css/selectrick/lib/jquery.min.js"></script>
+<script src="css/selectrick/lib/prism.js"></script>
+<script src="css/selectrick/jquery.selectric.js"></script>
+  <script>
+    $(function() {
+      $('select, .select').selectric();
+
+      $('.customOptions').selectric({
+        optionsItemBuilder: function(itemData, element, index) {
+          return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
+        }
+      });
+
+      $('.customLabel').selectric({
+        labelBuilder: function(currItem) {
+          return '<strong><em>' + currItem.text + '</em></strong>';
+        }
+      });
+    });
+
+   
+  </script>
+  
+
+</body>
+</html>
