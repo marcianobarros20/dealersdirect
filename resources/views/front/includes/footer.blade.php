@@ -69,8 +69,9 @@ $('#make_search').change(function(){
                         type :"post",
                         success: function( data ) {
                         if (make_search!='' && data!=""){
-                            $("#pres").html(data); 
-                            
+                          $("#model_search").html('');
+                            $("#model_search").html(data); 
+                          $("#model_search").trigger("chosen:updated");;
 
                         }
                         }

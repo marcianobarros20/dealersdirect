@@ -5,7 +5,7 @@
           <div class="row"> 
         
         <!-- quick search -->
-        <form method="get" action="#">
+        <form method="get" action="#" id="test">
               <fieldset>
             
             <!-- quick search fields -->
@@ -32,11 +32,7 @@
                       <div class="select-input">
                     <select id="model_search">
                           <option value="" selected="selected">Any Model</option>
-                          <option value="acura">155</option>
-                          <option value="alfa_romeo">156S</option>
-                          <option value="aston_martin">156 JTD</option>
-                          <option value="audi">Brera</option>
-                          <option value="bentley">159 JTD</option>
+                          
                         </select>
                   </div>
                     </div>
