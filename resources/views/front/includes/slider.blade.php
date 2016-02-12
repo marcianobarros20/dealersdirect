@@ -4,7 +4,7 @@
       <div class="bannercontainer">
     <div class="banner">
           <ul>
-        <li data-transition="fade" data-slotamount="1"> <img src="<?php echo url('/');?>/public/front/images/slide1.png" alt="" title="" /> 
+        <li data-transition="fade" data-slotamount="1"> <img src="<?php echo url('/');?>/public/front/images/slid1.jpeg" alt="" title="" /> 
               <!-- caption -->
               <div class="slide-caption caption lft" data-y="300" data-speed="700" data-start="400" data-easing="easeOutBack"></div>
               <!-- .caption --> 
@@ -28,7 +28,7 @@
               <!-- .tags --> 
               
             </li>
-        <li data-transition="fade" data-slotamount="1"> <img src="images/slide2.png" alt="" title="" /> 
+        <li data-transition="fade" data-slotamount="1"> <img src="<?php echo url('/');?>/public/front/images/slid2.jpeg" alt="" title="" /> 
               
               <!-- caption -->
               <div class="slide-caption caption lft" data-y="300" data-speed="700" data-start="400" data-easing="easeOutBack"></div>
