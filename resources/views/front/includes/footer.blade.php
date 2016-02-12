@@ -111,8 +111,108 @@ $('#model_search').change(function(){
 
 
 });
+$('#year_search').change(function(){
+  var year_search=$('#year_search').val();
+  if(year_search!=""){
+    $("#nextis").show();
+
+  }
 
 });
+
+$('#plsnex').click(function(){
+
+  
+  $("#firsc").hide();
+  $("#secsc").show();
+  return false;
+});
+$('#npllses').click(function(){
+  var tamo=$('#tamo').val();
+  var mtamo=$('#mtamo').val();
+  
+  var chkone=0;
+  var chktwo=0;
+  var chkthree=0;
+
+          if(!isNaN(tamo) && tamo!="")
+        {
+           //do some thing if it's a number
+        }else{
+           chkone+1;
+           alert("Please Provide Total Amount");
+           return false;
+        }
+        if(!isNaN(mtamo) && mtamo!="")
+        {
+           //do some thing if it's a number
+        }else{
+           chktwo+1;
+           alert("Please Provide Monthly Amount");
+           return false;
+        }
+        if(chkone==0 && chktwo==0 && (Number(tamo)>Number(mtamo))){
+          $("#secsc").hide();
+          $("#thirsc").show();
+          
+
+        }else{
+          chkthree+1;
+          alert("Please Make sure Total Amount Is Greater Than Monthly Amount");
+          return false;
+        }
+  return false;
+
+
+});
+
+$('#dstes').click(function(){
+    var make_search=$('#make_search').val();
+    console.log(make_search);
+    var model_search=$('#model_search').val();
+    console.log(model_search);
+    var condition_search=$('#condition_search').val();
+    console.log(condition_search);
+    var year_search=$('#year_search').val();
+    console.log(year_search);
+    var tamo=$('#tamo').val();
+    console.log(tamo);
+    var mtamo=$('#mtamo').val();
+    console.log(mtamo);
+    var fname=$('#fname').val();
+    console.log(fname);
+    var lname=$('#lname').val();
+    console.log(lname);
+    var phone=$('#phone').val();
+    console.log(phone);
+    var email=$('#email').val();
+    console.log(email);
+       
+       $.ajax({
+                        url: "<?php echo url('/');?>/ajax/requirment_queue",
+                        data: {
+                                make_search:make_search,
+                                model_search:model_search,
+                                condition_search:condition_search,
+                                year_search:year_search,
+                                tamo:tamo,
+                                mtamo:mtamo,
+                                fname:fname,
+                                lname:lname,
+                                phone:phone,
+                                email:email,
+                                _token: '{!! csrf_token() !!}'
+                        },
+                        type :"post",
+                        success: function( data ) {
+                        
+                        }
+                        });
+       return false;
+});
+
+});
+
 </script>
 </body>
 </html>

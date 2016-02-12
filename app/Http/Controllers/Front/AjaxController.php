@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\Caryear;          /* Model name*/
-
+use App\Model\RequestQueue;		/* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -47,6 +47,37 @@ class AjaxController extends Controller
 
 
         return view('front.ajax.create_year_types',compact('Caryear'));
+
+        
+    }
+    public function requirmentqueue()
+    {
+       	  $make_search=Request::input('make_search');
+          $model_search=Request::input('model_search');
+          $condition_search=Request::input('condition_search');
+          $year_search=Request::input('year_search');
+          $tamo=Request::input('tamo');
+          $mtamo=Request::input('mtamo');
+          $fname=Request::input('fname');
+          $lname=Request::input('lname');
+          $phone=Request::input('phone');
+          $email=Request::input('email');
+
+		$RequestQueue['make_id'] =$make_search;
+		$RequestQueue['carmodel_id'] =$model_search;
+		$RequestQueue['condition'] =$condition_search;
+		$RequestQueue['year'] =$year_search;
+		$RequestQueue['total_amount'] =$tamo;
+		$RequestQueue['monthly_amount'] =$mtamo;
+		$RequestQueue['fname'] =$fname;
+		$RequestQueue['lname'] =$lname;
+		$RequestQueue['phone'] =$phone;
+		$RequestQueue['email'] =$email;
+		RequestQueue::create($RequestQueue);
+        
+
+echo "Done";
+        //return view('front.ajax.create_year_types',compact('Caryear'));
 
         
     }

@@ -18,6 +18,7 @@ Route:: get('/api-edmunds-model','Admin\ApiController@apimodel');
 
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
 Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
+Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
