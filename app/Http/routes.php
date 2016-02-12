@@ -17,6 +17,7 @@ Route:: get('/api-edmunds-make','Admin\ApiController@apimake');
 Route:: get('/api-edmunds-model','Admin\ApiController@apimodel');
 
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
+Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

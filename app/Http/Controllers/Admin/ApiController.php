@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
+use App\Model\Caryear;          /* Model name*/
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,6 +49,7 @@ class ApiController extends Controller
 		public function apimodel()
 		{
 			$Makes=Make::all();
+			//$Makes=Make::where('id',1)->get();
 			//echo "<pre>";
 			//print_r($Makes);
 			foreach ($Makes as $Make) {
@@ -64,15 +66,27 @@ class ApiController extends Controller
 				curl_close($ch);
 				$resuls=json_decode($result, true);
 				
-				
+				echo "<pre>";
 				foreach ($resuls['models'] as $key => $value) {
 						$Carmodel['model_id'] =$value['id'];
 						$Carmodel['name'] =$value['name'];
 						$Carmodel['nice_name'] =$value['niceName'];
 						$Carmodel['years'] =json_encode($value['years'],true);
 						$Carmodel['make_id'] =$Make->id;
-						//print_r($Carmodel);
-						Carmodel::create($Carmodel);
+						print_r($value['years']);
+						print_r($Carmodel);
+						$Carmodel_row=Carmodel::create($Carmodel);
+						$lastinsertedId = $Carmodel_row->id;
+							foreach ($value['years'] as $years) {
+								$Caryear['make_id'] =$Make->id;
+								$Caryear['carmodel_id'] =$lastinsertedId;
+								$Caryear['year_id'] =$years['id'];
+								$Caryear['year'] =$years['year'];
+								$Caryear['styles'] =json_encode($years['styles'],true);
+								$Caryear_row=Caryear::create($Caryear);
+							}
+
+
 				}
 
 			}

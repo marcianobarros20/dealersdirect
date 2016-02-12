@@ -62,7 +62,7 @@ $(document).ready(function(){
 $('#make_search').change(function(){
                         
                     var make_search=$('#make_search').val();
-                    alert(make_search);
+                    
                     $.ajax({
                         url: "<?php echo url('/');?>/ajax/get_model",
                         data: {make_search:make_search,_token: '{!! csrf_token() !!}'},
@@ -76,9 +76,41 @@ $('#make_search').change(function(){
                         }
                         }
                         });
+                    $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_year",
+                        data: {make_search:make_search,model_search:0,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                        if (make_search!='' && data!=""){
+                          $("#year_search").html('');
+                            $("#year_search").html(data); 
+                          $("#year_search").trigger("chosen:updated");;
+
+                        }
+                        }
+                        });
 
 
                   });
+$('#model_search').change(function(){
+  var make_search=$('#make_search').val();
+  var model_search=$('#model_search').val();
+  $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_year",
+                        data: {make_search:make_search,model_search:model_search,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                        if (make_search!='' && data!=""){
+                          $("#year_search").html('');
+                            $("#year_search").html(data); 
+                          $("#year_search").trigger("chosen:updated");;
+
+                        }
+                        }
+                        });
+
+
+});
 
 });
 </script>
