@@ -60,7 +60,13 @@
                                       </div>
                                   </div>
                                   <!-- .select input --> 
+                                  <div class="two columns" id="nextis"> 
 
+                                  <!-- search -->
+                                    <div class="search-left" data-appear-animation="slideInRight">
+                                        <button type="submit"> <span class="icon-forward"></span>Next</button>
+                                    </div>
+                                  </div>
                               </div>
                         </div>
                         <!-- .quick search fileds --> 
