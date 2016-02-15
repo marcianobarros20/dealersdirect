@@ -15,4 +15,7 @@ class Make extends Model
         'nice_name',
         'models'
        ];
+       public function dealers() {
+        return $this->belongsToMany('App\Model\Dealer','dealers_makes_map', 'dealer_id', 'make_id');
+    }
 }

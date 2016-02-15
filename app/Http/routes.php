@@ -19,6 +19,14 @@ Route:: get('/api-edmunds-model','Admin\ApiController@apimodel');
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
 Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
 Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
+
+
+Route:: get('/dealers', 'Front\DealerController@index');
+Route:: get('/dealer-signin', 'Front\DealerController@signin');
+Route:: post('/dealer-signin', 'Front\DealerController@signin');
+Route:: get('/dealer-signup', 'Front\DealerController@signup');
+Route:: post('/dealerregister','Front\RegisterController@dealerRegister');
+Route:: get('/dealer-dashboard', 'Front\DealerController@dashboard');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
