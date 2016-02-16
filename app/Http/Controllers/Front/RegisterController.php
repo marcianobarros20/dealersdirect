@@ -38,7 +38,7 @@ class RegisterController extends Controller
 			DealerMakeMap::create($DealerMakeMap);
 		}
 		$Dealerx = Dealer::where('id', $lastinsertedId)->first();
-		$namx=ucfirst($Dealer->first_name)." ".ucfirst($Dealer->last_name);
+		$namx=ucfirst($Dealerx->first_name)." ".ucfirst($Dealerx->last_name);
 		Session::put('dealer_userid', $Dealerx->id);
 		Session::put('dealer_email', $Dealerx->email);
 		Session::put('dealer_name', $namx);
