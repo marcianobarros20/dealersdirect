@@ -47,12 +47,14 @@ class DealerController extends BaseController
         {
             return redirect('dealer-signin');
         } 
+
     }
     
 
 
     public function signin()
     {
+        var_dump(Session::all());
        $obj = new helpers();
         if($obj->checkDealerLogin())
         {
@@ -73,13 +75,15 @@ class DealerController extends BaseController
                    
                     
                     $nam=ucfirst($Dealer->first_name)." ".ucfirst($Dealer->last_name);
-                    Session::save('dealer_userid', $Dealer->id);
-                    Session::save('dealer_email', $Dealer->email);
-                    Session::save('dealer_name', $nam);
-                    $data = Session::all();
-                    print_r($data);
+                    Session::put('dealer_userid', $Dealer->id);
+                    Session::put('dealer_email', $Dealer->email);
+                    Session::put('dealer_name', $nam);
+                    
+                    
                     Session::save();
-                    return redirect('dealer-dashboard');
+
+                    var_dump(Session::all());
+                    //return redirect('dealer-dashboard');
 
                 }
                 else{
@@ -99,8 +103,8 @@ class DealerController extends BaseController
     }
     
 public function dashboard(){
-$data = Session::all();
-print_r($data);
+    //print_r($_SESSION);
+var_dump(Session::all());
 }
 
 
