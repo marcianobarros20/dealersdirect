@@ -27,6 +27,9 @@ Route:: post('/dealer-signin', 'Front\DealerController@signin');
 Route:: get('/dealer-signup', 'Front\DealerController@signup');
 Route:: post('/dealerregister','Front\RegisterController@dealerRegister');
 Route:: get('/dealer-dashboard', 'Front\DealerController@dashboard');
+Route:: get('/dealer_sign_out', 'Front\DealerController@signout');
+Route:: get('/dealers/request_list', 'Front\DealerController@requestList');
+Route:: get('dealers/request_detail/{id}', 'Front\DealerController@requestDetail');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

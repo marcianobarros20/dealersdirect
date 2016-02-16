@@ -6,6 +6,8 @@ use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\Caryear;          /* Model name*/
 use App\Model\RequestQueue;		/* Model name*/
+use App\Model\DealerMakeMap;          /* Model name*/
+use App\Model\RequestDealerLog;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -73,8 +75,22 @@ class AjaxController extends Controller
 		$RequestQueue['lname'] =$lname;
 		$RequestQueue['phone'] =$phone;
 		$RequestQueue['email'] =$email;
-		RequestQueue::create($RequestQueue);
-        
+		$RequestQueue_row=RequestQueue::create($RequestQueue);
+    
+    $lastinsertedId = $RequestQueue_row->id;
+    
+    $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+    
+    
+    foreach ($DealerMakeMap as $value) {
+
+      $RequestDealerLog['dealer_id']=$value->dealer_id;
+      $RequestDealerLog['request_id']=$lastinsertedId;
+      $RequestDealerLog['make_id']=$make_search;
+      $RequestDealerLog['status']=1;
+      RequestDealerLog::create($RequestDealerLog);
+    }
+
 
 echo "Done";
         //return view('front.ajax.create_year_types',compact('Caryear'));

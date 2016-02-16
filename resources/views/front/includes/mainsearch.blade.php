@@ -43,8 +43,8 @@
                                       <div class="select-input">
                                           <select id="condition_search">
                                               <option value="" selected="selected">Any Condition</option>
-                                              <option value="acura">New</option>
-                                              <option value="acura">Used</option>
+                                              <option value="New">New</option>
+                                              <option value="Used">Used</option>
                                           </select>
                                       </div>
                                   </div>

@@ -132,7 +132,7 @@
                   <!-- .blog --> 
                   
                   <!-- cars -->
-                  <li><a href="#">Log-out</a>
+                  <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
                 
               </li>
                   <!-- .cars --> 

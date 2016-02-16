@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 use App\Model\Make;          /* Model name*/
 use App\Model\Dealer;          /* Model name*/
 use App\Model\DealerMakeMap;          /* Model name*/
+use App\Model\RequestDealerLog;          /* Model name*/
+use App\Model\Carmodel;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -106,9 +108,9 @@ class DealerController extends BaseController
     
 public function dashboard(){
     //print_r($_SESSION);
-    echo Session::get('dealer_userid');
-    echo Session::get('dealer_email');
-    echo Session::get('dealer_name');
+    // echo Session::get('dealer_userid');
+    // echo Session::get('dealer_email');
+    // echo Session::get('dealer_name');
     
 return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
 }
@@ -127,70 +129,86 @@ return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Deal
         }
         return view('front.dealer.dealer_signup',compact('Makes'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function signout(){
+             Session::forget('dealer_userid');
+             Session::forget('dealer_email');
+             Session::forget('dealer_name');
+            
+            return redirect('dealer-signin');
     }
+    public function requestList(){
+    $dealer_userid=Session::get('dealer_userid');
+    $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
+    
+    $requestqueuex=array();
+    
+    foreach ($RequestDealerLog as $key=> $value) {
+       
+        $requestqueuex[$key]['id']=$value->id;
+        $requestqueuex[$key]['status']=$value->status;
+        $requestqueuex[$key]['make']=$value->makes->name;
+        $mid=$value->requestqueue->carmodel_id;
+        $Carmodel=Carmodel::where("id",$mid)->first();
+        $requestqueuex[$key]['model']=$Carmodel->name;
+        $requestqueuex[$key]['year']=$value->requestqueue->year;
+        $requestqueuex[$key]['conditions']=$value->requestqueue->condition;
+        $requestqueuex[$key]['total']=$value->requestqueue->total_amount;
+        $requestqueuex[$key]['monthly']=$value->requestqueue->monthly_amount;
+        
+        //$requestqueuex[$key]['fn']==self::maskcreate($fn);
+        if($value->status==1){
+            $fn=$value->requestqueue->fname;
+            $ln=$value->requestqueue->lname;
+            $em=$value->requestqueue->email;
+            $ph=$value->requestqueue->phone;
+          $requestqueuex[$key]['cfname']=self::maskcreate($fn);
+          $requestqueuex[$key]['lem']=self::maskcreate($ln);
+          $requestqueuex[$key]['cemail']=self::maskcreate($em);
+          $requestqueuex[$key]['cphone']=self::maskcreate($ph);
+                
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        }
     }
+    //print_r($requestqueuex);
+    return view('front.dealer.dealer_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    }
+     public function maskcreate($maskval){
+        $mm=strlen($maskval)-2;
+        $mask = preg_replace ( "/\S/", "X", $maskval );
+                $mask = substr ( $mask, 1, $mm );
+                $str = substr_replace ( $maskval, $mask, 1, $mm );
+        return ucfirst($str);
+     }
+     public function requestDetail($id=null){
+        $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
+        $requestqueuex['id']=$RequestDealerLog->id;
+        $requestqueuex['status']=$RequestDealerLog->status;
+        $requestqueuex['make']=$RequestDealerLog->makes->name;
+        $mid=$RequestDealerLog->requestqueue->carmodel_id;
+        $Carmodel=Carmodel::where("id",$mid)->first();
+        $requestqueuex['model']=$Carmodel->name;
+        $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
+        $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
+        $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
+        $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
+        $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
+        
+        
+        if($RequestDealerLog->status==1){
+            $fn=$RequestDealerLog->requestqueue->fname;
+            $ln=$RequestDealerLog->requestqueue->lname;
+            $em=$RequestDealerLog->requestqueue->email;
+            $ph=$RequestDealerLog->requestqueue->phone;
+          $requestqueuex['cfname']=self::maskcreate($fn);
+          $requestqueuex['lem']=self::maskcreate($ln);
+          $requestqueuex['cemail']=self::maskcreate($em);
+          $requestqueuex['cphone']=self::maskcreate($ph);
+                
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        }
+        //print_r($requestqueuex);
+        return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    
+     }
+    
 }

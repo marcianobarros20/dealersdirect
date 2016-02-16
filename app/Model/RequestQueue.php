@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RequestQueue extends Model
 {
     //
-    public $timestamps = false;
+    public $timestamps = true;
 	protected $table = 'request_queue';
 	protected $fillable=[
         'make_id',
