@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Session;
 
 use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
@@ -34,6 +35,10 @@ class HomeController extends BaseController
     public function index()
     {
         //
+        Session::put('test', "hallo");
+        
+        var_dump(Session::all());
+
         return view('front.home.index');
 
     }
