@@ -8,7 +8,7 @@ use App\Model\Caryear;          /* Model name*/
 use App\Model\RequestQueue;		/* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Session;
 use Input;
 use Illuminate\Support\Facades\Request;
 use Image\Image\ImageInterface;

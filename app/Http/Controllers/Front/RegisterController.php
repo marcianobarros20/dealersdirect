@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Request;
 use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
+use Session;
 use Hash;
 use App\Helper\helpers;
 class RegisterController extends Controller

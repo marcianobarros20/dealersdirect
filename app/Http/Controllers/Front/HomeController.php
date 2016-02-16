@@ -35,9 +35,8 @@ class HomeController extends BaseController
     public function index()
     {
         //
-        Session::put('test', "hallo");
+
         
-        var_dump(Session::all());
 
         return view('front.home.index');
 

@@ -43,10 +43,13 @@ class DealerController extends BaseController
     public function index()
     {
        $obj = new helpers();
+
         if(!$obj->checkDealerLogin())
         {
             return redirect('dealer-signin');
-        } 
+        }else{
+            return redirect('dealer-dashboard');
+        }
 
     }
     
@@ -54,7 +57,7 @@ class DealerController extends BaseController
 
     public function signin()
     {
-        var_dump(Session::all());
+        
        $obj = new helpers();
         if($obj->checkDealerLogin())
         {
@@ -82,8 +85,7 @@ class DealerController extends BaseController
                     
                     Session::save();
 
-                    var_dump(Session::all());
-                    //return redirect('dealer-dashboard');
+                    return redirect('dealer-dashboard');
 
                 }
                 else{
@@ -104,7 +106,11 @@ class DealerController extends BaseController
     
 public function dashboard(){
     //print_r($_SESSION);
-var_dump(Session::all());
+    echo Session::get('dealer_userid');
+    echo Session::get('dealer_email');
+    echo Session::get('dealer_name');
+    
+return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
 }
 
 
