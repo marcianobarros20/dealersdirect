@@ -29,8 +29,6 @@ class AjaxController extends Controller
         //print_r($Carmodel);
 
         return view('front.ajax.create_model_types',compact('Carmodel'));
-
-        
     }
     public function getyear()
     {
@@ -44,57 +42,48 @@ class AjaxController extends Controller
         else{
         	$Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
         }
-        //echo "<pre>";
-        //print_r($Caryear);
-
-
         return view('front.ajax.create_year_types',compact('Caryear'));
-
-        
     }
     public function requirmentqueue()
     {
-       	  $make_search=Request::input('make_search');
-          $model_search=Request::input('model_search');
-          $condition_search=Request::input('condition_search');
-          $year_search=Request::input('year_search');
-          $tamo=Request::input('tamo');
-          $mtamo=Request::input('mtamo');
-          $fname=Request::input('fname');
-          $lname=Request::input('lname');
-          $phone=Request::input('phone');
-          $email=Request::input('email');
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $condition_search=Request::input('condition_search');
+        $year_search=Request::input('year_search');
+        $tamo=Request::input('tamo');
+        $mtamo=Request::input('mtamo');
+        $fname=Request::input('fname');
+        $lname=Request::input('lname');
+        $phone=Request::input('phone');
+        $email=Request::input('email');
 
-		$RequestQueue['make_id'] =$make_search;
-		$RequestQueue['carmodel_id'] =$model_search;
-		$RequestQueue['condition'] =$condition_search;
-		$RequestQueue['year'] =$year_search;
-		$RequestQueue['total_amount'] =$tamo;
-		$RequestQueue['monthly_amount'] =$mtamo;
-		$RequestQueue['fname'] =$fname;
-		$RequestQueue['lname'] =$lname;
-		$RequestQueue['phone'] =$phone;
-		$RequestQueue['email'] =$email;
-		$RequestQueue_row=RequestQueue::create($RequestQueue);
-    
-    $lastinsertedId = $RequestQueue_row->id;
-    
-    $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
-    
-    
-    foreach ($DealerMakeMap as $value) {
-
-      $RequestDealerLog['dealer_id']=$value->dealer_id;
-      $RequestDealerLog['request_id']=$lastinsertedId;
-      $RequestDealerLog['make_id']=$make_search;
-      $RequestDealerLog['status']=1;
-      RequestDealerLog::create($RequestDealerLog);
-    }
-
-
-echo "Done";
+        $RequestQueue['make_id'] =$make_search;
+        $RequestQueue['carmodel_id'] =$model_search;
+        $RequestQueue['condition'] =$condition_search;
+        $RequestQueue['year'] =$year_search;
+        $RequestQueue['total_amount'] =$tamo;
+        $RequestQueue['monthly_amount'] =$mtamo;
+        $RequestQueue['fname'] =$fname;
+        $RequestQueue['lname'] =$lname;
+        $RequestQueue['phone'] =$phone;
+        $RequestQueue['email'] =$email;
+        $RequestQueue_row=RequestQueue::create($RequestQueue);
+        $lastinsertedId = $RequestQueue_row->id;
+        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+          foreach ($DealerMakeMap as $value) {
+              $RequestDealerLog['dealer_id']=$value->dealer_id;
+              $RequestDealerLog['request_id']=$lastinsertedId;
+              $RequestDealerLog['make_id']=$make_search;
+              $RequestDealerLog['status']=1;
+              RequestDealerLog::create($RequestDealerLog);
+          }
+        echo "Done";
         //return view('front.ajax.create_year_types',compact('Caryear'));
-
-        
+    }
+    public function deletedealermake(){
+      $makeid=Request::input('makeid');
+      $dealer_userid=Session::get('dealer_userid');
+      DealerMakeMap::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
+      echo "Deleted";
     }
 }

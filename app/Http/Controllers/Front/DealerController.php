@@ -204,7 +204,7 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
     }
     public function DealerAddMake(){
-        print_r(Request::input());
+        //print_r(Request::input());
         $dealer_userid=Session::get('dealer_userid');
         $make=Request::input('agree');
         if(isset($make)){

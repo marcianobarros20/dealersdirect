@@ -56,7 +56,7 @@
                         <!-- image -->
                         <div class="car-image">
                             <a href="#">
-                                <img src="images/car-1.jpg" title="car" alt="car" />
+                                <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
                                 
                             </a>
                         </div>
@@ -74,7 +74,7 @@
 
                             <!-- price -->
                             <div class="car-price">
-                                <a href="#" class="clearfix">
+                                <a href=""  id="deletemake" data-id="<?php echo $DealerMake->makes->id;?>" class="clearfix deletemake">
                                     <span class="price">Delete</span>
                                     <span class="icon-arrow-right2"></span>
                                 </a>

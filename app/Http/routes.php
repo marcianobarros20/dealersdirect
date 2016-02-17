@@ -33,6 +33,7 @@ Route:: get('dealers/request_detail/{id}', 'Front\DealerController@requestDetail
 Route:: get('/dealer/dealer_make', 'Front\DealerController@DealerMakeList');
 Route:: get('dealers/dealer_add_make', 'Front\DealerController@DealerMakeAdd');
 Route:: post('/dealeraddmake', 'Front\DealerController@DealerAddMake');
+Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
