@@ -16,9 +16,9 @@
         <div class="six columns">
               <div class="footer-navigation">
             <ul class="clearfix">
-                  <li><a href="#" class="active">Dashboard</a> </li>
-                  <li><a href="#">Profile</a> </li>
-                  <li><a href="#">Makes</a> </li>
+                  <li><a href="<?php echo url('/');?>/dealer-dashboard" class="active">Dashboard</a> </li>
+                  <li><a href="<?php echo url('/');?>/dealer/profile">Profile</a> </li>
+                  <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a> </li>
                   
                 </ul>
           </div>
@@ -73,6 +73,8 @@ $(document).ready(function(){
         });
         return false;
     });
+    
+
 
 });
 

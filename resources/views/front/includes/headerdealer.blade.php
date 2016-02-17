@@ -120,7 +120,7 @@
                   <!-- .home --> 
                   
                   <!-- pages -->
-                  <li><a href="#">Profile</a>
+                  <li><a href="<?php echo url('/');?>/dealer/profile">Profile</a>
                 
               </li>
                   <!-- .pages --> 

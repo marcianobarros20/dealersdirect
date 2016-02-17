@@ -6,6 +6,7 @@ use App\Model\Dealer;          /* Model name*/
 use App\Model\DealerMakeMap;          /* Model name*/
 use App\Model\RequestDealerLog;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
+use App\Model\RequestQueue;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -204,7 +205,6 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
     }
     public function DealerAddMake(){
-        //print_r(Request::input());
         $dealer_userid=Session::get('dealer_userid');
         $make=Request::input('agree');
         if(isset($make)){
@@ -212,9 +212,52 @@ class DealerController extends BaseController
                 $DealerMakeMap['dealer_id']=$dealer_userid;
                 $DealerMakeMap['make_id']=$value;
                 DealerMakeMap::create($DealerMakeMap);
+                $RequestQueue_row=RequestQueue::where('make_id', '=', $value)->get();
+                if(isset($RequestQueue_row)){
+                    
+                    foreach ($RequestQueue_row as $rqueue) {
+                        $RequestDealerLog['dealer_id']=$dealer_userid;;
+                        $RequestDealerLog['request_id']=$rqueue->id;
+                        $RequestDealerLog['make_id']=$rqueue->make_id;
+                        $RequestDealerLog['status']=1;
+                        RequestDealerLog::create($RequestDealerLog);
+                    }
+                }
             }
         }
         return redirect('dealer/dealer_make');
+    }
+    public function profile(){
+       $dealer_userid=Session::get('dealer_userid');
+       $Dealer = Dealer::where('id', $dealer_userid)->first();
+       return view('front.dealer.dealer_profile',compact('Dealer'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
+       //print_r($Dealer);
+
+    }
+    public function ProfileEditDetails(){
+        $dealer_userid=Session::get('dealer_userid');
+        $fname=Request::input('fname');
+        $lname=Request::input('lname');
+        $Dealer = Dealer::find($dealer_userid);
+        $Dealer->first_name = $fname;
+        $Dealer->last_name = $lname;
+        $Dealer->save();
+        $nam=ucfirst($fname)." ".ucfirst($lname);
+        Session::forget('dealer_name');
+        Session::put('dealer_name', $nam);
+        Session::flash('message', 'Profile Details Successfully Changed'); 
+        return redirect('/dealer/profile');
+    }
+    public function ProfileEditPassword(){
+        $dealer_userid=Session::get('dealer_userid');
         
+        $hashpassword = Hash::make(Request::input('password'));
+        $Dealer = Dealer::find($dealer_userid);
+        $Dealer->password = $hashpassword;
+        
+        $Dealer->save();
+        Session::flash('message', 'Password Successfully Changed'); 
+       
+        return redirect('/dealer/profile');
     }
 }

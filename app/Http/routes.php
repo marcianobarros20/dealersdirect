@@ -34,6 +34,9 @@ Route:: get('/dealer/dealer_make', 'Front\DealerController@DealerMakeList');
 Route:: get('dealers/dealer_add_make', 'Front\DealerController@DealerMakeAdd');
 Route:: post('/dealeraddmake', 'Front\DealerController@DealerAddMake');
 Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake');
+Route:: get('/dealer/profile', 'Front\DealerController@profile');
+Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
+Route:: post('/dealereditpassword', 'Front\DealerController@ProfileEditPassword');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

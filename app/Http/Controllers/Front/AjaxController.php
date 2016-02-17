@@ -84,6 +84,7 @@ class AjaxController extends Controller
       $makeid=Request::input('makeid');
       $dealer_userid=Session::get('dealer_userid');
       DealerMakeMap::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
+      RequestDealerLog::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
       echo "Deleted";
     }
 }

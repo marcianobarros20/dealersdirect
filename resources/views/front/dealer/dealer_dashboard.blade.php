@@ -43,14 +43,14 @@
                         <!-- promo number -->
                         <div class="promo-number">
                             <p>
-                                <span class="icon-profile"></span>
+                                <a href="<?php echo url('/');?>/dealer/profile"><span class="icon-profile"></span></a>
                             </p>
                         </div>
                         <!-- .promo number -->
 
                         <!-- promo content -->
                         <div class="promo-content">
-                            <h4>Profile</h4>
+                            <a href="<?php echo url('/');?>/dealer/profile"><h4>Profile</h4></a>
                         </div>
                         <!-- promo content -->
 
