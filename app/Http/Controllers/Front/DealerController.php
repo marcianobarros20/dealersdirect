@@ -26,8 +26,7 @@ class DealerController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct() 
-    {
+    public function __construct(){
         parent::__construct();
         $obj = new helpers();
         if(!$obj->checkDealerLogin())
@@ -42,23 +41,17 @@ class DealerController extends BaseController
         view()->share('dealerlogin',$dealerlogin);
         view()->share('obj',$obj);
     }
-    public function index()
-    {
-       $obj = new helpers();
+    public function index(){
+            $obj = new helpers();
 
-        if(!$obj->checkDealerLogin())
-        {
+            if(!$obj->checkDealerLogin())
+            {
             return redirect('dealer-signin');
-        }else{
+            }else{
             return redirect('dealer-dashboard');
-        }
-
+            }
     }
-    
-
-
-    public function signin()
-    {
+    public function signin(){
         
        $obj = new helpers();
         if($obj->checkDealerLogin())
@@ -105,110 +98,123 @@ class DealerController extends BaseController
 
         return view('front.dealer.dealer_signin',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
-    
-public function dashboard(){
-    //print_r($_SESSION);
-    // echo Session::get('dealer_userid');
-    // echo Session::get('dealer_email');
-    // echo Session::get('dealer_name');
-    
-return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
-}
+    public function dashboard(){
+            //print_r($_SESSION);
+            // echo Session::get('dealer_userid');
+            // echo Session::get('dealer_email');
+            // echo Session::get('dealer_name');
 
-
+            return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
+    }
     public function signup(){
-        $obj = new helpers();
-        if($obj->checkDealerLogin())
-        {
-            return redirect('dealer-dashboard');
-        }
-        $variable=Make::all();
-        $Makes=array();
-        foreach ($variable as $key => $value) {
-            $Makes[$value->id]=$value->name;
-        }
-        return view('front.dealer.dealer_signup',compact('Makes'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            $obj = new helpers();
+                if($obj->checkDealerLogin())
+                {
+                    return redirect('dealer-dashboard');
+                }
+            $variable=Make::all();
+            $Makes=array();
+                foreach ($variable as $key => $value) {
+                    $Makes[$value->id]=$value->name;
+                }
+            return view('front.dealer.dealer_signup',compact('Makes'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function signout(){
-             Session::forget('dealer_userid');
-             Session::forget('dealer_email');
-             Session::forget('dealer_name');
-            
+            Session::forget('dealer_userid');
+            Session::forget('dealer_email');
+            Session::forget('dealer_name');
+
             return redirect('dealer-signin');
     }
     public function requestList(){
-    $dealer_userid=Session::get('dealer_userid');
-    $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
-    
-    $requestqueuex=array();
-    
-    foreach ($RequestDealerLog as $key=> $value) {
-       
-        $requestqueuex[$key]['id']=$value->id;
-        $requestqueuex[$key]['status']=$value->status;
-        $requestqueuex[$key]['make']=$value->makes->name;
-        $mid=$value->requestqueue->carmodel_id;
-        $Carmodel=Carmodel::where("id",$mid)->first();
-        $requestqueuex[$key]['model']=$Carmodel->name;
-        $requestqueuex[$key]['year']=$value->requestqueue->year;
-        $requestqueuex[$key]['conditions']=$value->requestqueue->condition;
-        $requestqueuex[$key]['total']=$value->requestqueue->total_amount;
-        $requestqueuex[$key]['monthly']=$value->requestqueue->monthly_amount;
-        
-        //$requestqueuex[$key]['fn']==self::maskcreate($fn);
-        if($value->status==1){
-            $fn=$value->requestqueue->fname;
-            $ln=$value->requestqueue->lname;
-            $em=$value->requestqueue->email;
-            $ph=$value->requestqueue->phone;
-          $requestqueuex[$key]['cfname']=self::maskcreate($fn);
-          $requestqueuex[$key]['lem']=self::maskcreate($ln);
-          $requestqueuex[$key]['cemail']=self::maskcreate($em);
-          $requestqueuex[$key]['cphone']=self::maskcreate($ph);
-                
+            $dealer_userid=Session::get('dealer_userid');
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
+            $requestqueuex=array();
+            foreach ($RequestDealerLog as $key=> $value) {
+                    $requestqueuex[$key]['id']=$value->id;
+                    $requestqueuex[$key]['status']=$value->status;
+                    $requestqueuex[$key]['make']=$value->makes->name;
+                    $mid=$value->requestqueue->carmodel_id;
+                    $Carmodel=Carmodel::where("id",$mid)->first();
+                    $requestqueuex[$key]['model']=$Carmodel->name;
+                    $requestqueuex[$key]['year']=$value->requestqueue->year;
+                    $requestqueuex[$key]['conditions']=$value->requestqueue->condition;
+                    $requestqueuex[$key]['total']=$value->requestqueue->total_amount;
+                    $requestqueuex[$key]['monthly']=$value->requestqueue->monthly_amount;
 
-        }
+                    
+                        if($value->status==1){
+                            $fn=$value->requestqueue->fname;
+                            $ln=$value->requestqueue->lname;
+                            $em=$value->requestqueue->email;
+                            $ph=$value->requestqueue->phone;
+                            $requestqueuex[$key]['cfname']=self::maskcreate($fn);
+                            $requestqueuex[$key]['lem']=self::maskcreate($ln);
+                            $requestqueuex[$key]['cemail']=self::maskcreate($em);
+                            $requestqueuex[$key]['cphone']=self::maskcreate($ph);
+                        }
+            }
+            return view('front.dealer.dealer_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
-    //print_r($requestqueuex);
-    return view('front.dealer.dealer_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    public function maskcreate($maskval){
+            $mm=strlen($maskval)-2;
+            $mask = preg_replace ( "/\S/", "X", $maskval );
+            $mask = substr ( $mask, 1, $mm );
+            $str = substr_replace ( $maskval, $mask, 1, $mm );
+            return ucfirst($str);
     }
-     public function maskcreate($maskval){
-        $mm=strlen($maskval)-2;
-        $mask = preg_replace ( "/\S/", "X", $maskval );
-                $mask = substr ( $mask, 1, $mm );
-                $str = substr_replace ( $maskval, $mask, 1, $mm );
-        return ucfirst($str);
-     }
-     public function requestDetail($id=null){
-        $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
-        $requestqueuex['id']=$RequestDealerLog->id;
-        $requestqueuex['status']=$RequestDealerLog->status;
-        $requestqueuex['make']=$RequestDealerLog->makes->name;
-        $mid=$RequestDealerLog->requestqueue->carmodel_id;
-        $Carmodel=Carmodel::where("id",$mid)->first();
-        $requestqueuex['model']=$Carmodel->name;
-        $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
-        $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
-        $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
-        $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
-        $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
+    public function requestDetail($id=null){
+            $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
+            $requestqueuex['id']=$RequestDealerLog->id;
+            $requestqueuex['status']=$RequestDealerLog->status;
+            $requestqueuex['make']=$RequestDealerLog->makes->name;
+            $mid=$RequestDealerLog->requestqueue->carmodel_id;
+            $Carmodel=Carmodel::where("id",$mid)->first();
+            $requestqueuex['model']=$Carmodel->name;
+            $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
+            $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
+            $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
+            $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
+            $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
+                if($RequestDealerLog->status==1){
+                    $fn=$RequestDealerLog->requestqueue->fname;
+                    $ln=$RequestDealerLog->requestqueue->lname;
+                    $em=$RequestDealerLog->requestqueue->email;
+                    $ph=$RequestDealerLog->requestqueue->phone;
+                    $requestqueuex['cfname']=self::maskcreate($fn);
+                    $requestqueuex['lem']=self::maskcreate($ln);
+                    $requestqueuex['cemail']=self::maskcreate($em);
+                    $requestqueuex['cphone']=self::maskcreate($ph);
+                }
+            //print_r($requestqueuex);
+            return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    }
+    public function DealerMakeList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->with('makes')->get();
+        // echo "<pre>";
+        // print_r($DealerMakeMap);
+        return view('front.dealer.dealer_make_list',compact('DealerMakeMap'),array('title'=>'DEALERSDIRECT | Dealers Make'));
+    }
+    public function DealerMakeAdd(){
+        $dealer_userid=Session::get('dealer_userid');
+        $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->distinct()->lists('make_id');
         
-        
-        if($RequestDealerLog->status==1){
-            $fn=$RequestDealerLog->requestqueue->fname;
-            $ln=$RequestDealerLog->requestqueue->lname;
-            $em=$RequestDealerLog->requestqueue->email;
-            $ph=$RequestDealerLog->requestqueue->phone;
-          $requestqueuex['cfname']=self::maskcreate($fn);
-          $requestqueuex['lem']=self::maskcreate($ln);
-          $requestqueuex['cemail']=self::maskcreate($em);
-          $requestqueuex['cphone']=self::maskcreate($ph);
-                
-
+        $Make=Make::whereNotIn('id', $DealerMakeMap)->lists('name','id');
+        return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
+    }
+    public function DealerAddMake(){
+        print_r(Request::input());
+        $dealer_userid=Session::get('dealer_userid');
+        $make=Request::input('agree');
+        if(isset($make)){
+            foreach ($make as $key => $value) {
+                $DealerMakeMap['dealer_id']=$dealer_userid;
+                $DealerMakeMap['make_id']=$value;
+                DealerMakeMap::create($DealerMakeMap);
+            }
         }
-        //print_r($requestqueuex);
-        return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
-    
-     }
-    
+        return redirect('dealer/dealer_make');
+        
+    }
 }

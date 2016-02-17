@@ -13,11 +13,11 @@ class DealerMakeMap extends Model
     protected $table = 'dealers_makes_map';
 
     public function dealers() {
-        return $this->hasOne('App\Models\Dealer', 'id', 'dealer_id');
+        return $this->hasOne('App\Model\Dealer', 'id', 'dealer_id');
     }
 
     public function makes() {
-        return $this->hasOne('App\Models\Make', 'id', 'make_id');
+        return $this->hasOne('App\Model\Make', 'id', 'make_id');
     }
 
 }

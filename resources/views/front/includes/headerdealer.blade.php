@@ -95,7 +95,7 @@
 
                     <!-- logo -->
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="<?php echo url('/');?>/dealer-dashboard">
                             <img src="<?php echo url('/');?>/public/front/images/logo.png" title="Carell" alt="Carell" />
                         </a>
                     </div>
@@ -114,7 +114,7 @@
 
 
                                 <!-- home -->
-                  <li><a href="index.html" class="active">Dashboard</a>
+                  <li><a href="<?php echo url('/');?>/dealer-dashboard" class="active">Dashboard</a>
                 
               </li>
                   <!-- .home --> 
@@ -126,7 +126,7 @@
                   <!-- .pages --> 
                   
                   <!-- blog -->
-                  <li><a href="#">Makes</a>
+                  <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a>
                 
               </li>
                   <!-- .blog --> 

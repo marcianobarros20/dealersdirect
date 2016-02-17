@@ -24,14 +24,14 @@
                         <!-- promo number -->
                         <div class="promo-number">
                             <p>
-                                <span class="icon-hammer"></span>
+                                <a href="<?php echo url('/');?>/dealer/dealer_make"><span class="icon-hammer"></span></a>
                             </p>
                         </div>
                         <!-- .promo number -->
 
                         <!-- promo content -->
                         <div class="promo-content">
-                            <h4>Makes</h4>
+                            <a href="<?php echo url('/');?>/dealer/dealer_make"><h4>Makes</h4></a>
                         </div>
                         <!-- promo content -->
 
