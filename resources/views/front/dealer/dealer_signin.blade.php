@@ -8,7 +8,7 @@
 							<h1 data-appear-animation="flipInX">Sign In As A Dealer</h1>
 									<div class="dark-form">
 									
-									<div class="send_result"></div>
+									<div class="send_result">{!! Session::get('error') !!}</div>
 										<!-- <form class="contactform" method="post" action="contact_process.php"> -->
 										{{ Form::open(array('url' => 'dealer-signin')) }}
 											<fieldset>
@@ -16,12 +16,12 @@
 
 													<div class="input">
 														<!-- <input type="text" placeholder="Email" name="email"/> -->
-														{{ Form::text('email','',['placeholder' => 'Email']) }}
+														{{ Form::text('email','',['placeholder' => 'Email','required'=>'required']) }}
 													</div>
 
 													<div class="input">
 														<!-- <input type="password" placeholder="Password" name="password" /> -->
-														{{ Form::password('password',['placeholder' => 'Password']) }}
+														{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
 													</div>
 													
 												</div>

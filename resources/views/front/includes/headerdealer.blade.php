@@ -130,7 +130,11 @@
                 
               </li>
                   <!-- .blog --> 
-                  
+                  <!-- blog -->
+                  <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
+                
+              </li>
+                  <!-- .blog --> 
                   <!-- cars -->
                   <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
                 

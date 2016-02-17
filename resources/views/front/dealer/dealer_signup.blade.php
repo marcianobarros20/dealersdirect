@@ -8,7 +8,7 @@
 							<h1 data-appear-animation="flipInX">Sign Up As A Dealer</h1>
 									<div class="dark-form">
 									
-									<div class="send_result"></div>
+									<div class="send_result">{!! Session::get('error') !!}</div>
 										<!-- <form class="contactform" method="post" action="contact_process.php"> -->
 										{{ Form::open(array('url' => 'dealerregister')) }}
 											<fieldset>
@@ -16,27 +16,27 @@
 
 													<div class="input">
 														
-														{{ Form::text('fname','',['placeholder' => 'First Name']) }}
+														{{ Form::text('fname','',['placeholder' => 'First Name','required'=>'required']) }}
 													</div>
 
 													<div class="input">
-													{{ Form::text('lname','',['placeholder' => 'Last Name']) }}
+													{{ Form::text('lname','',['placeholder' => 'Last Name','required'=>'required']) }}
 													
 													</div>
 													<div class="input">
-													{{ Form::text('email','',['placeholder' => 'Email']) }}
+													{{ Form::text('email','',['placeholder' => 'Email','required'=>'required']) }}
 													
 													</div>
 													<div class="input">
-													{{ Form::password('password',['placeholder' => 'Password']) }}
+													{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
 													
 													</div>
 													<div class="input">
-													{{ Form::password('conf_password',['placeholder' => 'Confirm-Password']) }}
+													{{ Form::password('conf_password',['placeholder' => 'Confirm-Password','required'=>'required']) }}
 													
 													</div>
 														<div class="side-by-side clearfix">
-														{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','class' =>'chosen-select','multiple' => true)) }}
+														{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','class' =>'chosen-select','multiple' => true,'required'=>'required')) }}
 															
 														</div>
 												</div>
