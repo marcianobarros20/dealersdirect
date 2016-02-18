@@ -13,6 +13,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
 use Input;
+use Mail;
 //use Illuminate\Support\Facades\Session;
 use Session;
 use Illuminate\Support\Facades\Request;
@@ -188,6 +189,30 @@ class ClientController extends BaseController
             $requestqueuex['cat']=$RequestQueue->created_at;
             
             return view('front.client.client_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function testmailnew(){
+			$user_name = "PRODIPTO";
+			$user_email = "prodip211085@gmail.com";
+			$admin_users_email="prodip211085@gmail.com";
+			//$activateLink = url().'/activateLink/'.base64_encode($register['email']).'/member';
+			$activateLink ="Activatelink";
+			$sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'admin_users_email'=>$admin_users_email), 
+			function($message) use ($admin_users_email, $user_email,$user_name)
+			{
+			$message->from($admin_users_email);
+			$message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
+			});
+
+			if( ! $sent) 
+			{
+			echo 'something went wrong!! Mail not sent.'; 
+			
+			}
+			else
+			{
+			echo 'Registration completed successfully.Please login with your details to your account.'; 
+			
+			}
     }
 
 }
