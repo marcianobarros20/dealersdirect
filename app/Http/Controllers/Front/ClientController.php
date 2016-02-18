@@ -192,7 +192,7 @@ class ClientController extends BaseController
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";
-			$user_email = "prodip211085@gmail.com";
+			$user_email = "prodipXXXTinka@gmail.com";
 			$admin_users_email="prodip211085@gmail.com";
 			//$activateLink = url().'/activateLink/'.base64_encode($register['email']).'/member';
 			$activateLink ="Activatelink";
