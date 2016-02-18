@@ -10,17 +10,54 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+/*
+|--------------------------------------------------------------------------
+| Front Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route::get('/', 'Front\HomeController@index');
-
+Route::get('/request_success', 'Front\HomeController@RequestSuccess');
+/*
+|--------------------------------------------------------------------------
+| Client Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::post('/clientregister', 'Front\HomeController@ClientRegister');
+Route::get('/client-dashboard', 'Front\ClientController@Dashboard');
+Route::get('/client_sign_out', 'Front\ClientController@signout');
+Route:: get('/client-signin', 'Front\ClientController@signin');
+Route:: post('/client-signin', 'Front\ClientController@signin');
+Route:: get('/client/profile', 'Front\ClientController@profile');
+Route:: post('/clienteditdetails', 'Front\ClientController@ProfileEditDetails');
+Route:: post('/clienteditpassword', 'Front\ClientController@ProfileEditPassword');
+Route:: get('/client/request_list', 'Front\ClientController@requestList');
+Route:: get('/client/request_detail/{id}', 'Front\ClientController@requestDetail');
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route:: get('/api-edmunds-make','Admin\ApiController@apimake');
 Route:: get('/api-edmunds-model','Admin\ApiController@apimodel');
-
+/*
+|--------------------------------------------------------------------------
+| Front Ajax Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
 Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
 Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
 
-
+/*
+|--------------------------------------------------------------------------
+| Dealer Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route:: get('/dealers', 'Front\DealerController@index');
 Route:: get('/dealer-signin', 'Front\DealerController@signin');
 Route:: post('/dealer-signin', 'Front\DealerController@signin');
@@ -37,6 +74,8 @@ Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake'
 Route:: get('/dealer/profile', 'Front\DealerController@profile');
 Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
 Route:: post('/dealereditpassword', 'Front\DealerController@ProfileEditPassword');
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

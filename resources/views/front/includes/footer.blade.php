@@ -205,7 +205,8 @@ $('#dstes').click(function(){
                         },
                         type :"post",
                         success: function( data ) {
-                        
+                          var urlnew="<?php echo url('/');?>/request_success";
+                        $(location).attr('href',urlnew);
                         }
                         });
        return false;

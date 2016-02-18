@@ -77,7 +77,9 @@ class AjaxController extends Controller
               $RequestDealerLog['status']=1;
               RequestDealerLog::create($RequestDealerLog);
           }
-        echo "Done";
+        //echo "Done";
+        Session::forget('guest_user');
+        Session::put('guest_user', $lastinsertedId);
         //return view('front.ajax.create_year_types',compact('Caryear'));
     }
     public function deletedealermake(){

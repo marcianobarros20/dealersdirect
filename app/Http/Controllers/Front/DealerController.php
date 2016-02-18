@@ -100,11 +100,6 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_signin',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function dashboard(){
-            //print_r($_SESSION);
-            // echo Session::get('dealer_userid');
-            // echo Session::get('dealer_email');
-            // echo Session::get('dealer_name');
-
             return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function signup(){

@@ -1,16 +1,16 @@
-@extends('front/layout/dealer_signup_template')
+@extends('front/layout/client_signup_template')
 @section('content')
 		<section>
 			<div class="dark-promo">
 					<div class="container">
 						<div class="row">
 							<div class="promo dark">
-							<h1 data-appear-animation="flipInX">Sign In As A Dealer</h1>
+							<h1 data-appear-animation="flipInX">Sign In As A Client</h1>
 									<div class="dark-form">
 									
 									<div class="send_result">{!! Session::get('error') !!}</div>
 										<!-- <form class="contactform" method="post" action="contact_process.php"> -->
-										{{ Form::open(array('url' => 'dealer-signin')) }}
+										{{ Form::open(array('url' => 'client-signin')) }}
 											<fieldset>
 												<div class="twelve columns alpha">
 
@@ -41,7 +41,7 @@
 
                     <div class="twelve columns alpha" data-appear-animation="slideInLeft">
                         <h6>
-                            <span class=""></span><b>Want A Dealer Account ? <a href="<?php echo url('/');?>/dealer-signup">Sign up now!</a></b>
+                            <span class=""></span><b>Want A Client Account ? <!-- <a href="<?php //echo url('/');?>/client-signup"> -->Sign up now!<!-- </a> --></b>
                         </h6>
                         
                     </div>

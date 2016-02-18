@@ -1,0 +1,193 @@
+<?php
+
+namespace App\Http\Controllers\Front;
+
+use App\Model\Make;          /* Model name*/
+use App\Model\Dealer;          /* Model name*/
+use App\Model\DealerMakeMap;          /* Model name*/
+use App\Model\RequestDealerLog;          /* Model name*/
+use App\Model\Carmodel;          /* Model name*/
+use App\Model\RequestQueue;          /* Model name*/
+use App\Model\Client;          /* Model name*/
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Hash;
+use Input;
+//use Illuminate\Support\Facades\Session;
+use Session;
+use Illuminate\Support\Facades\Request;
+use Image\Image\ImageInterface;
+use Illuminate\Pagination\Paginator;
+use DB;
+use App\Helper\helpers;
+
+
+class ClientController extends BaseController
+{
+    //
+    public function __construct(){
+        parent::__construct();
+        $obj = new helpers();
+        if($obj->checkClientLogin())
+        {
+            $clientlogin=0;
+        }
+        else
+        {
+            $clientlogin=1;
+        }
+
+        view()->share('clientlogin',$clientlogin);
+        view()->share('obj',$obj);
+    }
+    public function Dashboard(){
+			$obj = new helpers();
+			if(!$obj->checkClientLogin())
+			{
+			return redirect('client-signin');
+			}
+			return view('front.client.client_dashboard',array('title'=>'DEALERSDIRECT | Client Dashboard'));
+    }
+    public function signout(){
+            Session::forget('client_userid');
+            Session::forget('client_email');
+            Session::forget('client_name');
+            return redirect('client-signin');
+    }
+    public function signin(){
+        
+       $obj = new helpers();
+        if($obj->checkClientLogin())
+        {
+            
+            return redirect('client-dashboard');
+        }
+        if(Request::isMethod('post'))
+        {
+           $email = Request::input('email');
+            $password = Request::input('password');
+            $Client = Client::where('email', $email)->first();
+            if($Client!=""){
+
+                $Client_pass = $Client->password;
+                // check for password
+                if(Hash::check($password, $Client_pass)){
+
+                   
+                    
+                    $nam=ucfirst($Client->first_name)." ".ucfirst($Client->last_name);
+                    Session::put('client_userid', $Client->id);
+                    Session::put('client_email', $Client->email);
+                    Session::put('client_name', $nam);
+                    
+                    
+                    Session::save();
+
+                    return redirect('client-dashboard');
+
+                }
+                else{
+                        Session::flash('error', 'Email and password does not match.'); 
+                        return redirect('client-signin');
+                    }
+               
+            }
+            else{
+                    Session::flash('error', 'Email and password does not match.'); 
+                    return redirect('client-signin');
+            }
+
+        }
+
+        return view('front.client.client_signin',array('title'=>'DEALERSDIRECT | Clients Signin'));
+    }
+    public function profile(){
+    	$obj = new helpers();
+			if(!$obj->checkClientLogin())
+			{
+			return redirect('client-signin');
+			}
+       	$client_userid=Session::get('client_userid');
+       	$Client = Client::where('id', $client_userid)->first();
+       	return view('front.client.client_profile',compact('Client'),array('title'=>'DEALERSDIRECT | Clients Profile'));
+    }
+    public function ProfileEditDetails(){
+    	$obj = new helpers();
+			if(!$obj->checkClientLogin())
+			{
+			return redirect('client-signin');
+			}
+        $client_userid=Session::get('client_userid');
+        $fname=Request::input('fname');
+        $lname=Request::input('lname');
+        $phone=Request::input('phone');
+        $Client = Client::find($client_userid);
+        $Client->first_name = $fname;
+        $Client->last_name = $lname;
+        $Client->phone = $phone;
+        $Client->save();
+        $nam=ucfirst($fname)." ".ucfirst($lname);
+        Session::forget('client_name');
+        Session::put('client_name', $nam);
+        Session::flash('message', 'Profile Details Successfully Changed'); 
+        return redirect('/client/profile');
+    }
+    public function ProfileEditPassword(){
+    	$obj = new helpers();
+			if(!$obj->checkClientLogin())
+			{
+			return redirect('client-signin');
+			}
+        $client_userid=Session::get('client_userid');
+        
+        $hashpassword = Hash::make(Request::input('password'));
+        $Client = Client::find($client_userid);
+        $Client->password = $hashpassword;
+        
+        $Client->save();
+        Session::flash('message', 'Password Successfully Changed'); 
+       
+        return redirect('/client/profile');
+    }
+    public function requestList(){
+		$obj = new helpers();
+			if(!$obj->checkClientLogin())
+			{
+				return redirect('client-signin');
+			}
+            $client_userid=Session::get('client_userid');
+            $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes')->get();
+            
+            $requestqueuex=array();
+            foreach ($RequestQueue as $key=> $value) {
+                    $requestqueuex[$key]['id']=$value->id;
+                    $requestqueuex[$key]['status']=$value->status;
+                    $requestqueuex[$key]['make']=$value->makes->name;
+                    $mid=$value->carmodel_id;
+                    $Carmodel=Carmodel::where("id",$mid)->first();
+                    $requestqueuex[$key]['model']=$Carmodel->name;
+                    $requestqueuex[$key]['year']=$value->year;
+                    $requestqueuex[$key]['conditions']=$value->condition;
+                    $requestqueuex[$key]['total']=$value->total_amount;
+                    $requestqueuex[$key]['monthly']=$value->monthly_amount; 
+            }
+            return view('front.client.client_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Client Request'));
+    }
+    public function requestDetail($id=null){
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes')->first();
+            $requestqueuex['id']=$RequestQueue->id;
+            $requestqueuex['status']=$RequestQueue->status;
+            $requestqueuex['make']=$RequestQueue->makes->name;
+            $mid=$RequestQueue->carmodel_id;
+            $Carmodel=Carmodel::where("id",$mid)->first();
+            $requestqueuex['model']=$Carmodel->name;
+            $requestqueuex['year']=$RequestQueue->year;
+            $requestqueuex['conditions']=$RequestQueue->condition;
+            $requestqueuex['total']=$RequestQueue->total_amount;
+            $requestqueuex['monthly']=$RequestQueue->monthly_amount;
+            $requestqueuex['cat']=$RequestQueue->created_at;
+            
+            return view('front.client.client_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+
+}

@@ -17,6 +17,12 @@ class helpers {
         }
         return false;
     }
+    function checkClientLogin(){
+        if( Session::has('client_userid')){
+            return true;
+        }
+        return false;
+    }
 
     
 
