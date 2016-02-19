@@ -232,7 +232,7 @@ class ClientController extends BaseController
 
         echo $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
         if($count==0){
-            $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+            echo $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
             $ch = curl_init();
             curl_setopt($ch,CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
