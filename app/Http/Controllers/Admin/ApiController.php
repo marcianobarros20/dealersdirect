@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\Caryear;          /* Model name*/
+use App\Model\Style;          /* Model name*/
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -91,5 +92,43 @@ class ApiController extends Controller
 
 			}
 			
+		}
+		public function apistyleid(){
+			
+			// $Caryear=Caryear::where('id',1)->with('models','makes')->get();
+			$Caryear=Caryear::all();
+			foreach ($Caryear as  $value) {
+				
+				$url='https://api.edmunds.com/api/vehicle/v2/'.$value->makes->nice_name.'/'.$value->models->nice_name.'/'.$value->year.'?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
+				$ch = curl_init();
+				curl_setopt($ch,CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				$resuls=json_decode($result, true);
+				
+				foreach ($resuls['styles'] as $styles) {
+
+				$Style['year_id'] =$value->id;
+				$Style['style_id'] =$styles['id'];
+				$Style['name'] =$styles['name'];
+				$Style['body'] =$styles['submodel']['body'];
+				$Style['trim'] =$styles['trim'];
+				$Style['submodel'] =json_encode($value['submodel'],true);
+				Style::create($Style);
+
+				}
+
+			}
+			//print_r($Caryear);
+		}
+		public function apistylegenerator(){
+			echo "<pre>";
+			$Caryear=Caryear::all();
+
+
+			print_r($Caryear);
 		}
 }
