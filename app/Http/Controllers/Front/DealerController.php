@@ -100,6 +100,12 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_signin',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function dashboard(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
             return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function signup(){
@@ -123,6 +129,12 @@ class DealerController extends BaseController
             return redirect('dealer-signin');
     }
     public function requestList(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
             $dealer_userid=Session::get('dealer_userid');
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
             $requestqueuex=array();
@@ -160,6 +172,12 @@ class DealerController extends BaseController
             return ucfirst($str);
     }
     public function requestDetail($id=null){
+            if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
             $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
             $requestqueuex['id']=$RequestDealerLog->id;
             $requestqueuex['status']=$RequestDealerLog->status;
@@ -186,6 +204,12 @@ class DealerController extends BaseController
             return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function DealerMakeList(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->with('makes')->get();
         // echo "<pre>";
@@ -193,6 +217,12 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_list',compact('DealerMakeMap'),array('title'=>'DEALERSDIRECT | Dealers Make'));
     }
     public function DealerMakeAdd(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->distinct()->lists('make_id');
         
@@ -200,6 +230,12 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
     }
     public function DealerAddMake(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $make=Request::input('agree');
         if(isset($make)){
@@ -223,6 +259,12 @@ class DealerController extends BaseController
         return redirect('dealer/dealer_make');
     }
     public function profile(){
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }else{
+            return redirect('dealer-dashboard');
+            }
        $dealer_userid=Session::get('dealer_userid');
        $Dealer = Dealer::where('id', $dealer_userid)->first();
        return view('front.dealer.dealer_profile',compact('Dealer'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
@@ -230,6 +272,7 @@ class DealerController extends BaseController
 
     }
     public function ProfileEditDetails(){
+
         $dealer_userid=Session::get('dealer_userid');
         $fname=Request::input('fname');
         $lname=Request::input('lname');

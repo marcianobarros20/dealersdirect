@@ -9,5 +9,5 @@
 
 <div style="font-size:16px;line-height:22px;color:#4e4e4e;font-family:'Lato', sans-serif;font-weight:700;background:#fff;border:1px solid #1588d1;border-radius:25px;  display: inline-block;margin-bottom:30px;">
  
-Link: <a href="{!! $activate_link !!}" style="font-weight:400;font-style:italic;color:#1588d1;text-decoration:none;">{!! $activate_link; !!}</a></p>
+Link: <a href="{!! $activate_link !!}" style="font-weight:400;font-style:italic;color:#1588d1;text-decoration:none;">Click Here To See The Details</a></p>
 </div>
