@@ -100,6 +100,7 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_signin',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function dashboard(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -129,6 +130,7 @@ class DealerController extends BaseController
             return redirect('dealer-signin');
     }
     public function requestList(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -172,6 +174,7 @@ class DealerController extends BaseController
             return ucfirst($str);
     }
     public function requestDetail($id=null){
+        $obj = new helpers();
             if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -204,6 +207,7 @@ class DealerController extends BaseController
             return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function DealerMakeList(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -217,6 +221,7 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_list',compact('DealerMakeMap'),array('title'=>'DEALERSDIRECT | Dealers Make'));
     }
     public function DealerMakeAdd(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -230,6 +235,7 @@ class DealerController extends BaseController
         return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
     }
     public function DealerAddMake(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
@@ -259,6 +265,7 @@ class DealerController extends BaseController
         return redirect('dealer/dealer_make');
     }
     public function profile(){
+        $obj = new helpers();
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
