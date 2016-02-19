@@ -95,7 +95,7 @@ class ApiController extends Controller
 		}
 		public function apistyleid(){
 			
-			// $Caryear=Caryear::where('id',1)->with('models','makes')->get();
+			set_time_limit(3600);
 			$Caryear=Caryear::all();
 			foreach ($Caryear as  $value) {
 				
