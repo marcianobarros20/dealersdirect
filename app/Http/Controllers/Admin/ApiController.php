@@ -108,7 +108,7 @@ class ApiController extends Controller
 				$result = curl_exec($ch);
 				curl_close($ch);
 				$resuls=json_decode($result, true);
-				print_r($$resuls['styles']);
+				print_r($resuls['styles']);
 				
 				// foreach ($resuls['styles'] as $styles) {
 
