@@ -229,7 +229,8 @@ class ClientController extends BaseController
         echo "<pre>";
         print_r($Caryear->carmodel_id);
         echo "<pre>";
-
+echo $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+            
         echo $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
         if($count==0){
             echo $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
