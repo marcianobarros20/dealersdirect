@@ -40,7 +40,7 @@ class HomeController extends BaseController
 
         
 
-        return view('front.home.index');
+        return view('front.home.index',array('title'=>'DEALERSDIRECT'));
 
     }
 

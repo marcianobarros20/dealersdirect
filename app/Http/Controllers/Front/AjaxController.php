@@ -103,7 +103,7 @@ class AjaxController extends Controller
             $user_name = $requestqueuex['dealername'];
             $user_email = $requestqueuex['dealeremail'];
             $admin_users_email="prodip211085@gmail.com";
-            $activateLink = url('/').'/dealers/request_detail/'.$maskval;
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($maskval);
             
             $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
             function($message) use ($admin_users_email, $user_email,$user_name)

@@ -11,7 +11,7 @@
 
     <!-- Site Title
 ================================================== -->
-    <title>Carell - Creative Multifunctional HTML Template</title>
+    <title>{{ $title }}</title>
 
     <!-- Mobile Specific Metas
 ================================================== -->
@@ -46,7 +46,7 @@
         
         <!-- notification -->
         <div class="notification">
-              <p>This is simple notification message and you can insert <a href="#">anchor</a> inside too.</p>
+              
             </div>
         <!-- .notification --> 
         
@@ -78,7 +78,7 @@
           <div class="row"> 
         
         <!-- logo -->
-        <div class="logo"> <a href="index.html"> <img src="<?php echo url('/');?>/public/front/images/logo.png" title="Carell" alt="Carell" /> </a> </div>
+        <div class="logo"> <a href="<?php echo url('/');?>"> <img src="<?php echo url('/');?>/public/front/images/logo.png" title="Carell" alt="Carell" /> </a> </div>
         <!-- .logo --> 
         
         <!-- navigation -->
@@ -102,125 +102,11 @@
             <ul class="main-navigation">
                   
                   <!-- home -->
-                  <li><a href="index.html" class="active">Home</a>
-                <ul class="sub-menu">
-                      <li><a href="index.html">Home v1</a>
-                  <li><a href="index-1.html">Home v2</a> </li>
-                      <li><a href="index-2.html">Home v3</a> </li>
-                      <li><a href="index-3.html">Headers</a>
-                    <ul class="sub-menu">
-                          <li><a href="index-4.html">Header v1</a> </li>
-                          <li><a href="index-5.html">Header v2</a> </li>
-                          <li><a href="index-6.html">Header v3</a> </li>
-                          <li><a href="index-7.html">Header v4</a> </li>
-                          <li><a href="index-8.html">Header v5</a> </li>
-                        </ul>
-                  </li>
-                      <li><a href="index-8.html">Footers</a>
-                    <ul class="sub-menu">
-                          <li><a href="index-9.html#footer-1">Footer v1</a> </li>
-                          <li><a href="index-10.html#footer-2">Footer v2</a> </li>
-                          <li><a href="index-11.html#footer-3">Footer v3</a> </li>
-                        </ul>
-                  </li>
-                    </ul>
-              </li>
+                  <li><a href="<?php echo url('/');?>" class="active">Home</a></li>
                   <!-- .home --> 
-                  
-                  <!-- pages -->
-                  <li><a href="#">Pages</a>
-                <ul class="sub-menu">
-                      <li><a href="testimonials.html">Testimonials</a> </li>
-                      <li><a href="faq.html">FAQ</a> </li>
-                      <li><a href="full-width.html">Full Width</a> </li>
-                      <li><a href="sidebar-left.html">Sidebar Left</a> </li>
-                      <li><a href="sidebar-right.html">Sidebar Right</a> </li>
-                      <li><a href="under-construction.html">Under Construction</a> </li>
-                      <li><a href="404.html">404 Error</a> </li>
-                      <li><a href="#">About</a>
-                    <ul class="sub-menu">
-                          <li><a href="about.html">About v1</a> </li>
-                          <li><a href="about-1.html">About v2</a> </li>
-                        </ul>
-                  </li>
-                      <li><a href="#">Services</a>
-                    <ul class="sub-menu">
-                          <li><a href="services.html">Services v1</a> </li>
-                          <li><a href="services-1.html">Services v2</a> </li>
-                        </ul>
-                  </li>
-                    </ul>
-              </li>
-                  <!-- .pages --> 
-                  
-                  <!-- blog -->
-                  <li><a href="#">Blog</a>
-                <ul class="sub-menu">
-                      <li><a href="#">Blog Posts</a>
-                    <ul class="sub-menu">
-                          <li><a href="blog.html">Blog v1</a> </li>
-                          <li><a href="blog-1.html">Blog v2</a> </li>
-                          <li><a href="blog-2.html">Blog v3</a> </li>
-                          <li><a href="blog-3.html">Blog v4</a> </li>
-                        </ul>
-                  </li>
-                      <li><a href="blog-single.html">Blog Single</a> </li>
-                    </ul>
-              </li>
-                  <!-- .blog --> 
-                  
-                  <!-- cars -->
-                  <li><a href="#">Cars</a>
-                <ul class="sub-menu">
-                      <li><a href="#">Car Listing</a>
-                    <ul class="sub-menu">
-                          <li><a href="car-listing.html">Car Listing v1</a> </li>
-                          <li><a href="car-listing-1.html">Car Listing v2</a> </li>
-                          <li><a href="car-listing-2.html">Car Listing v3</a> </li>
-                          <li><a href="car-listing-3.html">Car Listing v4</a> </li>
-                          <li><a href="car-listing-4.html">Car Listing v5</a> </li>
-                          <li><a href="car-listing-5.html">Car Listing v6</a> </li>
-                        </ul>
-                  </li>
-                      <li><a href="#">Car Single</a>
-                    <ul class="sub-menu">
-                          <li><a href="car-single.html">Car Single v1</a> </li>
-                          <li><a href="car-single-1.html">Car Single v2</a> </li>
-                        </ul>
-                  </li>
-                    </ul>
-              </li>
-                  <!-- .cars --> 
-                  
-                  <!-- elements -->
-                  <li><a href="#">Elements</a>
-                <ul class="sub-menu">
-                      <li><a href="animations.html">Animations</a> </li>
-                      <li><a href="buttons.html">Buttons</a> </li>
-                      <li><a href="form.html">Forms</a> </li>
-                      <li><a href="grid.html">Grid</a> </li>
-                      <li><a href="lightbox-modal.html">Lightboxes &amp; Modal</a> </li>
-                      <li><a href="lists.html">Lists</a> </li>
-                      <li><a href="notifications.html">Notifications</a> </li>
-                      <li><a href="pagination.html">Pagination</a> </li>
-                      <li><a href="price-boxes.html">Price Boxes</a> </li>
-                      <li><a href="progress-bars.html">Progress Bars</a> </li>
-                      <li><a href="promo-boxes.html">Promo Boxes</a> </li>
-                      <li><a href="tabs.html">Tabs</a> </li>
-                      <li><a href="typography.html">Typography</a> </li>
-                      <li><a href="icons.html">Icons</a> </li>
-                    </ul>
-              </li>
-                  <!-- .elements --> 
-                  
-                  <!-- contact -->
-                  <li><a href="#">Contact</a>
-                <ul class="sub-menu">
-                      <li><a href="contact.html">Contact v1</a> </li>
-                      <li><a href="contact-2.html">Contact v2</a> </li>
-                    </ul>
-              </li>
-                  <!-- .contact -->
+                  <li><a href="" class="active">About</a></li>
+                  <li><a href="" class="active">Services</a></li>
+                  <li><a href="" class="active">Contact Us</a></li>
                   
                 </ul>
             <!-- .main navigation --> 

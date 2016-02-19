@@ -11,7 +11,7 @@
 
     <!-- Site Title
 ================================================== -->
-    <title>Carell - Creative Multifunctional HTML Template</title>
+    <title>{{ $title }}</title>
 
     <!-- Mobile Specific Metas
 ================================================== -->

@@ -175,6 +175,7 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
+            $id=base64_decode($id);
             $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
             $requestqueuex['id']=$RequestDealerLog->id;
             $requestqueuex['status']=$RequestDealerLog->status;

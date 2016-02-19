@@ -10,18 +10,18 @@
           <div class="row">
         <div class="six columns">
               <div class="copyrights">
-            <p>&copy; 2014 - Carell by pebas - powered by Wordpress. All rights reserved.</p>
+            <p>&copy; 2016 - DealersDirect. All rights reserved.</p>
           </div>
             </div>
         <div class="six columns">
               <div class="footer-navigation">
             <ul class="clearfix">
-                  <li><a href="#" class="active">Home</a> </li>
-                  <li><a href="#">About</a> </li>
-                  <li><a href="#">Services</a> </li>
-                  <li><a href="#">Contact</a> </li>
-                  <li><a href="#">Terms &amp; Conditions</a> </li>
-                  <li><a href="#">Privacy Policy</a> </li>
+                  <li><a href="<?php echo url('/');?>" class="active">Home</a> </li>
+                  <li><a href="">About</a> </li>
+                  <li><a href="">Services</a> </li>
+                  <li><a href="">Contact</a> </li>
+                  <li><a href="">Terms &amp; Conditions</a> </li>
+                  <li><a href="">Privacy Policy</a> </li>
                 </ul>
           </div>
             </div>

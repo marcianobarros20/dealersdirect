@@ -10,7 +10,7 @@
           <div class="row">
         <div class="six columns">
               <div class="copyrights">
-            <p>&copy; 2014 - Carell by pebas - powered by Wordpress. All rights reserved.</p>
+            <p>&copy; 2016 - DEALERSDIRECT.</p>
           </div>
             </div>
         <div class="six columns">

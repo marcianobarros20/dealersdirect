@@ -49,7 +49,7 @@
 
                             <!-- price -->
                             <div class="car-price">
-                                <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo $value['id'];?>" class="clearfix">
+                                <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($value['id']);?>" class="clearfix">
                                     <span class="price"><?php if($value['status']==1){echo "Locked";}else{echo "Open";}?></span>
                                     <span class="icon-arrow-right2"></span>
                                 </a>
