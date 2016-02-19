@@ -132,8 +132,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
             $dealer_userid=Session::get('dealer_userid');
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
@@ -176,8 +174,6 @@ class DealerController extends BaseController
             if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
             $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
             $requestqueuex['id']=$RequestDealerLog->id;
@@ -209,8 +205,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->with('makes')->get();
@@ -223,8 +217,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->distinct()->lists('make_id');
@@ -237,8 +229,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
         $dealer_userid=Session::get('dealer_userid');
         $make=Request::input('agree');
@@ -267,8 +257,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
        $dealer_userid=Session::get('dealer_userid');
        $Dealer = Dealer::where('id', $dealer_userid)->first();
