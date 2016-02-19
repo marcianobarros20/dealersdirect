@@ -99,7 +99,7 @@ class ApiController extends Controller
 			$Caryear=Caryear::all();
 			foreach ($Caryear as  $value) {
 				
-				$url='https://api.edmunds.com/api/vehicle/v2/'.$value->makes->nice_name.'/'.$value->models->nice_name.'/'.$value->year.'?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
+				$url='https://api.edmunds.com/api/vehicle/v2/'.$value->makes->nice_name.'/'.$value->models->nice_name.'/'.$value->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
 				$ch = curl_init();
 				curl_setopt($ch,CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
