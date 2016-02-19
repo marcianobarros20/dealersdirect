@@ -108,18 +108,19 @@ class ApiController extends Controller
 				$result = curl_exec($ch);
 				curl_close($ch);
 				$resuls=json_decode($result, true);
+				print_r($$resuls['styles']);
 				
-				foreach ($resuls['styles'] as $styles) {
+				// foreach ($resuls['styles'] as $styles) {
 
-				$Style['year_id'] =$value->id;
-				$Style['style_id'] =$styles['id'];
-				$Style['name'] =$styles['name'];
-				$Style['body'] =$styles['submodel']['body'];
-				$Style['trim'] =$styles['trim'];
-				$Style['submodel'] =json_encode($value['submodel'],true);
-				Style::create($Style);
+				// $Style['year_id'] =$value->id;
+				// $Style['style_id'] =$styles['id'];
+				// $Style['name'] =$styles['name'];
+				// $Style['body'] =$styles['submodel']['body'];
+				// $Style['trim'] =$styles['trim'];
+				// $Style['submodel'] =json_encode($value['submodel'],true);
+				// Style::create($Style);
 
-				}
+				// }
 
 			}
 			//print_r($Caryear);
