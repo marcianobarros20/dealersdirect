@@ -104,8 +104,6 @@ class DealerController extends BaseController
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
-            }else{
-            return redirect('dealer-dashboard');
             }
             return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
