@@ -35,6 +35,7 @@ Route:: post('/clienteditpassword', 'Front\ClientController@ProfileEditPassword'
 Route:: get('/client/request_list', 'Front\ClientController@requestList');
 Route:: get('/client/request_detail/{id}', 'Front\ClientController@requestDetail');
 Route:: get('/testmailnew', 'Front\ClientController@testmailnew');
+Route:: get('/client/add-style/{id}', 'Front\ClientController@AddStyle');
 /*
 |--------------------------------------------------------------------------
 | API Routes

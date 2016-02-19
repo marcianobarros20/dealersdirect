@@ -37,13 +37,14 @@ class ApiController extends Controller
 			$resuls=json_decode($result, true);
 
 				foreach ($resuls['makes'] as $key => $value) {
-
-				$Make['makes_id'] =$value['id'];
-				$Make['name'] =$value['name'];
-				$Make['nice_name'] =$value['niceName'];
-				$Make['models'] =json_encode($value['models'],true);
-				Make::create($Make);
-
+				$count=Make::where('makes_id',$value['id'])->count();
+					if($count==0){
+						$Make['makes_id'] =$value['id'];
+						$Make['name'] =$value['name'];
+						$Make['nice_name'] =$value['niceName'];
+						$Make['models'] =json_encode($value['models'],true);
+						Make::create($Make);
+					}
 				}
 		}
 
@@ -69,22 +70,28 @@ class ApiController extends Controller
 				
 				echo "<pre>";
 				foreach ($resuls['models'] as $key => $value) {
-						$Carmodel['model_id'] =$value['id'];
-						$Carmodel['name'] =$value['name'];
-						$Carmodel['nice_name'] =$value['niceName'];
-						$Carmodel['years'] =json_encode($value['years'],true);
-						$Carmodel['make_id'] =$Make->id;
-						print_r($value['years']);
-						print_r($Carmodel);
-						$Carmodel_row=Carmodel::create($Carmodel);
-						$lastinsertedId = $Carmodel_row->id;
-							foreach ($value['years'] as $years) {
-								$Caryear['make_id'] =$Make->id;
-								$Caryear['carmodel_id'] =$lastinsertedId;
-								$Caryear['year_id'] =$years['id'];
-								$Caryear['year'] =$years['year'];
-								$Caryear['styles'] =json_encode($years['styles'],true);
-								$Caryear_row=Caryear::create($Caryear);
+						$count=Carmodel::where('model_id',$value['id'])->count();
+							if($count==0){
+								$Carmodel['model_id'] =$value['id'];
+								$Carmodel['name'] =$value['name'];
+								$Carmodel['nice_name'] =$value['niceName'];
+								$Carmodel['years'] =json_encode($value['years'],true);
+								$Carmodel['make_id'] =$Make->id;
+								print_r($value['years']);
+								print_r($Carmodel);
+								$Carmodel_row=Carmodel::create($Carmodel);
+								$lastinsertedId = $Carmodel_row->id;
+								foreach ($value['years'] as $years) {
+								$count=Caryear::where('year_id',$years['id'])->count();
+									if($count==0){	
+										$Caryear['make_id'] =$Make->id;
+										$Caryear['carmodel_id'] =$lastinsertedId;
+										$Caryear['year_id'] =$years['id'];
+										$Caryear['year'] =$years['year'];
+										$Caryear['styles'] =json_encode($years['styles'],true);
+										$Caryear_row=Caryear::create($Caryear);
+									}
+								}
 							}
 
 
@@ -130,11 +137,5 @@ class ApiController extends Controller
 			}
 			//print_r($Caryear);
 		}
-		public function apistylegenerator(){
-			echo "<pre>";
-			$Caryear=Caryear::all();
-
-
-			print_r($Caryear);
-		}
+		
 }

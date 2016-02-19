@@ -9,6 +9,8 @@ use App\Model\RequestDealerLog;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\RequestQueue;          /* Model name*/
 use App\Model\Client;          /* Model name*/
+use App\Model\Caryear;          /* Model name*/
+use App\Model\Style;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -213,6 +215,46 @@ class ClientController extends BaseController
 			echo 'Registration completed successfully.Please login with your details to your account.'; 
 			
 			}
+    }
+    public function AddStyle($id=null){
+        echo $id=base64_decode($id);
+        
+        echo "<pre>";
+        
+        $RequestQueue=RequestQueue::where('id', $id)->with('makes','models')->first();
+        $Caryear=Caryear::where('make_id', $RequestQueue->make_id)->where('carmodel_id', $RequestQueue->carmodel_id)->where('year', $RequestQueue->year)->with('makes','models')->first();
+        print_r($Caryear->year_id);
+        echo "<pre>";
+        print_r($Caryear->make_id);
+        echo "<pre>";
+        print_r($Caryear->carmodel_id);
+        echo "<pre>";
+
+        echo $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
+        if($count==0){
+            $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $resuls=json_decode($result, true);
+            foreach ($resuls['styles'] as $styles) {
+                        $Style['year_id'] =$Caryear->year_id;
+                        $Style['make_id'] =$Caryear->make_id;
+                        $Style['carmodel_id'] =$Caryear->carmodel_id;
+                        $Style['style_id'] =$styles['id'];
+                        $Style['name'] =$styles['name'];
+                        $Style['body'] =$styles['submodel']['body'];
+                        $Style['trim'] =$styles['trim'];
+                        $Style['submodel'] =json_encode($styles['submodel'],true);
+                        Style::create($Style);
+                    }
+
+        }
+
     }
 
 }

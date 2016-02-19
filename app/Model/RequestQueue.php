@@ -24,4 +24,8 @@ class RequestQueue extends Model
     public function makes() {
         return $this->hasOne('App\Model\Make', 'id', 'make_id');
     }
+    public function models() {
+        return $this->hasOne('App\Model\Carmodel', 'id', 'carmodel_id');
+        }
 }
+

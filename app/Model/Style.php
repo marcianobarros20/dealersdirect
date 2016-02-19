@@ -13,6 +13,10 @@ class Style extends Model
         'style_id',
         'name',
         'body',
-        'trim'
+        'trim',
+        'make_id',
+        'carmodel_id',
+        'submodel',
+
        ];
 }

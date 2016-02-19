@@ -9,7 +9,7 @@
                 <!-- car single header -->
                 <div class="car-single-header clearfix">
 
-                    <div class="ten columns alpha" data-appear-animation="slideInLeft">
+                    <div class="eight columns alpha" data-appear-animation="slideInLeft">
 
                         <!-- date added -->
                         <div class="single-car-date-added">
@@ -25,7 +25,11 @@
                         <!-- .car title -->
 
                     </div>
-
+                    <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
+                        <div class="single-car-price">
+                            <a class="button light medium" href="<?php echo url('/');?>/client/add-style/<?php echo base64_encode($requestqueuex['id']);?>"><b>Add MORE DETAILS</b> </a>
+                        </div>
+                    </div>
 
                     
 
