@@ -112,7 +112,7 @@ class ApiController extends Controller
 					foreach ($resuls['styles'] as $styles) {
 
 					
-					$count=Style::where('style_id'=>$styles['id'])->count();
+					$count=Style::where('style_id',$styles['id'])->count();
 					if($count==0){
 							$Style['year_id'] =$value->id;
 							$Style['style_id'] =$styles['id'];
