@@ -36,6 +36,10 @@ Route:: get('/client/request_list', 'Front\ClientController@requestList');
 Route:: get('/client/request_detail/{id}', 'Front\ClientController@requestDetail');
 Route:: get('/testmailnew', 'Front\ClientController@testmailnew');
 Route:: get('/client/add-style/{id}', 'Front\ClientController@AddStyle');
+Route:: get('/client/add-engine/{id}', 'Front\ClientController@AddEngine');
+Route:: get('/client/add-transmission/{id}', 'Front\ClientController@AddTransmission');
+Route:: get('/client/add-color-exterior/{id}', 'Front\ClientController@AddColorExterior');
+Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorInterior');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -55,6 +59,11 @@ Route:: get('/api-edmunds-style-generator','Admin\ApiController@apistylegenerato
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
 Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
 Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
+Route::resource('ajax/add_style_to_requestqueue', 'Front\AjaxController@AddStyleToRequestqueue');
+Route::resource('ajax/add_engine_to_requestqueue', 'Front\AjaxController@AddEngineToRequestqueue');
+Route::resource('/ajax/add_transmission_to_requestqueue', 'Front\AjaxController@AddTransmissionToRequestqueue');
+Route::resource('/ajax/add_exterior_color_to_requestqueue', 'Front\AjaxController@AddExteriorColorToRequestqueue');
+Route::resource('/ajax/add_interior_color_to_requestqueue', 'Front\AjaxController@AddInteriorColorToRequestqueue');
 
 /*
 |--------------------------------------------------------------------------

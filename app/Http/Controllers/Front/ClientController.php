@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Model\Make;          /* Model name*/
-use App\Model\Dealer;          /* Model name*/
-use App\Model\DealerMakeMap;          /* Model name*/
-use App\Model\RequestDealerLog;          /* Model name*/
-use App\Model\Carmodel;          /* Model name*/
-use App\Model\RequestQueue;          /* Model name*/
-use App\Model\Client;          /* Model name*/
-use App\Model\Caryear;          /* Model name*/
-use App\Model\Style;          /* Model name*/
+use App\Model\Make;                                         /* Model name*/
+use App\Model\Dealer;                                       /* Model name*/
+use App\Model\DealerMakeMap;                                /* Model name*/
+use App\Model\RequestDealerLog;                             /* Model name*/
+use App\Model\Carmodel;                                     /* Model name*/
+use App\Model\RequestQueue;                                 /* Model name*/
+use App\Model\Client;                                       /* Model name*/
+use App\Model\Caryear;                                      /* Model name*/
+use App\Model\Style;                                        /* Model name*/
+use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
+use App\Model\Engine;                                       /* Model name*/
+use App\Model\Transmission;                                 /* Model name*/
+use App\Model\Color;                                        /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -217,45 +221,186 @@ class ClientController extends BaseController
 			}
     }
     public function AddStyle($id=null){
-        echo $id=base64_decode($id);
-        
-        echo "<pre>";
-        
+        $id=base64_decode($id);
         $RequestQueue=RequestQueue::where('id', $id)->with('makes','models')->first();
         $Caryear=Caryear::where('make_id', $RequestQueue->make_id)->where('carmodel_id', $RequestQueue->carmodel_id)->where('year', $RequestQueue->year)->with('makes','models')->first();
-        print_r($Caryear->year_id);
-        echo "<pre>";
-        print_r($Caryear->make_id);
-        echo "<pre>";
-        print_r($Caryear->carmodel_id);
-        echo "<pre>";
-echo $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
-            
-        echo $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
+        $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+        $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
+            if($count==0){
+                $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $ch = curl_init();
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $resuls=json_decode($result, true);
+                foreach ($resuls['styles'] as $styles) {
+                    $Style['year_id'] =$Caryear->year_id;
+                    $Style['make_id'] =$Caryear->make_id;
+                    $Style['carmodel_id'] =$Caryear->carmodel_id;
+                    $Style['style_id'] =$styles['id'];
+                    $Style['name'] =$styles['name'];
+                    $Style['body'] =$styles['submodel']['body'];
+                    $Style['trim'] =$styles['trim'];
+                    $Style['submodel'] =json_encode($styles['submodel'],true);
+                    Style::create($Style);
+                }
+            }
+            $Stylenew=Style::where('year_id', $Caryear->year_id)->get();
+            $newrequest_id=base64_encode($id);
+            return view('front.client.client_add_style',compact('newrequest_id','Stylenew','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Add Style'));
+    }
+    public function AddEngine($id=null){
+        $id=base64_decode($id);
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("id",$id)->first();
+        $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
+        $count=Engine::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($count==0){
-            echo $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
-            $ch = curl_init();
-            curl_setopt($ch,CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($ch);
-            curl_close($ch);
-            $resuls=json_decode($result, true);
-            foreach ($resuls['styles'] as $styles) {
-                        $Style['year_id'] =$Caryear->year_id;
-                        $Style['make_id'] =$Caryear->make_id;
-                        $Style['carmodel_id'] =$Caryear->carmodel_id;
-                        $Style['style_id'] =$styles['id'];
-                        $Style['name'] =$styles['name'];
-                        $Style['body'] =$styles['submodel']['body'];
-                        $Style['trim'] =$styles['trim'];
-                        $Style['submodel'] =json_encode($styles['submodel'],true);
-                        Style::create($Style);
-                    }
+                echo $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/engines?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $ch = curl_init();
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $resuls=json_decode($result, true);
+                foreach ($resuls['engines'] as $value) {
+                    
+                    if(isset($value['compressionRatio'])){$compressionRatio=$value['compressionRatio'];}else{$compressionRatio="";}
+                    if(isset($value['cylinder'])){$cylinder=$value['cylinder'];}else{$cylinder="";}
+                    if(isset($value['size'])){$size=$value['size'];}else{$size="";}
+                    if(isset($value['displacement'])){$displacement=$value['displacement'];}else{$displacement="";}
+                    if(isset($value['configuration'])){$configuration=$value['configuration'];}else{$configuration="";}
+                    if(isset($value['fuelType'])){$fuelType=$value['fuelType'];}else{$fuelType="";}
+                    if(isset($value['horsepower'])){$horsepower=$value['horsepower'];}else{$horsepower="";}
+                    
+                    if(isset($value['torque'])){$torque=$value['torque'];}else{$torque="";}
+                    if(isset($value['totalValves'])){$totalValves=$value['totalValves'];}else{$totalValves="";}
+                    if(isset($value['type'])){$type=$value['type'];}else{$type="";}
+                    if(isset($value['code'])){$code=$value['code'];}else{$code="";}
+                    if(isset($value['compressorType'])){$compressorType=$value['compressorType'];}else{$compressorType="";}
+                    if(isset($value['rpm'])){$rpm=json_encode($value['rpm'],true);}else{$rpm="";}
+                    if(isset($value['valve'])){$valve=json_encode($value['valve'],true);}else{$valve="";}
 
+                    if($value['availability']!="OPTIONAL"){
+                        $Engine['requestqueue_id']=$id;
+                        $Engine['style_id']=$RequestStyleEngineTransmissionColor->style_id;
+                        $Engine['engine_id']=$value['id'];
+                        $Engine['name']=$value['name'];
+                        $Engine['equipmentType']=$value['equipmentType'];
+                        $Engine['compressionRatio']=$compressionRatio;
+                        $Engine['cylinder']=$cylinder;
+                        $Engine['size']=$size;
+                        $Engine['displacement']=$displacement;
+                        $Engine['configuration']=$configuration;
+                        $Engine['fuelType']=$fuelType;
+                        $Engine['horsepower']=$horsepower;
+                        $Engine['torque']=$torque;
+                        $Engine['totalValves']=$totalValves;
+                        $Engine['type']=$type;
+                        $Engine['code']=$code;
+                        $Engine['compressorType']=$compressorType;
+                        $Engine['rpm']=$rpm;
+                        $Engine['valve']=$valve;
+                        Engine::create($Engine);
+                    }
+                }
+        }
+        $counttransmission=Transmission::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
+        if($counttransmission==0){
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/transmissions?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $ch = curl_init();
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $resulttransmission = curl_exec($ch);
+                curl_close($ch);
+                $resulttransmissions=json_decode($resulttransmission, true);
+                
+                foreach ($resulttransmissions['transmissions'] as $transmissions) {
+
+                        $Transmission['requestqueue_id']=$id;
+                        $Transmission['style_id']=$RequestStyleEngineTransmissionColor->style_id;
+                        $Transmission['transmission_id']=$transmissions['id'];
+                        $Transmission['name']=$transmissions['name'];
+                        $Transmission['equipmentType']=$transmissions['equipmentType'];
+                        $Transmission['transmissionType']=$transmissions['transmissionType'];
+                        $Transmission['numberOfSpeeds']=$transmissions['numberOfSpeeds'];
+                        Transmission::create($Transmission);
+                }
+        }
+        $countcolor=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
+        if($countcolor==0){
+                echo $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/colors?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $ch = curl_init();
+                curl_setopt($ch,CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $resultcolor = curl_exec($ch);
+                curl_close($ch);
+                $resultcolors=json_decode($resultcolor, true);
+                
+                foreach ($resultcolors['colors'] as $color) {
+                    
+                    if(isset($color['category'])){$category=$color['category'];}else{$category="";}
+                    if(isset($color['name'])){$cname=$color['name'];}else{$cname="";}
+                    if(isset($color['manufactureOptionName'])){$manufactureOptionName=$color['manufactureOptionName'];}else{$manufactureOptionName="";}
+                    if(isset($color['colorChips']['primary']['hex'])){$hex=$color['colorChips']['primary']['hex'];}else{$hex="";}
+                    if(isset($color['colorChips'])){$colorChips=json_encode($color['colorChips'],true);}else{$colorChips="";}
+
+                        $Color['requestqueue_id']=$id;
+                        $Color['style_id']=$RequestStyleEngineTransmissionColor->style_id;
+                        $Color['color_id']=$color['id'];
+                        $Color['category']=$category;
+                        $Color['name']=$cname;
+                        $Color['manufactureOptionName']=$manufactureOptionName;
+                        $Color['hex']=$hex;
+                        $Color['rgb']=$colorChips;
+                        Color::create($Color);
+                    
+                }
         }
 
+        $Engine=Engine::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->get();
+
+        $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
+        $countnum=$RequestStyleEngineTransmissionColor->count;
+        return view('front.client.client_add_engine',compact('newrequest_id','Engine','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Engine'));
+    }
+    public function AddTransmission($id=null){
+        $id=base64_decode($id);
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("id",$id)->first();
+        $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
+        $Transmission=Transmission::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->get();
+
+        $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
+        $countnum=$RequestStyleEngineTransmissionColor->count;
+        return view('front.client.client_add_transmission',compact('newrequest_id','Transmission','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Transmission'));
+    }
+    public function AddColorExterior($id=null){
+        $id=base64_decode($id);
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("id",$id)->first();
+        $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
+        $Color=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->where('category','Exterior')->get();
+
+        $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
+        $countnum=$RequestStyleEngineTransmissionColor->count;
+        return view('front.client.client_add_exterior_color',compact('newrequest_id','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
+    }
+    public function AddColorInterior($id=null){
+        $id=base64_decode($id);
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("id",$id)->first();
+        $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
+        $Color=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->where('category','Interior')->get();
+
+        $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
+        $countnum=$RequestStyleEngineTransmissionColor->count;
+        return view('front.client.client_add_interior_color',compact('newrequest_id','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
     }
 
 }

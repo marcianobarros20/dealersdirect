@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Model\Make;          /* Model name*/
-use App\Model\Carmodel;          /* Model name*/
-use App\Model\Caryear;          /* Model name*/
-use App\Model\RequestQueue;		/* Model name*/
-use App\Model\DealerMakeMap;          /* Model name*/
-use App\Model\RequestDealerLog;          /* Model name*/
+use App\Model\Make;                                         /* Model name*/
+use App\Model\Carmodel;                                     /* Model name*/
+use App\Model\Caryear;                                      /* Model name*/
+use App\Model\RequestQueue;		                            /* Model name*/
+use App\Model\DealerMakeMap;                                /* Model name*/
+use App\Model\RequestDealerLog;                             /* Model name*/
+use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -124,5 +125,57 @@ class AjaxController extends Controller
       DealerMakeMap::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
       RequestDealerLog::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
       echo "Deleted";
+    }
+    public function AddStyleToRequestqueue(){
+        //print_r(Request::input());
+        $requestid=Request::input('requestid');
+        $count_by_request=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->count();
+        $RequestStyleEngineTransmissionColor['requestqueue_id']=Request::input('requestid');
+        $RequestStyleEngineTransmissionColor['style_id']=Request::input('styleid');
+        $RequestStyleEngineTransmissionColor['count']=$count_by_request+1;
+        $RequestStyleEngineTransmissionColor_row=RequestStyleEngineTransmissionColor::create($RequestStyleEngineTransmissionColor);
+        return $lastinsertedId = $RequestStyleEngineTransmissionColor_row->id;
+        exit;
+    }
+
+    public function AddEngineToRequestqueue(){
+        
+        $requestid=Request::input('requestid');
+        $engineid=Request::input('engineid');
+        $count=Request::input('count');
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->where('count',$count)->first();
+        $RequestStyleEngineTransmissionColor->engine_id = $engineid;
+        $RequestStyleEngineTransmissionColor->save();
+        return $RequestStyleEngineTransmissionColor->id;
+    }
+    public function AddTransmissionToRequestqueue(){
+        $requestid=Request::input('requestid');
+        $transmissionid=Request::input('transmissionid');
+        $count=Request::input('count');
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->where('count',$count)->first();
+        $RequestStyleEngineTransmissionColor->transmission_id = $transmissionid;
+        $RequestStyleEngineTransmissionColor->save();
+        return $RequestStyleEngineTransmissionColor->id;
+
+    }
+    public function AddExteriorColorToRequestqueue(){
+        $requestid=Request::input('requestid');
+        $colorid=Request::input('colorid');
+        $count=Request::input('count');
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->where('count',$count)->first();
+        $RequestStyleEngineTransmissionColor->exterior_color_id = $colorid;
+        $RequestStyleEngineTransmissionColor->save();
+        return $RequestStyleEngineTransmissionColor->id;
+
+    }
+    public function AddInteriorColorToRequestqueue(){
+        $requestid=Request::input('requestid');
+        $colorid=Request::input('colorid');
+        $count=Request::input('count');
+        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->where('count',$count)->first();
+        $RequestStyleEngineTransmissionColor->interior_color_id = $colorid;
+        $RequestStyleEngineTransmissionColor->save();
+        return $RequestStyleEngineTransmissionColor->requestqueue_id;
+
     }
 }
