@@ -81,7 +81,7 @@ $(document).ready(function(){
     
 
     $.ajax({
-            url: "<?php echo url('/');?>/ajax/add_style_to_requestqueue",
+            url: "<?php echo url('/');?>/ajax/addstyletorequestqueue",
             data: {requestid:requestid,styleid:styleid,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
@@ -103,7 +103,7 @@ $(document).ready(function(){
     
 
     $.ajax({
-            url: "<?php echo url('/');?>/ajax/add_engine_to_requestqueue",
+            url: "<?php echo url('/');?>/ajax/addenginetorequestqueue",
             data: {requestid:requestid,engineid:engineid,count:count,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
@@ -124,7 +124,7 @@ $(document).ready(function(){
     
 
     $.ajax({
-            url: "<?php echo url('/');?>/ajax/add_transmission_to_requestqueue",
+            url: "<?php echo url('/');?>/ajax/addtranstorequestqueue",
             data: {requestid:requestid,transmissionid:transmissionid,count:count,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
@@ -145,7 +145,7 @@ $(document).ready(function(){
     
 
     $.ajax({
-            url: "<?php echo url('/');?>/ajax/add_exterior_color_to_requestqueue",
+            url: "<?php echo url('/');?>/ajax/addexcolortorequestqueue",
             data: {requestid:requestid,colorid:colorid,count:count,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
@@ -166,7 +166,7 @@ $(document).ready(function(){
     
 
     $.ajax({
-            url: "<?php echo url('/');?>/ajax/add_interior_color_to_requestqueue",
+            url: "<?php echo url('/');?>/ajax/addincolortorequestqueue",
             data: {requestid:requestid,colorid:colorid,count:count,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {

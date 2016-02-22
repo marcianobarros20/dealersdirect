@@ -59,11 +59,11 @@ Route:: get('/api-edmunds-style-generator','Admin\ApiController@apistylegenerato
 Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
 Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
 Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
-Route::resource('ajax/add_style_to_requestqueue', 'Front\AjaxController@AddStyleToRequestqueue');
-Route::resource('ajax/add_engine_to_requestqueue', 'Front\AjaxController@AddEngineToRequestqueue');
-Route::resource('/ajax/add_transmission_to_requestqueue', 'Front\AjaxController@AddTransmissionToRequestqueue');
-Route::resource('/ajax/add_exterior_color_to_requestqueue', 'Front\AjaxController@AddExteriorColorToRequestqueue');
-Route::resource('/ajax/add_interior_color_to_requestqueue', 'Front\AjaxController@AddInteriorColorToRequestqueue');
+Route::resource('ajax/addstyletorequestqueue', 'Front\AjaxController@AddStyleToRequestqueue');
+Route::resource('ajax/addenginetorequestqueue', 'Front\AjaxController@AddEngineToRequestqueue');
+Route::resource('/ajax/addtranstorequestqueue', 'Front\AjaxController@AddTransmissionToRequestqueue');
+Route::resource('/ajax/addexcolortorequestqueue', 'Front\AjaxController@AddExteriorColorToRequestqueue');
+Route::resource('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorColorToRequestqueue');
 
 /*
 |--------------------------------------------------------------------------
