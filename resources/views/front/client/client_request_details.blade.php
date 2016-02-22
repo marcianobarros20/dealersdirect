@@ -75,7 +75,10 @@
                             <div class="h-tab">
                                 <ul class="resp-tabs-list clearfix">
                                     <li>DETAILS</li>
-                                    <li>OTHER INFO</li>
+                                    <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
+                                    <li>OPTIONS {!! $key+1 !!}</li>
+                                    <?php } ?>
+                                    
                                     
                                 </ul>
 
@@ -112,27 +115,41 @@
                                         </ul>
                                     </div>
                                     </div>
-
+                                    <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
+                                    
                                     <div>
                                        <div>
                                         <ul class="tab-list">
-                                            <li>User Name:
-                                                <span> <b></b> 
-                                                </span>
+                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
                                             </li>
-                                            <li>User Email:
-                                                <span> <b></b> 
-                                                </span>
+                                            <li><b>Body :</b> {!!  $value->styles->body !!}
                                             </li>
-                                            <li>User Phone:
-                                                <span> <b></b> 
-                                                </span>
+                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
                                             </li>
+                                            <li><b>Compression Ratio :</b> {!!  $value->engines['compressionRatio'] !!}</li>
+                                            <li><b>Cylinder :</b> {!!  $value->engines['cylinder'] !!}</li>
+                                            <li><b>Size :</b> {!!  $value->engines['size'] !!}</li>
+                                            <li><b>Displacement :</b> {!!  $value->engines['displacement'] !!}</li>
+                                            <li><b>Configuration :</b> {!!  $value->engines['configuration'] !!}</li>
+                                            <li><b>Fuel Type :</b> {!!  $value->engines['fuelType'] !!}</li>
+                                            <li><b>Horsepower :</b> {!!  $value->engines['horsepower'] !!}</li>
+                                            <li><b>Torque :</b> {!!  $value->engines['torque'] !!}</li>
+                                            <li><b>Total Valves :</b> {!!  $value->engines['totalValves'] !!}</li>
+                                            <li><b>Type :</b> {!!  $value->engines['type'] !!}</li>
+                                            <li><b>Code :</b> {!!  $value->engines['code'] !!}</li>
+                                            <li><b>Compressor Type :</b> {!!  $value->engines['compressorType'] !!}</li>
+                                            <?php if(!empty($value->engines['rpm'])){foreach (json_decode($value->engines['rpm'],true) as $key => $rpm) { ?>
+                                           <li><b>RPM ({!! $key !!}):</b> {!!  $rpm !!}</li>
+                                            <?php }} ?>
+                                            <?php if(!empty($value->engines['valve'])){foreach (json_decode($value->engines['valve'],true) as $keyv => $valve) { ?>
+                                            <li><b>Valve ({!! $keyv !!}):</b> {!!  $valve !!}</li>
+                                            <?php }} ?>
                                             
                                         </ul>
                                     </div>
                                     </div>
 
+                                    <?php } ?>
                                     
                                 </div>
                             </div>

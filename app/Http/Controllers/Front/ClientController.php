@@ -193,8 +193,10 @@ class ClientController extends BaseController
             $requestqueuex['total']=$RequestQueue->total_amount;
             $requestqueuex['monthly']=$RequestQueue->monthly_amount;
             $requestqueuex['cat']=$RequestQueue->created_at;
-            
-            return view('front.client.client_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
+            // echo "<pre>";
+            // print_r($RequestStyleEngineTransmissionColor);
+            return view('front.client.client_request_details',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";
@@ -258,7 +260,7 @@ class ClientController extends BaseController
         $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
         $count=Engine::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($count==0){
-                echo $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/engines?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/engines?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -335,7 +337,7 @@ class ClientController extends BaseController
         }
         $countcolor=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($countcolor==0){
-                echo $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/colors?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/colors?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);

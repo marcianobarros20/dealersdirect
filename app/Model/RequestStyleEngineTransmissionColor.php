@@ -14,7 +14,23 @@ class RequestStyleEngineTransmissionColor extends Model
         'style_id',
         'engine_id',
         'transmission_id',
-        'color_id',
+        'exterior_color_id',
+        'interior_color_id',
         'count'
         ];
+    public function styles() {
+        return $this->hasOne('App\Model\Style', 'style_id', 'style_id');
+    }
+    public function engines() {
+        return $this->hasOne('App\Model\Engine', 'engine_id', 'engine_id');
+    }
+    public function transmission() {
+        return $this->hasOne('App\Model\Transmission', 'transmission_id', 'transmission_id');
+    }
+    public function excolor() {
+        return $this->hasOne('App\Model\Color', 'color_id', 'exterior_color_id');
+    }
+    public function incolor() {
+        return $this->hasOne('App\Model\Color', 'color_id', 'interior_color_id');
+    }
 }
