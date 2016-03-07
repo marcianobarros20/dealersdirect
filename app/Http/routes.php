@@ -100,11 +100,11 @@ Route::group(
 |--------------------------------------------------------------------------
 |
 */
-Route::post('/ajax/get_model', 'Front\AjaxController@getmodel');
-Route::post('/ajax/get_year', 'Front\AjaxController@getyear');
-Route::post('ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
-Route::resource('ajax/addstyletorequestqueue', 'Front\AjaxController@AddStyleToRequestqueue');
-Route::resource('ajax/addenginetorequestqueue', 'Front\AjaxController@AddEngineToRequestqueue');
+Route::resource('/ajax/get_model', 'Front\AjaxController@getmodel');
+Route::resource('/ajax/get_year', 'Front\AjaxController@getyear');
+Route::resource('/ajax/requirment_queue', 'Front\AjaxController@requirmentqueue');
+Route::resource('/ajax/addstyletorequestqueue', 'Front\AjaxController@AddStyleToRequestqueue');
+Route::resource('/ajax/addenginetorequestqueue', 'Front\AjaxController@AddEngineToRequestqueue');
 Route::resource('/ajax/addtranstorequestqueue', 'Front\AjaxController@AddTransmissionToRequestqueue');
 Route::resource('/ajax/addexcolortorequestqueue', 'Front\AjaxController@AddExteriorColorToRequestqueue');
 Route::resource('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorColorToRequestqueue');
