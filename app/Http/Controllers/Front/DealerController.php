@@ -7,6 +7,7 @@ use App\Model\DealerMakeMap;          /* Model name*/
 use App\Model\RequestDealerLog;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\RequestQueue;          /* Model name*/
+use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -175,7 +176,7 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
-            $id=base64_decode($id);
+            echo $id=base64_decode($id);
             $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
             $requestqueuex['id']=$RequestDealerLog->id;
             $requestqueuex['status']=$RequestDealerLog->status;
@@ -199,7 +200,8 @@ class DealerController extends BaseController
                     $requestqueuex['cphone']=self::maskcreate($ph);
                 }
             //print_r($requestqueuex);
-            return view('front.dealer.dealer_request_details',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
+            return view('front.dealer.dealer_request_details',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function DealerMakeList(){
         $obj = new helpers();
