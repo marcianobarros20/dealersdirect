@@ -1,11 +1,1 @@
 
-node_modules/
-
-
-# Laravel 5 & Lumen specific
-storage/
-.env.*.php
-.env.php
-.env
-.env.example
-config/database.php
