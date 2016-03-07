@@ -21,15 +21,12 @@
                         <!-- car title -->
                         <div class="single-car-title">
                             <h3><?php echo $requestqueuex['make'];?></h3>
+                            <h4>Post A Bid</h4>
                         </div>
                         <!-- .car title -->
 
                     </div>
-                    <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
-                        <div class="single-car-price">
-                            <a class="button light medium" href="<?php echo url('/');?>/dealers/post-bid/<?php echo base64_encode($requestqueuex['id']);?>"><b>POST A BID</b> </a>
-                        </div>
-                    </div>
+                    
 
                     
 
@@ -43,37 +40,41 @@
                     <!-- car single media -->
                     <div class="eight columns alpha">
 
-                        <div class="comments">
-                        <?php foreach ($BidQueue as $key => $Bidqueue) { ?>
-                            <div class="comment clearfix">
+                        <div style="border-radius:10px;background:#363f48; display:block;  width:100%;">
+                                    <div style=" padding:20px; ">
 
-                                <div class="comment-wrap">
+                                        <div class="dark-form">
 
-                                    
+                                            {{ Form::open(array('url' => 'postbid')) }}
+                                                <fieldset>
+                                                    <div class="input">
+                                                    {{ Form::hidden('id',$requestqueuex['request_id'],'') }}
+                                                    {{ Form::hidden('request_id',$requestqueuex['id'],'') }}
+                                                        {{ Form::text('total_amount','',['placeholder' => 'Total Amount','required'=>'required']) }}
+                                                    </div>
 
-                                    <!-- content -->
-                                    <div class="twelve columns">
+                                                    <div class="input">
+                                                        {{ Form::text('monthly_amount','',['placeholder' => 'Monthly Amount','required'=>'required']) }}
 
-                                        <div class="comment-meta">
-                                            <p>
-                                                <a href="#">
-                                                    <span class="icon-reply"></span>
-                                                </a><b>{!! $Bidqueue->dealers->first_name!!} {!! $Bidqueue->dealers->last_name!!}</b> 2 days ago</p>
+                                                    </div>
+                                                   
+                                                    <div class="textarea">
+                                                        {{ Form::textarea('details','',['placeholder' => 'Details','required'=>'required']) }}
+
+                                                    </div>
+                                                    
+                                                
+                                                    <div class="input-submit">
+                                                        {{ Form::submit('POST BID',array('class' => '')) }}
+                                                    </div>
+                                                    
+
+
+                                                </fieldset>
+                                            {!! Form::close() !!}
                                         </div>
-
-                                        <div class="comment-content">
-                                            <p><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</p>
-                                            <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
-                                            <p><strong>Details:</strong>{!! substr( $Bidqueue->details, 0, strrpos( substr( $Bidqueue->details, 0, 55), ' ' ) ) !!} ....</p>
-                                        </div>
-
                                     </div>
-                                    <!-- .content -->
                                 </div>
-
-                            </div>
-                            <?php } ?>
-                        </div>
 
                     </div>
                     <!-- .car single media -->

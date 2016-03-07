@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-use App\Model\Make;          /* Model name*/
-use App\Model\Dealer;          /* Model name*/
-use App\Model\DealerMakeMap;          /* Model name*/
-use App\Model\RequestDealerLog;          /* Model name*/
-use App\Model\Carmodel;          /* Model name*/
-use App\Model\RequestQueue;          /* Model name*/
+use App\Model\Make;                                         /* Model name*/
+use App\Model\Dealer;                                       /* Model name*/
+use App\Model\DealerMakeMap;                                /* Model name*/
+use App\Model\RequestDealerLog;                             /* Model name*/
+use App\Model\Carmodel;                                     /* Model name*/
+use App\Model\RequestQueue;                                 /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
+use App\Model\BidQueue;                                     /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -176,9 +177,10 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
-            echo $id=base64_decode($id);
+            $id=base64_decode($id);
             $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
             $requestqueuex['id']=$RequestDealerLog->id;
+            $requestqueuex['request_id']=$RequestDealerLog->request_id;
             $requestqueuex['status']=$RequestDealerLog->status;
             $requestqueuex['make']=$RequestDealerLog->makes->name;
             $mid=$RequestDealerLog->requestqueue->carmodel_id;
@@ -199,9 +201,10 @@ class DealerController extends BaseController
                     $requestqueuex['cemail']=self::maskcreate($em);
                     $requestqueuex['cphone']=self::maskcreate($ph);
                 }
-            //print_r($requestqueuex);
+            $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->with('dealers')->get();
+            //print_r($BidQueue);
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
-            return view('front.dealer.dealer_request_details',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            return view('front.dealer.dealer_request_details',compact('BidQueue','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function DealerMakeList(){
         $obj = new helpers();
@@ -293,5 +296,58 @@ class DealerController extends BaseController
         Session::flash('message', 'Password Successfully Changed'); 
        
         return redirect('/dealer/profile');
+    }
+    public function postBid($id=null){
+        $obj = new helpers();
+            if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            $id=base64_decode($id);
+            $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
+            $requestqueuex['id']=$RequestDealerLog->id;
+            $requestqueuex['request_id']=$RequestDealerLog->request_id;
+            $requestqueuex['status']=$RequestDealerLog->status;
+            $requestqueuex['make']=$RequestDealerLog->makes->name;
+            $mid=$RequestDealerLog->requestqueue->carmodel_id;
+            $Carmodel=Carmodel::where("id",$mid)->first();
+            $requestqueuex['model']=$Carmodel->name;
+            $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
+            $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
+            $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
+            $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
+            $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
+                if($RequestDealerLog->status==1){
+                    $fn=$RequestDealerLog->requestqueue->fname;
+                    $ln=$RequestDealerLog->requestqueue->lname;
+                    $em=$RequestDealerLog->requestqueue->email;
+                    $ph=$RequestDealerLog->requestqueue->phone;
+                    $requestqueuex['cfname']=self::maskcreate($fn);
+                    $requestqueuex['lem']=self::maskcreate($ln);
+                    $requestqueuex['cemail']=self::maskcreate($em);
+                    $requestqueuex['cphone']=self::maskcreate($ph);
+                }
+            //print_r($requestqueuex);
+            $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
+            return view('front.dealer.post_bid',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    }
+    public function SaveBid(){
+        $obj = new helpers();
+            if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+        
+        $dealer_userid=Session::get('dealer_userid');
+        $id=base64_encode(Request::input('request_id'));
+
+        $BidQueue['requestqueue_id']=Request::input('id');
+        $BidQueue['dealer_id']=$dealer_userid;
+        $BidQueue['bid_id']=time()."BID";
+        $BidQueue['total_amount']=Request::input('total_amount');
+        $BidQueue['monthly_amount']=Request::input('monthly_amount');
+        $BidQueue['details']=Request::input('details');
+        BidQueue::create($BidQueue);
+        return redirect('dealers/request_detail/'.$id);
     }
 }

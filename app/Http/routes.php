@@ -131,7 +131,8 @@ Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake'
 Route:: get('/dealer/profile', 'Front\DealerController@profile');
 Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
 Route:: post('/dealereditpassword', 'Front\DealerController@ProfileEditPassword');
-
+Route:: get('/dealers/post-bid/{id}', 'Front\DealerController@postBid');
+Route:: post('/postbid/', 'Front\DealerController@SaveBid');
 
 /*
 |--------------------------------------------------------------------------
