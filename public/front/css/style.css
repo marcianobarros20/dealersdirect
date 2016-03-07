@@ -1,0 +1,60 @@
+/*
+Theme Name: Carell
+Description: Premium Multifunctional HTML Template
+Author: Predrag Stojanovic - @pebas
+Author URI: http://themeforest.net/user/pebas/
+Version: 1.0
+*/
+
+/* ============================================================================== 
+=================================================================================
+CARELL CSS */
+
+/**** Google Font ****/
+ @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic);
+
+/* Layout */
+ @import url('layout.css');
+
+/* Rev Slider */
+ @import url('settings.css');
+
+
+ /*=============Sandip ===========*/
+.s-textinput {
+	display: block;
+}
+.s-textinput > .formcon {
+	background-color: #46505a;
+    border: 1px solid #283038;
+    border-radius: 2px;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Droid Sans",sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 10px 0;
+    outline: medium none;
+    padding: 7px 8px;
+    width: 100%;
+}
+.s-textinput > .formcon::-webkit-input-placeholder {
+    color:    #fff;
+}
+.s-textinput > .formcon:-moz-placeholder { 
+   color:    #fff;
+   opacity:  1;
+}
+.s-textinput > .formcon::-moz-placeholder { 
+   color:    #fff;
+   opacity:  1;
+}
+.s-textinput > .formcon:-ms-input-placeholder { 
+   color:    #fff;
+}
+.s-textinput > .formcon:placeholder-shown { 
+  color:    #fff;
+}
+
+ /*==================Sandip=========*/
