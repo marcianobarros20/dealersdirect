@@ -15,6 +15,7 @@ use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\Engine;                                       /* Model name*/
 use App\Model\Transmission;                                 /* Model name*/
 use App\Model\Color;                                        /* Model name*/
+use App\Model\BidQueue;                                     /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -196,7 +197,8 @@ class ClientController extends BaseController
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
             // echo "<pre>";
             // print_r($RequestStyleEngineTransmissionColor);
-            return view('front.client.client_request_details',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            return view('front.client.client_request_details',compact('BidQueue','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";

@@ -115,6 +115,7 @@ Route::post('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorC
 |--------------------------------------------------------------------------
 |
 */
+Route:: get('dealers/calculate_bid_curve/{id}', 'Front\DealerController@CalculateBidCurve');
 Route:: get('/dealers', 'Front\DealerController@index');
 Route:: get('/dealer-signin', 'Front\DealerController@signin');
 Route:: post('/dealer-signin', 'Front\DealerController@signin');

@@ -43,25 +43,36 @@
                     <!-- car single media -->
                     <div class="eight columns alpha">
 
-                        <div class="bannercontainer">
-                            <div class="banner-single">
+                        <div class="comments">
+                            <?php foreach ($BidQueue as $key => $Bidqueue) { ?>
+                            <div class="comment clearfix">
 
-                                <ul>
+                                <div class="comment-wrap">
 
-                                    <li data-transition="fade" data-slotamount="1">
+                                    
 
-                                        <img src="<?php echo url('/');?>/public/front/images/slide1.png" alt="" title="" />
+                                    <!-- content -->
+                                    <div class="twelve columns">
 
-                                    </li>
+                                        <div class="comment-meta">
+                                            <p>
+                                                <a href="#">
+                                                    <span class="icon-reply"></span>
+                                                </a><b>{!! $Bidqueue->dealers->first_name!!} {!! $Bidqueue->dealers->last_name!!}</b> 2 days ago</p>
+                                        </div>
 
-                                    <li data-transition="fade" data-slotamount="1">
+                                        <div class="comment-content">
+                                            <p><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</p>
+                                            <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
+                                            <p><strong>Details:</strong>{!! substr( $Bidqueue->details, 0, strrpos( substr( $Bidqueue->details, 0, 55), ' ' ) ) !!} ....</p>
+                                        </div>
 
-                                        <img src="<?php echo url('/');?>/public/front/images/slide2.png" alt="" title="" />
+                                    </div>
+                                    <!-- .content -->
+                                </div>
 
-                                    </li>
-
-                                </ul>
                             </div>
+                                <?php } ?>
                         </div>
 
                     </div>

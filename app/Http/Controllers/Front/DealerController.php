@@ -201,7 +201,7 @@ class DealerController extends BaseController
                     $requestqueuex['cemail']=self::maskcreate($em);
                     $requestqueuex['cphone']=self::maskcreate($ph);
                 }
-            $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->with('dealers')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             //print_r($BidQueue);
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
             return view('front.dealer.dealer_request_details',compact('BidQueue','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
@@ -348,6 +348,38 @@ class DealerController extends BaseController
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
         $BidQueue['details']=Request::input('details');
         BidQueue::create($BidQueue);
+        $curve=self::CalculateBidCurve(Request::input('id'));
         return redirect('dealers/request_detail/'.$id);
+    }
+    public function CalculateBidCurve($id=null){
+            
+            $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->get();
+            
+            $AverageTp=0;
+            $AverageMp=0;
+            $tbid=0;
+            $curveArray=array();
+            foreach ($BidQueuex as $key => $value) {
+                $AverageTp=$AverageTp+$value->total_amount;
+                $AverageMp=$AverageMp+$value->monthly_amount;
+                $tbid=$tbid+1;
+            }
+            $AverageTp=$AverageTp/$tbid;
+            $AverageMp=$AverageMp/$tbid;
+            foreach ($BidQueuex as $key => $bid) {
+                
+               // $curveArray[$key]['id']=$bid->id;
+               // $curveArray[$key]['tp_curve_poin']=(($bid->total_amount-$AverageTp)/$AverageTp)*100;
+               // $curveArray[$key]['mp_curve_poin']=(($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
+               // $curveArray[$key]['acc_curve_poin']=((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
+                $BidQueue = BidQueue::find($bid->id);
+                $BidQueue->tp_curve_poin = (($bid->total_amount-$AverageTp)/$AverageTp)*100;
+                $BidQueue->mp_curve_poin = (($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
+                $BidQueue->acc_curve_poin = ((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
+                $BidQueue->save();
+
+            }
+            return 1;
+
     }
 }

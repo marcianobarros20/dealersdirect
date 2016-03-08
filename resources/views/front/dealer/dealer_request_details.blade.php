@@ -44,7 +44,7 @@
                     <div class="eight columns alpha">
 
                         <div class="comments">
-                        <?php foreach ($BidQueue as $key => $Bidqueue) { ?>
+                            <?php foreach ($BidQueue as $key => $Bidqueue) { ?>
                             <div class="comment clearfix">
 
                                 <div class="comment-wrap">
@@ -72,7 +72,7 @@
                                 </div>
 
                             </div>
-                            <?php } ?>
+                                <?php } ?>
                         </div>
 
                     </div>
