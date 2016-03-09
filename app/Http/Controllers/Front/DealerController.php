@@ -353,7 +353,7 @@ class DealerController extends BaseController
     }
     public function CalculateBidCurve($id=null){
             
-            $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->get();
+            $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->where('status','!=','2')->get();
             
             $AverageTp=0;
             $AverageMp=0;

@@ -179,7 +179,72 @@ $(document).ready(function(){
     return false;
 
   });
+  $('.rejecttrigger').click(function(){
+          var requestid=$(this).data("request");
+          var rejectdetails=$("#reject"+requestid).val();
+          console.log(requestid);
+          console.log(rejectdetails);
+          $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidreject",
+                  data: {requestid:requestid,rejectdetails:rejectdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+  });
 
+
+      var sortby=$("#sortby").val();
+      var pagestart=$("#pagestart").val();
+      var pageend=$("#pageend").val();
+      var requestid=$("#requestid").val();
+      if(typeof sortby!= "undefined"){ 
+
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getupdatedbid",
+                      data: {requestid:requestid,sortby:sortby,pagestart:pagestart,pageend:pageend,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#bidlist").html(data);
+                        }
+                        
+                      
+                      }
+              });
+      }
+  $('#shortoptions').change(function(){
+    var shortoptions=$("#shortoptions").val();
+    //alert(shortoptions);
+    $("#sortby").val(shortoptions);
+    $("#pagestart").val(0);
+    $("#pageend").val(10);
+      var sortby=$("#sortby").val();
+      var pagestart=$("#pagestart").val();
+      var pageend=$("#pageend").val();
+      var requestid=$("#requestid").val();
+      if(typeof sortby!= "undefined"){ 
+
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getupdatedbid",
+                      data: {requestid:requestid,sortby:sortby,pagestart:pagestart,pageend:pageend,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#bidlist").html(data);
+                        }
+                        
+                      
+                      }
+              });
+      }
+  });
 });
 
 </script>

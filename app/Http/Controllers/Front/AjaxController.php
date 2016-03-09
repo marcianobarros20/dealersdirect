@@ -9,6 +9,7 @@ use App\Model\RequestQueue;		                            /* Model name*/
 use App\Model\DealerMakeMap;                                /* Model name*/
 use App\Model\RequestDealerLog;                             /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
+use App\Model\BidQueue;                                     /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -115,10 +116,6 @@ class AjaxController extends Controller
 
             return $requestqueuex;
     }
-
-
-
-
     public function deletedealermake(){
       $makeid=Request::input('makeid');
       $dealer_userid=Session::get('dealer_userid');
@@ -137,7 +134,6 @@ class AjaxController extends Controller
         return $lastinsertedId = $RequestStyleEngineTransmissionColor_row->id;
         exit;
     }
-
     public function AddEngineToRequestqueue(){
         
         $requestid=Request::input('requestid');
@@ -177,5 +173,57 @@ class AjaxController extends Controller
         $RequestStyleEngineTransmissionColor->save();
         return $RequestStyleEngineTransmissionColor->requestqueue_id;
 
+    }
+    public function RejectDealerBid(){
+        print_r(Request::input());
+        $BidQueue=BidQueue::find(Request::input('requestid'));
+        $BidQueue->status = 2;
+        $BidQueue->details_of_actions = Request::input('rejectdetails');
+        $BidQueue->save();
+        $id=$BidQueue->requestqueue_id;
+
+        $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->where('status','!=','2')->get();
+            
+            $AverageTp=0;
+            $AverageMp=0;
+            $tbid=0;
+            $curveArray=array();
+            foreach ($BidQueuex as $key => $value) {
+                $AverageTp=$AverageTp+$value->total_amount;
+                $AverageMp=$AverageMp+$value->monthly_amount;
+                $tbid=$tbid+1;
+            }
+            $AverageTp=$AverageTp/$tbid;
+            $AverageMp=$AverageMp/$tbid;
+            foreach ($BidQueuex as $key => $bid) {
+                
+               
+                $BidQueuenew = BidQueue::find($bid->id);
+                $BidQueuenew->tp_curve_poin = (($bid->total_amount-$AverageTp)/$AverageTp)*100;
+                $BidQueuenew->mp_curve_poin = (($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
+                $BidQueuenew->acc_curve_poin = ((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
+                $BidQueuenew->save();
+
+            }
+            return 1;
+
+
+    }
+    public function GetUpdatedBid(){
+        
+        $id=base64_decode(Request::input('requestid'));
+        $sortby=Request::input('sortby');
+        $pageend=Request::input('pageend');
+        $pagestart=Request::input('pagestart');
+        if($sortby==1){
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+        }
+        if($sortby==2){
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
+        }
+        if($sortby==3){
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
+        }
+        return view('front.ajax.get_update_bid',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
 }

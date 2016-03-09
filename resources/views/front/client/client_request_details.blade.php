@@ -1,7 +1,10 @@
 @extends('front/layout/client_template')
 @section('content')
     <!-- ================================================== CAR SINGLE ================================================== -->
-
+<input type="hidden" id="sortby" value="1">
+<input type="hidden" id="pagestart" value="0">
+<input type="hidden" id="pageend" value="2">
+<input type="hidden" id="requestid" value="<?php echo base64_encode($requestqueuex['id']);?>">
     <section class="space-top-and-bottom medium">
         <div class="container">
             <div class="row">
@@ -9,7 +12,7 @@
                 <!-- car single header -->
                 <div class="car-single-header clearfix">
 
-                    <div class="eight columns alpha" data-appear-animation="slideInLeft">
+                    <div class="six columns alpha" data-appear-animation="slideInLeft">
 
                         <!-- date added -->
                         <div class="single-car-date-added">
@@ -25,6 +28,19 @@
                         <!-- .car title -->
 
                     </div>
+                    <!-- sort by -->
+                    <div class="two columns" data-appear-animation "slideInRight">
+                        <div class="light-select-input sort-by">
+                            <select id="shortoptions">
+                                <option value="" >Sort By</option>
+                                <option value="1" selected="selected">Best Pick</option>
+                                <option value="2">Best Monthly</option>
+                                <option value="3">Best Onetime</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <!-- .sort by -->
                     <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
                         <div class="single-car-price">
                             <a class="button light medium" href="<?php echo url('/');?>/client/add-style/<?php echo base64_encode($requestqueuex['id']);?>"><b>Add MORE DETAILS</b> </a>
@@ -43,36 +59,8 @@
                     <!-- car single media -->
                     <div class="eight columns alpha">
 
-                        <div class="comments">
-                            <?php foreach ($BidQueue as $key => $Bidqueue) { ?>
-                            <div class="comment clearfix">
-
-                                <div class="comment-wrap">
-
-                                    
-
-                                    <!-- content -->
-                                    <div class="twelve columns">
-
-                                        <div class="comment-meta">
-                                            <p>
-                                                <a href="#">
-                                                    <span class="icon-reply"></span>
-                                                </a><b>{!! $Bidqueue->dealers->first_name!!} {!! $Bidqueue->dealers->last_name!!}</b> 2 days ago</p>
-                                        </div>
-
-                                        <div class="comment-content">
-                                            <p><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</p>
-                                            <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
-                                            <p><strong>Details:</strong>{!! substr( $Bidqueue->details, 0, strrpos( substr( $Bidqueue->details, 0, 55), ' ' ) ) !!} ....</p>
-                                        </div>
-
-                                    </div>
-                                    <!-- .content -->
-                                </div>
-
-                            </div>
-                                <?php } ?>
+                        <div class="comments" id="bidlist">
+                            
                         </div>
 
                     </div>
