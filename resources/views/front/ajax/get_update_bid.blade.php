@@ -33,7 +33,7 @@
                                                         <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
                                                         <p><strong>Details:</strong>{!! $Bidqueue->details !!}</p>
                                                 </div>
-                                                <?php if($Bidqueue->status==0 ){?>
+                                                <?php if($Bidqueue->status==0 && $RequestQueue_row->status==0){?>
                                                 <a data-effect="mfp-zoom-out" class="popup-modal button medium full light" href="#test-accept-popup{!! $Bidqueue->id !!}">
                                                 <span class="icon-checkmark"></span>Accept</a>
                                                 <div id="test-accept-popup{!! $Bidqueue->id !!}" class="white-popup mfp-hide" data-effect="mfp-zoom-out">
@@ -69,6 +69,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
 
+<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/cross.js"></script> 
 <script>
 
 $(document).ready(function(){

@@ -27,5 +27,8 @@ class RequestQueue extends Model
     public function models() {
         return $this->hasOne('App\Model\Carmodel', 'id', 'carmodel_id');
         }
+    public function clients() {
+        return $this->hasOne('App\Model\Client', 'id', 'client_id');
+        }
 }
 

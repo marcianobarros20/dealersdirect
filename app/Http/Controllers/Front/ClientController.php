@@ -197,7 +197,7 @@ class ClientController extends BaseController
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
             // echo "<pre>";
             // print_r($RequestStyleEngineTransmissionColor);
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             return view('front.client.client_request_details',compact('BidQueue','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){

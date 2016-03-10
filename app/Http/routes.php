@@ -135,8 +135,10 @@ Route:: get('/dealer/profile', 'Front\DealerController@profile');
 Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
 Route:: post('/dealereditpassword', 'Front\DealerController@ProfileEditPassword');
 Route:: get('/dealers/post-bid/{id}', 'Front\DealerController@postBid');
+Route:: get('/dealers/edit-bid/{id}', 'Front\DealerController@editBid');
 Route:: post('/postbid/', 'Front\DealerController@SaveBid');
-
+Route:: post('/dealers/edit-bid', 'Front\DealerController@SaveEditBid');
+Route:: get('/testemail', 'Front\AjaxController@SendAcceptancemail');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

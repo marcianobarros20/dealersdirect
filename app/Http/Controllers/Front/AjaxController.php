@@ -218,15 +218,16 @@ class AjaxController extends Controller
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
         if($sortby==1){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
         }
         if($sortby==2){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
         }
         if($sortby==3){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
         }
-        return view('front.ajax.get_update_bid',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+        $RequestQueue_row=RequestQueue::where('id',$id)->first();
+        return view('front.ajax.get_update_bid',compact('BidQueue','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function AcceptDealerBid(){
         $id=Request::input('requestid');
@@ -236,13 +237,49 @@ class AjaxController extends Controller
         $BidAcceptanceQueue['bid_id'] =$BidQueue->id;
         $BidAcceptanceQueue['request_id'] =$BidQueue->requestqueue_id;
         $BidAcceptanceQueue['details'] =Request::input('acceptdetails');
-        
+
+        $RequestQueue_row=RequestQueue::where('id',$BidQueue->requestqueue_id)->first();
+        $RequestQueue_row->status=1;
+        $RequestQueue_row->save();
         $BidAcceptanceQueue_row=BidAcceptanceQueue::create($BidAcceptanceQueue);
         $BidQueue=BidQueue::find($id);
         $BidQueue->status = 3;
-        
         $BidQueue->save();
+        //self::SendAcceptancemail($id,$BidQueue->requestqueue_id);
         return 1;
         
+    }
+    public function SendAcceptancemail(){
+
+
+            //$RequestQueue_row=RequestQueue::where('id',$request_id)->with('clients','makes','models')->first();
+            //$BidQueue_row=BidQueue::where('id',$bidid)->with('dealers')->first();
+
+
+            // $RequestDealerLog=RequestDealerLog::where('id', $maskval)->with('makes','dealers')->first();
+            
+            $requestqueuex['make']="test1";
+            
+            $requestqueuex['model']="test2";
+            $requestqueuex['year']="test3";
+            $requestqueuex['conditions']="test";
+            $requestqueuex['dealername']="test4";
+            $requestqueuex['dealeremail']="test5";
+
+
+
+            $user_name = "prodip211085@gmail.com";
+            $user_email = "prodip211085@gmail.com";
+            $admin_users_email="prodip211085@gmail.com";
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode(1);
+            
+            $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
+            function($message) use ($admin_users_email, $user_email,$user_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
+            });
+
+            return $requestqueuex;
     }
 }
