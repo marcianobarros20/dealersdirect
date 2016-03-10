@@ -14,7 +14,8 @@
                                                     <span class="icon-reply"></span>
                                                 </a>
                                                 <b>{!! $Bidqueue->dealers->first_name!!} {!! $Bidqueue->dealers->last_name!!}</b> 2 days ago
-                                                
+                                                <?php if($Bidqueue->status==3){ ?><span class="label success">Accepted</span><?php } ?>
+                                                <?php if($Bidqueue->status==2){ ?><span class="label error">Rejected</span><?php } ?>
                                             </p>
 
                                         </div>
@@ -32,6 +33,7 @@
                                                         <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
                                                         <p><strong>Details:</strong>{!! $Bidqueue->details !!}</p>
                                                 </div>
+                                                <?php if($Bidqueue->status==0 ){?>
                                                 <a data-effect="mfp-zoom-out" class="popup-modal button medium full light" href="#test-accept-popup{!! $Bidqueue->id !!}">
                                                 <span class="icon-checkmark"></span>Accept</a>
                                                 <div id="test-accept-popup{!! $Bidqueue->id !!}" class="white-popup mfp-hide" data-effect="mfp-zoom-out">
@@ -40,8 +42,8 @@
                                                         <p><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</p>
                                                         <p><strong>Total:</strong>{!! $Bidqueue->total_amount !!}</p>
                                                         <p><strong>Details:</strong>{!! $Bidqueue->details !!}</p>
-                                                        <p><div class="textarea"><textarea placeholder="Accept Bid Details"></textarea></div></p>
-                                                        <a href="#" class="button full light">Accept</a>
+                                                        <p><div class="textarea"><textarea  id="accept{!! $Bidqueue->id !!}" placeholder="Accept Bid Details"></textarea></div></p>
+                                                        <a href="#" data-request="{!! $Bidqueue->id !!}" class="button full light accepttrigger">Accept</a>
                                                 </div>
                                                 <a data-effect="mfp-zoom-out" class="popup-modal button medium full light" href="#test-reject-popup{!! $Bidqueue->id !!}">
                                                 <span class="icon-close"></span>Reject</a>
@@ -54,6 +56,7 @@
                                                         <p><div class="textarea"><textarea id="reject{!! $Bidqueue->id !!}" placeholder="Reject Bid Details"></textarea></div></p>
                                                         <a href="#" data-request="{!! $Bidqueue->id !!}" class="button full light rejecttrigger">Reject</a>
                                                 </div>
+                                                <?php } ?>
 
                                         </div>
 
@@ -65,17 +68,7 @@
                                 <?php } ?>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.dscountdown.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/chosen.jquery.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.themepunch.plugins.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.themepunch.revolution.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/easyResponsiveTabs.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.appear.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.magnific-popup.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.knob.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/retina-1.1.0.min.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/jquery.mapmarker.js"></script> 
-<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/custom.js"></script> 
+
 <script>
 
 $(document).ready(function(){
@@ -98,6 +91,26 @@ $(document).ready(function(){
                   }
           });
           return false;
+  });
+  $('.accepttrigger').click(function(){
+        var requestid=$(this).data("request");
+          var acceptdetails=$("#accept"+requestid).val();
+          console.log(requestid);
+          console.log(acceptdetails);
+          $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidaccept",
+                  data: {requestid:requestid,acceptdetails:acceptdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+
   });
 
 

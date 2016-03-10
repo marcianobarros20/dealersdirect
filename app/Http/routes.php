@@ -110,6 +110,7 @@ Route::post('/ajax/addexcolortorequestqueue', 'Front\AjaxController@AddExteriorC
 Route::post('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorColorToRequestqueue');
 Route::post('/ajax/bidreject', 'Front\AjaxController@RejectDealerBid');
 Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
+Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

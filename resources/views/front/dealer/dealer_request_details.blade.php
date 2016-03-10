@@ -59,6 +59,8 @@
                                                 <a href="#">
                                                     <span class="icon-reply"></span>
                                                 </a><b>{!! $Bidqueue->dealers->first_name!!} {!! $Bidqueue->dealers->last_name!!}</b> 2 days ago</p>
+                                                <p><?php if($Bidqueue->status==3){ ?><span class="label success">Accepted</span><?php } ?>
+                                                <?php if($Bidqueue->status==2){ ?><span class="label error">Rejected</span><?php } ?></p>
                                         </div>
 
                                         <div class="comment-content">

@@ -10,6 +10,7 @@ use App\Model\DealerMakeMap;                                /* Model name*/
 use App\Model\RequestDealerLog;                             /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
+use App\Model\BidAcceptanceQueue;                           /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -205,6 +206,7 @@ class AjaxController extends Controller
                 $BidQueuenew->save();
 
             }
+            
             return 1;
 
 
@@ -225,5 +227,22 @@ class AjaxController extends Controller
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
         }
         return view('front.ajax.get_update_bid',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function AcceptDealerBid(){
+        $id=Request::input('requestid');
+        $BidQueue=BidQueue::where('id',$id)->with('dealers','request_queues')->first();
+        $BidAcceptanceQueue['dealer_id'] =$BidQueue->dealer_id;
+        $BidAcceptanceQueue['client_id'] =$BidQueue->request_queues->client_id;
+        $BidAcceptanceQueue['bid_id'] =$BidQueue->id;
+        $BidAcceptanceQueue['request_id'] =$BidQueue->requestqueue_id;
+        $BidAcceptanceQueue['details'] =Request::input('acceptdetails');
+        
+        $BidAcceptanceQueue_row=BidAcceptanceQueue::create($BidAcceptanceQueue);
+        $BidQueue=BidQueue::find($id);
+        $BidQueue->status = 3;
+        
+        $BidQueue->save();
+        return 1;
+        
     }
 }

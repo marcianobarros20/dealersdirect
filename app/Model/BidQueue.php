@@ -13,4 +13,7 @@ class BidQueue extends Model
 	public function dealers() {
         return $this->hasOne('App\Model\Dealer', 'id', 'dealer_id');
         }
+    public function request_queues() {
+        return $this->hasOne('App\Model\RequestQueue', 'id', 'requestqueue_id');
+        }
 }
