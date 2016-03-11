@@ -195,8 +195,13 @@ class AjaxController extends Controller
                 $AverageMp=$AverageMp+$value->monthly_amount;
                 $tbid=$tbid+1;
             }
+            if($tbid==0){
+                $AverageTp=$AverageTp;
+                $AverageMp=$AverageMp
+            }else{
             $AverageTp=$AverageTp/$tbid;
             $AverageMp=$AverageMp/$tbid;
+            }
             foreach ($BidQueuex as $key => $bid) {
                 
                
