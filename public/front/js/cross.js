@@ -51,6 +51,23 @@ jQuery( document ).ready( function ( $ )
         {
             beforeOpen: function ( )
             {
+                
+                
+                var bid=this.st.el.attr("data-bid");
+                console.log(bid);
+
+                $.ajax({
+                      url: "../../ajax/bidhistory",
+                      data: {bid:bid},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $('.bidhistory').html(data);
+                        }
+                        
+                      
+                      }
+                });
                 this.st.mainClass = this.st.el.attr( 'data-effect' );
             }
         },
@@ -66,6 +83,7 @@ jQuery( document ).ready( function ( $ )
             beforeOpen: function ( )
             {
                 this.st.mainClass = this.st.el.attr( 'data-effect' );
+
             }
         },
     } );

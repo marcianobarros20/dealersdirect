@@ -111,6 +111,7 @@ Route::post('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorC
 Route::post('/ajax/bidreject', 'Front\AjaxController@RejectDealerBid');
 Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
 Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
+Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -138,7 +139,7 @@ Route:: get('/dealers/post-bid/{id}', 'Front\DealerController@postBid');
 Route:: get('/dealers/edit-bid/{id}', 'Front\DealerController@editBid');
 Route:: post('/postbid/', 'Front\DealerController@SaveBid');
 Route:: post('/dealers/edit-bid', 'Front\DealerController@SaveEditBid');
-Route:: get('/testemail', 'Front\AjaxController@SendAcceptancemail');
+Route:: get('/testemail/{id}', 'Front\AjaxController@SendAcceptancemail');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

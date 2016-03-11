@@ -72,6 +72,11 @@
                         </div>
 
                     </div>
+                    <div id="test-popup" class="white-popup mfp-hide " data-effect="mfp-zoom-out">
+                    <div class="bidhistory"></div>
+                    
+                                                        
+                    </div>
                     <!-- .car single media -->
 
 
