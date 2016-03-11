@@ -112,6 +112,7 @@ Route::post('/ajax/bidreject', 'Front\AjaxController@RejectDealerBid');
 Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
 Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
 Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
+Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

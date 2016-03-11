@@ -11,6 +11,7 @@ use App\Model\RequestDealerLog;                             /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidAcceptanceQueue;                           /* Model name*/
+use App\Model\BlockBidLog;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -217,14 +218,16 @@ class AjaxController extends Controller
         $sortby=Request::input('sortby');
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
+        $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
+        
         if($sortby==1){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
         }
         if($sortby==2){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
         }
         if($sortby==3){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
         }
         $RequestQueue_row=RequestQueue::where('id',$id)->first();
         return view('front.ajax.get_update_bid',compact('BidQueue','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Client Request Details'));
@@ -273,7 +276,13 @@ class AjaxController extends Controller
             $message->from($admin_users_email);
             $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
             });
-            
+            $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
+            });
+
             //$RequestQueue_row=RequestQueue::where('id',$request_id)->with('clients','makes','models')->first();
             
 
@@ -312,5 +321,22 @@ class AjaxController extends Controller
         $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues')->orderBy('visable', 'desc')->get();
        return view('front.ajax.bid_history',compact('BidQueue'));
         
+    }
+    public function BlockDealerBid(){
+        $id=Request::input('requestid');
+        $BidQueue=BidQueue::where('id',$id)->first();
+        
+        $BidQueue->dealer_id;
+        $BidQueue->request_id;
+        $BlockBidLog['dealer_id'] =$BidQueue->dealer_id;
+        $BlockBidLog['client_id'] =$BidQueue->request_queues->client_id;
+        $BlockBidLog['bid_id'] =$BidQueue->id;
+        $BlockBidLog['request_id'] =$BidQueue->requestqueue_id;
+        $BlockBidLog['details'] =Request::input('blockdetails');
+        $BlockBidLog_row=BlockBidLog::create($BlockBidLog);
+        $RequestDealerLog=RequestDealerLog::where('dealer_id', $BidQueue->dealer_id)->where('request_id', $BidQueue->requestqueue_id)->first();
+        $RequestDealerLog->blocked=1;
+        $RequestDealerLog->save();
+        return 1;
     }
 }

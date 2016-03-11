@@ -50,7 +50,7 @@
                             <!-- price -->
                             <div class="car-price">
                                 <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($value['id']);?>" class="clearfix">
-                                    <span class="price"><?php if($value['status']==1){echo "Closed";}else{echo "Open";}?></span>
+                                    <span class="price"><?php if($value['blocked']==1){?>Blocked<?php }else{if($value['pstatus']==1){echo "Closed";}else{echo "Open";}}?></span>
                                     <span class="icon-arrow-right2"></span>
                                 </a>
                             </div>

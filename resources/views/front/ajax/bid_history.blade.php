@@ -53,6 +53,21 @@
                     <span class="icon-close"></span>Reject
                 </a>
             </div>
+            <div id="bl{!! $bid->id !!}">
+                <a class="button medium full light openbloc" href="" data-request="{!! $bid->id !!}">
+                    <span class="icon-blocked"></span>Block
+                </a>
+            </div>
+            <div id="blc{!! $bid->id !!}" style="display:none;">
+                <p>
+                    <div class="textarea">
+                        <textarea  id="bloc{!! $bid->id !!}" placeholder="Block Details"></textarea>
+                    </div>
+                </p>
+                <a href="#" data-request="{!! $bid->id !!}" class="button full light blocktrigger">
+                    <span class="icon-blocked"></span>Block
+                </a>
+            </div>
             <?php } ?>
         </div>
         <!-- .content -->
@@ -107,6 +122,26 @@ $(document).ready(function(){
           return false;
 
   });
+  $('.blocktrigger').click(function(){
+        var requestid=$(this).data("request");
+        var blockdetails=$("#bloc"+requestid).val();
+        console.log(requestid);
+        console.log(blockdetails);
+        $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidblock",
+                  data: {requestid:requestid,blockdetails:blockdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+
+  });
 
     $('.openreject').click(function(){
          var requestid=$(this).data("request");
@@ -115,6 +150,8 @@ $(document).ready(function(){
          $("#at"+requestid).show();
          $("#rj"+requestid).hide();
          $("#rejec"+requestid).show();
+         $("#bl"+requestid).show();
+         $("#blc"+requestid).hide();
          return false;
     });
     $('.openaccept').click(function(){
@@ -124,6 +161,21 @@ $(document).ready(function(){
          $("#rj"+requestid).show();
          $("#at"+requestid).hide();
          $("#accep"+requestid).show();
+         $("#bl"+requestid).show();
+         $("#blc"+requestid).hide();
+         return false;
+    });
+    
+    $('.openbloc').click(function(){
+         var requestid=$(this).data("request");
+         
+         $("#rejec"+requestid).hide();
+         $("#rj"+requestid).show();
+         $("#at"+requestid).show();
+         $("#accep"+requestid).hide();
+
+         $("#bl"+requestid).hide();
+         $("#blc"+requestid).show();
          return false;
     });
 

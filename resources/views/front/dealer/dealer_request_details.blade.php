@@ -25,7 +25,13 @@
                         <!-- .car title -->
 
                     </div>
-                    <?php if($RequestQueue_row->status!=1){ ?>
+                    <?php if($requestqueuex['blocked']==1){ ?>
+                    <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
+                        <div class="single-car-price">
+                            <a class="button light medium" href=""><b> Blocked </b> </a>
+                        </div>
+                    </div>
+                    <?php }else{ if($RequestQueue_row->status!=1){ ?>
                     <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
                         <div class="single-car-price">
                         <?php if($BidQueuecount==0){ ?>
@@ -39,12 +45,13 @@
                     <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
                         <div class="single-car-price">
                         
+                            
                             <a class="button light medium" href=""><b>Bidding Closed</b> </a>
                         
                         </div>
                     </div>
 
-                    <?php } ?>
+                    <?php } }?>
                     
 
                 </div>
