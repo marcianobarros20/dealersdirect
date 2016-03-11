@@ -32,6 +32,9 @@
                                 <ul class="clearfix">
                                     <li><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</li>
                                     <li><strong>Total{!! $Bidqueue->id !!}:</strong>{!! $Bidqueue->total_amount !!}</li>
+                                    <?php if($Bidqueue->status==3){?>
+                                    <li class="label success"><strong> Accepted  </li>
+                                    <?php }?>
                                     
                                 </ul>
                             </div>

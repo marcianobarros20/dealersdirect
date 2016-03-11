@@ -207,10 +207,46 @@ class AjaxController extends Controller
                 $BidQueuenew->save();
 
             }
-            
+            $details_of_actions=Request::input('rejectdetails');
+            self::SendRejectemail($id,$details_of_actions);
             return 1;
 
 
+    }
+    public function SendRejectemail($id=null,$details=null){
+            
+            $BidQueue_row=BidQueue::where('id',$id)->with('dealers','request_queues')->first();
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $BidQueue_row->dealer_id)->where('request_id', $BidQueue_row->requestqueue_id)->first();
+            $RequestQueue_row=RequestQueue::where('id',$BidQueue_row->requestqueue_id)->with('clients','makes','models')->first();
+            
+            $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
+            $dealer_email=$BidQueue_row->dealers->email;
+            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
+            $admin_users_email="prodip211085@gmail.com";
+            $project_make=$RequestQueue_row->makes->name;
+            $project_model=$RequestQueue_row->models->name;
+            $project_year=$RequestQueue_row->year;
+            $project_conditions=$RequestQueue_row->condition;
+            $project_bidcount=$BidQueuecount;
+            $client_email=$RequestQueue_row->clients->email;
+            $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
+            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $admin_users_email="prodip211085@gmail.com";
+            $sent = Mail::send('front.email.rejectbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
+            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
+            });
+            $senttoclient = Mail::send('front.email.rejectbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'dealer_name'=>$dealer_name,'details'=>$details), 
+            function($message) use ($admin_users_email, $client_email,$client_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($client_email, $client_name)->subject('Welcome to Dealers Direct');
+            });
+
+            return 1;
     }
     public function GetUpdatedBid(){
         
@@ -248,16 +284,16 @@ class AjaxController extends Controller
         $BidQueue=BidQueue::find($id);
         $BidQueue->status = 3;
         $BidQueue->save();
-        //self::SendAcceptancemail($id,$BidQueue->requestqueue_id);
+        self::SendAcceptancemail($id);
         return 1;
         
     }
     public function SendAcceptancemail($id=null){
-            echo "<pre>";
+            
             $BidQueue_row=BidQueue::where('id',$id)->with('dealers','request_queues')->first();
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $BidQueue_row->dealer_id)->where('request_id', $BidQueue_row->requestqueue_id)->first();
             $RequestQueue_row=RequestQueue::where('id',$BidQueue_row->requestqueue_id)->with('clients','makes','models')->first();
-            print_r($BidQueue_row);
+            
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
@@ -270,7 +306,7 @@ class AjaxController extends Controller
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
+            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
             $admin_users_email="prodip211085@gmail.com";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -285,34 +321,7 @@ class AjaxController extends Controller
             $message->to($client_email, $client_name)->subject('Welcome to Dealers Direct');
             });
 
-            //$RequestQueue_row=RequestQueue::where('id',$request_id)->with('clients','makes','models')->first();
-            
-
-            // $RequestDealerLog=RequestDealerLog::where('id', $maskval)->with('makes','dealers')->first();
-            
-            // $requestqueuex['make']="test1";
-            
-            // $requestqueuex['model']="test2";
-            // $requestqueuex['year']="test3";
-            // $requestqueuex['conditions']="test";
-            // $requestqueuex['dealername']="test4";
-            // $requestqueuex['dealeremail']="test5";
-
-
-
-            // $user_name = "prodip211085@gmail.com";
-            // $user_email = "prodip211085@gmail.com";
-            // $admin_users_email="prodip211085@gmail.com";
-            // $activateLink = url('/').'/dealers/request_detail/'.base64_encode(1);
-            
-            // $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
-            // function($message) use ($admin_users_email, $user_email,$user_name)
-            // {
-            // $message->from($admin_users_email);
-            // $message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
-            // });
-
-            //return $requestqueuex;
+            return 1;
     }
     public function BidHistory(){
 
