@@ -197,7 +197,7 @@ class AjaxController extends Controller
             }
             if($tbid==0){
                 $AverageTp=$AverageTp;
-                $AverageMp=$AverageMp
+                $AverageMp=$AverageMp;
             }else{
             $AverageTp=$AverageTp/$tbid;
             $AverageMp=$AverageMp/$tbid;
