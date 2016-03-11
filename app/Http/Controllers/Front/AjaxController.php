@@ -267,12 +267,13 @@ class AjaxController extends Controller
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="prodip211085@gmail.com";
-            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activate_link'=>$activateLink, 'project_make'=>$project_make,'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
+            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
             $message->from($admin_users_email);
             $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
             });
+            
             //$RequestQueue_row=RequestQueue::where('id',$request_id)->with('clients','makes','models')->first();
             
 
