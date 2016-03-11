@@ -106,7 +106,7 @@ class AjaxController extends Controller
 
             $user_name = $requestqueuex['dealername'];
             $user_email = $requestqueuex['dealeremail'];
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="jobs@tier5.in";
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($maskval);
             
             $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
@@ -177,7 +177,7 @@ class AjaxController extends Controller
 
     }
     public function RejectDealerBid(){
-        print_r(Request::input());
+        
         $BidQueue=BidQueue::find(Request::input('requestid'));
         $BidQueue->status = 2;
         $BidQueue->details_of_actions = Request::input('rejectdetails');
@@ -212,8 +212,9 @@ class AjaxController extends Controller
                 $BidQueuenew->save();
 
             }
+            $bid=Request::input('requestid');
             $details_of_actions=Request::input('rejectdetails');
-            self::SendRejectemail($id,$details_of_actions);
+            self::SendRejectemail($bid,$details_of_actions);
             return 1;
 
 
@@ -227,7 +228,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="jobs@tier5.in";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
@@ -302,7 +303,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="jobs@tier5.in";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
@@ -366,7 +367,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="jobs@tier5.in";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
