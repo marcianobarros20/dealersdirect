@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => array('address' => 'prodip211085@gmail.com', 'name' => 'Dealers Direct Suport'),
+    'from' => array('address' => 'dealersdirectus@gmail.com ', 'name' => 'Dealers Direct Suport'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'username' => 'prodip211085@gmail.com',
+    'username' => 'dealersdirectus@gmail.com ',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'password' => 'prodipto21101985',
+    'password' => 'Zxcvbnm1@',
 
     /*
     |--------------------------------------------------------------------------
