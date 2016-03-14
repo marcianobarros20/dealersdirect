@@ -127,6 +127,72 @@ $('#plsnex').click(function(){
   $("#secsc").show();
   return false;
 });
+$('#sinses').click(function(){
+
+    var make_search=$('#make_search').val();
+    console.log(make_search);
+    var model_search=$('#model_search').val();
+    console.log(model_search);
+    var condition_search=$('#condition_search').val();
+    console.log(condition_search);
+    var year_search=$('#year_search').val();
+    console.log(year_search);
+    var tamo=$('#tamo').val();
+    console.log(tamo);
+    var mtamo=$('#mtamo').val();
+    console.log(mtamo);
+            $.ajax({
+                        url: "<?php echo url('/');?>/ajax/client-request",
+                        data: {
+                                make_search:make_search,
+                                model_search:model_search,
+                                condition_search:condition_search,
+                                year_search:year_search,
+                                tamo:tamo,
+                                mtamo:mtamo,                               
+                                _token: '{!! csrf_token() !!}'
+                        },
+                        type :"post",
+                        success: function( data ) {
+                          var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
+                        $(location).attr('href',urlnew);
+                        }
+                    });
+  return false;
+});
+$('#newdeset').click(function(){
+
+    var make_search=$('#make_search').val();
+    console.log(make_search);
+    var model_search=$('#model_search').val();
+    console.log(model_search);
+    var condition_search=$('#condition_search').val();
+    console.log(condition_search);
+    var year_search=$('#year_search').val();
+    console.log(year_search);
+    var tamo=$('#tamo').val();
+    console.log(tamo);
+    var mtamo=$('#mtamo').val();
+    console.log(mtamo);
+            $.ajax({
+                        url: "<?php echo url('/');?>/ajax/setto-signup",
+                        data: {
+                                make_search:make_search,
+                                model_search:model_search,
+                                condition_search:condition_search,
+                                year_search:year_search,
+                                tamo:tamo,
+                                mtamo:mtamo,                               
+                                _token: '{!! csrf_token() !!}'
+                        },
+                        type :"post",
+                        success: function( data ) {
+                          var urlnew="<?php echo url('/');?>/signin-client";
+                        $(location).attr('href',urlnew);
+                        }
+                    });
+  return false;
+});
 $('#npllses').click(function(){
   var tamo=$('#tamo').val();
   var mtamo=$('#mtamo').val();
@@ -154,6 +220,7 @@ $('#npllses').click(function(){
         if(chkone==0 && chktwo==0 && (Number(tamo)>Number(mtamo))){
           $("#secsc").hide();
           $("#thirsc").show();
+          
           
 
         }else{

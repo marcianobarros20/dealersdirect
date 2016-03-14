@@ -43,6 +43,8 @@ Route:: get('/client/add-engine/{id}', 'Front\ClientController@AddEngine');
 Route:: get('/client/add-transmission/{id}', 'Front\ClientController@AddTransmission');
 Route:: get('/client/add-color-exterior/{id}', 'Front\ClientController@AddColorExterior');
 Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorInterior');
+Route:: get('/signin-client', 'Front\ClientController@SigninClient');
+Route:: post('/signin-client', 'Front\ClientController@SigninClient');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -113,6 +115,8 @@ Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
 Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
 Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
 Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
+Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
+Route::post('/ajax/setto-signup', 'Front\AjaxController@SetTosignup');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

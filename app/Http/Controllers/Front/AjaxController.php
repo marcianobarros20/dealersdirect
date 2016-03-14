@@ -12,6 +12,7 @@ use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidAcceptanceQueue;                           /* Model name*/
 use App\Model\BlockBidLog;                                  /* Model name*/
+use App\Model\Client;                                       /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -340,7 +341,7 @@ class AjaxController extends Controller
         
     }
     public function BlockDealerBid(){
-        $id=Request::input('requestid');
+        $id=print_r(Request::input());
         $BidQueue=BidQueue::where('id',$id)->first();
         
         $BidQueue->dealer_id;
@@ -392,5 +393,54 @@ class AjaxController extends Controller
             });
 
             return 1;
+    }
+    public function ClientRequest(){
+        
+        $client=Session::get('client_userid');
+        $Client = Client::find($client);
+        
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $condition_search=Request::input('condition_search');
+        $year_search=Request::input('year_search');
+        $tamo=Request::input('tamo');
+        $mtamo=Request::input('mtamo');
+        $RequestQueue['make_id'] =$make_search;
+        $RequestQueue['carmodel_id'] =$model_search;
+        $RequestQueue['condition'] =$condition_search;
+        $RequestQueue['year'] =$year_search;
+        $RequestQueue['total_amount'] =$tamo;
+        $RequestQueue['monthly_amount'] =$mtamo;
+        $RequestQueue['fname'] =$Client->first_name;
+        $RequestQueue['lname'] =$Client->last_name;
+        $RequestQueue['phone'] =$Client->phone;
+        $RequestQueue['type'] =1;
+        $RequestQueue['email'] =$Client->email;
+        $RequestQueue['client_id']=$Client->id;
+        
+        $RequestQueue_row=RequestQueue::create($RequestQueue);
+        $lastinsertedId = $RequestQueue_row->id;
+        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+        foreach ($DealerMakeMap as $value) {
+              $RequestDealerLog['dealer_id']=$value->dealer_id;
+              $RequestDealerLog['request_id']=$lastinsertedId;
+              $RequestDealerLog['make_id']=$make_search;
+              $RequestDealerLog['status']=1;
+              $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+              $lastlog = $RequestDealerLog_row->id;
+              self::SendRemindermail($lastlog);
+              
+          }
+          return $lastinsertedId;
+    }
+    public function SetTosignup(){
+        $cachedata['make_search']=Request::input('make_search');
+        $cachedata['model_search']=Request::input('model_search');
+        $cachedata['condition_search']=Request::input('condition_search');
+        $cachedata['year_search']=Request::input('year_search');
+        $cachedata['tamo']=Request::input('tamo');
+        $cachedata['mtamo']=Request::input('mtamo');
+        Session::put('cachedata',$cachedata);
+        return 1;
     }
 }

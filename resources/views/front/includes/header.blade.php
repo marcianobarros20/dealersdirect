@@ -63,6 +63,12 @@
             <li> <a href="#" class="tip-below success" data-tip="facebook"> <span class="icon-facebook"></span> </a> </li>
             <li> <a href="#" class="tip-below success" data-tip="twitter"> <span class="icon-twitter"></span> </a> </li>
             <li> <a href="#" class="tip-below success" data-tip="vimeo"> <span class="icon-vimeo"></span> </a> </li>
+            <?php if($client!=0){ ?>
+            <li> <a href="{!!  url('/') !!}/client-dashboard" class="tip-below success" data-tip="Dashboard"> <span class="icon-dashboard"></span> </a> </li>
+            <li> <a href="{!!  url('/') !!}/client_sign_out" class="tip-below success" data-tip="Log Out"> <span class="icon-exit"></span> </a> </li>
+            <?php }else{?>
+            <li> <a href="{!!  url('/') !!}/client-signin" class="tip-below success" data-tip="Log In"> <span class="icon-switch"></span> </a> </li>
+            <?php } ?>
           </ul>
             </div>
         <!-- social --> 
@@ -88,14 +94,14 @@
               <div class="main-nav"> 
             
             <!-- navigation search -->
-            <div class="nav-search">
+            <!-- <div class="nav-search">
                   <form method="post" action="#">
                 <fieldset>
                       <span class="icon-search"></span>
                       <input type="text" value="Type term and hit enter..." onfocus="if(this.value=='Type term and hit enter...'){this.value=''}" onblur="if(this.value==''){this.value='Type term and hit enter...'}" />
                     </fieldset>
               </form>
-                </div>
+                </div> -->
             <!-- .navigation search --> 
             
             <!-- main navigation -->

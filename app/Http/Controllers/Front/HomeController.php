@@ -31,16 +31,29 @@ class HomeController extends BaseController
         view()->share('order_class','active');
         
     }
-
+    public function CheckLogin(){
+            $client=Session::get('client_userid');
+            if(isset($client)){
+                return $client;
+            }else{
+                return 0;
+            }
+            
+    }
 
 
     public function index()
     {
-        //
-
+        
+        $client=self::CheckLogin();
+        if($client!=0){
+             $client;
+        }else{
+            
+        }
         
 
-        return view('front.home.index',array('title'=>'DEALERSDIRECT'));
+        return view('front.home.index',compact('client'),array('title'=>'DEALERSDIRECT'));
 
     }
 

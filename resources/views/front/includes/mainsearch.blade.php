@@ -99,7 +99,10 @@
 
                                   <!-- search -->
                                     <div class="search-left" data-appear-animation="slideInRight">
+                                        
+                                        <?php if($client!=0){ ?><button type="submit" id="sinses"> <span class="icon-forward"></span>Done</button> <?php }else{ ?>
                                         <button type="submit" id="npllses"> <span class="icon-forward"></span>Next</button>
+                                        <?php } ?>
                                     </div>
                                   </div>
                               </div>
@@ -142,6 +145,7 @@
                                   <!-- search -->
                                     <div class="search-left" data-appear-animation="slideInRight">
                                         <button type="submit" id="dstes"> <span class="icon-forward"></span>Done</button>
+                                        <button type="submit" id="newdeset"> <span class="icon-forward"></span>Request As A User</button>
                                     </div>
                                   </div>
                               </div>

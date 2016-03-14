@@ -54,7 +54,8 @@ class ClientController extends BaseController
 			{
 			return redirect('client-signin');
 			}
-			return view('front.client.client_dashboard',array('title'=>'DEALERSDIRECT | Client Dashboard'));
+            $client=Session::get('client_userid');
+			return view('front.client.client_dashboard',compact('client'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
     }
     public function signout(){
             Session::forget('client_userid');
@@ -106,8 +107,8 @@ class ClientController extends BaseController
             }
 
         }
-
-        return view('front.client.client_signin',array('title'=>'DEALERSDIRECT | Clients Signin'));
+        $client=0;
+        return view('front.client.client_signin',compact('client'),array('title'=>'DEALERSDIRECT | Clients Signin'));
     }
     public function profile(){
     	$obj = new helpers();
@@ -117,7 +118,8 @@ class ClientController extends BaseController
 			}
        	$client_userid=Session::get('client_userid');
        	$Client = Client::where('id', $client_userid)->first();
-       	return view('front.client.client_profile',compact('Client'),array('title'=>'DEALERSDIRECT | Clients Profile'));
+        $client=Session::get('client_userid');
+       	return view('front.client.client_profile',compact('Client','client'),array('title'=>'DEALERSDIRECT | Clients Profile'));
     }
     public function ProfileEditDetails(){
     	$obj = new helpers();
@@ -179,7 +181,8 @@ class ClientController extends BaseController
                     $requestqueuex[$key]['total']=$value->total_amount;
                     $requestqueuex[$key]['monthly']=$value->monthly_amount; 
             }
-            return view('front.client.client_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Client Request'));
+            $client=Session::get('client_userid');
+            return view('front.client.client_request_list',compact('requestqueuex','client'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
     public function requestDetail($id=null){
             $RequestQueue=RequestQueue::where('id', $id)->with('makes')->first();
@@ -198,7 +201,8 @@ class ClientController extends BaseController
             // echo "<pre>";
             // print_r($RequestStyleEngineTransmissionColor);
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
-            return view('front.client.client_request_details',compact('BidQueue','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            $client=Session::get('client_userid');
+            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";
@@ -254,7 +258,8 @@ class ClientController extends BaseController
             }
             $Stylenew=Style::where('year_id', $Caryear->year_id)->get();
             $newrequest_id=base64_encode($id);
-            return view('front.client.client_add_style',compact('newrequest_id','Stylenew','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Add Style'));
+            $client=Session::get('client_userid');
+            return view('front.client.client_add_style',compact('newrequest_id','client','Stylenew','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Add Style'));
     }
     public function AddEngine($id=null){
         $id=base64_decode($id);
@@ -374,7 +379,8 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
-        return view('front.client.client_add_engine',compact('newrequest_id','Engine','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Engine'));
+        $client=Session::get('client_userid');
+        return view('front.client.client_add_engine',compact('newrequest_id','client','Engine','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Engine'));
     }
     public function AddTransmission($id=null){
         $id=base64_decode($id);
@@ -384,7 +390,8 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
-        return view('front.client.client_add_transmission',compact('newrequest_id','Transmission','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Transmission'));
+        $client=Session::get('client_userid');
+        return view('front.client.client_add_transmission',compact('newrequest_id','client','Transmission','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Transmission'));
     }
     public function AddColorExterior($id=null){
         $id=base64_decode($id);
@@ -394,7 +401,8 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
-        return view('front.client.client_add_exterior_color',compact('newrequest_id','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
+        $client=Session::get('client_userid');
+        return view('front.client.client_add_exterior_color',compact('newrequest_id','client','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
     }
     public function AddColorInterior($id=null){
         $id=base64_decode($id);
@@ -404,7 +412,85 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
-        return view('front.client.client_add_interior_color',compact('newrequest_id','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
+        $client=Session::get('client_userid');
+        return view('front.client.client_add_interior_color',compact('newrequest_id','client','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
+    }
+    public function SigninClient(){
+        $cachedata=Session::get('cachedata');
+        print_r($cachedata);
+        if(Request::isMethod('post'))
+        {
+            print_r(Request::input());
+            $email = Request::input('email');
+            $password = Request::input('password');
+            $Client = Client::where('email', $email)->first();
+            if($Client!=""){
+
+                $Client_pass = $Client->password;
+                // check for password
+                if(Hash::check($password, $Client_pass)){
+
+                   
+                    
+                    $nam=ucfirst($Client->first_name)." ".ucfirst($Client->last_name);
+                    Session::put('client_userid', $Client->id);
+                    Session::put('client_email', $Client->email);
+                    Session::put('client_name', $nam);
+                    
+                    
+                    Session::save();
+
+
+                    $make_search=$cachedata['make_search'];
+                    $model_search=$cachedata['model_search'];
+                    $condition_search=$cachedata['condition_search'];
+                    $year_search=$cachedata['year_search'];
+                    $tamo=$cachedata['tamo'];
+                    $mtamo=$cachedata['mtamo'];
+                    $RequestQueue['make_id'] =$make_search;
+                    $RequestQueue['carmodel_id'] =$model_search;
+                    $RequestQueue['condition'] =$condition_search;
+                    $RequestQueue['year'] =$year_search;
+                    $RequestQueue['total_amount'] =$tamo;
+                    $RequestQueue['monthly_amount'] =$mtamo;
+                    $RequestQueue['fname'] =$Client->first_name;
+                    $RequestQueue['lname'] =$Client->last_name;
+                    $RequestQueue['phone'] =$Client->phone;
+                    $RequestQueue['type'] =1;
+                    $RequestQueue['email'] =$Client->email;
+                    $RequestQueue['client_id']=$Client->id;
+
+                    $RequestQueue_row=RequestQueue::create($RequestQueue);
+                    $lastinsertedId = $RequestQueue_row->id;
+                    $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+                    foreach ($DealerMakeMap as $value) {
+                        $RequestDealerLog['dealer_id']=$value->dealer_id;
+                        $RequestDealerLog['request_id']=$lastinsertedId;
+                        $RequestDealerLog['make_id']=$make_search;
+                        $RequestDealerLog['status']=1;
+                        $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                        $lastlog = $RequestDealerLog_row->id;
+                        Ajax::SendRemindermail($lastlog);
+
+                    }
+
+                    return redirect('client-dashboard');
+
+                }
+                else{
+                        Session::flash('error', 'Email and password does not match.'); 
+                        return redirect('signin-client');
+                    }
+               
+            }
+            else{
+                    Session::flash('error', 'Email and password does not match.'); 
+                    return redirect('signin-client');
+            }
+        }
+        $client=0;
+        return view('front.client.signin_client',compact('client'),array('title'=>'DEALERSDIRECT | Clients Signin'));
+
     }
 
 }
