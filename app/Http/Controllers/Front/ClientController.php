@@ -470,7 +470,7 @@ class ClientController extends BaseController
                         $RequestDealerLog['status']=1;
                         $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
                         $lastlog = $RequestDealerLog_row->id;
-                        Ajax::SendRemindermail($lastlog);
+                        AjaxController::SendRemindermail($lastlog);
 
                     }
 
