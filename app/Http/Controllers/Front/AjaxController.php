@@ -114,7 +114,7 @@ class AjaxController extends Controller
             function($message) use ($admin_users_email, $user_email,$user_name)
             {
             $message->from($admin_users_email);
-            $message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
+            $message->to($user_email, $user_name)->subject('Request From Dealers Direct');
             });
 
             return $requestqueuex;
@@ -244,13 +244,13 @@ class AjaxController extends Controller
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
             $message->from($admin_users_email);
-            $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
+            $message->to($dealer_email, $dealer_name)->subject('Bid Request Rejected By Client');
             });
             $senttoclient = Mail::send('front.email.rejectbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'dealer_name'=>$dealer_name,'details'=>$details), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
-            $message->to($client_email, $client_name)->subject('Welcome to Dealers Direct');
+            $message->to($client_email, $client_name)->subject('Bid Request Rejected');
             });
 
             return 1;
@@ -319,13 +319,13 @@ class AjaxController extends Controller
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
             $message->from($admin_users_email);
-            $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
+            $message->to($dealer_email, $dealer_name)->subject('Bid Request Accepted');
             });
             $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
-            $message->to($client_email, $client_name)->subject('Welcome to Dealers Direct');
+            $message->to($client_email, $client_name)->subject('Bid Request Accepted');
             });
 
             return 1;
@@ -383,13 +383,13 @@ class AjaxController extends Controller
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
             $message->from($admin_users_email);
-            $message->to($dealer_email, $dealer_name)->subject('Welcome to Dealers Direct');
+            $message->to($dealer_email, $dealer_name)->subject('Bid Request Blocked');
             });
             $senttoclient = Mail::send('front.email.blockbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'dealer_name'=>$dealer_name,'details'=>$details), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
-            $message->to($client_email, $client_name)->subject('Welcome to Dealers Direct');
+            $message->to($client_email, $client_name)->subject('Bid Request Blocked');
             });
 
             return 1;
