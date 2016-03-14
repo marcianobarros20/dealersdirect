@@ -470,7 +470,7 @@ class ClientController extends BaseController
                         $RequestDealerLog['status']=1;
                         $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
                         $lastlog = $RequestDealerLog_row->id;
-                        AjaxController::SendRemindermail($lastlog);
+                        self::SendRemindermail($lastlog);
 
                     }
 
@@ -491,6 +491,34 @@ class ClientController extends BaseController
         $client=0;
         return view('front.client.signin_client',compact('client'),array('title'=>'DEALERSDIRECT | Clients Signin'));
 
+    }
+    public function SendRemindermail($maskval){
+            $RequestDealerLog=RequestDealerLog::where('id', $maskval)->with('makes','dealers')->first();
+            
+            $requestqueuex['make']=$RequestDealerLog->makes->name;
+            $mid=$RequestDealerLog->requestqueue->carmodel_id;
+            $Carmodel=Carmodel::where("id",$mid)->first();
+            $requestqueuex['model']=$Carmodel->name;
+            $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
+            $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
+            $requestqueuex['dealername']=$RequestDealerLog->dealers->first_name."".$RequestDealerLog->dealers->last_name;
+            $requestqueuex['dealeremail']=$RequestDealerLog->dealers->email;
+
+
+
+            $user_name = $requestqueuex['dealername'];
+            $user_email = $requestqueuex['dealeremail'];
+            $admin_users_email="jobs@tier5.in";
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($maskval);
+            
+            $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
+            function($message) use ($admin_users_email, $user_email,$user_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($user_email, $user_name)->subject('Request From Dealers Direct');
+            });
+
+            return $requestqueuex;
     }
 
 }
