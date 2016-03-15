@@ -206,8 +206,8 @@ class ClientController extends BaseController
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";
-			$user_email = "prodipXXXTinka@gmail.com";
-			$admin_users_email="prodip211085@gmail.com";
+			$user_email = "hello@tier5.us";
+			$admin_users_email="hello@tier5.us";
 			//$activateLink = url().'/activateLink/'.base64_encode($register['email']).'/member';
 			$activateLink ="Activatelink";
 			$sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'admin_users_email'=>$admin_users_email), 
@@ -508,7 +508,7 @@ class ClientController extends BaseController
 
             $user_name = $requestqueuex['dealername'];
             $user_email = $requestqueuex['dealeremail'];
-            $admin_users_email="jobs@tier5.in";
+            $admin_users_email="hello@tier5.us";
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($maskval);
             
             $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 

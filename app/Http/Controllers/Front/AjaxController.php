@@ -107,7 +107,7 @@ class AjaxController extends Controller
 
             $user_name = $requestqueuex['dealername'];
             $user_email = $requestqueuex['dealeremail'];
-            $admin_users_email="jobs@tier5.in";
+            $admin_users_email="hello@tier5.us";
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($maskval);
             
             $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'make'=>$requestqueuex['make'],'model'=>$requestqueuex['model'],'year'=>$requestqueuex['year'],'conditions'=>$requestqueuex['conditions']), 
@@ -229,7 +229,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="jobs@tier5.in";
+            $admin_users_email="hello@tier5.us";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
@@ -239,7 +239,7 @@ class AjaxController extends Controller
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
             $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="hello@tier5.us";
             $sent = Mail::send('front.email.rejectbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
@@ -304,7 +304,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="jobs@tier5.in";
+            $admin_users_email="hello@tier5.us";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
@@ -314,7 +314,7 @@ class AjaxController extends Controller
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
             $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="hello@tier5.us";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
@@ -368,7 +368,7 @@ class AjaxController extends Controller
             $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $admin_users_email="jobs@tier5.in";
+            $admin_users_email="hello@tier5.us";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
             $project_year=$RequestQueue_row->year;
@@ -378,7 +378,7 @@ class AjaxController extends Controller
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
             $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
-            $admin_users_email="prodip211085@gmail.com";
+            $admin_users_email="hello@tier5.us";
             $sent = Mail::send('front.email.blockbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
