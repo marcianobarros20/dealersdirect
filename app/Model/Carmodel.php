@@ -16,4 +16,7 @@ class Carmodel extends Model
         'years',
         'make_id'
        ];
+       public function makes() {
+        return $this->hasOne('App\Model\Make', 'id', 'make_id');
+    }
 }

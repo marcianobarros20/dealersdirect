@@ -79,6 +79,8 @@ $router->group([
     Route::post('/admin/make/add_image/', 'CarMakeController@saveMakeimage');
     Route::get('/admin/make/update_image/{id}', 'CarMakeController@updateMakeimage');
     Route::post('/admin/make/update_image/', 'CarMakeController@saveupdateMakeimage');
+    Route::resource('/admin/model', 'CarModelController@getModel');
+    Route::resource('/admin/year', 'CarYearController@getYear');
 });
 
 // Logging in and out
