@@ -1,4 +1,4 @@
-@include('front.includes.header')
+@include('front.includes.headdeal')
 
 @yield('content')
 
