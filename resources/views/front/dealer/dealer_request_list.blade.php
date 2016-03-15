@@ -18,7 +18,9 @@
                         <!-- image -->
                         <div class="car-image">
                             <a href="#">
+                            <?php if($value['make_image']!=""){ ?><img src="{{ url('/')}}/public/uploads/carmake/thumb/<?php echo $value['make_image']; ?>" title="car" alt="car" /><?php }else{ ?>
                                 <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
+                            <?php } ?>
                                 <span class="background">
                                     <span class="icon-plus"></span>
                                 </span>

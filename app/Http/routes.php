@@ -74,8 +74,11 @@ $router->group([
     Route::resource('admin/home', 'HomeController');
     Route::resource('admin/admin-profile', 'HomeController@getProfile');
     Route::resource('admin/change-password', 'HomeController@changePass');
-    
-    
+    Route::resource('admin/make', 'CarMakeController@getMake');
+    Route::get('/admin/make/add_image/{id}', 'CarMakeController@addMakeimage');
+    Route::post('/admin/make/add_image/', 'CarMakeController@saveMakeimage');
+    Route::get('/admin/make/update_image/{id}', 'CarMakeController@updateMakeimage');
+    Route::post('/admin/make/update_image/', 'CarMakeController@saveupdateMakeimage');
 });
 
 // Logging in and out

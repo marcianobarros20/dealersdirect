@@ -173,6 +173,7 @@ class ClientController extends BaseController
                     $requestqueuex[$key]['id']=$value->id;
                     $requestqueuex[$key]['status']=$value->status;
                     $requestqueuex[$key]['make']=$value->makes->name;
+                    $requestqueuex[$key]['make_image']=$value->makes->image;
                     $mid=$value->carmodel_id;
                     $Carmodel=Carmodel::where("id",$mid)->first();
                     $requestqueuex[$key]['model']=$Carmodel->name;

@@ -5,23 +5,18 @@
  
   <!-- /navbar -->
  
-  <div class="btn-controls">
-      <div class="btn-box-row row-fluid">
-         <!--  <a href="#" class="btn-box big span4"><i class=" icon-random"></i><b>65%</b>
-              <p class="text-muted">
-                  Growth</p> 
-          </a>-->
-          <a href="#" class="btn-box big span4"><i class="icon-user"></i><b></b>
-              <p class="text-muted">
-                  Wel Come To DealersDirect Dashboard</p>
-          </a>
-          <!-- <a href="#" class="btn-box big span4"><i class="icon-money"></i><b>15,152</b>
-              <p class="text-muted">
-                  Profit</p>
-          </a> -->
-      </div>
-  </div>
                   
-     
+     <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"> Wel Come To DealersDirect Dashboard</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
 
 @stop

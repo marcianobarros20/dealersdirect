@@ -142,6 +142,7 @@ class DealerController extends BaseController
                     $requestqueuex[$key]['id']=$value->id;
                     $requestqueuex[$key]['status']=$value->status;
                     $requestqueuex[$key]['make']=$value->makes->name;
+                    $requestqueuex[$key]['make_image']=$value->makes->image;
                     $requestqueuex[$key]['pstatus']=$value->requestqueue->status;
                     $requestqueuex[$key]['blocked']=$value->blocked;
                     $mid=$value->requestqueue->carmodel_id;
