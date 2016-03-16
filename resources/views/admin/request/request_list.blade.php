@@ -40,11 +40,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($RequestQueue as $key => $Request) {
-                                        ?>
+                                        @foreach($RequestQueue as $key => $Request)
                                         <tr class="gradeA">
                                             
-                                            <td><?php if(isset($Request->clients)){?>{{$Request->clients->first_name}} {{$Request->clients->last_name}}<?php }else{ ?>{{$Request->fname}} {{$Request->lname}}<?php } ?></td>
+                                            <td>
+                                                @if(isset($Request->clients))
+                                                    {{$Request->clients->first_name}} {{$Request->clients->last_name}}
+
+                                                    @else
+                                                        {{$Request->fname}} {{$Request->lname}}
+                                                @endif
+                                            </td>
                                             <td><?php if(isset($Request->clients)){?>Registered<?php }else{ ?> UnRegistered <?php } ?></td>
                                             <td>{{$Request->makes->name}}</td>
                                             <td>{{$Request->models->name}}</td>
@@ -59,7 +65,7 @@
                                             </td>
                                             <td>{{count($Request->bids)}}</td>
                                         </tr>
-                                        <?php } ?>
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>
