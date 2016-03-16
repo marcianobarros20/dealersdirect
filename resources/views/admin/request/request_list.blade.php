@@ -59,7 +59,11 @@
                                                 @endif
                                             </td>
                                             <td>{{$Request->makes->name}}</td>
-                                            <td></td>
+                                            <td>
+                                            @if(isset($Request->models))
+                                                    {{$Request->models->name}}
+                                            @endif
+                                            </td>
                                             <td>{{$Request->year}}</td>
                                             <td>{{$Request->condition}}</td>
                                             <td>
