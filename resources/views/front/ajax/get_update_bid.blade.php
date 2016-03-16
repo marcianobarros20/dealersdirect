@@ -13,8 +13,18 @@
                         <!-- image -->
                         <div class="car-image">
                             <a href="#">
-                                <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
+                            <?php $keys=0;
+                            foreach ($Bidqueue->bid_image as $key => $bid_image){
                                 
+                                if($bid_image->dealer_id==$Bidqueue->dealer_id){
+                                     $keys++;
+                            ?>
+                                <img src="<?php echo url('/');?>/public/uploads/project/thumb/{!! $bid_image->image!!}" title="car" alt="car" />
+                            <?php
+                             }
+                             } if( $keys==0){?>
+                             <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
+                             <?php }?> 
                             </a>
                         </div>
                         <!-- .image -->

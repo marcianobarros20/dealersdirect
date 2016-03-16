@@ -45,7 +45,7 @@
 
                                         <div class="dark-form">
 
-                                            {{ Form::open(array('url' => 'postbid')) }}
+                                            {{ Form::open(array('url' => 'postbid', 'files'=>true)) }}
                                                 <fieldset>
                                                     <div class="input">
                                                     {{ Form::hidden('id',$requestqueuex['request_id'],'') }}
@@ -62,8 +62,15 @@
                                                         {{ Form::textarea('details','',['placeholder' => 'Details','required'=>'required']) }}
 
                                                     </div>
+                                                    <div class="imagecontainer">
+                                                        
+                                                    </div>
+                                                    <div class="input-submit">
+
+                                                    <a class="button medium orange addimagecontain" href=""><span class="icon-images"></span>Add Image</a>
+
+                                                    </div>
                                                     
-                                                
                                                     <div class="input-submit">
                                                         {{ Form::submit('POST BID',array('class' => '')) }}
                                                     </div>

@@ -264,14 +264,15 @@ class AjaxController extends Controller
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
 
         if($sortby==1){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
         }
         if($sortby==2){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('mp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->get();
         }
         if($sortby==3){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers')->orderBy('tp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->where('visable','=','1')->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
         }
+        
         $RequestQueue_row=RequestQueue::where('id',$id)->first();
         return view('front.ajax.get_update_bid',compact('BidQueue','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
@@ -442,5 +443,8 @@ class AjaxController extends Controller
         $cachedata['mtamo']=Request::input('mtamo');
         Session::put('cachedata',$cachedata);
         return 1;
+    }
+    public function AddImageOptions(){
+        return view('front.ajax.add_image_options');
     }
 }

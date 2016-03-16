@@ -16,4 +16,7 @@ class BidQueue extends Model
     public function request_queues() {
         return $this->hasOne('App\Model\RequestQueue', 'id', 'requestqueue_id');
         }
+    public function bid_image() {
+        return $this->hasMany('App\Model\BidImage', 'bid_id');
+        }
 }

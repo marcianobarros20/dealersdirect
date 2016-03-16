@@ -45,7 +45,7 @@
 
                                         <div class="dark-form">
 
-                                            {{ Form::open(array('url' => '/dealers/edit-bid/')) }}
+                                            {{ Form::open(array('url' => '/dealers/edit-bid/', 'files'=>true)) }}
                                                 <fieldset>
                                                     <div class="input">
                                                     {{ Form::hidden('id',$BidQueue->id,'') }}
@@ -63,6 +63,36 @@
 
                                                     </div>
                                                     
+                                                    <?php   $keys=0;
+                                                            foreach ($BidQueue->bid_image as $key => $bid_image){
+                                
+                                                                    if($bid_image->dealer_id==$BidQueue->dealer_id){
+                                                                        $keys++; 
+                                                    ?>
+                                                    <div class="textarea" id="imx{!!$bid_image->id!!}">
+                                                    {{ Form::hidden('preimg[]',$bid_image->image,'') }}
+                                                        <img src="<?php echo url('/');?>/public/uploads/project/thumb/{!! $bid_image->image!!}" title="car" alt="car" />
+                                                            <br><a class="button small green deleteprevious" data-id="imx{!!$bid_image->id!!}" href="">
+                                                            <span class="icon-cancel-circle"></span>
+                                                            Delete
+                                                            </a>
+                                                    </div>
+                                                    
+                                                    <?php
+                                                                    }
+                                                            } if( $keys==0){
+                                                    ?>
+
+                                                    <?php       } 
+                                                    ?>
+                                                    <div class="imagecontainer">
+                                                        
+                                                    </div>
+                                                    <div class="input-submit">
+
+                                                    <a class="button medium orange addimagecontain" href=""><span class="icon-images"></span>Add Image</a>
+
+                                                    </div>
                                                 
                                                     <div class="input-submit">
                                                         {{ Form::submit('EDIT YOUR PREVIOUS BID',array('class' => '')) }}

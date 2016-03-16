@@ -9,6 +9,7 @@ use App\Model\Carmodel;                                     /* Model name*/
 use App\Model\RequestQueue;                                 /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
+use App\Model\BidImage;                                     /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Request;
 use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
+use Imagine\Image\Box;
+
 use App\Helper\helpers;
 
 
@@ -29,6 +32,7 @@ class DealerController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function __construct(){
         parent::__construct();
         $obj = new helpers();
@@ -370,7 +374,7 @@ class DealerController extends BaseController
             
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
             $dealer_userid=Session::get('dealer_userid');
-            $BidQueue=BidQueue::where("dealer_id",$dealer_userid)->where("requestqueue_id",$RequestDealerLog->request_id)->where('visable','=','1')->first();
+            $BidQueue=BidQueue::where("dealer_id",$dealer_userid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
             return view('front.dealer.edit_bid',compact('requestqueuex','BidQueue','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function SaveBid(){
@@ -379,7 +383,11 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
-        
+
+            
+            //dd(Request::input());
+            //dd(Request::file('images'));
+        // exit;
         $dealer_userid=Session::get('dealer_userid');
         $id=base64_encode(Request::input('request_id'));
 
@@ -389,11 +397,39 @@ class DealerController extends BaseController
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
         $BidQueue['details']=Request::input('details');
-        BidQueue::create($BidQueue);
+        $BidQueue_row=BidQueue::create($BidQueue);
         $curve=self::CalculateBidCurve(Request::input('id'));
+        $OtherImage=Request::file('images');
+            if(Request::hasFile('images')){
+                $this->obj = $obj;
+                foreach ($OtherImage as $imgval) {
+                    $extension =$imgval->getClientOriginalExtension();
+                    $destinationPath = 'public/uploads/project/';   // upload path
+                    $thumb_path = 'public/uploads/project/thumb/';
+                    $medium = 'public/uploads/project/medium/';
+                    $home_thumb_path = 'public/uploads/project/home_thumb/';
+                    $extension =$imgval->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
+                    $imgval->move($destinationPath, $fileName); // uploading file to given path
+
+                    $this->obj->createThumbnail($fileName,260,167,$destinationPath,$thumb_path);
+                    $this->obj->createThumbnail($fileName,850,455,$destinationPath,$medium);
+                    $this->obj->createThumbnail($fileName,1920,900,$destinationPath,$home_thumb_path);
+                    $BidImage['bid_id']=$BidQueue_row->id;
+                    $BidImage['request_id']=$BidQueue_row->requestqueue_id;
+                    $BidImage['dealer_id']=$BidQueue_row->dealer_id;
+                    $BidImage['image']=$fileName;
+                    BidImage::create($BidImage);
+
+                }
+
+            }
         return redirect('dealers/request_detail/'.$id);
     }
     public function SaveEditBid(){
+$obj = new helpers();
+        
+
         $BidQueueprevious=BidQueue::where("id",Request::input('id'))->first();
         print_r($BidQueueprevious);
         $id=base64_encode(Request::input('request_id'));
@@ -403,8 +439,42 @@ class DealerController extends BaseController
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
         $BidQueue['details']=Request::input('details');
-        BidQueue::create($BidQueue);
+        $BidQueue_row=BidQueue::create($BidQueue);
+        $OtherImage=Request::file('images');
+            if(Request::hasFile('images')){
+                $this->obj = $obj;
+                foreach ($OtherImage as $imgval) {
+                    $extension =$imgval->getClientOriginalExtension();
+                    $destinationPath = 'public/uploads/project/';   // upload path
+                    $thumb_path = 'public/uploads/project/thumb/';
+                    $medium = 'public/uploads/project/medium/';
+                    $home_thumb_path = 'public/uploads/project/home_thumb/';
+                    $extension =$imgval->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
+                    $imgval->move($destinationPath, $fileName); // uploading file to given path
 
+                    $this->obj->createThumbnail($fileName,260,167,$destinationPath,$thumb_path);
+                    $this->obj->createThumbnail($fileName,850,455,$destinationPath,$medium);
+                    $this->obj->createThumbnail($fileName,1920,900,$destinationPath,$home_thumb_path);
+                    $BidImage['bid_id']=$BidQueue_row->id;
+                    $BidImage['request_id']=$BidQueue_row->requestqueue_id;
+                    $BidImage['dealer_id']=$BidQueue_row->dealer_id;
+                    $BidImage['image']=$fileName;
+                    BidImage::create($BidImage);
+
+                }
+
+            }
+            $preimg=Request::input('preimg');
+        if(isset($preimg)){
+            foreach ($preimg as $key => $pre) {
+                    $BidImage['bid_id']=$BidQueue_row->id;
+                    $BidImage['request_id']=$BidQueue_row->requestqueue_id;
+                    $BidImage['dealer_id']=$BidQueue_row->dealer_id;
+                    $BidImage['image']=$pre;
+                    BidImage::create($BidImage);
+            }
+        }
         $updateBidQueue=BidQueue::find(Request::input('id'));
         $updateBidQueue->visable=0;
         $updateBidQueue->tp_curve_poin = 0;

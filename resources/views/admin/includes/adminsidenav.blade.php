@@ -20,7 +20,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        
+                        <li>
+                            <a href="{{ url('/')}}/admin/dealers"><i class="fa fa-group fa-fw"></i> Dealers</a>
+                        </li>
                         
                     </ul>
                 </div>

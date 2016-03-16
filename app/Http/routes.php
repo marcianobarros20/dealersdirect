@@ -81,6 +81,7 @@ $router->group([
     Route::post('/admin/make/update_image/', 'CarMakeController@saveupdateMakeimage');
     Route::resource('/admin/model', 'CarModelController@getModel');
     Route::resource('/admin/year', 'CarYearController@getYear');
+    Route::resource('/admin/dealers', 'DealerController@getDealer');
 });
 
 // Logging in and out
@@ -122,6 +123,7 @@ Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
 Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
 Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
 Route::post('/ajax/setto-signup', 'Front\AjaxController@SetTosignup');
+Route::post('/ajax/add-image-option','Front\AjaxController@AddImageOptions');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
