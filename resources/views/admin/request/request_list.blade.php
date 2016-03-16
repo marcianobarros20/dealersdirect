@@ -51,7 +51,13 @@
                                                         {{$Request->fname}} {{$Request->lname}}
                                                 @endif
                                             </td>
-                                            <td><?php if(isset($Request->clients)){?>Registered<?php }else{ ?> UnRegistered <?php } ?></td>
+                                            <td>
+                                                @if(isset($Request->clients))
+                                                    Registered
+                                                        @else 
+                                                            UnRegistered
+                                                @endif
+                                            </td>
                                             <td>{{$Request->makes->name}}</td>
                                             <td>{{$Request->models->name}}</td>
                                             <td>{{$Request->year}}</td>
