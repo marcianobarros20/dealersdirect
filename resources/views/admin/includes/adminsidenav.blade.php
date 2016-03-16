@@ -23,7 +23,9 @@
                         <li>
                             <a href="{{ url('/')}}/admin/dealers"><i class="fa fa-group fa-fw"></i> Dealers</a>
                         </li>
-                        
+                        <li>
+                            <a href="{{ url('/')}}/admin/request"><i class="fa fa-th-list fa-fw"></i> Requests</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

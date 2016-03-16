@@ -82,6 +82,7 @@ $router->group([
     Route::resource('/admin/model', 'CarModelController@getModel');
     Route::resource('/admin/year', 'CarYearController@getYear');
     Route::resource('/admin/dealers', 'DealerController@getDealer');
+    Route::resource('/admin/request', 'RequestController@getRequest');
 });
 
 // Logging in and out

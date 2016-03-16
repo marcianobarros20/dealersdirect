@@ -31,5 +31,11 @@ class RequestQueue extends Model
     public function clients() {
         return $this->hasOne('App\Model\Client', 'id', 'client_id');
         }
+    public function bids() {
+        return $this->hasMany('App\Model\BidQueue', 'requestqueue_id')->where('visable','=',1);
+        }
+    public function options() {
+        return $this->hasMany('App\Model\RequestStyleEngineTransmissionColor', 'requestqueue_id');
+        }
 }
 
