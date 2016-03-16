@@ -59,7 +59,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$Request->makes->name}}</td>
-                                            <td>{{$Request->models->name}}</td>
+                                            <td></td>
                                             <td>{{$Request->year}}</td>
                                             <td>{{$Request->condition}}</td>
                                             <td>
