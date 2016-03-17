@@ -18,6 +18,8 @@
 
 
         $('.getoptiondetails').click(function(){
+            $(".reqopt").html('');
+            $( "#storeview" ).appendTo( ".reqopt" );
             var requestid=$(this).data("id");
             console.log(requestid);
                 $.ajax({
@@ -32,6 +34,8 @@
                 });
         });
         $('.getclientdetails').click(function(){
+            $(".reqopt").html('');
+            $( "#storeview" ).appendTo( ".reqopt" );
             var requestid=$(this).data("id");
             console.log(requestid);
                 $.ajax({
@@ -46,6 +50,8 @@
                 });
         });
         $('.getguestclientdetails').click(function(){
+            $(".reqopt").html('');
+            $( "#storeview" ).appendTo( ".reqopt" );
             var requestid=$(this).data("id");
             console.log(requestid);
                 $.ajax({
@@ -60,6 +66,8 @@
                 });
         });
         $('.getbiddetails').click(function(){
+            $(".reqopt").html('');
+            $( "#storeview" ).appendTo( ".reqopt" );
             var requestid=$(this).data("id");
             console.log(requestid);
                 $.ajax({

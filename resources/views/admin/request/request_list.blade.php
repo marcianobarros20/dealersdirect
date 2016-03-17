@@ -102,5 +102,14 @@
             </div>
 
 </div>
-
+<div id="storeview" style="display:none;">
+    <div class="modal-content">
+    
+    <div class="modal-body">
+        <img src="<?php echo url('/');?>/public/backend/ajax-loader.gif">
+        
+    </div>
+   
+</div>
+</div>
 @stop
