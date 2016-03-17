@@ -83,6 +83,11 @@ $router->group([
     Route::resource('/admin/year', 'CarYearController@getYear');
     Route::resource('/admin/dealers', 'DealerController@getDealer');
     Route::resource('/admin/request', 'RequestController@getRequest');
+
+    Route::post('/admin/ajax/getoptiondetails', 'AjaxController@getOptionDetails');
+    Route::post('/admin/ajax/getclientdetails', 'AjaxController@getClientDetails');
+    Route::post('/admin/ajax/getguestclientdetails', 'AjaxController@getGuestClientDetails');
+    Route::post('/admin/ajax/getbiddetails', 'AjaxController@getbiddetails');
 });
 
 // Logging in and out

@@ -14,6 +14,65 @@
 <script src="{{ url('/')}}/public/backend/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
+        
+
+
+        $('.getoptiondetails').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+                $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/getoptiondetails",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  $(".reqopt").html('');
+                  $(".reqopt").html(data);
+                
+                }
+                });
+        });
+        $('.getclientdetails').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+                $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/getclientdetails",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  $(".reqopt").html('');
+                  $(".reqopt").html(data);
+                
+                }
+                });
+        });
+        $('.getguestclientdetails').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+                $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/getguestclientdetails",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  $(".reqopt").html('');
+                  $(".reqopt").html(data);
+                
+                }
+                });
+        });
+        $('.getbiddetails').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+                $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/getbiddetails",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  $(".reqopt").html('');
+                  $(".reqopt").html(data);
+                
+                }
+                });
+        });
         $('#dataTables-example').DataTable({
                 responsive: true
         });

@@ -19,4 +19,10 @@ class BidQueue extends Model
     public function bid_image() {
         return $this->hasMany('App\Model\BidImage', 'bid_id');
         }
+    public function bid_acceptance_log() {
+        return $this->hasOne('App\Model\BidAcceptanceQueue', 'bid_id');
+        }
+    public function bid_blocked_log() {
+        return $this->hasOne('App\Model\BlockBidLog', 'bid_id');
+        }
 }

@@ -45,10 +45,11 @@
                                             
                                             <td>
                                                 @if(isset($Request->clients))
-                                                    {{$Request->clients->first_name}} {{$Request->clients->last_name}}
-
+                                                    
+                                                    <button class="btn btn-success getclientdetails" data-toggle="modal" data-id="{{$Request->clients->id}}" data-target="#myModal" type="button">{{$Request->clients->first_name}} {{$Request->clients->last_name}}</button><br>
                                                     @else
-                                                        {{$Request->fname}} {{$Request->lname}}
+                                                        
+                                                        <button class="btn btn-warning getguestclientdetails" data-toggle="modal" data-id="{{$Request->id}}" data-target="#myModal" type="button">{{$Request->fname}} {{$Request->lname}}</button><br>
                                                 @endif
                                             </td>
                                             <td>
@@ -69,18 +70,29 @@
                                             <td>
                                                 @if(isset($Request->options))
                                                     @foreach($Request->options as $options)
-                                                        <button class="btn btn-info" type="button">{{$options->styles->name}}</button><br>
+                                                        <button class="btn btn-info getoptiondetails" data-toggle="modal" data-id="{{$options->id}}" data-target="#myModal" type="button">{{$options->styles->name}}</button><br>
                                                     @endforeach
                                                 @endif
                                             </td>
-                                            <td>{{count($Request->bids)}}</td>
+                                            <td>
+                                            @if(count($Request->bids)!=0)
+                                                <button type="button" class="btn btn-danger btn-circle getbiddetails"  data-toggle="modal" data-id="{{$Request->id}}" data-target="#myModal" ><i class="fa fa-bell"></i> </button>
+                                            @endif
+                                            
+                                            </td>
                                         </tr>
                                         @endforeach
                                         
                                     </tbody>
                                 </table>
                             </div>
-                            
+                           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog reqopt">
+                                    
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div> 
                         </div>
                         <!-- /.panel-body -->
                     </div>
