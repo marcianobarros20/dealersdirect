@@ -25,7 +25,7 @@
                                         <li>{{$Bid->created_at}}</li>
                                          @if($Bid->visable==1 && $Bid->blocked!=1)
 
-                                        <li><button type="button" class="btn btn-success">Vissable</button></li>
+                                        <li><button type="button" class="btn btn-success">Visible</button></li>
                                         @endif
                                         @if($Bid->status==2)
 
