@@ -50,7 +50,9 @@ class AjaxController extends Controller
     	$BidQueue=BidQueue::where('requestqueue_id',$id)->with('dealers','request_queues','bid_image','bid_acceptance_log','bid_blocked_log')->get();
     	foreach ($BidQueue as $key => $bid) {
     		$RequestDealerLog=RequestDealerLog::where('dealer_id', $bid->dealer_id)->where('request_id', $bid->requestqueue_id)->first();
-    		$BidQueue[$key]['blocked']=$RequestDealerLog->blocked;
+    		$RequestDealerLogcount=RequestDealerLog::where('dealer_id', $bid->dealer_id)->where('request_id', $bid->requestqueue_id)->count();
+    		if($RequestDealerLogcount==0){$BidQueue[$key]['blocked']=0;}else{
+    		$BidQueue[$key]['blocked']=$RequestDealerLog->blocked;}
     	}
     	//dd($BidQueue);
     	return view('admin.ajax.get_bid_details',compact('BidQueue'));
