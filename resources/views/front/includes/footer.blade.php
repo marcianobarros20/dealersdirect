@@ -24,7 +24,7 @@
                   <li><a href="">Terms &amp; Conditions</a> </li>
                   <li><a href="">Privacy Policy</a> </li>
                 </ul>
-                <p><a href="http://www.edmunds.com/?id=meth499r2aepx8h7c7hcm9qz"><img src="<?php echo url('/');?>/public/front/images/300_horizontal_grey.png"></a></p>
+                <p><a href="http://www.edmunds.com/?id=meth499r2aepx8h7c7hcm9qz"><img src="<?php echo url('/');?>/public/front/images/100_horizontal_grey.png"></a></p>
           </div>
             </div>
       </div>
