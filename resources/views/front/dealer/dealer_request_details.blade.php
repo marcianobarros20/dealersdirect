@@ -37,7 +37,8 @@
                         <?php if($BidQueuecount==0){ ?>
                             <a class="button light medium dealpostbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>POST A BID</b> </a>
                         <?php }else{?>
-                             <a class="button light medium dealeditbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>EDIT YOUR BID</b> </a>
+                        <a class="button light medium dealstopbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>STOP BID</b> </a>
+                        <a class="button light medium dealeditbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>EDIT YOUR BID</b> </a>
                         <?php } ?>
                         </div>
                     </div>

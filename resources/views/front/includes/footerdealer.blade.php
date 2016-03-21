@@ -138,6 +138,26 @@ $(document).ready(function(){
         });
       return false;
     });
+    $('.dealstopbid').click(function(){
+      var modid=$(this).data("id");
+      console.log(modid);
+      $.ajax({
+            url: "<?php echo url('/');?>/ajax/checkdealersstatus",
+            data: {modid:modid,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              if(data==0){
+                        var urlnew="<?php echo url('/');?>/dealers/blocked";
+                        $(location).attr('href',urlnew);
+             }
+             if(data==1){
+                        var urlnewb="<?php echo url('/');?>/dealers/stop-bid/"+modid;
+                        $(location).attr('href',urlnewb);
+             }
+            }
+        });
+      return false;
+    });
 
 });
 

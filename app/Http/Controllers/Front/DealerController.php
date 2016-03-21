@@ -10,6 +10,8 @@ use App\Model\RequestQueue;                                 /* Model name*/
 use App\Model\RequestStyleEngineTransmissionColor;          /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidImage;                                     /* Model name*/
+use App\Model\BidStopLogDetail;                             /* Model name*/
+use App\Model\BidStopLog;                                   /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -513,8 +515,13 @@ class DealerController extends BaseController
                 $AverageMp=$AverageMp+$value->monthly_amount;
                 $tbid=$tbid+1;
             }
+            if($tbid==0){
+                $AverageTp=$AverageTp;
+                $AverageMp=$AverageMp;
+            }else{
             $AverageTp=$AverageTp/$tbid;
             $AverageMp=$AverageMp/$tbid;
+            }
             foreach ($BidQueuex as $key => $bid) {
                 
                // $curveArray[$key]['id']=$bid->id;
@@ -541,5 +548,49 @@ class DealerController extends BaseController
        $Dealer = Dealer::where('id', $dealer_userid)->first();
        return view('front.dealer.blocked',compact('Dealer'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
       
+    }
+    public function DealerStopBid($id=null){
+
+                $obj = new helpers();
+                    if(!$obj->checkDealerLogin())
+                    {
+                    return redirect('dealer-signin');
+                    }
+                
+                    $dealid=Session::get('dealer_userid');
+                    $Dealerdet=Dealer::find($dealid);
+                    if($Dealerdet->status==0){
+                        return redirect('/dealers/blocked');
+                    }else{
+                        $id=base64_decode($id);
+                        $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
+                        $dealer_userid=Session::get('dealer_userid');
+                        $BidQueues=BidQueue::where("dealer_id",$dealer_userid)->where("requestqueue_id",$RequestDealerLog->request_id)->get();
+                         $BidQueuesfirst=BidQueue::where("dealer_id",$dealer_userid)->where("requestqueue_id",$RequestDealerLog->request_id)->first();
+                        
+                            $BidStopLogDetail['dealer_id'] =$BidQueuesfirst->dealer_id;
+                            $BidStopLogDetail['request_id'] =$id;
+                            $BidStopLogDetail['details'] ="Bid Stop By Dealers";
+                            $BidStopLogDetail_row=BidStopLogDetail::create($BidStopLogDetail);
+
+                        foreach ($BidQueues as $key => $BidQueue) {
+                                $BidStopLog['requestqueue_id']=$BidQueue->requestqueue_id;
+                                $BidStopLog['dealer_id']=$BidQueue->dealer_id;
+                                $BidStopLog['bid_id']=$BidQueue->bid_id;
+                                $BidStopLog['total_amount']=$BidQueue->total_amount;
+                                $BidStopLog['monthly_amount']=$BidQueue->monthly_amount;
+                                $BidStopLog['details']=$BidQueue->details;
+                                $BidStopLog['tp_curve_poin']=$BidQueue->tp_curve_poin;
+                                $BidStopLog['mp_curve_poin']=$BidQueue->mp_curve_poin;
+                                $BidStopLog['acc_curve_poin']=$BidQueue->acc_curve_poin;
+                                $BidStopLog['stop_id']=$BidStopLogDetail_row->id;
+                                $BidStopLog_row=BidStopLog::create($BidStopLog);
+                                BidQueue::where('id', '=', $BidQueue->id)->delete();
+                        }
+                        $curve=self::CalculateBidCurve($id);
+                        $xes=base64_encode($id);
+                        return redirect('dealers/request_detail/'.$xes);
+                    }
+
     }
 }
