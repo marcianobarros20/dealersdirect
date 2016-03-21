@@ -125,8 +125,9 @@ class HomeController extends BaseController
     public function RequestSuccess(){
         $guest_user=Session::get('guest_user');
         $RequestQueue = RequestQueue::find($guest_user);
-        Session::forget('guest_user');
-        return view('front.home.request_success',compact('RequestQueue'),array('title'=>'DEALERSDIRECT | Request Success'));
+        //Session::forget('guest_user');
+        $client=0;
+        return view('front.home.request_success',compact('client','RequestQueue'),array('title'=>'DEALERSDIRECT | Request Success'));
 
     }
     public function ClientRegister(){
