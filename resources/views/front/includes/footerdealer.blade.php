@@ -15,12 +15,13 @@
             </div>
         <div class="six columns">
               <div class="footer-navigation">
-            <ul class="clearfix">
+                <ul class="clearfix">
                   <li><a href="<?php echo url('/');?>/dealer-dashboard" class="active">Dashboard</a> </li>
                   <li><a href="<?php echo url('/');?>/dealer/profile">Profile</a> </li>
                   <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a> </li>
                   
                 </ul>
+                <p><a href="http://www.edmunds.com/?id=meth499r2aepx8h7c7hcm9qz"><img src="<?php echo url('/');?>/public/front/images/300_horizontal_grey.png"></a></p>
           </div>
             </div>
       </div>

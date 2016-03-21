@@ -11,11 +11,12 @@
         <div class="six columns">
               <div class="copyrights">
             <p>&copy; 2016 - DealersDirect. All rights reserved.</p>
+
           </div>
             </div>
         <div class="six columns">
               <div class="footer-navigation">
-            <ul class="clearfix">
+                <ul class="clearfix">
                   <li><a href="<?php echo url('/');?>" class="active">Home</a> </li>
                   <li><a href="">About</a> </li>
                   <li><a href="">Services</a> </li>
@@ -23,6 +24,7 @@
                   <li><a href="">Terms &amp; Conditions</a> </li>
                   <li><a href="">Privacy Policy</a> </li>
                 </ul>
+                <p><a href="http://www.edmunds.com/?id=meth499r2aepx8h7c7hcm9qz"><img src="<?php echo url('/');?>/public/front/images/300_horizontal_grey.png"></a></p>
           </div>
             </div>
       </div>
