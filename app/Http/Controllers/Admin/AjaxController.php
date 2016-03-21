@@ -13,6 +13,7 @@ use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidAcceptanceQueue;                           /* Model name*/
 use App\Model\BlockBidLog;                                  /* Model name*/
 use App\Model\Client;                                       /* Model name*/
+use App\Model\Dealer;                                       /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -56,5 +57,19 @@ class AjaxController extends Controller
     	}
     	//dd($BidQueue);
     	return view('admin.ajax.get_bid_details',compact('BidQueue'));
+    }
+    public function activateDealer() {
+        $id=base64_decode(Request::input('requestid'));
+        $Dealer=Dealer::find($id);
+        $Dealer->status=1;
+        $Dealer->save();
+        return 1;
+    }
+    public function deactivateDealer(){
+        $id=base64_decode(Request::input('requestid'));
+        $Dealer=Dealer::find($id);
+        $Dealer->status=0;
+        $Dealer->save();
+        return 1;
     }
 }

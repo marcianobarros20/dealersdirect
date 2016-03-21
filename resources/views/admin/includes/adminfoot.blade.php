@@ -81,6 +81,44 @@
                 }
                 });
         });
+        $('.activatedealer').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+            $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/activatedealer",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  if(data==1){
+                    window.location.reload();
+                  }
+                  else{
+                    alert("Sorry Please Try Later");
+                  }
+                
+                }
+                });
+
+        });
+        $('.deactivatedealer').click(function(){
+            var requestid=$(this).data("id");
+            console.log(requestid);
+            $.ajax({
+                url: "<?php echo url('/');?>/admin/ajax/deactivatedealer",
+                data: {requestid:requestid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  if(data==1){
+                    window.location.reload();
+                  }
+                  else{
+                    alert("Sorry Please Try Later");
+                  }
+                
+                }
+                });
+
+        });
         $('#dataTables-example').DataTable({
                 responsive: true
         });

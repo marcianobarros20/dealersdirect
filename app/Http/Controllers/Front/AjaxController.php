@@ -13,6 +13,7 @@ use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidAcceptanceQueue;                           /* Model name*/
 use App\Model\BlockBidLog;                                  /* Model name*/
 use App\Model\Client;                                       /* Model name*/
+use App\Model\Dealer;                                       /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -446,5 +447,10 @@ class AjaxController extends Controller
     }
     public function AddImageOptions(){
         return view('front.ajax.add_image_options');
+    }
+    public function CheckDealersStatus(){
+        $id=Session::get('dealer_userid');
+        $Dealer=Dealer::find($id);
+        return $Dealer->status;
     }
 }

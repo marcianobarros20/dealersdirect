@@ -30,6 +30,7 @@
                                             <th>Dealer Name</th>
                                             <th>Dealer Email</th>
                                             <th>Dealer Login Date</th>
+                                            <th>Status</th>
                                             
                                         </tr>
                                     </thead>
@@ -41,6 +42,14 @@
                                             <td>{{$Dealer->first_name}} {{$Dealer->last_name}}</td>
                                             <td>{{$Dealer->email}}</td>
                                             <td>{{$Dealer->created_at}}</td>
+                                            <th>
+                                                @if($Dealer->status==0)
+                                                <button class="btn btn-success activatedealer"  data-id="{{base64_encode ($Dealer->id)}}"  type="button"><i class="fa fa-thumbs-o-up"></i> Activate</button><br>
+                                                    @else
+                                                        
+                                                    <button class="btn btn-warning deactivatedealer"  data-id="{{base64_encode ($Dealer->id)}}"  type="button"><i class="fa fa-thumbs-o-down"></i> Deactivate</button><br>
+                                                @endif
+                                            </th>
                                         </tr>
                                         <?php } ?>
                                         

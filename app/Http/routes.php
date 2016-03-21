@@ -88,6 +88,8 @@ $router->group([
     Route::post('/admin/ajax/getclientdetails', 'AjaxController@getClientDetails');
     Route::post('/admin/ajax/getguestclientdetails', 'AjaxController@getGuestClientDetails');
     Route::post('/admin/ajax/getbiddetails', 'AjaxController@getbiddetails');
+    Route::post('/admin/ajax/activatedealer', 'AjaxController@activateDealer');
+    Route::post('/admin/ajax/deactivatedealer', 'AjaxController@deactivateDealer');
 });
 
 // Logging in and out
@@ -130,6 +132,7 @@ Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
 Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
 Route::post('/ajax/setto-signup', 'Front\AjaxController@SetTosignup');
 Route::post('/ajax/add-image-option','Front\AjaxController@AddImageOptions');
+Route::post('/ajax/checkdealersstatus','Front\AjaxController@CheckDealersStatus');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -158,6 +161,7 @@ Route:: get('/dealers/edit-bid/{id}', 'Front\DealerController@editBid');
 Route:: post('/postbid/', 'Front\DealerController@SaveBid');
 Route:: post('/dealers/edit-bid', 'Front\DealerController@SaveEditBid');
 Route:: get('/testemail/{id}', 'Front\AjaxController@SendAcceptancemail');
+Route:: get('/dealers/blocked', 'Front\DealerController@BlockAction');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

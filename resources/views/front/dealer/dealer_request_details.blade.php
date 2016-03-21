@@ -35,9 +35,9 @@
                     <div data-appear-animation="slideInRight" class="four columns carell-animation slideInRight carell-animation-visible">
                         <div class="single-car-price">
                         <?php if($BidQueuecount==0){ ?>
-                            <a class="button light medium" href="<?php echo url('/');?>/dealers/post-bid/<?php echo base64_encode($requestqueuex['id']);?>"><b>POST A BID</b> </a>
+                            <a class="button light medium dealpostbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>POST A BID</b> </a>
                         <?php }else{?>
-                             <a class="button light medium" href="<?php echo url('/');?>/dealers/edit-bid/<?php echo base64_encode($requestqueuex['id']);?>"><b>EDIT YOUR BID</b> </a>
+                             <a class="button light medium dealeditbid" href="" data-id="<?php echo base64_encode($requestqueuex['id']);?>"><b>EDIT YOUR BID</b> </a>
                         <?php } ?>
                         </div>
                     </div>
