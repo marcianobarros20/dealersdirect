@@ -133,6 +133,8 @@ Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
 Route::post('/ajax/setto-signup', 'Front\AjaxController@SetTosignup');
 Route::post('/ajax/add-image-option','Front\AjaxController@AddImageOptions');
 Route::post('/ajax/checkdealersstatus','Front\AjaxController@CheckDealersStatus');
+Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDealer');
+Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

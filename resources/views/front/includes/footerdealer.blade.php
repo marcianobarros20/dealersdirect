@@ -56,6 +56,25 @@
 <script>
 
 $(document).ready(function(){
+      var sortby=$("#sortby").val();
+      var pagestart=$("#pagestart").val();
+      var pageend=$("#pageend").val();
+      var requestid=$("#requestid").val();
+      if(typeof sortby!= "undefined"){ 
+
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getupdatedbiddealer",
+                      data: {requestid:requestid,sortby:sortby,pagestart:pagestart,pageend:pageend,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#bidlist").html(data);
+                        }
+                        
+                      
+                      }
+              });
+      }
     $('.deletemake').click(function(){
 
         var makeid=$(this).data("id")
@@ -158,6 +177,7 @@ $(document).ready(function(){
         });
       return false;
     });
+
 
 });
 

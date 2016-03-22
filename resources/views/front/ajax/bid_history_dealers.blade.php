@@ -1,0 +1,154 @@
+<?php foreach ($BidQueue as $key => $bid) {
+?>
+<div class="comment clearfix">
+
+    <div class="comment-wrap">
+
+        <!-- content -->
+        <div class="twelve columns">
+
+            <div class="comment-meta">
+                <p>
+                    
+                    <span class="icon-reply"></span>
+                    <b>{!! $bid->dealers->first_name!!} {!! $bid->dealers->last_name!!}</b> {!! $bid->updated_at!!}
+                    <?php if($bid->status==3){ ?><span class="label success">Accepted</span><?php } ?>
+                    <?php if($bid->status==2){ ?><span class="label error">Rejected</span><?php } ?>
+                                        @if($bid->visable==1 && $bid->blocked!=1 && $bid->status!=2)
+
+                                        <button type="button" class="btn btn-success">Visible</button>
+                                        @endif
+                                        @if($bid->status==2)
+
+                                        <button type="button" class="btn btn-warning">Rejected</button>
+                                        @endif
+                                        @if($bid->status==3)
+
+                                        <button type="button" class="btn btn-info">Accepted</button>
+                                        @endif
+                                        @if($bid->blocked==1)
+                                        <button type="button" class="btn btn-danger">Blocked</button>
+                                        @endif
+            </div>
+
+            <div class="comment-content">
+                <p><strong>Monthly:</strong>{!! $bid->monthly_amount !!}</p>
+                <p><strong>Total:</strong>{!! $bid->total_amount !!}</p>
+                <p><strong>Details:</strong>{!! $bid->details!!} ....</p>
+
+            </div>
+            
+        </div>
+        <!-- .content -->
+    </div>
+
+</div>
+<?php } ?>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
+
+<script type="text/javascript" src="<?php echo url('/');?>/public/front/js/cross_dealers.js"></script> 
+<script>
+
+$(document).ready(function(){
+
+  $('.rejecttrigger').click(function(){
+          var requestid=$(this).data("request");
+          var rejectdetails=$("#reject"+requestid).val();
+          console.log(requestid);
+          console.log(rejectdetails);
+          $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidreject",
+                  data: {requestid:requestid,rejectdetails:rejectdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      //window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+  });
+  $('.accepttrigger').click(function(){
+        var requestid=$(this).data("request");
+          var acceptdetails=$("#accept"+requestid).val();
+          console.log(requestid);
+          console.log(acceptdetails);
+          $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidaccept",
+                  data: {requestid:requestid,acceptdetails:acceptdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+
+  });
+  $('.blocktrigger').click(function(){
+        var requestid=$(this).data("request");
+        var blockdetails=$("#bloc"+requestid).val();
+        console.log(requestid);
+        console.log(blockdetails);
+        $.ajax({
+                  url: "<?php echo url('/');?>/ajax/bidblock",
+                  data: {requestid:requestid,blockdetails:blockdetails,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                    if(data){
+                      window.location.reload();
+                    }
+                    
+                  
+                  }
+          });
+          return false;
+
+  });
+
+    $('.openreject').click(function(){
+         var requestid=$(this).data("request");
+         
+         $("#accep"+requestid).hide();
+         $("#at"+requestid).show();
+         $("#rj"+requestid).hide();
+         $("#rejec"+requestid).show();
+         $("#bl"+requestid).show();
+         $("#blc"+requestid).hide();
+         return false;
+    });
+    $('.openaccept').click(function(){
+         var requestid=$(this).data("request");
+         
+         $("#rejec"+requestid).hide();
+         $("#rj"+requestid).show();
+         $("#at"+requestid).hide();
+         $("#accep"+requestid).show();
+         $("#bl"+requestid).show();
+         $("#blc"+requestid).hide();
+         return false;
+    });
+    
+    $('.openbloc').click(function(){
+         var requestid=$(this).data("request");
+         
+         $("#rejec"+requestid).hide();
+         $("#rj"+requestid).show();
+         $("#at"+requestid).show();
+         $("#accep"+requestid).hide();
+
+         $("#bl"+requestid).hide();
+         $("#blc"+requestid).show();
+         return false;
+    });
+
+
+});
+
+</script>
