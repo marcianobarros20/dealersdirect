@@ -177,7 +177,32 @@ $(document).ready(function(){
         });
       return false;
     });
+$('#shortoptions').change(function(){
+    var shortoptions=$("#shortoptions").val();
+    //alert(shortoptions);
+    $("#sortby").val(shortoptions);
+    $("#pagestart").val(0);
+    $("#pageend").val(10);
+      var sortby=$("#sortby").val();
+      var pagestart=$("#pagestart").val();
+      var pageend=$("#pageend").val();
+      var requestid=$("#requestid").val();
+      if(typeof sortby!= "undefined"){ 
 
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getupdatedbiddealer",
+                      data: {requestid:requestid,sortby:sortby,pagestart:pagestart,pageend:pageend,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#bidlist").html(data);
+                        }
+                        
+                      
+                      }
+              });
+      }
+  });
 
 });
 

@@ -3,6 +3,7 @@
         $start=0; 
         $end=0;
         foreach ($BidQueue as $key => $Bidqueue) { 
+            if(($dealer_userid==$Bidqueue->dealer_id) ||($dealer_userid!=$Bidqueue->dealer_id && $Bidqueue->visable==1))
             if($i==0){ $start++;?>
             <div class="row">
             <?php } ?>
@@ -49,6 +50,7 @@
                                 </ul>
                             </div>
                             <!-- price -->
+
                             <div class="car-price">
                                 <a data-effect="mfp-zoom-out" data-bid="{!! $Bidqueue->id !!}"class="popup-modal" href="#test-popup" >
                                     <span class="price">View</span>

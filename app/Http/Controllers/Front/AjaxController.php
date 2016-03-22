@@ -284,7 +284,7 @@ class AjaxController extends Controller
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
-        if($sortby==1){
+         if($sortby==1){
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         if($sortby==2){
@@ -293,9 +293,9 @@ class AjaxController extends Controller
         if($sortby==3){
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
-        
+        $dealer_userid=Session::get('dealer_userid');
         $RequestQueue_row=RequestQueue::where('id',$id)->first();
-        return view('front.ajax.get_update_bid_dealers',compact('BidQueue','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+        return view('front.ajax.get_update_bid_dealers',compact('BidQueue','RequestQueue_row','dealer_userid'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function AcceptDealerBid(){
         $id=Request::input('requestid');
