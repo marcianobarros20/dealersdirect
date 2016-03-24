@@ -21,6 +21,7 @@ class RequestQueue extends Model
         'phone',
         'email',
         'client_id',
+        'im_type',
        ];
     public function makes() {
         return $this->hasOne('App\Model\Make', 'id', 'make_id');

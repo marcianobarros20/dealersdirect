@@ -156,8 +156,8 @@ $('#sinses').click(function(){
                         },
                         type :"post",
                         success: function( data ) {
-                          var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
-                        $(location).attr('href',urlnew);
+                          //var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
+                        //$(location).attr('href',urlnew);
                         }
                     });
   return false;

@@ -66,7 +66,26 @@
 
                     <!-- car single media -->
                     <div class="eight columns alpha">
+                        <?php if($EdmundsMakeModelYearImage!=""){ ?>
+                        <div class="bannercontainer">
+                            <div class="banner-single">
 
+                                <ul>
+                                <?php foreach ($EdmundsMakeModelYearImage as $key => $Image) {
+                                   
+                                ?>
+                                    <li data-transition="fade" data-slotamount="<?php echo $key;?>">
+
+                                        <img src="{{ url('/')}}/public/edmunds/make/big/<?php echo $Image->local_path_big;?>" alt="" title="" />
+
+                                    </li>
+
+                                <?php } ?>  
+
+                                </ul>
+                            </div>
+                        </div>
+                        <?php } ?>
                         <div class="comments" id="bidlist">
                             
                         </div>

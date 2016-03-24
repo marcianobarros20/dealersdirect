@@ -14,6 +14,7 @@ use App\Model\BidAcceptanceQueue;                           /* Model name*/
 use App\Model\BlockBidLog;                                  /* Model name*/
 use App\Model\Client;                                       /* Model name*/
 use App\Model\Dealer;                                       /* Model name*/
+use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -74,6 +75,9 @@ class AjaxController extends Controller
         $RequestQueue['lname'] =$lname;
         $RequestQueue['phone'] =$phone;
         $RequestQueue['email'] =$email;
+        
+        self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
+        $RequestQueue['im_type'] =1;
         $RequestQueue_row=RequestQueue::create($RequestQueue);
         $lastinsertedId = $RequestQueue_row->id;
         $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
@@ -437,11 +441,13 @@ class AjaxController extends Controller
         
         $client=Session::get('client_userid');
         $Client = Client::find($client);
+         $year_search=Request::input('year_search');
+         $make_search=Request::input('make_search');
+         $model_search=Request::input('model_search');
+        self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
         
-        $make_search=Request::input('make_search');
-        $model_search=Request::input('model_search');
         $condition_search=Request::input('condition_search');
-        $year_search=Request::input('year_search');
+        
         $tamo=Request::input('tamo');
         $mtamo=Request::input('mtamo');
         $RequestQueue['make_id'] =$make_search;
@@ -456,7 +462,7 @@ class AjaxController extends Controller
         $RequestQueue['type'] =1;
         $RequestQueue['email'] =$Client->email;
         $RequestQueue['client_id']=$Client->id;
-        
+        $RequestQueue['im_type'] =1;
         $RequestQueue_row=RequestQueue::create($RequestQueue);
         $lastinsertedId = $RequestQueue_row->id;
         $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
@@ -470,6 +476,7 @@ class AjaxController extends Controller
               self::SendRemindermail($lastlog);
               
           }
+          
           return $lastinsertedId;
     }
     public function SetTosignup(){
@@ -489,5 +496,71 @@ class AjaxController extends Controller
         $id=Session::get('dealer_userid');
         $Dealer=Dealer::find($id);
         return $Dealer->status;
+    }
+    public function ApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
+        
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $resuls=json_decode($result, true);
+        
+        foreach ($resuls['photos'] as $photoskey => $photos) {
+                    $makephoto['make_id']=$Make->id;
+                    $makephoto['model_id']=$Model->id;
+                    $makephoto['year_id']=$Year;
+                    $makephoto['title']=$photos['title'];
+                    $makephoto['category']=$photos['category'];
+                    foreach ($photos['sources'] as $sources) {
+                        if($sources['size']['width']==$photos['originalSize']['width']){
+                                $makephoto['edmunds_path_big']=$sources['link']['href'];
+                            }
+                        if($sources['size']['width']=="1600"){
+                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                        }
+                        
+                        if($sources['size']['width']=="276"){
+                            $makephoto['edmunds_path_small']=$sources['link']['href'];
+                        }
+
+                        
+                    }
+                    if(!isset($makephoto['edmunds_path_big'])){
+                        
+
+                        foreach ($photos['sources'] as $sourcesx) {
+                            if($sourcesx['size']['width']==$photos['originalSize']['width']){
+                                $makephoto['edmunds_path_big']=$sourcesx['link']['href'];
+                            }
+                        }
+                        
+                    }
+                        $bcontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_big']);
+                        $bnpath=time().".jpg";
+                        $bigpathe="public/edmunds/make/big/".$bnpath;
+                        $fbp = fopen($bigpathe, "w");
+                        fwrite($fbp, $bcontent);
+                        fclose($fbp);
+
+                        $scontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_small']);
+                        $smpath=time().".jpg";
+                        $smallpathe="public/edmunds/make/small/".$smpath;
+                        $fsp = fopen($smallpathe, "w");
+                        fwrite($fsp, $scontent);
+                        fclose($fsp);
+                        $makephoto['local_path_big']=$bnpath;
+                        $makephoto['local_path_smalll']=$smpath;
+                    EdmundsMakeModelYearImage::create($makephoto);
+
+                }
+
+
+
     }
 }

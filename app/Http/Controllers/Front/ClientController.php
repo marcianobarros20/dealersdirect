@@ -16,6 +16,7 @@ use App\Model\Engine;                                       /* Model name*/
 use App\Model\Transmission;                                 /* Model name*/
 use App\Model\Color;                                        /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
+use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -180,8 +181,16 @@ class ClientController extends BaseController
                     $requestqueuex[$key]['year']=$value->year;
                     $requestqueuex[$key]['conditions']=$value->condition;
                     $requestqueuex[$key]['total']=$value->total_amount;
-                    $requestqueuex[$key]['monthly']=$value->monthly_amount; 
+                    $requestqueuex[$key]['monthly']=$value->monthly_amount;
+                    if($value->im_type==1){
+                        
+                    $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
+                    $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                    }else{
+                        $requestqueuex[$key]['img']="";
+                    }
             }
+           // dd($requestqueuex);
             $client=Session::get('client_userid');
             return view('front.client.client_request_list',compact('requestqueuex','client'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
@@ -203,7 +212,14 @@ class ClientController extends BaseController
             // print_r($RequestStyleEngineTransmissionColor);
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             $client=Session::get('client_userid');
-            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            if($RequestQueue->im_type==1){
+                        
+                    $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
+                    
+                    }else{
+                        $EdmundsMakeModelYearImage="";
+                    }
+            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor','EdmundsMakeModelYearImage'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";

@@ -135,6 +135,7 @@ Route::post('/ajax/add-image-option','Front\AjaxController@AddImageOptions');
 Route::post('/ajax/checkdealersstatus','Front\AjaxController@CheckDealersStatus');
 Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDealer');
 Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
+Route::get('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
