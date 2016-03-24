@@ -12,6 +12,7 @@ use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\BidImage;                                     /* Model name*/
 use App\Model\BidStopLogDetail;                             /* Model name*/
 use App\Model\BidStopLog;                                   /* Model name*/
+use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -170,6 +171,20 @@ class DealerController extends BaseController
                             $requestqueuex[$key]['cemail']=self::maskcreate($em);
                             $requestqueuex[$key]['cphone']=self::maskcreate($ph);
                         }
+                    if($value->requestqueue->im_type==1){
+                        
+                    $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
+                    $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                    }else{
+                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
+                        if($local_path_smalll_count!=0){
+                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
+                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        }else{
+                            $requestqueuex[$key]['img']="";
+                        }
+                        
+                    }
             }
             return view('front.dealer.dealer_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
@@ -211,12 +226,25 @@ class DealerController extends BaseController
                     $requestqueuex['cemail']=self::maskcreate($em);
                     $requestqueuex['cphone']=self::maskcreate($ph);
                 }
+                if($RequestDealerLog->requestqueue->im_type==1){
+                        
+                    $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
+                    
+                    }else{
+                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->count();
+                        if($local_path_smalll_count!=0){
+                            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
+                            
+                        }else{
+                            $EdmundsMakeModelYearImage="";
+                        }
+                    }
             $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             $dealer_userid=Session::get('dealer_userid');
             $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->count();
              $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->first();
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
-            return view('front.dealer.dealer_request_details',compact('RequestQueue_row','BidQueue','BidQueuecount','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            return view('front.dealer.dealer_request_details',compact('RequestQueue_row','EdmundsMakeModelYearImage','BidQueue','BidQueuecount','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function DealerMakeList(){
         $obj = new helpers();

@@ -501,6 +501,8 @@ class AjaxController extends Controller
         
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
+        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
+        if($EdmundsMakeModelYearImagecount==0){
         $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
@@ -560,7 +562,7 @@ class AjaxController extends Controller
 
                 }
 
-
+                }
 
     }
 }

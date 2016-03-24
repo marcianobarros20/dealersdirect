@@ -187,7 +187,14 @@ class ClientController extends BaseController
                     $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
                     $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
                     }else{
-                        $requestqueuex[$key]['img']="";
+                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
+                        if($local_path_smalll_count!=0){
+                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
+                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        }else{
+                            $requestqueuex[$key]['img']="";
+                        }
+                        
                     }
             }
            // dd($requestqueuex);
