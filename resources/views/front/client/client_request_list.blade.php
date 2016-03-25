@@ -19,7 +19,10 @@
                         <!-- image -->
                         <div class="car-image">
                             <a href="#">
-                            <?php if($value['img']!=""){ ?><img src="{{ url('/')}}/public/edmunds/make/small/<?php echo $value['img']; ?>" title="car" alt="car" /><?php }else{ ?>
+                            <?php if($value['img']!="" && $value['im_type']==1){ ?><img src="{{ url('/')}}/public/edmunds/make/small/<?php echo $value['img']; ?>" title="car" alt="car" />
+                            <?php }elseif ($value['img']!="" && $value['im_type']==2) {?>
+                              <img src="{{ url('/')}}/public/edmundsstyle/style/small/<?php echo $value['img']; ?>" title="car" alt="car" />  
+                            <?php }else{ ?>
                                 <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
                             <?php } ?>
                             <span class="background">

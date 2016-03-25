@@ -75,8 +75,11 @@
                                    
                                 ?>
                                     <li data-transition="fade" data-slotamount="<?php echo $key;?>">
-
+                                    <?php if($requestqueuex['im_type']==1){ ?>
                                         <img src="{{ url('/')}}/public/edmunds/make/big/<?php echo $Image->local_path_big;?>" alt="" title="" />
+                                    <?php }else{ ?>
+                                        <img src="{{ url('/')}}/public/edmundsstyle/style/big/<?php echo $Image->local_path_big;?>" alt="" title="" />
+                                    <?php } ?>
 
                                     </li>
 

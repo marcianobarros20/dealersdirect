@@ -15,6 +15,7 @@ use App\Model\BlockBidLog;                                  /* Model name*/
 use App\Model\Client;                                       /* Model name*/
 use App\Model\Dealer;                                       /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
+use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -139,7 +140,71 @@ class AjaxController extends Controller
         $RequestStyleEngineTransmissionColor['style_id']=Request::input('styleid');
         $RequestStyleEngineTransmissionColor['count']=$count_by_request+1;
         $RequestStyleEngineTransmissionColor_row=RequestStyleEngineTransmissionColor::create($RequestStyleEngineTransmissionColor);
-        return $lastinsertedId = $RequestStyleEngineTransmissionColor_row->id;
+        $styleid=Request::input('styleid');
+        $requestqueueid=Request::input('requestid');
+        $EdmundsStyleImage_count=EdmundsStyleImage::where('style_id',$styleid)->count();
+        $RequestQueue=RequestQueue::where('id', $requestqueueid)->first();
+        if($EdmundsStyleImage_count==0){
+                    
+                    // $url = "https://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=".$styleid."&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+                    $url = "https://api.edmunds.com/api/media/v2/styles/".$styleid."/photos?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+                    $ch = curl_init();
+                    curl_setopt($ch,CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    $resuls=json_decode($result, true);
+        
+                    foreach ($resuls['photos'] as $photoskey => $photos) {
+                            $makephoto['make_id']=$RequestQueue->make_id;
+                            $makephoto['model_id']=$RequestQueue->carmodel_id;
+                            $makephoto['year_id']=$RequestQueue->year;
+                            $makephoto['title']=$photos['title'];
+                            $makephoto['style_id']=$styleid;
+                            $makephoto['category']=$photos['category'];
+                                foreach ($photos['sources'] as $sources) {
+                                    if($sources['size']['width']=="500"){
+                                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                                        }
+                                    if($sources['size']['width']=="1280"){
+                                        $makephoto['edmunds_path_big']=$sources['link']['href'];
+                                    }
+                                    if($sources['size']['width']=="1600"){
+                                        $makephoto['edmunds_path_big']=$sources['link']['href'];
+                                    }
+                                    if($sources['size']['width']=="196"){
+                                        $makephoto['edmunds_path_small']=$sources['link']['href'];
+                                    }
+                                    if($sources['size']['width']=="276"){
+                                        $makephoto['edmunds_path_small']=$sources['link']['href'];
+                                    }
+                                }
+                                $bcontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_big']);
+                                $bnpath=time().".jpg";
+                                $bigpathe="public/edmundsstyle/style/big/".$bnpath;
+                                $fbp = fopen($bigpathe, "w");
+                                fwrite($fbp, $bcontent);
+                                fclose($fbp);
+
+                                $scontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_small']);
+                                $smpath=time().".jpg";
+                                $smallpathe="public/edmundsstyle/style/small/".$smpath;
+                                $fsp = fopen($smallpathe, "w");
+                                fwrite($fsp, $scontent);
+                                fclose($fsp);
+                                $makephoto['local_path_big']=$bnpath;
+                                $makephoto['local_path_smalll']=$smpath;
+                                EdmundsStyleImage::create($makephoto);
+                    }
+
+        }
+        
+            
+            $RequestQueue->im_type = 2;
+            $RequestQueue->save();
+         return $lastinsertedId = $RequestStyleEngineTransmissionColor_row->id;
         exit;
     }
     public function AddEngineToRequestqueue(){

@@ -17,6 +17,7 @@ use App\Model\Transmission;                                 /* Model name*/
 use App\Model\Color;                                        /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
+use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -182,11 +183,19 @@ class ClientController extends BaseController
                     $requestqueuex[$key]['conditions']=$value->condition;
                     $requestqueuex[$key]['total']=$value->total_amount;
                     $requestqueuex[$key]['monthly']=$value->monthly_amount;
+                    $requestqueuex[$key]['im_type']=$value->im_type;
                     if($value->im_type==1){
                         
                     $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
                     $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                    }else{
+                    }
+                    elseif ($value->im_type==2) {
+                    $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->id)->first();
+                    $RequestStyleEngineTransmissionColor->style_id;
+                    $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
+                    $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
+                    }
+                    else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
                         if($local_path_smalll_count!=0){
                             $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
@@ -214,6 +223,7 @@ class ClientController extends BaseController
             $requestqueuex['total']=$RequestQueue->total_amount;
             $requestqueuex['monthly']=$RequestQueue->monthly_amount;
             $requestqueuex['cat']=$RequestQueue->created_at;
+            $requestqueuex['im_type']=$RequestQueue->im_type;
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
             // echo "<pre>";
             // print_r($RequestStyleEngineTransmissionColor);
@@ -223,8 +233,20 @@ class ClientController extends BaseController
                         
                     $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
                     
-                    }else{
+                    }
+                    elseif($RequestQueue->im_type==2){
+                        $RequestStyleEngineTransmissionColor_isx=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->orderBy('id', 'desc')->first();
+                        $RequestStyleEngineTransmissionColor_isx->style_id;
+                         $EdmundsMakeModelYearImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor_isx->style_id)->get();
+                    }
+                        else{
+                        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->count();
+                        if($EdmundsMakeModelYearImagecount!=0){
+                          $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();  
+                      }else{
                         $EdmundsMakeModelYearImage="";
+                      }
+                        
                     }
             return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor','EdmundsMakeModelYearImage'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
@@ -283,6 +305,8 @@ class ClientController extends BaseController
             $Stylenew=Style::where('year_id', $Caryear->year_id)->get();
             $newrequest_id=base64_encode($id);
             $client=Session::get('client_userid');
+
+
             return view('front.client.client_add_style',compact('newrequest_id','client','Stylenew','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Add Style'));
     }
     public function AddEngine($id=null){

@@ -13,6 +13,7 @@ use App\Model\BidImage;                                     /* Model name*/
 use App\Model\BidStopLogDetail;                             /* Model name*/
 use App\Model\BidStopLog;                                   /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
+use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -159,7 +160,7 @@ class DealerController extends BaseController
                     $requestqueuex[$key]['conditions']=$value->requestqueue->condition;
                     $requestqueuex[$key]['total']=$value->requestqueue->total_amount;
                     $requestqueuex[$key]['monthly']=$value->requestqueue->monthly_amount;
-
+                    $requestqueuex[$key]['im_type']=$value->requestqueue->im_type;
                     
                         if($value->status==1){
                             $fn=$value->requestqueue->fname;
@@ -175,7 +176,14 @@ class DealerController extends BaseController
                         
                     $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
                     $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                    }else{
+                    }
+                    elseif ($value->requestqueue->im_type==2) {
+                        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->requestqueue->id)->first();
+                        $RequestStyleEngineTransmissionColor->style_id;
+                        $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
+                        $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
+                    }
+                    else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
                         if($local_path_smalll_count!=0){
                             $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
@@ -216,6 +224,7 @@ class DealerController extends BaseController
             $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
             $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
             $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
+            $requestqueuex['im_type']=$RequestDealerLog->requestqueue->im_type;
                 if($RequestDealerLog->status==1){
                     $fn=$RequestDealerLog->requestqueue->fname;
                     $ln=$RequestDealerLog->requestqueue->lname;
@@ -230,7 +239,12 @@ class DealerController extends BaseController
                         
                     $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
                     
-                    }else{
+                    }elseif ($RequestDealerLog->requestqueue->im_type==2) {
+                       $RequestStyleEngineTransmissionColor_isx=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->requestqueue->id)->orderBy('id', 'desc')->first();
+                       $RequestStyleEngineTransmissionColor_isx->style_id;
+                         $EdmundsMakeModelYearImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor_isx->style_id)->get();
+                    }
+                    else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->count();
                         if($local_path_smalll_count!=0){
                             $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
