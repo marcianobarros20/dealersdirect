@@ -278,10 +278,11 @@ class ClientController extends BaseController
         $id=base64_decode($id);
         $RequestQueue=RequestQueue::where('id', $id)->with('makes','models')->first();
         $Caryear=Caryear::where('make_id', $RequestQueue->make_id)->where('carmodel_id', $RequestQueue->carmodel_id)->where('year', $RequestQueue->year)->with('makes','models')->first();
-        $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+       $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
         $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
             if($count==0){
-                $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?view=full&fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -290,6 +291,7 @@ class ClientController extends BaseController
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $resuls=json_decode($result, true);
+               
                 foreach ($resuls['styles'] as $styles) {
                     $Style['year_id'] =$Caryear->year_id;
                     $Style['make_id'] =$Caryear->make_id;
@@ -299,6 +301,7 @@ class ClientController extends BaseController
                     $Style['body'] =$styles['submodel']['body'];
                     $Style['trim'] =$styles['trim'];
                     $Style['submodel'] =json_encode($styles['submodel'],true);
+                    $Style['price'] =json_encode($styles['price'],true);
                     Style::create($Style);
                 }
             }
@@ -507,7 +510,7 @@ class ClientController extends BaseController
                     $RequestQueue['type'] =1;
                     $RequestQueue['email'] =$Client->email;
                     $RequestQueue['client_id']=$Client->id;
-
+                    $RequestQueue['im_type']=1;
                     $RequestQueue_row=RequestQueue::create($RequestQueue);
                     $lastinsertedId = $RequestQueue_row->id;
                     $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();

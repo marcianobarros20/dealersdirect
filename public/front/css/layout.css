@@ -3080,7 +3080,7 @@ ul.tab-list li:last-child {
 	border-bottom: none;
 }
 ul.tab-list li span {
-	float: right;
+	/*float: right;*/
 }
 .tab-content {
 	padding: 15px 20px;

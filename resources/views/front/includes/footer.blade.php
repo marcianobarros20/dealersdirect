@@ -4,6 +4,7 @@
 
 
 <!-- ================================================== BOTTOM FOOTER ================================================== -->
+<div id="dvLoading" style="display:none;"><img  style="position: absolute; height:80%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif"></div>
 <footer>
       <div class="bottom-footer clearfix;">
     <div class="container">
@@ -55,7 +56,22 @@
 <script type="text/javascript" src="<?php echo url('/');?>/public/front/js/custom.js"></script> 
 
 <!-- End Document================================================== -->
-
+<style type="text/css">
+  #dvLoading
+{
+   background:#000  no-repeat center center;
+   opacity: 0.8;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    left: 0;
+    outline: medium none !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1043;
+}
+</style>
 <script>
 
 $(document).ready(function(){
@@ -130,7 +146,7 @@ $('#plsnex').click(function(){
   return false;
 });
 $('#sinses').click(function(){
-
+$("#dvLoading").show();
     var make_search=$('#make_search').val();
     console.log(make_search);
     var model_search=$('#model_search').val();
@@ -156,8 +172,8 @@ $('#sinses').click(function(){
                         },
                         type :"post",
                         success: function( data ) {
-                          //var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
-                        //$(location).attr('href',urlnew);
+                          var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
+                        $(location).attr('href',urlnew);
                         }
                     });
   return false;
@@ -176,6 +192,7 @@ $('#newdeset').click(function(){
     console.log(tamo);
     var mtamo=$('#mtamo').val();
     console.log(mtamo);
+    $("#dvLoading").show();
             $.ajax({
                         url: "<?php echo url('/');?>/ajax/setto-signup",
                         data: {
@@ -256,7 +273,7 @@ $('#dstes').click(function(){
     console.log(phone);
     var email=$('#email').val();
     console.log(email);
-       
+       $("#dvLoading").show();
        $.ajax({
                         url: "<?php echo url('/');?>/ajax/requirment_queue",
                         data: {

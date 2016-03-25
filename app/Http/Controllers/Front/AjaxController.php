@@ -551,6 +551,10 @@ class AjaxController extends Controller
         $cachedata['year_search']=Request::input('year_search');
         $cachedata['tamo']=Request::input('tamo');
         $cachedata['mtamo']=Request::input('mtamo');
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $year_search=Request::input('year_search');
+        self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
         Session::put('cachedata',$cachedata);
         return 1;
     }
@@ -585,7 +589,7 @@ class AjaxController extends Controller
                     $makephoto['title']=$photos['title'];
                     $makephoto['category']=$photos['category'];
                     foreach ($photos['sources'] as $sources) {
-                        if($sources['size']['width']==$photos['originalSize']['width']){
+                        if($sources['size']['width']=="500"){
                                 $makephoto['edmunds_path_big']=$sources['link']['href'];
                             }
                         if($sources['size']['width']=="1600"){

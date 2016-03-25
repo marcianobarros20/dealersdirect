@@ -154,6 +154,9 @@
                                     <div>
                                        <div>
                                         <ul class="tab-list">
+                                            <?php if(!empty($value->styles['price'])){foreach (json_decode($value->styles['price'],true) as $key => $price) { if($key=="baseMSRP"){ ?>
+                                           <li><span class="label error">{!! $key !!}: {!!  $price !!}</span></li>
+                                            <?php }}} ?>
                                             <li><b>Style Name :</b> {!!  $value->styles->name !!}
                                             </li>
                                             <li><b>Body :</b> {!!  $value->styles->body !!}

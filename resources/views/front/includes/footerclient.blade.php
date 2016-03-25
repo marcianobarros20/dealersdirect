@@ -4,6 +4,7 @@
 
 
 <!-- ================================================== BOTTOM FOOTER ================================================== -->
+<div id="dvLoading" style="display:none;"><img  style="position: absolute; height:80%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif"></div>
 <footer>
       <div class="bottom-footer clearfix;">
     <div class="container">
@@ -53,10 +54,26 @@
 <script type="text/javascript" src="<?php echo url('/');?>/public/front/js/custom.js"></script> 
 
 <!-- End Document================================================== -->
-
+<style type="text/css">
+  #dvLoading
+{
+   background:#000  no-repeat center center;
+   opacity: 0.8;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    left: 0;
+    outline: medium none !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1043;
+}
+</style>
 <script>
 
 $(document).ready(function(){
+  //$('#dvLoading').fadeOut(2000);
     $('.deletemake').click(function(){
 
         var makeid=$(this).data("id")
@@ -79,7 +96,7 @@ $(document).ready(function(){
   $('.add_style').click(function(){
     var requestid=$(this).data("id");
     var styleid=$(this).data("styleid");
-    
+    $("#dvLoading").show();
     
 
     $.ajax({
@@ -317,7 +334,7 @@ $('#plsnex').click(function(){
   return false;
 });
 $('#sinses').click(function(){
-
+$("#dvLoading").show();
     var make_search=$('#make_search').val();
     console.log(make_search);
     var model_search=$('#model_search').val();

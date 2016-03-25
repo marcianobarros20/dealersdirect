@@ -17,6 +17,6 @@ class Style extends Model
         'make_id',
         'carmodel_id',
         'submodel',
-
+        'price',
        ];
 }
