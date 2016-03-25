@@ -193,7 +193,8 @@ class ClientController extends BaseController
                     $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->id)->first();
                     $RequestStyleEngineTransmissionColor->style_id;
                     $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
-                    $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
+                    
+                    $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_big;
                     }
                     else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
