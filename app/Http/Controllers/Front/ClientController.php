@@ -225,8 +225,7 @@ class ClientController extends BaseController
             $requestqueuex['cat']=$RequestQueue->created_at;
             $requestqueuex['im_type']=$RequestQueue->im_type;
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
-            // echo "<pre>";
-            // print_r($RequestStyleEngineTransmissionColor);
+            
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             $client=Session::get('client_userid');
             if($RequestQueue->im_type==1){
