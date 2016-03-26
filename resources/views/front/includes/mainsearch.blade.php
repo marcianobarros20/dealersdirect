@@ -59,14 +59,115 @@
                                           </select>
                                       </div>
                                   </div>
+                                  <div class="two columns" id="trade-in" style="margin-top: -3%;display:none;" data-appear-animation="slideInRight">
+                                  <p style="color:#ffffff;">Trade IN</p>
+                                    <div class="radio" style="margin-top: -15%;" data-appear-animation="slideInRight">
+                                      <input id="yes" type="radio" name="tradein" value="yes">
+                                      <label style="color:#ffffff;"for="yes">Yes</label>
+                                      <input id="no" type="radio" name="tradein" value="no">
+                                      <label  style="color:#ffffff;" for="no">No</label>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="two columns" id="owe-money"style="margin-top: -3%;display:none;" data-appear-animation="slideInRight">
+                                  <p style="color:#ffffff;">Owe Money</p>
+                                    <div class="radio" style="margin-top: -15%;">
+                                      <input id="1" type="radio" name="owe" value="1">
+                                      <label style="color:#ffffff;"for="1">Yes</label>
+                                      <input id="0" type="radio" name="owe" value="0">
+                                      <label  style="color:#ffffff;" for="0">No</label>
+                                    </div>
+                                  </div>
                                   <!-- .select input --> 
                                   <div class="two columns" id="nextis" style="display:none;"> 
-
+                                    
                                   <!-- search -->
                                     <div class="search-left" data-appear-animation="slideInRight">
                                         <button type="submit" id="plsnex"> <span class="icon-forward"></span>Next</button>
                                     </div>
                                   </div>
+                                  <div class="two columns" id="tradeinowe" style="display:none;">
+                                  <!-- search -->
+                                    <div class="search-left" data-appear-animation="slideInRight">
+                                        <button type="submit" id="tradeinowenex"> <span class="icon-forward"></span>Next</button>
+                                    </div>
+                                  </div> 
+                                    <div class="two columns" id="tradein" style="display:none;"> 
+                                    <!-- search -->
+                                    <div class="search-left" data-appear-animation="slideInRight">
+                                        <button type="submit" id="tradeinnex"> <span class="icon-forward"></span>Next</button>
+                                    </div>
+                                  </div>
+                              </div>
+                        </div>
+
+
+                        <div class="quick-search-fields" data-appear-animation="slideInLeft" id="tradefirsc" style="display:none;">
+                              <div class="ten columns clearfix"> 
+
+                                  <!-- select input -->
+                                  <div class="two columns" id="owediv" style="display: none;">
+                                      <div class="s-textinput">
+                                          <input type="text" id="oweamount" name="oweamount" class="formcon" placeholder="OWE Amount">
+                                      </div>
+                                  </div>
+                                  <div class="two columns">
+                                      <div class="select-input">
+                                        <select id="trademake_search">
+                                            <option value="" selected="selected">Any Make</option>
+                                              <?php foreach ($Makes as $value) {
+                                              ?>
+
+                                            <option value="<?php echo $value->id; ?>"><?php echo $value->name; ?></option>
+                                              <?php } ?>
+                                        </select>
+                                      </div>
+                                  </div>
+                                  <!-- .select input --> 
+
+                                  <!-- select input -->
+                                  <div class="two columns" id="pres">
+                                      <div class="select-input">
+                                        <select id="trademodel_search">
+                                          <option value="" selected="selected">Any Model</option>
+
+                                        </select>
+                                      </div>
+                                  </div>
+                                  <!-- .select input --> 
+
+                                  <!-- select input -->
+                                  <div class="two columns">
+                                      <div class="select-input">
+                                          <select id="tradecondition_search">
+                                              <option value="" selected="selected">Any Condition</option>
+                                              <option value="New">New</option>
+                                              <option value="Used">Used</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <!-- .select input --> 
+
+                                  <!-- select input -->
+                                  <div class="two columns">
+                                      <div class="select-input">
+                                          <select id="tradeyear_search">
+                                              <option value="" selected="selected">Any Year</option>
+                                              
+                                          </select>
+                                      </div>
+                                  </div>
+                                  
+                                  <!-- .select input --> 
+                                  <div class="two columns" id="tradenext" style="display:none;"> 
+                                    
+                                  <!-- search -->
+                                    <div class="search-left" data-appear-animation="slideInRight">
+                                        <button type="submit" id="plstradenex"> <span class="icon-forward"></span>Next</button>
+                                    </div>
+                                  </div>
+                                   
+                                    
                               </div>
                         </div>
 
