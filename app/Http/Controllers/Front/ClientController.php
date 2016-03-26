@@ -206,7 +206,7 @@ class ClientController extends BaseController
                         
                     }
             }
-           // dd($requestqueuex);
+           
             $client=Session::get('client_userid');
             return view('front.client.client_request_list',compact('requestqueuex','client'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
