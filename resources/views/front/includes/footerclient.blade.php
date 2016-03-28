@@ -317,13 +317,103 @@ $('#model_search').change(function(){
 
 
 });
-$('#year_search').change(function(){
-  var year_search=$('#year_search').val();
+$('#trademake_search').change(function(){
+                        
+                    var trademake_search=$('#trademake_search').val();
+                    
+                    $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_model",
+                        data: {make_search:trademake_search,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                        if (trademake_search!='' && data!=""){
+                          $("#trademodel_search").html('');
+                            $("#trademodel_search").html(data); 
+                          $("#trademodel_search").trigger("chosen:updated");;
+
+                        }
+                        }
+                        });
+                    $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_year",
+                        data: {make_search:trademake_search,model_search:0,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                        if (trademake_search!='' && data!=""){
+                          $("#tradeyear_search").html('');
+                            $("#tradeyear_search").html(data); 
+                          $("#tradeyear_search").trigger("chosen:updated");;
+
+                        }
+                        }
+                        });
+
+
+                  });
+$('#trademodel_search').change(function(){
+  var trademake_search=$('#trademake_search').val();
+  var trademodel_search=$('#trademodel_search').val();
+  $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_year",
+                        data: {make_search:trademake_search,model_search:trademodel_search,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                        if (trademake_search!='' && data!=""){
+                          $("#tradeyear_search").html('');
+                            $("#tradeyear_search").html(data); 
+                          $("#tradeyear_search").trigger("chosen:updated");;
+
+                        }
+                        }
+                        });
+
+
+});
+$('#tradeyear_search').change(function(){
+  var year_search=$('#tradeyear_search').val();
   if(year_search!=""){
-    $("#nextis").show();
+    //$("#nextis").show();
+    $("#tradenext").show();
 
   }
 
+});
+$('#year_search').change(function(){
+  var year_search=$('#year_search').val();
+  if(year_search!=""){
+    //$("#nextis").show();
+    $("#trade-in").show();
+  }
+
+});
+$("input:radio[name=tradein]").click(function() {
+    var value = $(this).val();
+    
+    if(value=="yes"){
+       $("#owe-money").show();
+       $("#nextis").hide();
+        $("#tradein").hide();
+        $("#tradeinowe").hide();
+    }else{
+      $("#owe-money").hide();
+      $("#nextis").show();
+      $("#tradein").hide();
+        $("#tradeinowe").hide();
+    }
+});
+$("input:radio[name=owe]").click(function() {
+    var owe = $(this).val();
+    
+    if(owe=="1"){
+       $("#tradeinowe").show();
+       $("#tradein").hide();
+       $("#nextis").hide();
+    }else{
+      
+      $("#tradein").show();
+      $("#tradeinowe").hide();
+      $("#nextis").hide();
+    }
 });
 
 $('#plsnex').click(function(){
@@ -331,6 +421,32 @@ $('#plsnex').click(function(){
   
   $("#firsc").hide();
   $("#secsc").show();
+  return false;
+});
+$('#plstradenex').click(function(){
+
+  
+  $("#firsc").hide();
+  $("#tradefirsc").hide();
+  $("#secsc").show();
+  return false;
+});
+$('#tradeinowenex').click(function(){
+
+  
+  $("#firsc").hide();
+  $("#tradefirsc").show();
+  $("#owediv").show();
+  $("#secsc").hide();
+  return false;
+});
+$('#tradeinnex').click(function(){
+
+  
+  $("#firsc").hide();
+  $("#tradefirsc").show();
+  $("#owediv").hide();
+  $("#secsc").hide();
   return false;
 });
 $('#sinses').click(function(){
@@ -347,6 +463,20 @@ $("#dvLoading").show();
     console.log(tamo);
     var mtamo=$('#mtamo').val();
     console.log(mtamo);
+    var tradein=$('input[name=tradein]:checked').val();
+    console.log(tradein);
+    var owe=$('input[name=owe]:checked').val();
+    console.log(owe);
+    var oweamount=$('#oweamount').val();
+    console.log(oweamount);
+    var trademake_search=$('#trademake_search').val();
+    console.log(trademake_search);
+    var trademodel_search=$('#trademodel_search').val();
+    console.log(trademodel_search);
+    var tradecondition_search=$('#tradecondition_search').val();
+    console.log(tradecondition_search);
+    var tradeyear_search=$('#tradeyear_search').val();
+    console.log(tradeyear_search);
             $.ajax({
                         url: "<?php echo url('/');?>/ajax/client-request",
                         data: {
@@ -355,7 +485,14 @@ $("#dvLoading").show();
                                 condition_search:condition_search,
                                 year_search:year_search,
                                 tamo:tamo,
-                                mtamo:mtamo,                               
+                                mtamo:mtamo,
+                                tradein:tradein,
+                                owe:owe,
+                                oweamount:oweamount,
+                                trademake_search:trademake_search,
+                                trademodel_search:trademodel_search,
+                                tradecondition_search:tradecondition_search,
+                                tradeyear_search:tradeyear_search,                                
                                 _token: '{!! csrf_token() !!}'
                         },
                         type :"post",

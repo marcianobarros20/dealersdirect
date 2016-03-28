@@ -550,6 +550,12 @@ class AjaxController extends Controller
          $year_search=Request::input('year_search');
          $make_search=Request::input('make_search');
          $model_search=Request::input('model_search');
+
+        $tradein=Request::input('tradein');
+        $trademake_search=Request::input('trademake_search');
+        $trademodel_search=Request::input('trademodel_search');
+        $tradecondition_search=Request::input('tradecondition_search');
+        $tradeyear_search=Request::input('tradeyear_search');
         self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
         
         $condition_search=Request::input('condition_search');
@@ -569,8 +575,37 @@ class AjaxController extends Controller
         $RequestQueue['email'] =$Client->email;
         $RequestQueue['client_id']=$Client->id;
         $RequestQueue['im_type'] =1;
+        if($tradein=="yes"){
+        $RequestQueue['trade_in']=1;
+        $TradeinRequest['make_id'] =$trademake_search;
+        $TradeinRequest['carmodel_id'] =$trademodel_search;
+        $TradeinRequest['condition'] =$tradecondition_search;
+        $TradeinRequest['year'] =$tradeyear_search;
+        $owe=Request::input('owe');
+            if(isset($owe)){
+                $TradeinRequest['owe'] =Request::input('owe');
+                $TradeinRequest['owe_amount'] =Request::input('oweamount');
+
+            }
+        
+        $TradeinRequest['fname'] =$Client->first_name;
+        $TradeinRequest['lname'] =$Client->last_name;
+        $TradeinRequest['phone'] =$Client->phone;
+        $TradeinRequest['email'] =$Client->email;
+        $TradeinRequest['client_id']=$Client->id;
+        $TradeinRequest['im_type'] =0;
+        $TradeinRequest['type'] =1;
+        }
         $RequestQueue_row=RequestQueue::create($RequestQueue);
         $lastinsertedId = $RequestQueue_row->id;
+        if(isset($TradeinRequest)){
+            self::ApiGetImageNotStyle($trademake_search,$trademodel_search,$tradeyear_search);
+            $TradeinRequest['im_type'] =1;
+            
+            $TradeinRequest['request_queue_id'] =$lastinsertedId;
+            $TradeinRequest=TradeinRequest::create($TradeinRequest);
+           
+        }
         $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
         foreach ($DealerMakeMap as $value) {
               $RequestDealerLog['dealer_id']=$value->dealer_id;

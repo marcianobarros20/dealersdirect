@@ -275,6 +275,20 @@ $("#dvLoading").show();
     console.log(tamo);
     var mtamo=$('#mtamo').val();
     console.log(mtamo);
+    var tradein=$('input[name=tradein]:checked').val();
+    console.log(tradein);
+    var owe=$('input[name=owe]:checked').val();
+    console.log(owe);
+    var oweamount=$('#oweamount').val();
+    console.log(oweamount);
+    var trademake_search=$('#trademake_search').val();
+    console.log(trademake_search);
+    var trademodel_search=$('#trademodel_search').val();
+    console.log(trademodel_search);
+    var tradecondition_search=$('#tradecondition_search').val();
+    console.log(tradecondition_search);
+    var tradeyear_search=$('#tradeyear_search').val();
+    console.log(tradeyear_search);
             $.ajax({
                         url: "<?php echo url('/');?>/ajax/client-request",
                         data: {
@@ -283,7 +297,14 @@ $("#dvLoading").show();
                                 condition_search:condition_search,
                                 year_search:year_search,
                                 tamo:tamo,
-                                mtamo:mtamo,                               
+                                mtamo:mtamo,
+                                tradein:tradein,
+                                owe:owe,
+                                oweamount:oweamount,
+                                trademake_search:trademake_search,
+                                trademodel_search:trademodel_search,
+                                tradecondition_search:tradecondition_search,
+                                tradeyear_search:tradeyear_search,                                
                                 _token: '{!! csrf_token() !!}'
                         },
                         type :"post",
