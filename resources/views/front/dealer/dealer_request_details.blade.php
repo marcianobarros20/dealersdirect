@@ -127,7 +127,9 @@
                                     <li>OPTIONS {!! $key+1 !!}</li>
                                     <?php } ?>
                                     <li>USER INFO</li>
-                                    
+                                    @if(!empty($RequestQueue_row->trade_in))
+                                    <li>Trade In</li>
+                                    @endif
                                 </ul>
 
                                 <div class="resp-tabs-container">
@@ -217,7 +219,37 @@
                                         </ul>
                                     </div>
                                     </div>
-
+                                    @if(!empty($RequestQueue_row->trade_in))
+                                        <div>
+                                            <div>
+                                                <ul class="tab-list">
+                                                    <li>Make:
+                                                        <span> <b>{{$RequestQueue_row->trade_ins->makes->name}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Model:
+                                                        <span> <b>{{$RequestQueue_row->trade_ins->models->name}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Year:
+                                                        <span> <b>{{$RequestQueue_row->trade_ins->year}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Conditions:
+                                                        <span> <b>{{$RequestQueue_row->trade_ins->condition}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    @if($RequestQueue_row->trade_ins->owe==1)
+                                                    <li>OWE Amount:
+                                                        <span> <b>{{$RequestQueue_row->trade_ins->owe_amount}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    @endif
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    @endif
                                     
                                 </div>
                             </div>

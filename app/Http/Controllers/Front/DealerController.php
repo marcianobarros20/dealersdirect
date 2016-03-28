@@ -256,7 +256,7 @@ class DealerController extends BaseController
             $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             $dealer_userid=Session::get('dealer_userid');
             $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->count();
-             $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->first();
+             $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
             $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
             return view('front.dealer.dealer_request_details',compact('RequestQueue_row','EdmundsMakeModelYearImage','BidQueue','BidQueuecount','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }

@@ -25,5 +25,8 @@ class RequestQueue extends Model
     public function options() {
         return $this->hasMany('App\Model\RequestStyleEngineTransmissionColor', 'requestqueue_id');
         }
+    public function trade_ins(){
+        return $this->hasOne('App\Model\TradeinRequest', 'request_queue_id','id');
+    }
 }
 

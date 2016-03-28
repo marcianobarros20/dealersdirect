@@ -112,6 +112,9 @@
                                     <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
                                     <li>OPTIONS {!! $key+1 !!}</li>
                                     <?php } ?>
+                                    @if(!empty($RequestQueue->trade_in))
+                                    <li>Trade In</li>
+                                    @endif
                                     
                                     
                                 </ul>
@@ -119,7 +122,7 @@
                                 <div class="resp-tabs-container">
 
                                     <div>
-                                         <div>
+                                    <div>
                                         <ul class="tab-list">
                                             <li>Make:
                                                 <span> <b><?php echo $requestqueuex['make'];?></b> 
@@ -152,42 +155,75 @@
                                     <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
                                     
                                     <div>
-                                       <div>
-                                        <ul class="tab-list">
-                                            <?php if(!empty($value->styles['price'])){foreach (json_decode($value->styles['price'],true) as $key => $price) { if($key=="baseMSRP"){ ?>
-                                           <li><span class="label error">{!! $key !!}: {!!  $price !!}</span></li>
-                                            <?php }}} ?>
-                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
-                                            </li>
-                                            <li><b>Body :</b> {!!  $value->styles->body !!}
-                                            </li>
-                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
-                                            </li>
-                                            <li><b>Compression Ratio :</b> {!!  $value->engines['compressionRatio'] !!}</li>
-                                            <li><b>Cylinder :</b> {!!  $value->engines['cylinder'] !!}</li>
-                                            <li><b>Size :</b> {!!  $value->engines['size'] !!}</li>
-                                            <li><b>Displacement :</b> {!!  $value->engines['displacement'] !!}</li>
-                                            <li><b>Configuration :</b> {!!  $value->engines['configuration'] !!}</li>
-                                            <li><b>Fuel Type :</b> {!!  $value->engines['fuelType'] !!}</li>
-                                            <li><b>Horsepower :</b> {!!  $value->engines['horsepower'] !!}</li>
-                                            <li><b>Torque :</b> {!!  $value->engines['torque'] !!}</li>
-                                            <li><b>Total Valves :</b> {!!  $value->engines['totalValves'] !!}</li>
-                                            <li><b>Type :</b> {!!  $value->engines['type'] !!}</li>
-                                            <li><b>Code :</b> {!!  $value->engines['code'] !!}</li>
-                                            <li><b>Compressor Type :</b> {!!  $value->engines['compressorType'] !!}</li>
-                                            <?php if(!empty($value->engines['rpm'])){foreach (json_decode($value->engines['rpm'],true) as $key => $rpm) { ?>
-                                           <li><b>RPM ({!! $key !!}):</b> {!!  $rpm !!}</li>
-                                            <?php }} ?>
-                                            <?php if(!empty($value->engines['valve'])){foreach (json_decode($value->engines['valve'],true) as $keyv => $valve) { ?>
-                                            <li><b>Valve ({!! $keyv !!}):</b> {!!  $valve !!}</li>
-                                            <?php }} ?>
-                                            
-                                        </ul>
-                                    </div>
+                                        <div>
+                                            <ul class="tab-list">
+                                                <?php if(!empty($value->styles['price'])){foreach (json_decode($value->styles['price'],true) as $key => $price) { if($key=="baseMSRP"){ ?>
+                                               <li><span class="label error">{!! $key !!}: {!!  $price !!}</span></li>
+                                                <?php }}} ?>
+                                                <li><b>Style Name :</b> {!!  $value->styles->name !!}
+                                                </li>
+                                                <li><b>Body :</b> {!!  $value->styles->body !!}
+                                                </li>
+                                                <li><b>Style Name :</b> {!!  $value->styles->name !!}
+                                                </li>
+                                                <li><b>Compression Ratio :</b> {!!  $value->engines['compressionRatio'] !!}</li>
+                                                <li><b>Cylinder :</b> {!!  $value->engines['cylinder'] !!}</li>
+                                                <li><b>Size :</b> {!!  $value->engines['size'] !!}</li>
+                                                <li><b>Displacement :</b> {!!  $value->engines['displacement'] !!}</li>
+                                                <li><b>Configuration :</b> {!!  $value->engines['configuration'] !!}</li>
+                                                <li><b>Fuel Type :</b> {!!  $value->engines['fuelType'] !!}</li>
+                                                <li><b>Horsepower :</b> {!!  $value->engines['horsepower'] !!}</li>
+                                                <li><b>Torque :</b> {!!  $value->engines['torque'] !!}</li>
+                                                <li><b>Total Valves :</b> {!!  $value->engines['totalValves'] !!}</li>
+                                                <li><b>Type :</b> {!!  $value->engines['type'] !!}</li>
+                                                <li><b>Code :</b> {!!  $value->engines['code'] !!}</li>
+                                                <li><b>Compressor Type :</b> {!!  $value->engines['compressorType'] !!}</li>
+                                                <?php if(!empty($value->engines['rpm'])){foreach (json_decode($value->engines['rpm'],true) as $key => $rpm) { ?>
+                                               <li><b>RPM ({!! $key !!}):</b> {!!  $rpm !!}</li>
+                                                <?php }} ?>
+                                                <?php if(!empty($value->engines['valve'])){foreach (json_decode($value->engines['valve'],true) as $keyv => $valve) { ?>
+                                                <li><b>Valve ({!! $keyv !!}):</b> {!!  $valve !!}</li>
+                                                <?php }} ?>
+                                                
+                                            </ul>
+                                        </div>
                                     </div>
 
                                     <?php } ?>
-                                    
+                                    @if(!empty($RequestQueue->trade_in))
+                                        <div>
+                                            <div>
+                                                <ul class="tab-list">
+                                                    <li>Make:
+                                                        <span> <b>{{$RequestQueue->trade_ins->makes->name}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Model:
+                                                        <span> <b>{{$RequestQueue->trade_ins->models->name}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Year:
+                                                        <span> <b>{{$RequestQueue->trade_ins->year}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    <li>Conditions:
+                                                        <span> <b>{{$RequestQueue->trade_ins->condition}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    @if($RequestQueue->trade_ins->owe==1)
+                                                    <li>OWE Amount:
+                                                        <span> <b>{{$RequestQueue->trade_ins->owe_amount}}</b> 
+                                                        </span>
+                                                    </li>
+                                                    @endif
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    @endif
+
+
+
                                 </div>
                             </div>
 

@@ -225,7 +225,7 @@ class ClientController extends BaseController
             return view('front.client.client_request_list',compact('requestqueuex','client'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
     public function requestDetail($id=null){
-            $RequestQueue=RequestQueue::where('id', $id)->with('makes')->first();
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
             $requestqueuex['id']=$RequestQueue->id;
             $requestqueuex['status']=$RequestQueue->status;
             $requestqueuex['make']=$RequestQueue->makes->name;
@@ -261,7 +261,8 @@ class ClientController extends BaseController
                       }
                         
                     }
-            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor','EdmundsMakeModelYearImage'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            //dd();
+            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor','EdmundsMakeModelYearImage','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";
