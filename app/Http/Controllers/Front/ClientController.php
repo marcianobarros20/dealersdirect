@@ -185,15 +185,28 @@ class ClientController extends BaseController
                     $requestqueuex[$key]['monthly']=$value->monthly_amount;
                     $requestqueuex[$key]['im_type']=$value->im_type;
                     if($value->im_type==1){
-                        
-                    $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
-                    $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                    $local_path_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
+                        if($local_path_count!=0){
+                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
+                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        }
+                        else{
+                           $requestqueuex[$key]['img']=""; 
+                        }
+                   
                     }
                     elseif ($value->im_type==2) {
                     $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->id)->first();
                     $RequestStyleEngineTransmissionColor->style_id;
-                    $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
-                    $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_big;
+                    
+                    $EdmundsStyleImagecount=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->count();
+                    
+                        if($EdmundsStyleImagecount!=0){
+                            $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
+                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_big;
+                        }else{
+                             $requestqueuex[$key]['img']="";
+                        }
                     }
                     else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
