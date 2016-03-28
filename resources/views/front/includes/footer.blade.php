@@ -144,8 +144,8 @@ $('#trademake_search').change(function(){
 
                   });
 $('#trademodel_search').change(function(){
-  var make_search=$('#trademake_search').val();
-  var model_search=$('#trademodel_search').val();
+  var trademake_search=$('#trademake_search').val();
+  var trademodel_search=$('#trademodel_search').val();
   $.ajax({
                         url: "<?php echo url('/');?>/ajax/get_year",
                         data: {make_search:trademake_search,model_search:trademodel_search,_token: '{!! csrf_token() !!}'},
@@ -308,6 +308,20 @@ $('#newdeset').click(function(){
     console.log(tamo);
     var mtamo=$('#mtamo').val();
     console.log(mtamo);
+    var tradein=$('input[name=tradein]:checked').val();
+    console.log(tradein);
+    var owe=$('input[name=owe]:checked').val();
+    console.log(owe);
+    var oweamount=$('#oweamount').val();
+    console.log(oweamount);
+    var trademake_search=$('#trademake_search').val();
+    console.log(trademake_search);
+    var trademodel_search=$('#trademodel_search').val();
+    console.log(trademodel_search);
+    var tradecondition_search=$('#tradecondition_search').val();
+    console.log(tradecondition_search);
+    var tradeyear_search=$('#tradeyear_search').val();
+    console.log(tradeyear_search);
     $("#dvLoading").show();
             $.ajax({
                         url: "<?php echo url('/');?>/ajax/setto-signup",
@@ -317,7 +331,14 @@ $('#newdeset').click(function(){
                                 condition_search:condition_search,
                                 year_search:year_search,
                                 tamo:tamo,
-                                mtamo:mtamo,                               
+                                mtamo:mtamo,
+                                tradein:tradein,
+                                owe:owe,
+                                oweamount:oweamount,
+                                trademake_search:trademake_search,
+                                trademodel_search:trademodel_search,
+                                tradecondition_search:tradecondition_search,
+                                tradeyear_search:tradeyear_search,                               
                                 _token: '{!! csrf_token() !!}'
                         },
                         type :"post",
@@ -389,6 +410,23 @@ $('#dstes').click(function(){
     console.log(phone);
     var email=$('#email').val();
     console.log(email);
+
+
+    var tradein=$('input[name=tradein]:checked').val();
+    console.log(tradein);
+    var owe=$('input[name=owe]:checked').val();
+    console.log(owe);
+    var oweamount=$('#oweamount').val();
+    console.log(oweamount);
+    var trademake_search=$('#trademake_search').val();
+    console.log(trademake_search);
+    var trademodel_search=$('#trademodel_search').val();
+    console.log(trademodel_search);
+    var tradecondition_search=$('#tradecondition_search').val();
+    console.log(tradecondition_search);
+    var tradeyear_search=$('#tradeyear_search').val();
+    console.log(tradeyear_search);
+    // return false;
        $("#dvLoading").show();
        $.ajax({
                         url: "<?php echo url('/');?>/ajax/requirment_queue",
@@ -403,11 +441,18 @@ $('#dstes').click(function(){
                                 lname:lname,
                                 phone:phone,
                                 email:email,
+                                tradein:tradein,
+                                owe:owe,
+                                oweamount:oweamount,
+                                trademake_search:trademake_search,
+                                trademodel_search:trademodel_search,
+                                tradecondition_search:tradecondition_search,
+                                tradeyear_search:tradeyear_search,
                                 _token: '{!! csrf_token() !!}'
                         },
                         type :"post",
                         success: function( data ) {
-                          var urlnew="<?php echo url('/');?>/request_success";
+                          var urlnew="<?php echo url('/');?>/request_success/"+data;
                         $(location).attr('href',urlnew);
                         }
                         });

@@ -17,7 +17,7 @@
 |
 */
 Route::get('/', 'Front\HomeController@index');
-Route::get('/request_success', 'Front\HomeController@RequestSuccess');
+Route::get('/request_success/{id}', 'Front\HomeController@RequestSuccess');
 Route::get('/refresh-token', function(){
     return csrf_token();
 });

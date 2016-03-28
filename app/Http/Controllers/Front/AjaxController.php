@@ -16,6 +16,7 @@ use App\Model\Client;                                       /* Model name*/
 use App\Model\Dealer;                                       /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
+use App\Model\TradeinRequest;                               /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -55,6 +56,7 @@ class AjaxController extends Controller
     }
     public function requirmentqueue()
     {
+        //dd(Request::input());
         $make_search=Request::input('make_search');
         $model_search=Request::input('model_search');
         $condition_search=Request::input('condition_search');
@@ -66,6 +68,13 @@ class AjaxController extends Controller
         $phone=Request::input('phone');
         $email=Request::input('email');
 
+        $tradein=Request::input('tradein');
+        $trademake_search=Request::input('trademake_search');
+        $trademodel_search=Request::input('trademodel_search');
+        $tradecondition_search=Request::input('tradecondition_search');
+        $tradeyear_search=Request::input('tradeyear_search');
+        
+        
         $RequestQueue['make_id'] =$make_search;
         $RequestQueue['carmodel_id'] =$model_search;
         $RequestQueue['condition'] =$condition_search;
@@ -76,11 +85,40 @@ class AjaxController extends Controller
         $RequestQueue['lname'] =$lname;
         $RequestQueue['phone'] =$phone;
         $RequestQueue['email'] =$email;
+        $RequestQueue['im_type'] =0;
+        if($tradein=="yes"){
+        $RequestQueue['trade_in']=1;
+        $TradeinRequest['make_id'] =$trademake_search;
+        $TradeinRequest['carmodel_id'] =$trademodel_search;
+        $TradeinRequest['condition'] =$tradecondition_search;
+        $TradeinRequest['year'] =$tradeyear_search;
+        $owe=Request::input('owe');
+            if(isset($owe)){
+                $TradeinRequest['owe'] =Request::input('owe');
+                $TradeinRequest['owe_amount'] =Request::input('oweamount');
+
+            }
         
+        $TradeinRequest['fname'] =$fname;
+        $TradeinRequest['lname'] =$lname;
+        $TradeinRequest['phone'] =$phone;
+        $TradeinRequest['email'] =$email;
+        $TradeinRequest['im_type'] =0;
+        }
         self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
         $RequestQueue['im_type'] =1;
+        
         $RequestQueue_row=RequestQueue::create($RequestQueue);
         $lastinsertedId = $RequestQueue_row->id;
+        
+        if(isset($TradeinRequest)){
+            self::ApiGetImageNotStyle($trademake_search,$trademodel_search,$tradeyear_search);
+            $TradeinRequest['im_type'] =1;
+            
+            $TradeinRequest['request_queue_id'] =$lastinsertedId;
+            $TradeinRequest=TradeinRequest::create($TradeinRequest);
+           
+        }
         $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
           foreach ($DealerMakeMap as $value) {
               $RequestDealerLog['dealer_id']=$value->dealer_id;
@@ -92,10 +130,13 @@ class AjaxController extends Controller
               self::SendRemindermail($lastlog);
               
           }
-        //echo "Done";
+        
         Session::forget('guest_user');
-        Session::put('guest_user', $lastinsertedId);
-        //return view('front.ajax.create_year_types',compact('Caryear'));
+        
+        echo base64_encode($lastinsertedId);
+        exit;
+        
+        
     }
     public function SendRemindermail($maskval){
             $RequestDealerLog=RequestDealerLog::where('id', $maskval)->with('makes','dealers')->first();
@@ -554,7 +595,31 @@ class AjaxController extends Controller
         $make_search=Request::input('make_search');
         $model_search=Request::input('model_search');
         $year_search=Request::input('year_search');
+        
+
+        $tradein=Request::input('tradein');
+        $trademake_search=Request::input('trademake_search');
+        $trademodel_search=Request::input('trademodel_search');
+        $tradecondition_search=Request::input('tradecondition_search');
+        $tradeyear_search=Request::input('tradeyear_search');
+        $cachedata['tradein']=$tradein;
+        if($tradein=="yes"){
+        $cachedata['trade_in']=1;
+        $cachedata['trademake_search'] =$trademake_search;
+        $cachedata['trademodel_search'] =$trademodel_search;
+        $cachedata['tradecondition_search'] =$tradecondition_search;
+        $cachedata['tradeyear_search'] =$tradeyear_search;
+        $cachedata['owe'] =0;
+        $owe=Request::input('owe');
+        if(isset($owe)){
+        $cachedata['owe'] =Request::input('owe');
+        $cachedata['owe_amount'] =Request::input('oweamount');
+
+        }
+        }
         self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
+        self::ApiGetImageNotStyle($trademake_search,$trademodel_search,$tradeyear_search);
+        $cachedata['im_type'] =1;
         Session::put('cachedata',$cachedata);
         return 1;
     }
@@ -572,7 +637,7 @@ class AjaxController extends Controller
         $Model=Carmodel::find($Models);
         $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
         if($EdmundsMakeModelYearImagecount==0){
-        $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+         $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);

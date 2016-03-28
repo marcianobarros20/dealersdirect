@@ -64,8 +64,8 @@
                                     <div class="radio" style="margin-top: -15%;" data-appear-animation="slideInRight">
                                       <input id="yes" type="radio" name="tradein" value="yes">
                                       <label style="color:#ffffff;"for="yes">Yes</label>
-                                      <input id="no" type="radio" name="tradein" value="no">
-                                      <label  style="color:#ffffff;" for="no">No</label>
+                                      <input id="no" type="radio"  name="tradein" value="no">
+                                      <label  style="color:#ffffff;"   for="no">No</label>
                                     </div>
                                   </div>
                                   
@@ -74,8 +74,8 @@
                                     <div class="radio" style="margin-top: -15%;">
                                       <input id="1" type="radio" name="owe" value="1">
                                       <label style="color:#ffffff;"for="1">Yes</label>
-                                      <input id="0" type="radio" name="owe" value="0">
-                                      <label  style="color:#ffffff;" for="0">No</label>
+                                      <input id="0" type="radio"  name="owe" value="0">
+                                      <label  style="color:#ffffff;"   for="0">No</label>
                                     </div>
                                   </div>
                                   <!-- .select input --> 

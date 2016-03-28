@@ -122,8 +122,9 @@ class HomeController extends BaseController
     {
         //
     }
-    public function RequestSuccess(){
-        $guest_user=Session::get('guest_user');
+    public function RequestSuccess($id=null){
+        $guest_user=base64_decode($id);
+        
         $RequestQueue = RequestQueue::find($guest_user);
         //Session::forget('guest_user');
         $client=0;

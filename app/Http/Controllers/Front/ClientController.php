@@ -18,6 +18,7 @@ use App\Model\Color;                                        /* Model name*/
 use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
+use App\Model\TradeinRequest;                               /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -290,10 +291,10 @@ class ClientController extends BaseController
         $id=base64_decode($id);
         $RequestQueue=RequestQueue::where('id', $id)->with('makes','models')->first();
         $Caryear=Caryear::where('make_id', $RequestQueue->make_id)->where('carmodel_id', $RequestQueue->carmodel_id)->where('year', $RequestQueue->year)->with('makes','models')->first();
-       $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+       $urlxx='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
         $count=Style::where('year_id',$Caryear->year_id)->where('make_id',$Caryear->make_id)->where('carmodel_id',$Caryear->carmodel_id)->count();
             if($count==0){
-                $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?view=full&fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/'.$RequestQueue->makes->nice_name.'/'.$RequestQueue->models->nice_name.'/'.$Caryear->year.'/styles?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
                 
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
@@ -330,7 +331,7 @@ class ClientController extends BaseController
         $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
         $count=Engine::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($count==0){
-                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/engines?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/engines?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -383,7 +384,7 @@ class ClientController extends BaseController
         }
         $counttransmission=Transmission::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($counttransmission==0){
-                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/transmissions?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/transmissions?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -407,7 +408,7 @@ class ClientController extends BaseController
         }
         $countcolor=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->count();
         if($countcolor==0){
-                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/colors?fmt=json&api_key=zxccg2zf747xeqvmuyxk9ht2';
+                $url='https://api.edmunds.com/api/vehicle/v2/styles/'.$RequestStyleEngineTransmissionColor->style_id.'/colors?fmt=json&api_key=meth499r2aepx8h7c7hcm9qz';
                 $ch = curl_init();
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -523,8 +524,31 @@ class ClientController extends BaseController
                     $RequestQueue['email'] =$Client->email;
                     $RequestQueue['client_id']=$Client->id;
                     $RequestQueue['im_type']=1;
+
+                    if($cachedata['tradein']=="yes"){
+                        $RequestQueue['trade_in']=1;
+                        $TradeinRequest['make_id'] =$cachedata['trademake_search'];
+                        $TradeinRequest['carmodel_id'] =$cachedata['trademodel_search'];
+                        $TradeinRequest['condition'] =$cachedata['tradecondition_search'];
+                        $TradeinRequest['year'] =$cachedata['tradeyear_search'];
+                        $owe=Request::input('owe');
+                            if(isset($cachedata['owe'])){
+                                $TradeinRequest['owe'] =$cachedata['owe'];
+                                $TradeinRequest['owe_amount'] =$cachedata['owe_amount'];
+
+                            }
+                        $TradeinRequest['im_type']=1;
+                        $TradeinRequest['fname'] =$Client->first_name;
+                        $TradeinRequest['lname'] =$Client->last_name;
+                        $TradeinRequest['phone'] =$Client->phone;
+                        $TradeinRequest['type'] =1;
+                        $TradeinRequest['email'] =$Client->email;
+                        $TradeinRequest['client_id']=$Client->id;
+                    }
                     $RequestQueue_row=RequestQueue::create($RequestQueue);
                     $lastinsertedId = $RequestQueue_row->id;
+                    $TradeinRequest['request_queue_id'] =$lastinsertedId;
+                    $TradeinRequest=TradeinRequest::create($TradeinRequest);
                     $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
                     foreach ($DealerMakeMap as $value) {
                         $RequestDealerLog['dealer_id']=$value->dealer_id;
