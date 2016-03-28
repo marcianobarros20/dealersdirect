@@ -203,7 +203,7 @@ class ClientController extends BaseController
                     
                         if($EdmundsStyleImagecount!=0){
                             $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
-                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_big;
+                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
                         }else{
                              $requestqueuex[$key]['img']="";
                         }
