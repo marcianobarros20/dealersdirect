@@ -45,7 +45,9 @@
                                     <?php if($Bidqueue->status==3){?>
                                     <li class="label success"><strong> Accepted  </li>
                                     <?php }?>
-                                    
+                                    @if($Bidqueue->trade_in!=0)
+                                    <li><strong>Trade In:</strong>{!! $Bidqueue->trade_in !!}</li>
+                                    @endif
                                 </ul>
                             </div>
                             <!-- price -->

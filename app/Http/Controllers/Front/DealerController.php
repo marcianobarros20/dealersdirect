@@ -390,7 +390,8 @@ class DealerController extends BaseController
                         }
 
                         $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
-                        return view('front.dealer.post_bid',compact('requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+                        $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
+                        return view('front.dealer.post_bid',compact('requestqueuex','RequestStyleEngineTransmissionColor','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
             }
     }
     public function editBid($id=null){
@@ -434,7 +435,8 @@ class DealerController extends BaseController
                         $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
                         $dealer_userid=Session::get('dealer_userid');
                         $BidQueue=BidQueue::where("dealer_id",$dealer_userid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
-                        return view('front.dealer.edit_bid',compact('requestqueuex','BidQueue','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+                        $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
+                        return view('front.dealer.edit_bid',compact('requestqueuex','BidQueue','RequestStyleEngineTransmissionColor','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
                     }
     }
     public function SaveBid(){
@@ -457,6 +459,7 @@ class DealerController extends BaseController
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
         $BidQueue['details']=Request::input('details');
+        $BidQueue['trade_in']=Request::input('trade_in');
         $BidQueue_row=BidQueue::create($BidQueue);
         $curve=self::CalculateBidCurve(Request::input('id'));
         $OtherImage=Request::file('images');
@@ -499,6 +502,7 @@ class DealerController extends BaseController
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
         $BidQueue['details']=Request::input('details');
+        $BidQueue['trade_in']=Request::input('trade_in');
         $BidQueue_row=BidQueue::create($BidQueue);
         $OtherImage=Request::file('images');
             if(Request::hasFile('images')){

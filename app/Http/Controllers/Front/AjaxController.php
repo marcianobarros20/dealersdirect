@@ -388,20 +388,20 @@ class AjaxController extends Controller
         return view('front.ajax.get_update_bid',compact('BidQueue','RequestQueue_row'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function GetUpdatedBidDealer(){
-        
+        $dealer_userid=Session::get('dealer_userid');
         $id=base64_decode(Request::input('requestid'));
         $sortby=Request::input('sortby');
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
          if($sortby==1){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         if($sortby==2){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         if($sortby==3){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         $dealer_userid=Session::get('dealer_userid');
         $RequestQueue_row=RequestQueue::where('id',$id)->first();
@@ -468,7 +468,7 @@ class AjaxController extends Controller
         $BidQueue_row=BidQueue::where('id',$bid)->first();
         $BidQueue_row->requestqueue_id;
         $BidQueue_row->dealer_id;
-        $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues')->orderBy('visable', 'desc')->get();
+        $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues','bid_image')->orderBy('visable', 'desc')->get();
        return view('front.ajax.bid_history',compact('BidQueue'));
         
     }
@@ -480,10 +480,10 @@ class AjaxController extends Controller
         $BidQueue_row->dealer_id;
         $dealer_userid=Session::get('dealer_userid');
         if($dealer_userid!=$BidQueue_row->dealer_id){
-          $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues')->where('visable', '=',1)->get();  
+          $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues','bid_image')->where('visable', '=',1)->get();  
         }
         else{
-           $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues')->orderBy('visable', 'desc')->get(); 
+           $BidQueue=BidQueue::where('requestqueue_id', $BidQueue_row->requestqueue_id)->where('dealer_id', $BidQueue_row->dealer_id)->with('dealers','request_queues','bid_image')->orderBy('visable', 'desc')->get(); 
         }
         
        return view('front.ajax.bid_history_dealers',compact('BidQueue'));

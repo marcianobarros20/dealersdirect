@@ -6,7 +6,21 @@
 
         <!-- content -->
         <div class="twelve columns">
+          <?php $keys=0;
+            foreach ($bid->bid_image as $key => $bid_image){
 
+              if($bid_image->dealer_id==$bid->dealer_id){
+              $keys++;
+            ?>
+            <div class="comment-avatar">
+              <a href="#">
+                <img src="<?php echo url('/');?>/public/uploads/project/thumb/{!! $bid_image->image!!}" title="car" alt="car" />
+              </a>
+            </div>
+            <?php
+                }
+               }
+             ?>
             <div class="comment-meta">
                 <p>
                     
@@ -19,6 +33,9 @@
             <div class="comment-content">
                 <p><strong>Monthly:</strong>{!! $bid->monthly_amount !!}</p>
                 <p><strong>Total:</strong>{!! $bid->total_amount !!}</p>
+                @if($bid->trade_in!=0)
+                <li><strong>Trade In:</strong>{!! $bid->trade_in !!}</li>
+                @endif
                 <p><strong>Details:</strong>{!! $bid->details!!} ....</p>
 
             </div>
