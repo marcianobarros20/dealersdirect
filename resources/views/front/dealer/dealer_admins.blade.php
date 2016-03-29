@@ -79,7 +79,7 @@
                                 <!-- title -->
                                 <div class="car-title">
                                     <p><strong>Name:</strong>{!! $Dealer->first_name !!} {!! $Dealer->last_name !!}</p>
-                                    <p><strong>Email:</strong>{!! $Dealer->email !!} {!! $Dealer->last_name !!}</p>
+                                    <p><strong>Email:</strong>{!! $Dealer->email !!} </p>
                                     @if(!empty($Dealer->dealer_details))
                                     <p><strong>Zip:</strong>{!! $Dealer->dealer_details->zip !!}</p>
                                     <p><strong>Phone:</strong>{!! $Dealer->dealer_details->phone !!}</p>
