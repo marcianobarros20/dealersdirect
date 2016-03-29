@@ -14,6 +14,7 @@ use App\Model\BidStopLogDetail;                             /* Model name*/
 use App\Model\BidStopLog;                                   /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
+use App\Model\DealerDetail;                                 /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -87,7 +88,7 @@ class DealerController extends BaseController
                     Session::put('dealer_userid', $Dealer->id);
                     Session::put('dealer_email', $Dealer->email);
                     Session::put('dealer_name', $nam);
-                    
+                    Session::put('dealer_parent', $Dealer->parent_id);
                     
                     Session::save();
 
@@ -638,5 +639,65 @@ class DealerController extends BaseController
                         return redirect('dealers/request_detail/'.$xes);
                     }
 
+    }
+    public function DealerAdminList(){
+        $obj = new helpers();
+            if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            $dealer_userid=Session::get('dealer_userid');
+            $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details')->get();
+            
+        return view('front.dealer.dealer_admins',compact('Dealers'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+    public function DealerAdminAdd(){
+        $obj = new helpers();
+            if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            if(Request::isMethod('post')){
+                $dealer_userid=Session::get('dealer_userid');
+                //print_r(Request::input());
+                $tamo=time()."DEALERS";
+                $hashpassword = Hash::make(Request::input('password'));
+                $Dealer['first_name'] =Request::input('fname');
+                $Dealer['last_name'] =Request::input('lname');
+                $Dealer['email'] =Request::input('email');
+                $Dealer['password'] =$hashpassword;
+                $Dealer['code_number'] =$tamo;
+                $Dealer['parent_id'] =$dealer_userid;
+                $Dealers_row=Dealer::create($Dealer);
+                $lastinsertedId = $Dealers_row->id;
+                if(Request::hasFile('images')){
+                    $imgval=Request::file('images');
+                    $extension =$imgval->getClientOriginalExtension();
+                    $destinationPath = 'public/dealers/';   // upload path
+                    
+                    $extension =$imgval->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
+                    $imgval->move($destinationPath, $fileName); // uploading file to given path
+
+                   
+                }else{
+                    $fileName = "";
+                }
+                $DealerDetail['dealer_id']=$lastinsertedId;
+                $DealerDetail['zip']=Request::input('zip');
+                $DealerDetail['phone']=Request::input('phone');
+                $DealerDetail['address']=Request::input('address');
+                $DealerDetail['image']=$fileName;
+                DealerDetail::create($DealerDetail);
+
+                $make=DealerMakeMap::where('dealer_id',$dealer_userid)->get();
+                foreach ($make as $key => $value) {
+                    $DealerMakeMap['dealer_id']=$lastinsertedId;
+                    $DealerMakeMap['make_id']=$value->make_id;
+                    DealerMakeMap::create($DealerMakeMap);
+                }
+                return redirect('/dealer/admins');
+            }
+        return view('front.dealer.dealer_admin_add',compact(''),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
 }

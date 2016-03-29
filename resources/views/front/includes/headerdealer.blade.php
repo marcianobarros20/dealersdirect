@@ -114,31 +114,35 @@
 
 
                                 <!-- home -->
-                  <li><a href="<?php echo url('/');?>/dealer-dashboard" class="active">Dashboard</a>
-                
-              </li>
+                <li><a href="<?php echo url('/');?>/dealer-dashboard" class="active">Dashboard</a>
+
+                </li>
                   <!-- .home --> 
                   
                   <!-- pages -->
-                  <li><a href="<?php echo url('/');?>/dealer/profile">Profile</a>
-                
-              </li>
+                <li><a href="<?php echo url('/');?>/dealer/profile">Profile</a>
+
+                </li>
                   <!-- .pages --> 
-                  
+                @if(Session::get('dealer_parent')==0)
+                <li><a href="<?php echo url('/');?>/dealer/admins">Admins</a>
+
+                </li>
+                @endif  
                   <!-- blog -->
-                  <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a>
-                
-              </li>
+                <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a>
+
+                </li>
                   <!-- .blog --> 
                   <!-- blog -->
-                  <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
+                <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
                 
-              </li>
+                </li>
                   <!-- .blog --> 
                   <!-- cars -->
-                  <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
-                
-              </li>
+                <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
+
+                </li>
                   <!-- .cars --> 
 
                             </ul>

@@ -9,7 +9,14 @@
             <div class="row">
                 <div class="twelve columns" data-appear-animation="bounceIn">
                     <div class="heading">
-                        <h1><b>Welcome</b> <?php echo Session::get('dealer_name');?> To Your <b>Dashboard</b></h1>
+                        <h1><b>Welcome</b>
+                         @if(Session::get('dealer_parent')==0)
+                         Super Admin 
+                         @else
+                         Admin
+                         @endif
+                         {{ Session::get('dealer_name') }}
+                         To Your <b>Dashboard</b></h1>
                         <span></span>
                     </div>
                 </div>

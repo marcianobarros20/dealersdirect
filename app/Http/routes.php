@@ -166,6 +166,9 @@ Route:: post('/dealers/edit-bid', 'Front\DealerController@SaveEditBid');
 Route:: get('/testemail/{id}', 'Front\AjaxController@SendAcceptancemail');
 Route:: get('/dealers/blocked', 'Front\DealerController@BlockAction');
 Route:: get('/dealers/stop-bid/{id}', 'Front\DealerController@DealerStopBid');
+Route:: get('/dealer/admins', 'Front\DealerController@DealerAdminList');
+Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
+Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
