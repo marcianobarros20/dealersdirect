@@ -651,9 +651,10 @@ class AjaxController extends Controller
         $cachedata['owe_amount'] =Request::input('oweamount');
 
         }
+        self::ApiGetImageNotStyle($trademake_search,$trademodel_search,$tradeyear_search);
         }
         self::ApiGetImageNotStyle($make_search,$model_search,$year_search);
-        self::ApiGetImageNotStyle($trademake_search,$trademodel_search,$tradeyear_search);
+        
         $cachedata['im_type'] =1;
         Session::put('cachedata',$cachedata);
         return 1;
