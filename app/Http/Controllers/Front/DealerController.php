@@ -176,19 +176,37 @@ class DealerController extends BaseController
                     if($value->requestqueue->im_type==1){
                         
                     $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
-                    $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        if(isset($local_path_smalll->local_path_smalll)){
+                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        }
+                        else{
+                            $requestqueuex[$key]['img']="";
+                        }
+                    
                     }
                     elseif ($value->requestqueue->im_type==2) {
                         $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->requestqueue->id)->first();
                         $RequestStyleEngineTransmissionColor->style_id;
                         $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
                         $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
+                        if(isset($EdmundsStyleImage->local_path_smalll)){
+                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
+                        }
+                        else{
+                            $requestqueuex[$key]['img']="";
+                        }
                     }
                     else{
                         $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
                         if($local_path_smalll_count!=0){
                             $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
                             $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                            if(isset($local_path_smalll->local_path_smalll)){
+                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
+                        }
+                        else{
+                            $requestqueuex[$key]['img']="";
+                        }
                         }else{
                             $requestqueuex[$key]['img']="";
                         }
