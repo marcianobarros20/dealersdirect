@@ -482,10 +482,10 @@ class ClientController extends BaseController
     }
     public function SigninClient(){
         $cachedata=Session::get('cachedata');
-        print_r($cachedata);
+        
         if(Request::isMethod('post'))
         {
-            print_r(Request::input());
+           
             $email = Request::input('email');
             $password = Request::input('password');
             $Client = Client::where('email', $email)->first();
