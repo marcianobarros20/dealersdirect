@@ -27,7 +27,7 @@
 
     <!-- Favicon
 ================================================== -->
-    <link rel="shortcut icon" href="<?php echo url('/');?>/public/front/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo url('/');?>/public/front/images/faviconnew.ico" type="image/x-icon">
 
     <!-- Google Analytics
 ================================================== -->
@@ -52,12 +52,12 @@
         
         <!-- call us -->
         <div class="call-us">
-              <p> <span class="icon-phone"></span>080.444.333.233</p>
+              <!-- <p> <span class="icon-phone"></span>080.444.333.233</p> -->
             </div>
         <!-- .call us --> 
         
         <!-- social -->
-        <div class="social">
+        <!-- <div class="social">
               <ul class="clearfix">
             <li> <a href="#" class="tip-below success" data-tip="google plus"> <span class="icon-google-plus"></span> </a> </li>
             <li> <a href="#" class="tip-below success" data-tip="facebook"> <span class="icon-facebook"></span> </a> </li>
@@ -65,7 +65,7 @@
             <li> <a href="#" class="tip-below success" data-tip="vimeo"> <span class="icon-vimeo"></span> </a> </li>
             
           </ul>
-            </div>
+            </div> -->
         <!-- social --> 
         
       </div>
@@ -79,7 +79,7 @@
           <div class="row"> 
         
         <!-- logo -->
-        <div class="logo"> <a href="<?php echo url('/');?>"> <img src="<?php echo url('/');?>/public/front/images/logo.png" title="Carell" alt="Carell" /> </a> </div>
+        <div class="logo"> <a href="<?php echo url('/');?>"> <img src="<?php echo url('/');?>/public/front/images/logonew.png" title="DealersDirect" alt="DealersDirect" /> </a> </div>
         <!-- .logo --> 
         
         <!-- navigation -->

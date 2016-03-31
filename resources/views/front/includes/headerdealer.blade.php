@@ -27,7 +27,7 @@
 
     <!-- Favicon
 ================================================== -->
-    <link rel="shortcut icon" href="<?php echo url('/');?>/public/front/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo url('/');?>/public/front/images/faviconnew.ico" type="image/x-icon">
 
     <!-- Google Analytics
 ================================================== -->
@@ -70,7 +70,7 @@
                     <!-- logo -->
                     <div class="logo">
                         <a href="<?php echo url('/');?>/dealer-dashboard">
-                            <img src="<?php echo url('/');?>/public/front/images/logo.png" title="Carell" alt="Carell" />
+                            <img src="<?php echo url('/');?>/public/front/images/logonew.png" title="DealersDirect" alt="DealersDirect" />
                         </a>
                     </div>
                     <!-- .logo -->
