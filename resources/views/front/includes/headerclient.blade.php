@@ -45,19 +45,19 @@
 
                     <!-- notification -->
                     <div class="notification">
-                        <p>This is simple notification message and you can insert <a href="#">anchor</a> inside too.</p>
+                        <!-- <p>This is simple notification message and you can insert <a href="#">anchor</a> inside too.</p> -->
                     </div>
                     <!-- .notification -->
 
                     <!-- call us -->
-                    <div class="call-us">
+                    <!-- <div class="call-us">
                         <p>
                             <span class="icon-phone"></span>080.444.333.233</p>
-                    </div>
+                    </div> -->
                     <!-- .call us -->
 
                     <!-- social -->
-                    <div class="social">
+                    <!-- <div class="social">
                         <ul class="clearfix">
                             <li>
                                 <a href="#" class="tip-below success" data-tip="google plus">
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                     <!-- social -->
 
                 </div>

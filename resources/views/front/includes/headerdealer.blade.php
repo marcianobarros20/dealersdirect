@@ -45,42 +45,16 @@
 
                     <!-- notification -->
                     <div class="notification">
-                        <p>This is simple notification message and you can insert <a href="#">anchor</a> inside too.</p>
+                        
                     </div>
                     <!-- .notification -->
 
                     <!-- call us -->
-                    <div class="call-us">
-                        <p>
-                            <span class="icon-phone"></span>080.444.333.233</p>
-                    </div>
+                    
                     <!-- .call us -->
 
                     <!-- social -->
-                    <div class="social">
-                        <ul class="clearfix">
-                            <li>
-                                <a href="#" class="tip-below success" data-tip="google plus">
-                                    <span class="icon-google-plus"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="tip-below success" data-tip="facebook">
-                                    <span class="icon-facebook"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="tip-below success" data-tip="twitter">
-                                    <span class="icon-twitter"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="tip-below success" data-tip="vimeo">
-                                    <span class="icon-vimeo"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                     <!-- social -->
 
                 </div>
