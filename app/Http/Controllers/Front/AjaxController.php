@@ -389,20 +389,22 @@ class AjaxController extends Controller
     }
     public function GetUpdatedBidDealer(){
         $dealer_userid=Session::get('dealer_userid');
-        $id=base64_decode(Request::input('requestid'));
+       $id=base64_decode(Request::input('requestid'));
         $sortby=Request::input('sortby');
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
-        $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
+        $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->lists('dealer_id');
          if($sortby==1){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         if($sortby==2){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
         if($sortby==3){
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->Orwhere('dealer_id','=',$dealer_userid)->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->groupBy('dealer_id')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->groupBy('dealer_id')->get();
         }
+       
         $dealer_userid=Session::get('dealer_userid');
         $RequestQueue_row=RequestQueue::where('id',$id)->first();
         return view('front.ajax.get_update_bid_dealers',compact('BidQueue','RequestQueue_row','dealer_userid'),array('title'=>'DEALERSDIRECT | Client Request Details'));
@@ -734,5 +736,118 @@ class AjaxController extends Controller
 
                 }
 
+    }
+    public function GetAllRequest(){
+        $RequestDealerLog = new RequestDealerLog;
+         $dealer_userid=Session::get('dealer_userid');
+        $make_search=Request::input('make_search');
+        $onesearchmin=Request::input('onesearchmin');
+        $onesearchmax=Request::input('onesearchmax');
+        $monsearchmin=Request::input('monsearchmin');
+        $monsearchmax=Request::input('monsearchmax');
+        $status_search=Request::input('status_search');
+        $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->with('makes','requestqueue','requestqueue.models');
+        if($make_search!=0){
+            $RequestDealerLog=$RequestDealerLog->where('make_id', $make_search);
+        }
+        
+        $RS=$RequestDealerLog->get();
+
+        if($onesearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount < $onesearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($onesearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount > $onesearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        if($monsearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount < $monsearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($monsearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount > $monsearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        foreach($RS as $key => $rsq){
+            $accep=self::FindDealerBidAccepted($rsq->request_id,$dealer_userid);
+            $RS[$key]['accepted_state']=$accep;
+            $rejcet=self::FindDealerBidReject($rsq->request_id,$dealer_userid);
+            $RS[$key]['rejected_state']=$rejcet;
+        }
+        
+        foreach ($RS as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
+             $RS[$key]['imx']=$imx->local_path_smalll;
+            }else{
+               $RS[$key]['imx']=""; 
+            }
+
+        }
+        if($status_search==1){
+            foreach ($RS as $key => $act) {
+                if($act->blocked==1){
+                    unset($RS[$key]);
+                }
+                if($act->accepted_state!=0){
+                    unset($RS[$key]);
+                }
+                if($act->rejected_state!=0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==2){
+            foreach ($RS as $key => $act) {
+                
+                if($act->rejected_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==3){
+            foreach ($RS as $key => $act) {
+                
+                if($act->blocked==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==4){
+            foreach ($RS as $key => $act) {
+                
+                if($act->accepted_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        //dd($RS);
+        //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
+        return view('front.ajax.get_all_request',compact('RS'));
+    }
+    public function FindDealerBidAccepted($request_id,$dealer_id){
+       
+        return $BidQueuecount=BidQueue::where('requestqueue_id',$request_id)->where('dealer_id',$dealer_id)->where('status',3)->count();
+        
+
+    }
+    public function FindDealerBidReject($request_id,$dealer_id){
+        return $BidQueuecount=BidQueue::where('requestqueue_id',$request_id)->where('dealer_id',$dealer_id)->where('status',2)->where('visable',1)->count();
     }
 }

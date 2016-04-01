@@ -17,6 +17,7 @@
 |
 */
 Route::get('/', 'Front\HomeController@index');
+Route::get('/pan', 'Front\HomeController@index');
 Route::get('/request_success/{id}', 'Front\HomeController@RequestSuccess');
 Route::get('/refresh-token', function(){
     return csrf_token();
@@ -136,6 +137,7 @@ Route::post('/ajax/checkdealersstatus','Front\AjaxController@CheckDealersStatus'
 Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDealer');
 Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
 Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
+Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

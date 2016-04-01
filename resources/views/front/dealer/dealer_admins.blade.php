@@ -115,8 +115,9 @@
                         {{--*/ $i++ /*--}}
                     @endif
                 @endforeach 
-                <?php if($start!=$end){?></div><?php }
-                ?>
+                @if($start!=$end)
+                </div>
+                @endif
 
 
                         @if(empty($Dealer))

@@ -2096,6 +2096,21 @@ CARELL CAR BOXES */
 	color: #46505a;
 	padding: 2px 5px;
 }
+.new-error {
+	background: #e1473e !important;
+	color: #ffffff !important;
+		
+}
+.new-success {
+	background: #51bd6a !important;
+	color: #ffffff !important;
+	
+}
+.new-alert {
+	background: #f9ca64 !important;
+	color: #ffffff !important;
+	
+}
 .car-price {
 	text-align: center;
 	display: inline-block;
@@ -3112,6 +3127,10 @@ CARELL FORMS */
 	margin: 25px 0px;
 	position: relative;
 }
+.search-input{
+	margin: 10px 15px 10px 15px !important;
+	width: 85%!important;
+}
 .dark-form .input {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -3958,13 +3977,13 @@ ul.widget-list li a:after {
 	content: "\e705";
 	font-family: "icomoon";
 	float: right;
-	color: #c2c9d7;
+	color: #f34b0a;
 	padding-right: 15px;
 }
 ul.widget-list li a {
 	font-size: 12px;
 	padding: 8px 0px;
-	color: #363f48;
+	color: #f34b0a;
 	display: block;
 	background: #ffffff;
 	-webkit-transition: all 0.35s ease-in-out;
@@ -3979,7 +3998,7 @@ ul.widget-list li a:hover {
 	padding: 8px 0px;
 	color: #ffffff;
 	display: block;
-	background: #c2c9d7;
+	background: #f34b0a;
 	-webkit-transition: all 0.35s ease-in-out;
 	-moz-transition: all 0.35s ease-in-out;
 	-ms-transition: all 0.35s ease-in-out;

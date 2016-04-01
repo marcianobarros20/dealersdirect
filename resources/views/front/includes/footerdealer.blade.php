@@ -56,6 +56,164 @@
 <script>
 
 $(document).ready(function(){
+
+/*Dealer Request List*/
+
+
+      var loct=$(location).attr('href');
+      
+      var res = loct.split("/"); 
+      var cou=res.length-1;
+      
+
+      if(res[cou]=="request_list"){
+        var make_search=$("#make_search").val();
+        var status_search=$("#status_search").val();
+        var onesearchmin=$("#onesearchmin").val();
+        var onesearchmax=$("#onesearchmax").val();
+        var monsearchmin=$("#monsearchmin").val();
+        var monsearchmax=$("#monsearchmax").val();
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getallrequest",
+                      data: {make_search:make_search,status_search:status_search,onesearchmin:onesearchmin,onesearchmax:onesearchmax,monsearchmin:monsearchmin,monsearchmax:monsearchmax,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#loading").hide();
+
+                         $("#results").html(data);
+                         $("#results").show();
+                        }
+                        
+                      
+                      }
+              });
+      }
+
+      $('#make_search').change(function(){
+        $("#loading").show();
+        $("#results").hide();
+        var make_search=$("#make_search").val();
+        var status_search=$("#status_search").val();
+        var onesearchmin=$("#onesearchmin").val();
+        var onesearchmax=$("#onesearchmax").val();
+        var monsearchmin=$("#monsearchmin").val();
+        var monsearchmax=$("#monsearchmax").val();
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getallrequest",
+                      data: {make_search:make_search,status_search:status_search,onesearchmin:onesearchmin,onesearchmax:onesearchmax,monsearchmin:monsearchmin,monsearchmax:monsearchmax,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#loading").hide();
+
+                         $("#results").html(data);
+                         $("#results").show();
+                        }
+                        
+                      
+                      }
+              });
+
+      });
+      $('#status_search').change(function(){
+        $("#loading").show();
+        $("#results").hide();
+        var make_search=$("#make_search").val();
+        var status_search=$("#status_search").val();
+        var onesearchmin=$("#onesearchmin").val();
+        var onesearchmax=$("#onesearchmax").val();
+        var monsearchmin=$("#monsearchmin").val();
+        var monsearchmax=$("#monsearchmax").val();
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getallrequest",
+                      data: {make_search:make_search,status_search:status_search,onesearchmin:onesearchmin,onesearchmax:onesearchmax,monsearchmin:monsearchmin,monsearchmax:monsearchmax,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#loading").hide();
+
+                         $("#results").html(data);
+                         $("#results").show();
+                        }
+                        
+                      
+                      }
+              });
+
+      });
+      $('#op').click(function(){
+        $("#loading").show();
+        $("#results").hide();
+        var make_search=$("#make_search").val();
+        var status_search=$("#status_search").val();
+        var onesearchmin=$("#onesearchmin").val();
+        var onesearchmax=$("#onesearchmax").val();
+        var monsearchmin=$("#monsearchmin").val();
+        var monsearchmax=$("#monsearchmax").val();
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getallrequest",
+                      data: {make_search:make_search,status_search:status_search,onesearchmin:onesearchmin,onesearchmax:onesearchmax,monsearchmin:monsearchmin,monsearchmax:monsearchmax,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#loading").hide();
+
+                         $("#results").html(data);
+                         $("#results").show();
+                        }
+                        
+                      
+                      }
+              });
+return false;
+      });
+      $('#mp').click(function(){
+        $("#loading").show();
+        $("#results").hide();
+        var make_search=$("#make_search").val();
+        var status_search=$("#status_search").val();
+        var onesearchmin=$("#onesearchmin").val();
+        var onesearchmax=$("#onesearchmax").val();
+        var monsearchmin=$("#monsearchmin").val();
+        var monsearchmax=$("#monsearchmax").val();
+        $.ajax({
+                      url: "<?php echo url('/');?>/ajax/getallrequest",
+                      data: {make_search:make_search,status_search:status_search,onesearchmin:onesearchmin,onesearchmax:onesearchmax,monsearchmin:monsearchmin,monsearchmax:monsearchmax,_token: '{!! csrf_token() !!}'},
+                      type :"post",
+                      success: function( data ) {
+                        if(data){
+                          $("#loading").hide();
+
+                         $("#results").html(data);
+                         $("#results").show();
+                        }
+                        
+                      
+                      }
+              });
+return false;
+      });
+
+/*Dealer Request List*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       var sortby=$("#sortby").val();
       var pagestart=$("#pagestart").val();
       var pageend=$("#pageend").val();

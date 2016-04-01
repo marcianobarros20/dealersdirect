@@ -37,6 +37,7 @@ class DealerController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+
     
     public function __construct(){
         parent::__construct();
@@ -144,76 +145,22 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
-            $dealer_userid=Session::get('dealer_userid');
-            $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
-            $requestqueuex=array();
-            foreach ($RequestDealerLog as $key=> $value) {
-                    $requestqueuex[$key]['id']=$value->id;
-                    $requestqueuex[$key]['status']=$value->status;
-                    $requestqueuex[$key]['make']=$value->makes->name;
-                    $requestqueuex[$key]['make_image']=$value->makes->image;
-                    $requestqueuex[$key]['pstatus']=$value->requestqueue->status;
-                    $requestqueuex[$key]['blocked']=$value->blocked;
-                    $mid=$value->requestqueue->carmodel_id;
-                    $Carmodel=Carmodel::where("id",$mid)->first();
-                    $requestqueuex[$key]['model']=$Carmodel->name;
-                    $requestqueuex[$key]['year']=$value->requestqueue->year;
-                    $requestqueuex[$key]['conditions']=$value->requestqueue->condition;
-                    $requestqueuex[$key]['total']=$value->requestqueue->total_amount;
-                    $requestqueuex[$key]['monthly']=$value->requestqueue->monthly_amount;
-                    $requestqueuex[$key]['im_type']=$value->requestqueue->im_type;
-                    
-                        if($value->status==1){
-                            $fn=$value->requestqueue->fname;
-                            $ln=$value->requestqueue->lname;
-                            $em=$value->requestqueue->email;
-                            $ph=$value->requestqueue->phone;
-                            $requestqueuex[$key]['cfname']=self::maskcreate($fn);
-                            $requestqueuex[$key]['lem']=self::maskcreate($ln);
-                            $requestqueuex[$key]['cemail']=self::maskcreate($em);
-                            $requestqueuex[$key]['cphone']=self::maskcreate($ph);
-                        }
-                    if($value->requestqueue->im_type==1){
-                        
-                    $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
-                        if(isset($local_path_smalll->local_path_smalll)){
-                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                        }
-                        else{
-                            $requestqueuex[$key]['img']="";
-                        }
-                    
-                    }
-                    elseif ($value->requestqueue->im_type==2) {
-                        $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->requestqueue->id)->first();
-                        $RequestStyleEngineTransmissionColor->style_id;
-                        $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
-                        $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
-                        if(isset($EdmundsStyleImage->local_path_smalll)){
-                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
-                        }
-                        else{
-                            $requestqueuex[$key]['img']="";
-                        }
-                    }
-                    else{
-                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
-                        if($local_path_smalll_count!=0){
-                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->first();
-                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                            if(isset($local_path_smalll->local_path_smalll)){
-                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                        }
-                        else{
-                            $requestqueuex[$key]['img']="";
-                        }
-                        }else{
-                            $requestqueuex[$key]['img']="";
-                        }
-                        
-                    }
+            $id=Session::get('dealer_userid');
+            $DealerMake=DealerMakeMap::where('dealer_id', $id)->with('makes')->orderBy('make_id', 'asc')->get();
+            $Makes=array();
+            $Makes['0']="All MAKES";
+            foreach($DealerMake as $DealerM){
+                $Makes[$DealerM->makes->id]=$DealerM->makes->name;
             }
-            return view('front.dealer.dealer_request_list',compact('requestqueuex'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            $Status=array();
+            $Status['0']="All STATUS";
+            $Status['1']="Active";
+            $Status['2']="Rejected";
+            $Status['3']="Blocked";
+            $Status['4']="Accepted";
+            //dd($Makes);
+            
+            return view('front.dealer.dealer_request_list',compact('Makes','Status'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function maskcreate($maskval){
             $mm=strlen($maskval)-2;

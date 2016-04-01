@@ -3,7 +3,7 @@
 		
    <!-- ================================================== PAGINATION ================================================== -->
 
-    <section>
+    <section  class="space-top-and-bottom medium">
         <div class="container">
             
             <div class="row">
