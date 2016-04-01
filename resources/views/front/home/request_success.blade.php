@@ -38,6 +38,10 @@
 
 													</div>
 													<div class="input">
+														{{ Form::text('zip',$RequestQueue->zip,['placeholder' => 'Zip','required'=>'required']) }}
+
+													</div>
+													<div class="input">
 														{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
 
 													</div>

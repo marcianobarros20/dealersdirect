@@ -295,9 +295,11 @@ class DealerController extends BaseController
         $dealer_userid=Session::get('dealer_userid');
         $fname=Request::input('fname');
         $lname=Request::input('lname');
+        $zip=Request::input('zip');
         $Dealer = Dealer::find($dealer_userid);
         $Dealer->first_name = $fname;
         $Dealer->last_name = $lname;
+        $Dealer->zip = $zip;
         $Dealer->save();
         $nam=ucfirst($fname)." ".ucfirst($lname);
         Session::forget('dealer_name');

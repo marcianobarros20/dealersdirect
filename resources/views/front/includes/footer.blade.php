@@ -431,6 +431,8 @@ $('#dstes').click(function(){
     console.log(phone);
     var email=$('#email').val();
     console.log(email);
+    var zip=$('#zip').val();
+    console.log(zip);
 
 
     var tradein=$('input[name=tradein]:checked').val();
@@ -462,6 +464,7 @@ $('#dstes').click(function(){
                                 lname:lname,
                                 phone:phone,
                                 email:email,
+                                zip:zip,
                                 tradein:tradein,
                                 owe:owe,
                                 oweamount:oweamount,

@@ -58,6 +58,9 @@
 														<div class="input">
 															{{ Form::text('phone',$Client->phone,['placeholder' => 'Phone','required'=>'required']) }}
 														</div>
+														<div class="input">
+															{{ Form::text('zip',$Client->zip,['placeholder' => 'Zip','required'=>'required']) }}
+														</div>
 														<div class="input-submit">
 															{{ Form::submit('EDIT',array('class' => '')) }}
 														</div>

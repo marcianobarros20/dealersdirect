@@ -28,6 +28,10 @@
 													
 													</div>
 													<div class="input">
+													{{ Form::text('zip','',['placeholder' => 'Zip','required'=>'required']) }}
+													
+													</div>
+													<div class="input">
 													{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
 													
 													</div>

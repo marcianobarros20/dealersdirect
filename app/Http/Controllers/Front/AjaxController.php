@@ -67,7 +67,7 @@ class AjaxController extends Controller
         $lname=Request::input('lname');
         $phone=Request::input('phone');
         $email=Request::input('email');
-
+        $zip=Request::input('zip');
         $tradein=Request::input('tradein');
         $trademake_search=Request::input('trademake_search');
         $trademodel_search=Request::input('trademodel_search');
@@ -85,6 +85,7 @@ class AjaxController extends Controller
         $RequestQueue['lname'] =$lname;
         $RequestQueue['phone'] =$phone;
         $RequestQueue['email'] =$email;
+        $RequestQueue['zip'] =$zip;
         $RequestQueue['im_type'] =0;
         if($tradein=="yes"){
         $RequestQueue['trade_in']=1;

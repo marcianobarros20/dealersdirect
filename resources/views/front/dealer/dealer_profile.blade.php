@@ -52,6 +52,9 @@
 														<div class="input">
 															{{ Form::text('lname',$Dealer->last_name,['placeholder' => 'Last Name','required'=>'required']) }}
 														</div>
+														<div class="input">
+															{{ Form::text('zip',$Dealer->zip,['placeholder' => 'Zip','required'=>'required']) }}
+														</div>
 														<div class="input-submit">
 															{{ Form::submit('EDIT',array('class' => '')) }}
 														</div>

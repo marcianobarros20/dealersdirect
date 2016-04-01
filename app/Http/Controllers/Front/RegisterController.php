@@ -25,6 +25,7 @@ class RegisterController extends Controller
      	$Dealer['first_name'] =Request::input('fname');
 		$Dealer['last_name'] =Request::input('lname');
 		$Dealer['email'] =Request::input('email');
+		$Dealer['zip'] =Request::input('zip');
 		$Dealer['password'] =$hashpassword;
 		$Dealer['code_number'] =$tamo;
 		

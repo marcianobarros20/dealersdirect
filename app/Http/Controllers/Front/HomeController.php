@@ -143,6 +143,7 @@ class HomeController extends BaseController
         $Client['last_name'] =Request::input('lname');
         $Client['phone'] =Request::input('phone');
         $Client['email'] =Request::input('email');
+        $Client['zip'] =Request::input('zip');
         $Client['password'] =$hashpassword;
         $Client['code_number'] =$tamo;
         
@@ -154,6 +155,7 @@ class HomeController extends BaseController
         $RequestQueue->lname=Request::input('lname');
         $RequestQueue->phone=Request::input('phone');
         $RequestQueue->email=Request::input('email');
+        $RequestQueue->zip=Request::input('zip');
         $RequestQueue->type=1;
         $RequestQueue->client_id=$lastinsertedId;
         $RequestQueue->save();

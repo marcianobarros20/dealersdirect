@@ -134,10 +134,12 @@ class ClientController extends BaseController
         $fname=Request::input('fname');
         $lname=Request::input('lname');
         $phone=Request::input('phone');
+        $zip=Request::input('zip');
         $Client = Client::find($client_userid);
         $Client->first_name = $fname;
         $Client->last_name = $lname;
         $Client->phone = $phone;
+        $Client->zip = $zip;
         $Client->save();
         $nam=ucfirst($fname)." ".ucfirst($lname);
         Session::forget('client_name');

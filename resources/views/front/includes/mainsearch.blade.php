@@ -240,7 +240,11 @@
                                       </div>
                                   </div>
                                   <!-- .select input -->  
-
+                                  <div class="two columns">
+                                      <div class="s-textinput">
+                                          <input type="text" id="zip" name="zip" class="formcon" placeholder="Zip">
+                                      </div>
+                                  </div>
                                   <div class="two columns" id="donetes"> 
 
                                   <!-- search -->
