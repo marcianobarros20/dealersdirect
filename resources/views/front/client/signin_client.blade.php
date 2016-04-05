@@ -1,55 +1,39 @@
-@extends('front/layout/client_signup_template')
+@extends('front/layout/clientfrontend_signup_template')
 @section('content')
 		<section>
-			<div class="dark-promo">
-					<div class="container">
-						<div class="row">
-							<div class="promo dark">
-							<h1 data-appear-animation="flipInX">Sign In As A Client</h1>
-									<div class="dark-form">
-									
-									<div class="send_result">{!! Session::get('error') !!}</div>
-										<!-- <form class="contactform" method="post" action="contact_process.php"> -->
-										{{ Form::open(array('url' => 'signin-client')) }}
-											<fieldset>
-												<div class="twelve columns alpha">
-
-													<div class="input">
-														<!-- <input type="text" placeholder="Email" name="email"/> -->
-														{{ Form::text('email','',['placeholder' => 'Email','required'=>'required']) }}
-													</div>
-
-													<div class="input">
-														<!-- <input type="password" placeholder="Password" name="password" /> -->
-														{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
-													</div>
-													
-												</div>
-												
-												<div class="twelve columns alpha">
-													<div class="input-submit">
-														<!-- <input type="submit" value="SIGN-IN" class="submitform" /> -->
-														{{ Form::submit('SIGN-IN',array('class' => '')) }}
-														
-													</div>
-												</div>
-
-											</fieldset>
-										{!! Form::close() !!}
+			<div class="container">
+			@if(Session::get('error'))
+				<div class = "alert alert-danger">
+					<a href = "#" class = "close" data-dismiss = "alert">
+					&times;
+					</a>
+					<strong>{{Session::get('error')}}</strong> 
+				</div>
+			@endif
+				<h2 class="head center-block">SIGN IN AS A CLIENT</h2>
+					<div class="row">
+							<div class="col-xs-12 sign_form">
+								{{ Form::open(array('url' => 'signin-client','class'=>'form-horizontal')) }}
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+										<div class="col-sm-9">
+										{{ Form::text('email','',['required'=>'required','class'=>'form-control']) }}
+										</div>
 									</div>
-									<div class="row">
-
-                    
-
-                    
-
-
-                    
-
-
-                </div>
-							</div>
-						</div>
+									<div class="form-group">
+										<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+										<div class="col-sm-9">
+										{{ Form::password('password',['required'=>'required','class'=>'form-control']) }}
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-9">
+										{{ Form::submit('SIGN IN',array('class' => 'btn btn-default btn-lg btn-block sign_btn')) }}
+										</div>
+									</div>
+								{!! Form::close() !!}
+							
+							</div>	<!-- /col-xs-12 col-sm-6 col-md-6 -->	
 					</div>
 			</div>
 		</section>

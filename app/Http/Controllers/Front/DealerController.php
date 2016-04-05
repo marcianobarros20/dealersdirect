@@ -67,6 +67,7 @@ class DealerController extends BaseController
     public function signin(){
         
        $obj = new helpers();
+
         if($obj->checkDealerLogin())
         {
             
@@ -108,8 +109,8 @@ class DealerController extends BaseController
             }
 
         }
-
-        return view('front.dealer.dealer_signin',array('title'=>'DEALERSDIRECT | Dealers Signin'));
+        $client=0;
+        return view('front.dealer.dealer_signin',compact('client'),array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function dashboard(){
         $obj = new helpers();

@@ -1,3 +1,3 @@
-@extends('front/layout/front_template')
+@extends('front/layout/frontend_template')
 @section('content')
 @stop

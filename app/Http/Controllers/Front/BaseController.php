@@ -19,7 +19,7 @@ class BaseController extends Controller {
 	public function __construct() 
     {
     	
-        $Makes=Make::all();
+        $Makes=[''=>'Select Make']+Make::lists('name', 'id')->all();
        
         
 	    view()->share('Makes',$Makes);
