@@ -723,3 +723,7 @@ input::-moz-placeholder { /* Mozilla Firefox 19+ */
 input:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    #fff !important;
 }
+
+.ms-drop ul > li label span{
+    margin-left: 5px !important;
+}
