@@ -1,80 +1,54 @@
-@extends('front/layout/dealer_signup_template')
+@extends('front/layout/dealerfrontend_signup_template')
 @section('content')
+<section>
+	<div class="container">
+	<!-- <div class="alert alert-warning">
+	Indication for<strong>ERROR</strong> in further procedure.
+	</div> -->
 		<section>
-			<div class="dark-promo">
-					<div class="container">
-						<div class="row">
-							<div class="promo dark">
-							<h1 data-appear-animation="flipInX">Sign Up As A Dealer</h1>
-									<div class="dark-form">
+			<div class="container">
+			<h2 class="profile_head center-block">Sign Up As A Dealer</h2>
+				<div class="row profile_details">
+					<div class="col-xs-12 profile_form">
+						{{ Form::open(array('url' => 'dealerregister')) }}
+							<div class="form_back">
+								<div class="form-group">
+									<label for="exampleInputName1">First Name</label>
+										{{ Form::text('fname','',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputName1">Last Name</label>
+										{{ Form::text('lname','',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Email/Username</label>
+										{{ Form::text('email','',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputName1">Zip</label>
+										{{ Form::text('zip','',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword3">Password</label>
+										{{ Form::password('password',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword3">Confirm Password</label>
+										{{ Form::password('conf_password',['class' => 'form-control profile_control','required'=>'required']) }}
+								</div>
+								<div class="form-group">
+									<label>Make</label>
+									{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','multiple' => 'multiple','required'=>'required','id'=>'ms')) }}
 									
-									<div class="send_result">{!! Session::get('error') !!}</div>
-										<!-- <form class="contactform" method="post" action="contact_process.php"> -->
-										{{ Form::open(array('url' => 'dealerregister')) }}
-											<fieldset>
-												<div class="twelve columns alpha">
-
-													<div class="input">
-														
-														{{ Form::text('fname','',['placeholder' => 'First Name','required'=>'required']) }}
-													</div>
-
-													<div class="input">
-													{{ Form::text('lname','',['placeholder' => 'Last Name','required'=>'required']) }}
-													
-													</div>
-													<div class="input">
-													{{ Form::text('email','',['placeholder' => 'Email','required'=>'required']) }}
-													
-													</div>
-													<div class="input">
-													{{ Form::text('zip','',['placeholder' => 'Zip','required'=>'required']) }}
-													
-													</div>
-													<div class="input">
-													{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
-													
-													</div>
-													<div class="input">
-													{{ Form::password('conf_password',['placeholder' => 'Confirm-Password','required'=>'required']) }}
-													
-													</div>
-														<div class="side-by-side clearfix">
-														{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','class' =>'chosen-select','multiple' => true,'required'=>'required')) }}
-															
-														</div>
-												</div>
-												
-												<div class="twelve columns alpha">
-													<div class="input-submit">
-														
-														{{ Form::submit('SIGN-UP',array('class' => '')) }}
-													</div>
-												</div>
-
-											</fieldset>
-										{!! Form::close() !!}
-									</div>
-									<div class="row">
-
-                    <div class="twelve columns alpha" data-appear-animation="slideInLeft">
-                        <h6>
-                            <span class=""></span><b>Want A Dealer Account ? <a href="<?php echo url('/');?>/dealer-signup">Sign up now!</a></b>
-                        </h6>
-                        
-                    </div>
-
-                    
-
-
-                    
-
-
-                </div>
+								</div>
+							<button type="submit" class="btn btn-warning btn-lg btn-block">SIGN UP</button>
+							<p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p>
 							</div>
-						</div>
+						{!! Form::close() !!}
 					</div>
+				</div>
 			</div>
 		</section>
-
+	</div>
+</section>
 @stop

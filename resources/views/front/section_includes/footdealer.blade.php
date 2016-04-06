@@ -20,14 +20,21 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
+<script src="<?php echo url('/');?>/public/front_end/assets/jquery.min.js"></script>
+<script src="<?php echo url('/');?>/public/front_end/assets/multiple-select.js"></script>
 
+<link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/assets/multiple-select.css" />
+<script>
+    $(function() {
+        $('#ms').change(function() {
+            console.log($(this).val());
+        }).multipleSelect({
+            width: '100%'
+        });
+    });
+</script>
 <script>
 
-$(function() {
-  $('select, .select').selectric();
-
-
-});
 
 $(document).ready(function(){
 

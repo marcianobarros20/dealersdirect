@@ -6,6 +6,6 @@
 @yield('content')
 
 @include('front.section_includes.footer')
-@include('front.section_includes.foot')
+@include('front.section_includes.footdealer')
 </body>
 </html>

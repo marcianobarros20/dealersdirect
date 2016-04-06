@@ -131,7 +131,8 @@ class DealerController extends BaseController
                 foreach ($variable as $key => $value) {
                     $Makes[$value->id]=$value->name;
                 }
-            return view('front.dealer.dealer_signup',compact('Makes'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+                $client=0;
+            return view('front.dealer.dealer_signup',compact('Makes','client'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function signout(){
             Session::forget('dealer_userid');

@@ -1,76 +1,23 @@
-@extends('front/layout/client_template')
+@extends('front/layout/clientfrontend_template')
 @section('content')
-		
-    <!-- ================================================== TESTIMONIALS ================================================== -->
-    <section class="space-top-and-bottom medium">
-        <div class="container">
-
-            <!-- heading -->
-            <div class="row">
-                <div class="twelve columns" data-appear-animation="bounceIn">
-                    <div class="heading">
-                        <h1><b>Welcome</b> <?php echo Session::get('client_name');?> To Your <b>Dashboard</b></h1>
-                        <span></span>
+<section>
+                <div class="container">
+                    <h2 class="head center-block">WELCOME {{Session::get('client_name')}} TO YOUR DASHBOARD</h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/client/profile"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
+                                <h1>PROFILES</h1> 
+                            </div>     
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
+                        <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/client/request_list"><img src="<?php echo url('/');?>/public/front_end/images/pic2.png" alt="image"></a>
+                                <h1>REQUEST</h1>
+                            </div>
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->   
                     </div>
                 </div>
-            </div>
-            <!-- .heading -->
-
-            <!-- about content -->
-            <div class="row space-top small">
-                
-                <div class="six columns" data-appear-animation="bounceIn">
-                    <div class="promo-box unboxed round transparent">
-
-                        <!-- promo number -->
-                        <div class="promo-number">
-                            <p>
-                                <a href="<?php echo url('/');?>/client/profile"><span class="icon-profile"></span></a>
-                            </p>
-                        </div>
-                        <!-- .promo number -->
-
-                        <!-- promo content -->
-                        <div class="promo-content">
-                            <a href="<?php echo url('/');?>/client/profile"><h4>Profile</h4></a>
-                        </div>
-                        <!-- promo content -->
-
-                    </div>
-                </div>
-                <div class="six columns" data-appear-animation="bounceIn">
-                    <a href="#">
-                        <div class="promo-box round unboxed transparent">
-
-                            <!-- promo number -->
-                            <div class="promo-number">
-                                <p>
-                                    <a href="<?php echo url('/');?>/client/request_list"><span class="icon-list"></span></a>
-                                </p>
-                            </div>
-                            <!-- .promo number -->
-
-                            <!-- promo content -->
-                            <div class="promo-content">
-                                <a href="<?php echo url('/');?>/client/request_list"><h4>Request List</h4></a>
-                            </div>
-                            <!-- promo content -->
-
-                        </div>
-                    </a>
-                </div>
-
-                
-            </div>
-            <!-- .about content -->
-
-            
-
-            
-
-        </div>
-    </section>
-
-    <!-- ================================================== END TESTIMONIALS ================================================== -->
+            </section>
 
 @stop
