@@ -1,100 +1,48 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_template')
 @section('content')
+            <section>
+                <div class="container">
+                    <h2 class="head center-block">WELCOME 
+                        @if(Session::get('dealer_parent')==0)
+                            Super Admin 
+                        @else
+                            Admin
+                        @endif
+                            {{ Session::get('dealer_name') }} TO YOUR DASHBOARD
+                    </h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-3 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/dealer/dealer_make"><img src="<?php echo url('/');?>/public/front_end/images/make_icon.png" alt="image"></a>
+                                <h1>MAKE</h1> 
+                            </div>     
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
+                        @if(Session::get('dealer_parent')==0)
+                        <div class="col-xs-12 col-sm-3 col-md-3 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/dealer/admins"><img src="<?php echo url('/');?>/public/front_end/images/profile_icon.png" alt="image"></a>
+                                <h1>ADMIN</h1>
+                            </div>
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
+                        @endif
+                        <div class="col-xs-12 col-sm-3 col-md-3 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/dealer/profile"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
+                                <h1>PROFILES</h1> 
+                            </div>     
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
+                        <div class="col-xs-12 col-sm-3 col-md-3 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/dealers/request_list"><img src="<?php echo url('/');?>/public/front_end/images/request_icon.png" alt="image"></a>
+                                <h1>REQUEST</h1> 
+                            </div>     
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->   
+                    </div>
+                </div>
+            </section>
 		
     <!-- ================================================== TESTIMONIALS ================================================== -->
-    <section class="space-top-and-bottom medium">
-        <div class="container">
-
-            <!-- heading -->
-            <div class="row">
-                <div class="twelve columns" data-appear-animation="bounceIn">
-                    <div class="heading">
-                        <h1><b>Welcome</b>
-                         @if(Session::get('dealer_parent')==0)
-                         Super Admin 
-                         @else
-                         Admin
-                         @endif
-                         {{ Session::get('dealer_name') }}
-                         To Your <b>Dashboard</b></h1>
-                        <span></span>
-                    </div>
-                </div>
-            </div>
-            <!-- .heading -->
-
-            <!-- about content -->
-            <div class="row space-top small">
-                <div class="four columns alpha" data-appear-animation="slideInLeft">
-                    <div class="promo-box round unboxed transparent">
-
-                        <!-- promo number -->
-                        <div class="promo-number">
-                            <p>
-                                <a href="<?php echo url('/');?>/dealer/dealer_make"><span class="icon-hammer"></span></a>
-                            </p>
-                        </div>
-                        <!-- .promo number -->
-
-                        <!-- promo content -->
-                        <div class="promo-content">
-                            <a href="<?php echo url('/');?>/dealer/dealer_make"><h4>Makes</h4></a>
-                        </div>
-                        <!-- promo content -->
-
-                    </div>
-                </div>
-                <div class="four columns" data-appear-animation="bounceIn">
-                    <div class="promo-box unboxed round transparent">
-
-                        <!-- promo number -->
-                        <div class="promo-number">
-                            <p>
-                                <a href="<?php echo url('/');?>/dealer/profile"><span class="icon-profile"></span></a>
-                            </p>
-                        </div>
-                        <!-- .promo number -->
-
-                        <!-- promo content -->
-                        <div class="promo-content">
-                            <a href="<?php echo url('/');?>/dealer/profile"><h4>Profile</h4></a>
-                        </div>
-                        <!-- promo content -->
-
-                    </div>
-                </div>
-                <div class="four columns" data-appear-animation="bounceIn">
-                    <a href="#">
-                        <div class="promo-box round unboxed transparent">
-
-                            <!-- promo number -->
-                            <div class="promo-number">
-                                <p>
-                                    <a href="<?php echo url('/');?>/dealers/request_list"><span class="icon-list"></span></a>
-                                </p>
-                            </div>
-                            <!-- .promo number -->
-
-                            <!-- promo content -->
-                            <div class="promo-content">
-                                <a href="<?php echo url('/');?>/dealers/request_list"><h4>Request List</h4></a>
-                            </div>
-                            <!-- promo content -->
-
-                        </div>
-                    </a>
-                </div>
-
-                
-            </div>
-            <!-- .about content -->
-
-            
-
-            
-
-        </div>
-    </section>
+    
 
     <!-- ================================================== END TESTIMONIALS ================================================== -->
 

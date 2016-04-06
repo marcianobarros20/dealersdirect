@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="col-xs-2 further_proceed_options" id="owe-money" style="display:none;" >
-			<h3>Trade In</h3>
+			<h3>Owe Money</h3>
 			<div class="radio">
 				<label>
 					{{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes
@@ -41,7 +41,7 @@
 		</div>
 		</div>
 		<div class="col-xs-12 next_button_area"  id="nextis" style="display:none;" >
-				<button type="button"  id="plsnex"  class="btn btn-warning next_btn"><i class="fa fa-share-square-o"></i> Next</button>
+				<button type="button"  id="plsnexii"  class="btn btn-warning next_btn"><i class="fa fa-share-square-o"></i> Next</button>
 		</div>
 		<div class="col-xs-12 next_button_area"  id="tradeinowe" style="display:none;" >
 				<button type="button" id="tradeinowenex"  class="btn btn-warning next_btn"><i class="fa fa-share-square-o"></i> Next</button>
