@@ -765,3 +765,41 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display:none;
 }
 
+
+/**********CSS OF DEALER REQUEST LIST PAGE************/
+.dealer_request_area{
+    padding-bottom: 50px;
+}
+.list_request{
+    border: 1px solid #F26722;
+    border-radius: 5px;
+    padding-bottom: 20px;
+}
+.btn_new {
+    margin-left: 26px;
+}
+.btn_new h3{
+    color: #000;
+}
+.dotted_hr{
+    border-bottom:1px dotted #F26722;
+}
+.text_new_area{
+    margin-left: 26px;
+}
+.text_new_area h3{
+    color: #000;
+}
+.submit_btn{
+    color: #F26722;
+    padding-top: 10px;
+}
+.btn-link{
+    color: #F26722;
+}
+.btn-link:focus, .btn-link:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: transparent;
+}
+
