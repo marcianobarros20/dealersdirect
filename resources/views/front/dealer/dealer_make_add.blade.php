@@ -1,52 +1,33 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_template')
 @section('content')
-		
-    <!-- ================================================== TESTIMONIALS ================================================== -->
-<section class="space-top-and-bottom tiny">
-<div class="container">
-<div class="row">
-<h3><b>Choose</b> New Make</h3>
-<hr />
+	
 
-
-<div class="twelve columns alpha space-top-and-bottom tiny">
-<div style="border-radius:10px;background:#363f48; display:block;  width:100%;">
-<div style=" padding:20px; ">
-
-<div class="dark-form">
-{{ Form::open(array('url' => 'dealeraddmake')) }}
-<fieldset>
-
-<?php foreach ($Make as $key=>$value) {
-    //echo $value;
-?>
-<div class="checkbox">
-{{ Form::checkbox('agree[]', $key, null, array('id'=>$key)) }}
-<label for="<?php echo $key; ?>"><?php echo $value; ?></label>
-</div>
-<?php }?>
-
-
-<div class="input-submit">
-
-{{ Form::submit('ADD',array('class' => '')) }}
-</div>
-
-
-</fieldset>
-{!! Form::close() !!}
-</div>
-</div>
-</div>
-
-</div>
-
-
-</div>
-</div>
-</section>
-
-<!-- ================================================== END TESTIMONIALS ================================================== --> 
-
-
+	<section class="brand_section">
+		  <div class="container">
+		  	{{ Form::open(array('url' => 'dealeraddmake')) }}
+		    <div class="row">
+		    	@foreach ($Make as $key=>$value)
+				<div class="col-xs-12 col-md-4">
+					
+					<div class="brand_request checkpro">
+							{{ Form::checkbox('agree[]', $value->id, null, array('id'=>$value->id,'style'=>"display:none;")) }}
+							@if($value->image!="")
+							<img src="{{ url('/')}}/public/uploads/carmake/thumb/{{$value->image}}" title="car" class="img-responsive" alt="car" />
+							@else
+							<img src="<?php echo url('/');?>/public/front_end/images/dealers_direct_pic_logo.png" class="img-responsive" title="car" alt="car" />
+							@endif
+							<div class="checkbox select_brand">
+								<label>
+									<?php echo $value->name; ?>
+								</label>
+							</div>
+					</div>
+				</div>
+				@endforeach
+				
+				{{ Form::submit('ADD',array('class' => 'btn btn-warning btn-lg btn-block')) }}
+	        </div>
+	       	{{ Form::close() }}
+		  </div>
+	</section>	
 @stop

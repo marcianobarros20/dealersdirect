@@ -59,6 +59,19 @@
             });
             return false;
         });
+        $('.checkpro').click(function(){
+
+          if($(this).find('input[type=checkbox]').is(':checked'))
+          {
+            $(this).find('input[type=checkbox]').prop("checked", false);
+            $(this).css("background-color","white");
+          }
+          else
+          { 
+            $(this).find('input[type=checkbox]').prop("checked", true);
+            $(this).css("background-color","#f26722");
+          }
+        });
       });
 
 			</script>

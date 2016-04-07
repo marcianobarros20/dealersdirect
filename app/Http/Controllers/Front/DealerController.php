@@ -249,7 +249,7 @@ class DealerController extends BaseController
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->distinct()->lists('make_id');
         
-        $Make=Make::whereNotIn('id', $DealerMakeMap)->lists('name','id');
+        $Make=Make::whereNotIn('id', $DealerMakeMap)->get();
         return view('front.dealer.dealer_make_add',compact('Make'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
     }
     public function DealerAddMake(){
