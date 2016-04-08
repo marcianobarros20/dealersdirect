@@ -51,9 +51,9 @@
             <div class="col-xs-12 col-sm-9 col-md-9">
                 <div class="brand-section">
                     <div class="container">
-                        <!-- <div id="loading" class="row" >
+                        <div id="loading" class="row" >
                             <img  style=" height:100%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif">
-                        </div> -->
+                        </div>
                         <div class="row" id="results">
                             
                         </div>
