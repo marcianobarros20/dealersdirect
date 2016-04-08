@@ -885,4 +885,29 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border-color: rgb(242, 103, 34);
 }
 
+/**********CSS OF CLIENT ADD OPTION PAGE************/
+.client-add{
+    border:2px solid #ccc;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    padding: 15px;
+    border-radius: 7px;
+}
+.font-a{
+    margin-left: 10px;
+    margin-right: 2px;
+}
+.dealer-info h3{
+    color:#000;
+    font-weight: bold;
+}
+.c-p{
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 4px;
+}
 
+.c-p:hover, .c-p:focus{
+    border-color: rgb(242, 103, 34);
+}
