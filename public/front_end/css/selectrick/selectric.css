@@ -23,20 +23,15 @@
   text-overflow: ellipsis;
   margin: 0 38px 0 10px;
   font-size: 12px;
-  line-height: 38px;
-  color: #444;
-  height: 38px;
+  line-height: 30px;
+  color: #fff;
+  height: 33px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
-.selectric .label {
-    color: #fff !important;
-    font-size: 10px !important;
-    line-height: 31px !important;
-    font-weight: bold !important;
-}
+
 .selectric .button {
   display: block;
   position: absolute;

@@ -1,189 +1,67 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_request_template')
 @section('content')
 		
-   <!-- ================================================== PAGINATION ================================================== -->
-
-    <section class="space-top-and-bottom medium">
-        <div class="container">
-
-            <div class="row">
-                <!-- sidebar -->
-                <div class="three columns" data-appear-animation="slideInLeft">
-                    <div class="sidebar space-top">
-
-                        <!-- MAKE -->
-                        <div class="sidebar-widget clearfix">
-
-                            <div class="widget-wrap search">
-
-                                <div class="sidebar-title">
-                                    <h4><b>Search By</b> Make</h4>
-                                </div>
-
-                                <div class="search-wrap">
-                                    <form method="get" action="#">
-                                        <fieldset>
-                                            <div class="light-select-input">
-                                                {{  Form::select('make_search', $Makes,null,array('id'=>'make_search')) }}
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- .MAKE -->
-
-                        <!-- TYPE -->
-                        <div class="sidebar-widget clearfix">
-
-                            <div class="widget-wrap search">
-
-                                <div class="sidebar-title">
-                                    <h4><b>Search By</b> Status</h4>
-                                </div>
-
-                                <div class="search-wrap">
-                                    <form method="get" action="#">
-                                        <fieldset>
-                                            <div class="light-select-input">
-                                                {{  Form::select('status_search', $Status,null,array('id'=>'status_search')) }}
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- .TYPE -->
-
-                        
-
-                        <!-- archives -->
-                        <div class="sidebar-widget clearfix">
-                            <div class="widget-wrap list">
-
-                                <div class="sidebar-title">
-                                    <h4><b>OneTime </b>Payment</h4>
-                                </div>
-                                <ul class="widget-list clearfix">
-                                    <li> 
-                                    
-                                    <div class="input search-input">
-                                    <input type="text" name="onesearchmin" id="onesearchmin"placeholder="MIN PRICE" />
-                                    </div>
-                                    
-                                    
-                                    <div class="input search-input">
-                                    <input type="text" name="onesearchmax" id="onesearchmax" placeholder="MAX PRICE" />
-                                    </div> 
-                                    </li>
-                                    
-                                    <li><a id="op" href="">SUBMIT</a> 
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                        <!-- .archives -->
-                        <!-- archives -->
-                        <div class="sidebar-widget clearfix">
-                            <div class="widget-wrap list">
-
-                                <div class="sidebar-title">
-                                    <h4><b>Monthly </b>Payment</h4>
-                                </div>
-                                <ul class="widget-list clearfix">
-                                    <li> 
-                                    
-                                    <div class="input search-input">
-                                    <input type="text"  name="monsearchmin" id="monsearchmin"placeholder="MIN PRICE" />
-                                    </div>
-                                    
-                                    
-                                    <div class="input search-input">
-                                    <input type="text" name="monsearchmax" id="monsearchmax" placeholder="MAX PRICE" />
-                                    </div> 
-                                    </li>
-                                    
-                                    <li><a id="mp" href="">SUBMIT</a> 
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                        <!-- .archives -->
-
+<section class="dealer_request_area">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-xs-12 col-sm-3 col-md-3 list_request">
+                <div class="btn-new">
+                    <h3>Search By Make</h3>
+                    <div class="request-list">
+                        {{  Form::select('make_search', $Makes,null,array('id'=>'make_search')) }}
                     </div>
                 </div>
-                <!-- .sidebar -->
 
-                <!-- body -->
-                <div class="nine columns" data-appear-animation="slideInRight">
-                    <h2>Dealers <b>Request</b> List</h2>
-                        <!-- <div class="three columns">
-                            <div class="car-box vertical medium">
-
-                                
-                                <div class="car-image">
-                                    <a href="#">
-                                        <img alt="car" title="car" src="images/car-1.jpg">
-                                        <span class="background">
-                                            <span class="icon-plus"></span>
-                                        </span>
-                                    </a>
-                                </div>
-                                
-                                <div class="car-content">
-
-                                   
-                                    <div class="car-title">
-                                        <h3><a href="#">Very Nice House</a>
-                                        </h3>
-                                    </div>
-                                    
-
-                                   
-                                    <div class="car-tags">
-                                        <ul class="clearfix">
-                                            <li>2012</li>
-                                            <li>4 beds</li>
-                                            <li>2 baths</li>
-                                            <li>New York</li>
-                                            <li>124m2</li>
-                                        </ul>
-                                    </div>
-                                    
-
-                                    
-                                    <div class="car-price">
-                                        <a class="clearfix" href="#">
-                                        <span class="price">$12.350</span>
-                                        <span class="icon-arrow-right2"></span>
-                                        </a>
-                                    </div>
-                                    
-
-                                </div>
-                                
-
-                            </div>
-                        </div> -->
-                        <div id="loading" class="" >
-                            <img  style=" height:100%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif">
-                        </div>
-                        <div id="results" style="display:none;"></div>
-
-                </div>
-                <!-- .body -->
-
-
-
+                    <div class="border"></div>
+                    <div class="btn-new">
+                        <h3>Search By Status</h3>
+                        {{  Form::select('status_search', $Status,null,array('id'=>'status_search')) }}
+                    </div>
+                    <div class="border"></div>
+                    <div class="text-new-area">
+                        <h3>One Time Payment</h3>
+                        
+                        {{ Form::text('onesearchmin','',['id' =>'onesearchmin','placeholder' => 'Min Price','class'=>'form-control form-in-control']) }}
+                        <br>
+                        {{ Form::text('onesearchmax','',['id' =>'onesearchmax','placeholder' => 'Max Price','class'=>'form-control form-in-control f-c']) }}
+                    </div>
+                    <div class="border"></div>
+                    <ul class="nav nav-pills nav-stacked submit_btn">
+                        <li><a  id="op" href="">Submit
+                            <i class="fa fa-chevron-circle-right pull-right i-c"></i>
+                        </a></li>
+                    </ul>
+                    <div class="border"></div>
+                    <div class="text-new-area">
+                        <h3>Monthly Payment</h3>
+                        {{ Form::text('monsearchmin','',['id' =>'monsearchmin','placeholder' => 'Min Price','class'=>'form-control form-in-control']) }}
+                        <br>
+                        {{ Form::text('monsearchmax','',['id' =>'monsearchmax','placeholder' => 'Max Price','class'=>'form-control form-in-control f-c']) }}
+                    </div>
+                    <div class="border"></div>  
+                    <ul class="nav nav-pills nav-stacked submit_btn">
+                        <li><a  id="mp" href="">Submit
+                            <i class="fa fa-chevron-circle-right pull-right i-c"></i>
+                        </a></li>
+                    </ul>
+                    
             </div>
-
-    </section>
-
-    <!-- ================================================== END PAGINATION ============================================== -->
-
+            
+            <div class="col-xs-12 col-sm-9 col-md-9">
+                <div class="brand-section">
+                    <div class="container">
+                        <!-- <div id="loading" class="row" >
+                            <img  style=" height:100%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif">
+                        </div> -->
+                        <div class="row" id="results">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /row col-xs-12 select_option -->    
+    </div><!--  /container --> 
+</section>
 
 @stop

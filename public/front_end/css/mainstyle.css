@@ -636,21 +636,16 @@ small{
     width: 150px;
     height: 40px !important;
 }
-.selectric-wrapper {
+/*.selectric-wrapper {
     margin-bottom: 10px;
     width: 150px !important;
-}
+}*/
 .selectric {
     border: 1px solid #C6611E !important;
     background: #F26722 !important;
     position: relative;
 }
-.selectric .label {
-    color: #fff !important;
-    font-size: 10px !important;
-    line-height: 31px !important;
-    font-weight: bold !important;
-}
+
 .new_btn{
     margin-left: 10px;
 }
@@ -764,4 +759,109 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .select_brand input{
     display:none;
 }
+
+
+/**********CSS OF DEALER REQUEST LIST PAGE************/
+.brand-section{
+    padding-bottom: 50px;
+}
+.dealer_request_area{
+    padding-bottom: 50px;
+}
+.list_request{
+    border: 1px solid #F26722;
+    border-radius: 5px;
+    padding-bottom: 20px;
+
+}
+.btn_new {
+    margin-left: 26px;
+}
+.btn_new h3{
+    color: #000;
+}
+.dotted_hr{
+    border-bottom:1px dotted #F26722;
+}
+.text_new_area{
+    margin-left: 26px;
+}
+.text_new_area h3{
+    color: #000;
+}
+.submit_btn{
+    color: #F26722;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    margin-top: -5px;
+}
+.submit_btn li a{
+    color: #F26722;
+    /*padding-top: 10px;*/
+}
+.submit_btn li a:hover, .submit_btn li a:focus{
+    color: #fff;
+    background-color:#F26722;
+}
+.i-c{
+    margin-top: 5px;
+}
+/*.submit_btn {
+    color: #FFF;
+    padding-top: 10px;
+    padding-right: 5px;
+}
+.submit_btn:hover {
+    color: #fff;
+    padding-top: 10px;
+}*/
+.btn-link {
+    color: #FFF;
+}
+.btn-link:focus, .btn-link:hover {
+    color: #4E4D4D;
+    text-decoration: none;
+    background-color: transparent;
+}
+.form-in-control{
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 203px;
+    height: 36px !important;
+}
+.f-c{
+    margin-bottom:10px;
+}
+/*.submit-area{
+    margin-top: 10px;
+    background: #F26722 !important;
+    color: #fff;
+}*/
+.border{
+    /*background-image: url("../images/dot_1.png");
+    background-repeat: repeat-x;*/
+    border-bottom: 1px solid #F26722;
+    border-bottom-style: dashed;
+
+}
+
+.carousel_area{
+    width: 26.333% !important; 
+}
+.btns{
+    padding:10px;
+}
+.c-p-b{
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 4px;
+    font-size:10px;
+}
+
+.c-p-b:hover, .c-p-b:focus{
+    border-color: rgb(242, 103, 34);
+}
+
 

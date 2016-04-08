@@ -1,95 +1,56 @@
-                {{--*/ $i =0 /*--}}
-                {{--*/ $start =0 /*--}}
-                {{--*/ $end =0 /*--}}
-                @foreach($RS as $key=>$RequestLog)
-                <!-- car vertical medium -->
-                @if($i==0)
-                        {{--*/ $start++ /*--}}
-                    <div class="row">
-                    @endif
-                        <div class="four columns">
-                            <div class="car-box vertical medium">
 
-                                <!-- image -->
-                                <div class="car-image">
-                                    <a href="#">
-                                        <img src="{{ url('/')}}/public/edmunds/make/small/<?php echo $RequestLog['imx']; ?>" title="car" alt="car" />
-                                        <span class="background">
-                                            <span class="icon-plus"></span>
-                                        </span>
-                                    </a>
-                                </div>
-                                <!-- .image -->
+@foreach($RS as $key=>$RequestLog)
 
-                                <!-- content -->
-                                <div class="car-content">
+    <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+        <div class="brand_request">
+            
+            <div id = "myCarousel{{$key}}" class = "carousel slide">
 
-                                    <!-- title -->
-                                    <div class="car-title">
-                                        <h3>
-                                        <a href="#">
-                                        {!! $RequestLog->makes->name !!} 
-                                        {!! $RequestLog->requestqueue->models->name !!}
-                                        </a>
-                                        </h3>
-                                    </div>
-                                    <!-- .title -->
+            
+                <ol class = "carousel-indicators">
+                    @foreach($RequestLog->imx as $vx=>$img)
+                    <li data-target = "#myCarousel{{$key}}" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
+                    @endforeach
+                </ol>   
 
-                                    <!-- tags -->
-                                    <div class="car-tags">
-                                        <ul class="clearfix">
-                                            @if($RequestLog->blocked==1)
-                                            <li class="new-error">BLOCKED</li>
-                                            @endif
-                                            @if($RequestLog->accepted_state!=0)
-                                            <li class="new-success">Accepted</li>
-                                            @endif
-                                            @if($RequestLog->rejected_state!=0)
-                                            <li class="new-alert">Rejected</li>
-                                            @endif
-                                            <li>{!! $RequestLog->requestqueue->year !!}</li>
-                                            <li>{!! $RequestLog->requestqueue->models->name !!}</li>
-                                            <li>ONETIME :{!! $RequestLog->requestqueue->total_amount !!}</li>
-                                            <li>MONTHLY :{!! $RequestLog->requestqueue->monthly_amount !!}</li>
-                                            
-                                        </ul>
-                                    </div>
-                                    <!-- .tags -->
-
-                                    <!-- price -->
-                                    <div class="car-price">
-                                        <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($RequestLog->id);?>" class="clearfix">
-                                        <span class="price">Open</span>
-                                        <span class="icon-arrow-right2"></span>
-                                        </a>
-                                    </div>
-                                    <!-- .price -->
-
-                                </div>
-                                <!-- .content -->
-
-                            </div>
-                        </div>
-                @if($i==2)
-                        {{--*/ $end++ /*--}}
-                        </div>
-                        {{--*/ $i=0 /*--}}
-                        
-                    @else
-                        {{--*/ $i++ /*--}}
-                    @endif
-                @endforeach 
-                @if($start!=$end)
+            
+                <div class = "carousel-inner">
+                @foreach($RequestLog->imx as $vx=>$img)
+                    <div class = "item @if($vx==0) active @endif">
+                        <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
+                    </div>
+                @endforeach  
                 </div>
+
+            
+                <a class = "carousel-control left" href = "#myCarousel{{$key}}" data-slide = "prev">&lsaquo;</a>
+                <a class = "carousel-control right" href = "#myCarousel{{$key}}" data-slide = "next">&rsaquo;</a>
+
+            </div> 
+            <h2>{!! $RequestLog->makes->name !!} </h2>
+            <div class="btns">
+                <button type="button" class="btn btn-default c-p-b">{!! $RequestLog->requestqueue->models->name !!}</button>
+                @if($RequestLog->blocked==1)
+                <button type="button" class="btn btn-default c-p-b">BLOCKED</button>
                 @endif
-                    @if(empty($RS))
-                        <div class="share">
+                @if($RequestLog->accepted_state!=0)
+                <button type="button" class="btn btn-default c-p-b">Accepted</button>
+                @endif
+                @if($RequestLog->rejected_state!=0)
+                <button type="button" class="btn btn-default c-p-b">Rejected</button>
+                @endif
+                <button type="button" class="btn btn-default c-p-b">{!! $RequestLog->requestqueue->year !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime:{!! $RequestLog->requestqueue->total_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Monthly:{!! $RequestLog->requestqueue->monthly_amount !!}</button>
+                
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success">OPEN</button>
+                <button type="button" class="btn btn-warning">
+                    <i class="fa fa-long-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div> 
 
-                            <ul>
-                                <li>Sorry No Request List</li>
-
-                            </ul>
-
-                        </div>
-                    @endif
-                <!-- .car vertical medium -->
+@endforeach
