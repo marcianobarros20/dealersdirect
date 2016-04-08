@@ -789,11 +789,24 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .text_new_area h3{
     color: #000;
 }
-/*.submit_btn{
+.submit_btn{
     color: #F26722;
-    padding-top: 10px;
-}*/
-.submit_btn {
+    padding-top: 5px;
+    padding-bottom: 0px;
+    margin-top: -5px;
+}
+.submit_btn li a{
+    color: #F26722;
+    /*padding-top: 10px;*/
+}
+.submit_btn li a:hover, .submit_btn li a:focus{
+    color: #fff;
+    background-color:#F26722;
+}
+.i-c{
+    margin-top: 5px;
+}
+/*.submit_btn {
     color: #FFF;
     padding-top: 10px;
     padding-right: 5px;
@@ -801,7 +814,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .submit_btn:hover {
     color: #fff;
     padding-top: 10px;
-}
+}*/
 .btn-link {
     color: #FFF;
 }
@@ -820,33 +833,19 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .f-c{
     margin-bottom:10px;
 }
-.submit-area{
-    /*margin-top: 10px;*/
+/*.submit-area{
+    margin-top: 10px;
     background: #F26722 !important;
     color: #fff;
-}
-/*.submit-area .btn-link:hover {
-    background: #F26722 !important;
-    color: #fff; 
-}
-.submit-area .submit_btn:hover {
-    background: #F26722 !important;
-    color: #fff;
-    cursor: pointer; 
+}*/
+.border{
+    /*background-image: url("../images/dot_1.png");
+    background-repeat: repeat-x;*/
+    border-bottom: 1px solid #F26722;
+    border-bottom-style: dashed;
+
 }
 
-.submit-area:hover {
-    background: #F26722 !important;
-    color: #fff;
-}*/
-/*.submit-area a img:hover {
-    background: #F26722 !important;
-    color: #fff;s
-}
-.submit-area a i:hover {
-    background: #F26722 !important;
-    color: #fff;
-}*/
 .carousel_area{
     width: 26.333% !important; 
 }
