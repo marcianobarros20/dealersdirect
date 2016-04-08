@@ -54,12 +54,12 @@
                 <button type="button" class="btn btn-default c-p-b">Monthly:{!! $RequestLog->requestqueue->monthly_amount !!}</button>
                 
             </div>
-            <div class="btn-group">
+            <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($RequestLog->id);?>" class="btn-group">
                 <button type="button" class="btn btn-success">OPEN</button>
                 <button type="button" class="btn btn-warning">
                     <i class="fa fa-long-arrow-right"></i>
                 </button>
-            </div>
+            </a>
         </div>
     </div> 
 

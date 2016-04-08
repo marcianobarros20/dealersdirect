@@ -1,130 +1,81 @@
-@extends('front/layout/client_template')
+@extends('front/layout/clientfrontend_template')
 @section('content')
 		
- <!-- ================================================== TESTIMONIALS ================================================== -->
-	<section class="space-top-and-bottom tiny">
-		<div class="container">
-			<div class="row">
-
-				<h3>
-					<b>Profile & Details</b>
-				</h3>
-				<hr />
-				<div class="send_result" style="padding-bottom: 2%;">{!! Session::get('message') !!}</div>
-				<!-- horizontal tabs -->
-				<div class="twelve columns alpha">
-					
-					<div class="h-tab">
-						<ul class="resp-tabs-list clearfix">
-							<li>Details</li>
-							<li>Change Password</li>
-						</ul>
-						<!-- .nav -->
-
-						<!-- container -->
-						<div class="resp-tabs-container">
-
-							<!-- 1 -->
-							<div class="tab-content">
-								<h4>Change Details</h4>
-										<div style="border-radius:10px;background:#363f48; display:block;  width:100%;">
-											<div style=" padding:20px; ">
-
-												<div class="dark-form">
-												{{ Form::open(array('url' => 'clienteditdetails','id'=>'cliedit')) }}
-													<fieldset>
-														<div class="label">
-															Email/User Name
-														</div>
-														<div class="input">
-															
-															{{ Form::text('email',$Client->email,['placeholder' => 'Email/User Name','readonly' => 'true']) }}
-														</div>
-														<div class="label">
-															First Name
-														</div>
-														<div class="input">
-															{{ Form::text('fname',$Client->first_name,['placeholder' => 'First Name','required'=>'required']) }}
-														</div>
-														<div class="label">
-															Last Name
-														</div>
-														<div class="input">
-															{{ Form::text('lname',$Client->last_name,['placeholder' => 'Last Name','required'=>'required']) }}
-														</div>
-														<div class="label">
-															Phone
-														</div>
-														<div class="input">
-															{{ Form::text('phone',$Client->phone,['placeholder' => 'Phone','required'=>'required']) }}
-														</div>
-														<div class="input">
-															{{ Form::text('zip',$Client->zip,['placeholder' => 'Zip','required'=>'required']) }}
-														</div>
-														<div class="input-submit">
-															{{ Form::submit('EDIT',array('class' => '')) }}
-														</div>
-
-
-													</fieldset>
-												{!! Form::close() !!}
-												</div>
-											</div>
-										</div>
-
-									
-							</div>
-							<!-- .1 -->
-
-							<!-- 2 -->
-							<div class="tab-content">
-								<h4>Change Password</h4>
-										<div style="border-radius:10px;background:#363f48; display:block;  width:100%;">
-											<div style=" padding:20px; ">
-
-												<div class="dark-form">
-												{{ Form::open(array('url' => 'clienteditpassword')) }}
-													<fieldset>
-														<div class="input">
-															{{ Form::password('password',['placeholder' => 'Password','required'=>'required']) }}
-														</div>
-														<div class="input">
-															{{ Form::password('conf_password',['placeholder' => 'Confirm-Password','required'=>'required']) }}
-														</div>
-														
-														<div class="input-submit">
-															{{ Form::submit('EDIT',array('class' => '')) }}
-														</div>
-
-
-													</fieldset>
-												{!! Form::close() !!}
-												</div>
-											</div>
-										</div>
-							</div>
-							<!-- .2 -->
-
-
-
-						</div>
-						<!-- container -->
-
-					</div>
-
+ 
+<section>
+	<div class="container">
+	@if(Session::get('message'))
+				<div class = "alert alert-success">
+					<a href = "#" class = "close" data-dismiss = "alert">
+					&times;
+					</a>
+					<strong>{{Session::get('message')}}</strong> 
 				</div>
-				<!-- .horizontal tabs -->
-
-
-
-
-			</div>
-
+	@endif
+	  <h2 class="profile_head center-block">PROFILE & DETAILS</h2>
+	    <div class="row profile_details">
+		    <div class="col-xs-12 profile_form">
+		     	<div id="content">
+			        <ul id="tabs" class="nav nav-tabs profile-browse" data-tabs="tabs">
+				        <li class="active"><a href="#red" data-toggle="tab">Details</a></li>
+				        <li><a href="#orange" data-toggle="tab">Change Password</a></li>
+			        </ul>
+			        <div id="my-tab-content" class="tab-content">
+				        <div class="tab-pane active form-head" id="red">
+				            {{ Form::open(array('url' => 'clienteditdetails','id'=>'cliedit')) }}
+				            	<h3>Change Details</h3>
+								<div class="form_back">
+				              		<div class="form-group">
+									    <label for="exampleInputEmail1">Email/Username</label>
+									    
+									    {{ Form::text('email',$Client->email,['class' => 'form-control profile_control','readonly' => 'true']) }}
+								  	</div>
+									<div class="form-group">
+										<label for="exampleInputName1">First Name</label>
+										{{ Form::text('fname',$Client->first_name,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">Last Name</label>
+									    {{ Form::text('lname',$Client->last_name,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">Phone</label>
+									    {{ Form::text('phone',$Client->phone,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">Zip</label>
+									    {{ Form::text('zip',$Client->zip,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									
+											{{ Form::submit('EDIT',array('class' => 'btn btn-default btn-lg btn-block')) }}
+								        
+								</div> <!-- /form_back -->
+							{!! Form::close() !!}
+				        </div>
+				        <div class="tab-pane form-head" id="orange">
+				            {{ Form::open(array('url' => 'clienteditpassword')) }}
+				            	<h3>Change Password</h3>
+								<div class="form_back">
+				              		<div class="form-group">
+									    <label for="exampleInputPassword1">Password</label>
+									    
+									    {{ Form::password('password',['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputPassword1">Confirm Password</label>
+									    
+									    {{ Form::password('conf_password',['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+								       
+								        {{ Form::submit('EDIT',array('class' => 'btn btn-default btn-lg btn-block')) }}
+								</div> <!-- /form_back -->
+							{!! Form::close() !!}
+				        </div>
+			        </div>
+		        </div>
+		    </div>
 		</div>
-		
-	</section>
-
-<!-- ================================================== END TESTIMONIALS ================================================== --> 
-
+	</div>
+</section>
 
 @stop
