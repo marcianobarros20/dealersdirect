@@ -54,6 +54,9 @@
                         <div id="loading" class="row" >
                             <img  style=" height:100%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif">
                         </div>
+                        <div id="sorry" class="row"  style="font-style: italic;    font-weight: bolder;    padding-left: 21%;    padding-top: 21%;">
+                            
+                        </div>
                         <div class="row" id="results">
                             
                         </div>

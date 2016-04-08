@@ -55,11 +55,16 @@
                       success: function( data ) {
                         if(data){
                           $("#loading").hide();
-
+                          $("#sorry").hide();
                          $("#results").html(data);
                          $("#results").show();
                         }
-                        
+                        else{
+                         
+                          $("#sorry").html('Sorry No Request List Yet Generated !!!');
+                          $("#sorry").show();
+                          $("#loading").hide();
+                        }
                       
                       }
               });
@@ -68,6 +73,7 @@
       $('#make_search').change(function(){
         $("#loading").show();
         $("#results").hide();
+        $("#sorry").hide();
         var make_search=$("#make_search").val();
         var status_search=$("#status_search").val();
         var onesearchmin=$("#onesearchmin").val();
@@ -81,9 +87,14 @@
                       success: function( data ) {
                         if(data){
                           $("#loading").hide();
-
+                          $("#sorry").hide();
                          $("#results").html(data);
                          $("#results").show();
+                        }else{
+                          
+                          $("#sorry").html('Sorry No Request With This Make !!!');
+                          $("#sorry").show();
+                          $("#loading").hide();
                         }
                         
                       
@@ -94,6 +105,7 @@
       $('#status_search').change(function(){
         $("#loading").show();
         $("#results").hide();
+        $("#sorry").hide();
         var make_search=$("#make_search").val();
         var status_search=$("#status_search").val();
         var onesearchmin=$("#onesearchmin").val();
@@ -107,9 +119,14 @@
                       success: function( data ) {
                         if(data){
                           $("#loading").hide();
-
+                          $("#sorry").hide();
                          $("#results").html(data);
                          $("#results").show();
+                        }else{
+                          
+                          $("#sorry").html('Sorry No Request With This Status !!!');
+                          $("#sorry").show();
+                          $("#loading").hide();
                         }
                         
                       
@@ -120,6 +137,7 @@
       $('#op').click(function(){
         $("#loading").show();
         $("#results").hide();
+        $("#sorry").hide();
         var make_search=$("#make_search").val();
         var status_search=$("#status_search").val();
         var onesearchmin=$("#onesearchmin").val();
@@ -133,11 +151,16 @@
                       success: function( data ) {
                         if(data){
                           $("#loading").hide();
-
+                          $("#sorry").hide();
                          $("#results").html(data);
                          $("#results").show();
                         }
-                        
+                        else{
+                          
+                          $("#sorry").html('Sorry No Request With This Onetime Payment Range !!!');
+                          $("#sorry").show();
+                          $("#loading").hide();
+                        }
                       
                       }
               });
@@ -146,6 +169,7 @@ return false;
       $('#mp').click(function(){
         $("#loading").show();
         $("#results").hide();
+        $("#sorry").hide();
         var make_search=$("#make_search").val();
         var status_search=$("#status_search").val();
         var onesearchmin=$("#onesearchmin").val();
@@ -159,11 +183,16 @@ return false;
                       success: function( data ) {
                         if(data){
                           $("#loading").hide();
-
+                          $("#sorry").hide();
                          $("#results").html(data);
                          $("#results").show();
                         }
-                        
+                        else{
+                          alert("Sorry");
+                          $("#sorry").html('Sorry No Request With This Monthly Payment Range !!!');
+                          $("#sorry").show();
+                          $("#loading").hide();
+                        }
                       
                       }
               });
