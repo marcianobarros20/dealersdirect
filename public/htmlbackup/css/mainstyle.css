@@ -396,7 +396,28 @@ input.search-form:hover {
 .next_button_area{
     padding-bottom:30px;
 }
-
+.profile-browse{
+    
+    background-color: rgb(70, 80, 90);
+    border-color: #0c0505;
+}
+.profile-browse a{
+    color: #FCFAFA;
+}
+.profile-browse > li > a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 0px!important;
+}
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #eee;
+    color: #0E0D0D !important;
+}
+.form-head h3{
+    color: #F26722;
+}
 /**********CSS OF PRIVACY POLICY PAGE************/
 
 .privacy_policy{
