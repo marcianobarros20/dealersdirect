@@ -1,4 +1,4 @@
-<?php dd($RS); ?>
+
 @foreach($RS as $key=>$RequestLog)
 
     <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
@@ -8,18 +8,28 @@
 
             
                 <ol class = "carousel-indicators">
+                @if($RequestLog->imx!="")
                     @foreach($RequestLog->imx as $vx=>$img)
                     <li data-target = "#myCarousel{{$key}}" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
                     @endforeach
+                @else
+                    <li data-target = "#myCarousel{{$key}}" data-slide-to = "0" class = "active"></li>
+                @endif
                 </ol>   
 
             
                 <div class = "carousel-inner">
+                @if($RequestLog->imx!="")
                 @foreach($RequestLog->imx as $vx=>$img)
                     <div class = "item @if($vx==0) active @endif">
                         <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
                     </div>
-                @endforeach  
+                @endforeach 
+                @else
+                <div class = "item active">
+                        <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+                </div>
+                @endif 
                 </div>
 
             
