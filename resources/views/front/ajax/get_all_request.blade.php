@@ -1,4 +1,4 @@
-
+<?php dd($RS); ?>
 @foreach($RS as $key=>$RequestLog)
 
     <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
