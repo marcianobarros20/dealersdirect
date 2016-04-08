@@ -789,19 +789,24 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .text_new_area h3{
     color: #000;
 }
-.submit_btn{
+/*.submit_btn{
     color: #F26722;
     padding-top: 10px;
+}*/
+.submit_btn {
+    color: #FFF;
+    padding-top: 10px;
+    padding-right: 5px;
 }
 .submit_btn:hover {
     color: #fff;
     padding-top: 10px;
 }
-.btn-link{
-    color: #F26722;
+.btn-link {
+    color: #FFF;
 }
 .btn-link:focus, .btn-link:hover {
-    color: #fff;
+    color: #4E4D4D;
     text-decoration: none;
     background-color: transparent;
 }
@@ -812,13 +817,36 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 203px;
     height: 36px !important;
 }
-.submit-area{
-    padding-top: 10px;
+.f-c{
+    margin-bottom:10px;
 }
-.submit-area a:hover {
-    background-color: #F26722 !important;
+.submit-area{
+    /*margin-top: 10px;*/
+    background: #F26722 !important;
     color: #fff;
 }
+/*.submit-area .btn-link:hover {
+    background: #F26722 !important;
+    color: #fff; 
+}
+.submit-area .submit_btn:hover {
+    background: #F26722 !important;
+    color: #fff;
+    cursor: pointer; 
+}
+
+.submit-area:hover {
+    background: #F26722 !important;
+    color: #fff;
+}*/
+/*.submit-area a img:hover {
+    background: #F26722 !important;
+    color: #fff;s
+}
+.submit-area a i:hover {
+    background: #F26722 !important;
+    color: #fff;
+}*/
 .carousel_area{
     width: 26.333% !important; 
 }
