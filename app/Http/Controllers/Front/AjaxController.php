@@ -794,7 +794,7 @@ class AjaxController extends Controller
         foreach ($RS as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
             if($countimg!=0){
-                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->groupBy('title')->get();
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->groupBy('edmunds_path_small')->get();
              $RS[$key]['imx']=$imx;
             }else{
                $RS[$key]['imx']=""; 
