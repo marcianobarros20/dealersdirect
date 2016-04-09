@@ -827,15 +827,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .i-c{
     margin-top: 5px;
 }
-/*.submit_btn {
-    color: #FFF;
-    padding-top: 10px;
-    padding-right: 5px;
-}
-.submit_btn:hover {
-    color: #fff;
-    padding-top: 10px;
-}*/
 .btn-link {
     color: #FFF;
 }
@@ -876,11 +867,22 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .c-p-b{
     color: rgb(51, 51, 51);
     background-color: rgba(230, 230, 230, 0.01);
-    border-color: rgb(242, 103, 34);
+    /*border-color: rgb(242, 103, 34);*/
     padding: 4px;
     font-size:10px;
 }
-
+.accept{
+    border-color: rgb(23, 87, 28);
+}
+.decline{
+    border-color: rgb(227, 62, 18);
+}
+.warning{
+    border-color: rgb(227, 231, 52);
+}
+.block{
+    border-color: rgb(25, 31, 150);
+}
 .c-p-b:hover, .c-p-b:focus{
     border-color: rgb(242, 103, 34);
 }
@@ -910,4 +912,99 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .c-p:hover, .c-p:focus{
     border-color: rgb(242, 103, 34);
+}
+
+
+
+/**********CSS OF POSTBID PAGE************/
+.post-bid{
+    margin-bottom: 50px;
+}
+.intro-text h4 {
+    font-size: 11px;
+}
+.intro-text h2 {
+    margin-top: 0px !important;
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+}
+.intro-text p {
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+}
+.add-image{
+    background-color: rgb(242, 103, 34);
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 5px;
+}
+.c-b{
+    font-size: 16px;
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 8px 22px;
+    margin-bottom: 15px;
+}
+.postbid-browse {
+    background-color: #F26722;
+    border-color: #C54607;
+}
+.post-text{
+    text-align: center;
+    border: 1px solid #F26722 !important;
+}
+
+/**********CSS OF dealers_request_detail_view PAGE************/
+.detail-text{
+    margin-top:15px;
+}
+.detail-text h2 {
+    margin-top: 0px !important;
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+}
+.detail-text p {
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+}
+.c-v{
+    font-size: 16px;
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 8px 15px;
+    margin-bottom: 15px;
+}
+.client-table{
+    border: 1px solid #F26722 !important;
+}
+.brand-view {
+    text-align: center;
+    border: 1px solid #F26722;
+    box-shadow: 0 5px 15px rgba(0,0,0,.3);
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+}
+.img-area{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.image-view{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.brand-sec {
+    padding-bottom: 50px;
+    margin-top: 30px;
+}
+
+/**********CSS OF modal fade in client_request_detail_view PAGE************/
+
+.information{
+    margin-left: 25px;
 }
