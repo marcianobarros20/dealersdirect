@@ -60,7 +60,7 @@
 			<div class="collapse navbar-collapse navbar-right">
 			  <ul class="nav navbar-nav">
 				<li @if($typex=="home")class="active"@endif><a href="<?php echo url('/');?>">Home</a></li>
-				<li><a href="<?php echo url('/');?>">About Us</a></li>
+				<!-- <li><a href="">About Us</a></li> -->
 				<li @if($typex=="services")
 				class="active"
 				@endif

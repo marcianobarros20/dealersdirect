@@ -9,7 +9,7 @@
 			<div class="col-sm-6">
 				<ul class="pull-right">
 					<li @if($typex=="home")class="active"@endif><a href="<?php echo url('/');?>">Home</a></li>
-					<li ><a href="<?php echo url('/');?>">About Us</a></li>
+					<!-- <li ><a href="">About Us</a></li> -->
 					<li @if($typex=="services")
 				class="active"
 				@endif><a href="<?php echo url('/');?>/services">Services</a></li>
