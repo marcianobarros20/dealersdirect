@@ -1,3 +1,4 @@
+
 <header id="header">
 		<div class="top-bar">
 		  <div class="container">
@@ -59,15 +60,28 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-right">
 			  <ul class="nav navbar-nav">
-				<li @if($typex=="home")class="active"@endif><a href="<?php echo url('/');?>">Home</a></li>
+				<li 
+					@if(isset($typex))
+						@if($typex=="home")
+							class="active"
+						@endif
+					@endif
+				><a href="<?php echo url('/');?>">Home</a></li>
 				<!-- <li><a href="">About Us</a></li> -->
-				<li @if($typex=="services")
-				class="active"
-				@endif
+				<li 
+					@if(isset($typex))
+						@if($typex=="services")
+							class="active"
+						@endif
+					@endif
 				><a href="<?php echo url('/');?>/services">Services</a></li>
-				<li @if($typex=="contact-us")
-				class="active"
-				@endif><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
+				<li 
+					@if(isset($typex))
+						@if($typex=="contact-us")
+							class="active"
+						@endif
+					@endif
+				><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
 				@if($client!=0)
 				<li><a href="<?php echo url('/');?>/client_sign_out">Logout</a></li>
 				@endif

@@ -1,6 +1,6 @@
 <section class="home_second_part">
   <div class="container">
-	<h2 class="home_head_second center-block">WELCOME TO DEALERS DIRECT<br><small>Lorem Ipsum 21000, North Valley, Byorg</small></h2>
+	<h2 class="home_head_second center-block">WELCOME TO DEALERS DIRECT<br></h2>
    <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 home_second_buttons">
 	  <a href="<?php echo url('/');?>/client-signin" type="button" class="btn btn-default btn-lg home_default">SIGN IN</a>
