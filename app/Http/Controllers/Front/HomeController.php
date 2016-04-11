@@ -91,7 +91,8 @@ class HomeController extends BaseController
             $message->from($admin_users_email);
             $message->to($admin_users_email, "DealersDirect")->subject('Contact From DEALERSDIRECT');
             });
-
+        Session::flash('message', 'Your Message Has Been Sent To The Dealers Direct Admin We Will Get Back To You Soon'); 
+                    return redirect('/contact-us');
             
     }
 

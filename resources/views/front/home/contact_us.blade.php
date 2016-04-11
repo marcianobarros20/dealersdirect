@@ -4,7 +4,14 @@
     
 	<section>
 		<div class="container">
-			
+			@if(Session::get('message'))
+				<div class = "alert alert-danger">
+					<a href = "#" class = "close" data-dismiss = "alert">
+					&times;
+					</a>
+					<strong>{{Session::get('message')}}</strong> 
+				</div>
+			@endif
 			<h2 class="head center-block">Contact Us</h2>
 			<div class="row">
 				<div class="col-xs-12 sign_form">
