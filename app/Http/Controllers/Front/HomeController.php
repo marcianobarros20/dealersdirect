@@ -18,6 +18,7 @@ use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
 use Hash;
+use Mail;
 use App\Helper\helpers;
 
 
@@ -52,9 +53,46 @@ class HomeController extends BaseController
             
         }
         
+        return view('front.home.index',compact('client'),array('title'=>'DEALERSDIRECT','typex'=>'home'));
 
-        return view('front.home.index',compact('client'),array('title'=>'DEALERSDIRECT'));
+    }
+    public function services(){
+        $client=self::CheckLogin();
+        if($client!=0){
+             $client;
+        }else{
+            
+        }
+        
+        return view('front.home.services',compact('client'),array('title'=>'DEALERSDIRECT Services','typex'=>'services'));
+    }
+    public function ContactUs(){
+        $client=self::CheckLogin();
+        if($client!=0){
+             $client;
+        }else{
+            
+        }
+       
+        return view('front.home.contact_us',compact('client'),array('title'=>'DEALERSDIRECT Contact-Us','typex'=>'contact-us'));
+    }
+    public function Contact(){
+        print_r(Request::input());
+        $name=Request::input('name');
+        $email=Request::input('email');
+        $phone=Request::input('phone');
+        $subject=Request::input('subject');
+        $details=Request::input('details');
+        $admin_users_email="hello@tier5.us";
 
+        $sent = Mail::send('front.email.contactUs', array('name'=>$name,'email'=>$email,'phone'=>$phone, 'subject'=>$subject,'details'=>$details), 
+            function($message) use ($admin_users_email,$email,$name)
+            {
+            $message->from($admin_users_email);
+            $message->to($admin_users_email, "DealersDirect")->subject('Contact From DEALERSDIRECT');
+            });
+
+            
     }
 
     /**
