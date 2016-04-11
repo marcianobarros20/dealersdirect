@@ -956,6 +956,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     text-align: center;
     border: 1px solid #F26722 !important;
 }
+.image-btn{
+    padding-bottom:15px;
+}
 
 /**********CSS OF dealers_request_detail_view PAGE************/
 .detail-text{
