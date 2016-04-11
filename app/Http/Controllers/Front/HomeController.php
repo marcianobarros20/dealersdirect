@@ -83,7 +83,7 @@ class HomeController extends BaseController
         $phone=Request::input('phone');
         $subject=Request::input('subject');
         $details=Request::input('details');
-        $admin_users_email="hello@tier5.us";
+        $admin_users_email="work@tier5.us";
 
         $sent = Mail::send('front.email.contactUs', array('name'=>$name,'email'=>$email,'phone'=>$phone, 'subject'=>$subject,'details'=>$details), 
             function($message) use ($admin_users_email,$email,$name)
