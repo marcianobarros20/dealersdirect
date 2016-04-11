@@ -13,7 +13,9 @@
 					<li @if($typex=="services")
 				class="active"
 				@endif><a href="<?php echo url('/');?>/services">Services</a></li>
-					<li><a href="<?php echo url('/');?>">Contact-Us</a></li>
+					<li @if($typex=="contact-us")
+				class="active"
+				@endif><a href="<?php echo url('/');?>">Contact-Us</a></li>
 				</ul>
 			</div>
 		</div>

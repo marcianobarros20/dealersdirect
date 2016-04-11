@@ -65,7 +65,9 @@
 				class="active"
 				@endif
 				><a href="<?php echo url('/');?>/services">Services</a></li>
-				<li><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
+				<li @if($typex=="contact-us")
+				class="active"
+				@endif><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
 				@if($client!=0)
 				<li><a href="<?php echo url('/');?>/client_sign_out">Logout</a></li>
 				@endif
