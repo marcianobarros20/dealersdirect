@@ -142,6 +142,7 @@ Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers'
 Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
 Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
 Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
+Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -175,6 +176,7 @@ Route:: get('/dealers/stop-bid/{id}', 'Front\DealerController@DealerStopBid');
 Route:: get('/dealer/admins', 'Front\DealerController@DealerAdminList');
 Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

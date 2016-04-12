@@ -39,18 +39,41 @@
             <div class="btns">
                 
                 @if($Bid->trade_in!=0)  
-                <button type="button" class="btn btn-default c-p-b">OneTime:{!! $Bid->trade_in !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Trade In:{!! $Bid->trade_in !!}</button>
                 @endif              
                 <button type="button" class="btn btn-default c-p-b">OneTime:{!! $Bid->total_amount !!}</button>
                 <button type="button" class="btn btn-default c-p-b">Monthly:{!! $Bid->monthly_amount !!}</button>
                 
             </div>
-            <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($Bid->id);?>" class="btn-group">
+            <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
                 <button type="button" class="btn btn-success">OPEN</button>
                 <button type="button" class="btn btn-warning">
                     <i class="fa fa-long-arrow-right"></i>
                 </button>
-            </a>
+            </div>
         </div>
     </div> 
 @endforeach
+<script src="<?php echo url('/');?>/public/front_end/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.oppomod').click(function(){
+			
+			var dealer=$(this).data('id');
+			var requestid=$(this).data('idx');
+			//$(".modal-body").html('');
+			//$(".modal-body").html(dx);
+			$.ajax({
+					url: "<?php echo url('/');?>/ajax/getbidhistory",
+					data: {dealer:dealer,requestid:requestid,_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						if(data){
+							$(".modal-body").html('');
+							$(".modal-body").html(data)
+						}
+					}
+				});
+		});
+});
+</script>

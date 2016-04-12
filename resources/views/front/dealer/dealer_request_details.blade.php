@@ -75,7 +75,7 @@
                         @endif
                     @endif
                 @endif
-                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-default c-v">Model</button>
+                
                 
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
@@ -297,58 +297,7 @@
           <h4 class="modal-title">Edit Bid</h4>
         </div>
         <div class="modal-body">
-            <div class="detal-c">
-                <div class="row img-area">
-                    <div class="col-xs-12 col-sm-12 col-md-6 image-view">
-                        <img src="images/pic1.jpg" class="img-responsive" alt="Responsive image">
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 image-view">
-                        <img src="images/pic2.jpg" class="img-responsive" alt="Responsive image">
-                    </div>
-                </div>
-                    <h2><i class="fa fa-reply"></i> Acura GG <small>2016-04-06 06:33:20</small></h2>
-                    <div class="information">
-                        <p>Monthly: 675</p>
-                        <p>Total: 67500</p>
-                        <p><i class="fa fa-suitcase"></i> Trade In: 1956</p>
-                        <p>Details: 1956 Acura GG</p>
-                        <div class="form-group">
-                            <label for="exampleInputName1">Details</label>
-                            <textarea type="name" class="form-control profile_control" rows="5" id="exampleInputName1" placeholder=""></textarea>
-                            <div class="btns">
-                                <button type="button" class="btn btn-default c-p"><i class="fa fa-check"></i> Accept</button>
-                                <button type="button" class="btn btn-default c-p"><i class="fa fa-times"></i> Reject</button>
-                                <button type="button" class="btn btn-default c-p"><i class="fa fa-ban"></i> Block</button>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="detal-c">
-                <div class="row img-area">
-                    <div class="col-xs-12 col-sm-12 col-md-6 image-view">
-                        <img src="images/pic1.jpg" class="img-responsive" alt="Responsive image">
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 image-view">
-                        <img src="images/pic2.jpg" class="img-responsive" alt="Responsive image">
-                    </div>
-                </div>
-                    <h2><i class="fa fa-reply"></i> Acura GG <small>2016-04-06 06:33:20</small></h2>
-                <div class="information">
-                    <p>Monthly: 675</p>
-                    <p>Total: 67500</p>
-                    <p><i class="fa fa-suitcase"></i> Trade In: 1956</p>
-                    <p>Details: 1956 Acura GG</p>
-                    <div class="form-group">
-                        <label for="exampleInputName1">Details</label>
-                        <textarea type="name" class="form-control profile_control" rows="5" id="exampleInputName1" placeholder=""></textarea>
-                        <div class="btns">
-                            <button type="button" class="btn btn-default c-p"><i class="fa fa-check"></i> Accept</button>
-                            <button type="button" class="btn btn-default c-p"><i class="fa fa-times"></i> Reject</button>
-                            <button type="button" class="btn btn-default c-p"><i class="fa fa-ban"></i> Block</button>
-                        </div>
-                    </div>
-                </div>
-            </div>              
+                        
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">

@@ -60,4 +60,8 @@ $(document).ready(function(){
 					});
 				}
 		});
+
+		$('.oppomod').click(function(){
+			alert("yes");
+		});
 });

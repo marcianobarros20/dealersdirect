@@ -26,8 +26,12 @@
                     
                     <span class="icon-reply"></span>
                     <b>{!! $bid->dealers->first_name!!} {!! $bid->dealers->last_name!!}</b> {!! $bid->updated_at!!}
-                    <?php if($bid->status==3){ ?><span class="label success">Accepted</span><?php } ?>
-                    <?php if($bid->status==2){ ?><span class="label error">Rejected</span><?php } ?>
+                    @if($bid->status==3)
+                    <span class="label success">Accepted</span>
+                    @endif
+                    @if($bid->status==2)
+                    <span class="label error">Rejected</span>
+                    @endif
                                         @if($bid->visable==1 && $bid->blocked!=1 && $bid->status!=2)
 
                                         <button type="button" class="btn btn-success">Visible</button>

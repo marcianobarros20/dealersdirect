@@ -882,4 +882,16 @@ class AjaxController extends Controller
         //dd($BidQueue);
         return view('front.ajax.get_all_bid_chunk',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+    public function GetBidHistory(){
+        $dealer_userid=Session::get('dealer_userid');
+        $dealer=Request::input('dealer');
+        $requestid=Request::input('requestid');
+        if($dealer_userid==$dealer){
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+        }else{
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->where('visable','=','1')->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+        }
+        //dd($BidQueue);
+        return view('front.ajax.get_bid_history',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
 }
