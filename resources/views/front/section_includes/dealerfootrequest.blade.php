@@ -27,6 +27,7 @@
       <script src="<?php echo url('/');?>/public/front_end/css/selectrick/lib/jquery.min.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/css/selectrick/lib/prism.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/css/selectrick/jquery.selectric.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/js/ajaxcaravan.js"></script>
 
       
 			<script>
@@ -198,6 +199,47 @@ return false;
               });
 return false;
       });
+      $('.dealpostbid').click(function(){
+        var modid=$(this).data("id");
+        console.log(modid);
+
+        $.ajax({
+              url: "<?php echo url('/');?>/ajax/checkdealersstatus",
+              data: {modid:modid,_token: '{!! csrf_token() !!}'},
+              type :"post",
+              success: function( data ) {
+               if(data==0){
+                          var urlnew="<?php echo url('/');?>/dealers/blocked";
+                          $(location).attr('href',urlnew);
+               }
+               if(data==1){
+                          var urlnewb="<?php echo url('/');?>/dealers/post-bid/"+modid;
+                          $(location).attr('href',urlnewb);
+               }
+              }
+          });
+        return false;
+        });
+        $('.dealeditbid').click(function(){
+      var modid=$(this).data("id");
+      console.log(modid);
+      $.ajax({
+            url: "<?php echo url('/');?>/ajax/checkdealersstatus",
+            data: {modid:modid,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              if(data==0){
+                        var urlnew="<?php echo url('/');?>/dealers/blocked";
+                        $(location).attr('href',urlnew);
+             }
+             if(data==1){
+                        var urlnewb="<?php echo url('/');?>/dealers/edit-bid/"+modid;
+                        $(location).attr('href',urlnewb);
+             }
+            }
+        });
+      return false;
+    });
     });
 
 /*Dealer Request List*/

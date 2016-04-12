@@ -33,4 +33,7 @@ class RequestStyleEngineTransmissionColor extends Model
     public function incolor() {
         return $this->hasOne('App\Model\Color', 'color_id', 'interior_color_id');
     }
+    public function edmundsimage() {
+        return $this->hasMany('App\Model\EdmundsStyleImage', 'style_id', 'style_id');
+    }
 }

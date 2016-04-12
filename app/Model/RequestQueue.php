@@ -28,5 +28,8 @@ class RequestQueue extends Model
     public function trade_ins(){
         return $this->hasOne('App\Model\TradeinRequest', 'request_queue_id','id');
     }
+    public function request_dealer_log(){
+        return $this->hasOne('App\Model\RequestDealerLog', 'request_id','id');
+    }
 }
 

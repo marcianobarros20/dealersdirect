@@ -141,6 +141,7 @@ Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDeal
 Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
 Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
 Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
+Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

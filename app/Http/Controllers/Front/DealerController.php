@@ -178,55 +178,22 @@ class DealerController extends BaseController
             return redirect('dealer-signin');
             }
             $id=base64_decode($id);
-            $RequestDealerLog=RequestDealerLog::where('id', $id)->with('makes','requestqueue')->first();
-            $requestqueuex['id']=$RequestDealerLog->id;
-            $requestqueuex['request_id']=$RequestDealerLog->request_id;
-            $requestqueuex['status']=$RequestDealerLog->status;
-            $requestqueuex['make']=$RequestDealerLog->makes->name;
-            $requestqueuex['blocked']=$RequestDealerLog->blocked;
-            $mid=$RequestDealerLog->requestqueue->carmodel_id;
-            $Carmodel=Carmodel::where("id",$mid)->first();
-            $requestqueuex['model']=$Carmodel->name;
-            $requestqueuex['year']=$RequestDealerLog->requestqueue->year;
-            $requestqueuex['conditions']=$RequestDealerLog->requestqueue->condition;
-            $requestqueuex['total']=$RequestDealerLog->requestqueue->total_amount;
-            $requestqueuex['monthly']=$RequestDealerLog->requestqueue->monthly_amount;
-            $requestqueuex['cat']=$RequestDealerLog->requestqueue->created_at;
-            $requestqueuex['im_type']=$RequestDealerLog->requestqueue->im_type;
-                if($RequestDealerLog->status==1){
-                    $fn=$RequestDealerLog->requestqueue->fname;
-                    $ln=$RequestDealerLog->requestqueue->lname;
-                    $em=$RequestDealerLog->requestqueue->email;
-                    $ph=$RequestDealerLog->requestqueue->phone;
-                    $requestqueuex['cfname']=self::maskcreate($fn);
-                    $requestqueuex['lem']=self::maskcreate($ln);
-                    $requestqueuex['cemail']=self::maskcreate($em);
-                    $requestqueuex['cphone']=self::maskcreate($ph);
-                }
-                if($RequestDealerLog->requestqueue->im_type==1){
-                        
-                    $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
-                    
-                    }elseif ($RequestDealerLog->requestqueue->im_type==2) {
-                       $RequestStyleEngineTransmissionColor_isx=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->requestqueue->id)->orderBy('id', 'desc')->first();
-                       $RequestStyleEngineTransmissionColor_isx->style_id;
-                         $EdmundsMakeModelYearImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor_isx->style_id)->get();
-                    }
-                    else{
-                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->count();
-                        if($local_path_smalll_count!=0){
-                            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestDealerLog->requestqueue->make_id)->where('model_id',$RequestDealerLog->requestqueue->carmodel_id)->where('year_id',$RequestDealerLog->requestqueue->year)->get();
-                            
-                        }else{
-                            $EdmundsMakeModelYearImage="";
-                        }
-                    }
-            $BidQueue=BidQueue::where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
             $dealer_userid=Session::get('dealer_userid');
-            $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestDealerLog->request_id)->where('visable','=','1')->count();
-             $RequestQueue_row=RequestQueue::where('id', $RequestDealerLog->request_id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
-            $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$RequestDealerLog->request_id)->with('styles','engines','transmission','excolor','incolor')->get();
-            return view('front.dealer.dealer_request_details',compact('RequestQueue_row','EdmundsMakeModelYearImage','BidQueue','BidQueuecount','requestqueuex','RequestStyleEngineTransmissionColor'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+            $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
+            $requestqueue_id=$RequestDealerLog->request_id;
+            $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
+            
+                $RequestQueue->clients->first_name=self::maskcreate($RequestQueue->clients->first_name);
+                $RequestQueue->clients->last_name=self::maskcreate($RequestQueue->clients->last_name);
+                $RequestQueue->clients->phone=self::maskcreate($RequestQueue->clients->phone);
+                $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
+                $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
+                $RequestQueue->request_dealer_log=$RequestDealerLog;
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
+                $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
+            //dd($RequestQueue);
+
+            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
     }
     public function DealerMakeList(){
         $obj = new helpers();
@@ -520,7 +487,7 @@ class DealerController extends BaseController
     }
     public function CalculateBidCurve($id=null){
             
-            $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->where('status','!=','2')->where('visable','=','1')->get();
+            $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->where('status','=','0')->where('visable','=','1')->get();
             
             $AverageTp=0;
             $AverageMp=0;
@@ -538,18 +505,16 @@ class DealerController extends BaseController
             $AverageTp=$AverageTp/$tbid;
             $AverageMp=$AverageMp/$tbid;
             }
+
             foreach ($BidQueuex as $key => $bid) {
                 
-               // $curveArray[$key]['id']=$bid->id;
-               // $curveArray[$key]['tp_curve_poin']=(($bid->total_amount-$AverageTp)/$AverageTp)*100;
-               // $curveArray[$key]['mp_curve_poin']=(($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
-               // $curveArray[$key]['acc_curve_poin']=((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
+               
                 $BidQueue = BidQueue::find($bid->id);
                 $BidQueue->tp_curve_poin = (($bid->total_amount-$AverageTp)/$AverageTp)*100;
                 $BidQueue->mp_curve_poin = (($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
                 $BidQueue->acc_curve_poin = ((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
                 $BidQueue->save();
-
+                
             }
             return 1;
 
