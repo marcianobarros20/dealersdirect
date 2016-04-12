@@ -214,14 +214,5 @@
     margin-bottom: 10px;
     width: 150px;
     }
-.form-in-control {
-    border-radius: 0px;
-    color: #fff;
-    background-color: #F26722;
-    width: 150px;
-    height: 36px !important;
-    }
-.carousel_area {
-    width: 28% !important;
-    }
+
 }
