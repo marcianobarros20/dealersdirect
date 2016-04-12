@@ -260,6 +260,34 @@ return false;
         });
       return false;
     });
+
+
+        $(".image-btn").click(function(){
+        $(".hidden-area").show();
+    });
+    $('.addimagecontain').click(function(){
+
+        $.ajax({
+            url: "<?php echo url('/');?>/ajax/add-image-option",
+            data: {_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              
+              $('.imagecontainer').append(data);
+              
+            
+            }
+        });
+
+      return false;
+    });
+    $('.deleteprevious').click(function(){
+      var modid=$(this).data("id");
+      console.log(modid);
+      $( "div" ).remove( "#"+modid );
+      return false;
+
+    })
     });
 
 /*Dealer Request List*/

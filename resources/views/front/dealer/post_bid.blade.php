@@ -1,255 +1,264 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_request_template')
 @section('content')
-    <!-- ================================================== CAR SINGLE ================================================== -->
-
-    <section class="space-top-and-bottom medium">
-        <div class="container">
-            <div class="row">
-
-                <!-- car single header -->
-                <div class="car-single-header clearfix">
-
-                    <div class="eight columns alpha" data-appear-animation="slideInLeft">
-
-                        <!-- date added -->
-                        <div class="single-car-date-added">
-                            <p>
-                                <span class="icon-calendar"></span><?php echo $requestqueuex['cat'];?></p>
-                        </div>
-                        <!-- date added -->
-
-                        <!-- car title -->
-                        <div class="single-car-title">
-                            <h3><?php echo $requestqueuex['make'];?></h3>
-                            <h4>Post A Bid</h4>
-                        </div>
-                        <!-- .car title -->
-
-                    </div>
-                    
-
-                    
-
-                </div>
-                <!-- .car single header -->
-
-
-                <!-- car single body -->
-                <div class="car-single-body clearfix" data-appear-animation="slideInLeft">
-
-                    <!-- car single media -->
-                    <div class="eight columns alpha">
-
-                        <div style="border-radius:10px;background:#363f48; display:block;  width:100%;">
-                                    <div style=" padding:20px; ">
-
-                                        <div class="dark-form">
-
-                                            {{ Form::open(array('url' => 'postbid', 'files'=>true)) }}
-                                                <fieldset>
-                                                    <div class="input">
-                                                    {{ Form::hidden('id',$requestqueuex['request_id'],'') }}
-                                                    {{ Form::hidden('request_id',$requestqueuex['id'],'') }}
-                                                        {{ Form::text('total_amount','',['placeholder' => 'Total Amount','required'=>'required']) }}
-                                                    </div>
-
-                                                    <div class="input">
-                                                        {{ Form::text('monthly_amount','',['placeholder' => 'Monthly Amount','required'=>'required']) }}
-
-                                                    </div>
-                                                    @if(!empty($RequestQueue_row->trade_in))
-                                                        <div class="input">
-                                                            {{ Form::text('trade_in','',['placeholder' => 'Trade In Amount']) }}
-
-                                                        </div>
-                                                    @else
-                                                        
-                                                            {{ Form::hidden('trade_in',0,['placeholder' => 'Trade In Amount']) }}
-
-                                                        
-                                                    @endif
-                                                    <div class="textarea">
-                                                        {{ Form::textarea('details','',['placeholder' => 'Details','required'=>'required']) }}
-
-                                                    </div>
-                                                    <div class="imagecontainer">
-                                                        
-                                                    </div>
-                                                    <div class="input-submit">
-
-                                                    <a class="button medium orange addimagecontain" href=""><span class="icon-images"></span>Add Image</a>
-
-                                                    </div>
-                                                    
-                                                    <div class="input-submit">
-                                                        {{ Form::submit('POST BID',array('class' => '')) }}
-                                                    </div>
-                                                    
-
-
-                                                </fieldset>
-                                            {!! Form::close() !!}
-                                        </div>
-                                    </div>
-                                </div>
-
-                    </div>
-                    <!-- .car single media -->
-
-
-                    <!-- car single info -->
-                    <div class="four columns" data-appear-animation="slideInRight">
-
-                        <div class="horizontal-tab clearfix">
-                            <div class="h-tab">
-                                <ul class="resp-tabs-list clearfix">
-                                    <li>DETAILS</li>
-                                    <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
-                                    <li>OPTIONS {!! $key+1 !!}</li>
-                                    <?php } ?>
-                                    <li>USER INFO</li>
-                                    @if(!empty($RequestQueue_row->trade_in))
-                                    <li>Trade In</li>
-                                    @endif
-                                </ul>
-
-                                <div class="resp-tabs-container">
-
-                                    <div>
-                                         <div>
-                                        <ul class="tab-list">
-                                            <li>Make:
-                                                <span> <b><?php echo $requestqueuex['make'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>Model:
-                                                <span> <b><?php echo $requestqueuex['model'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>Year:
-                                                <span> <b><?php echo $requestqueuex['year'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>Conditions:
-                                                <span> <b><?php echo $requestqueuex['conditions'];?></b> 
-                                                </span>
-                                            </li>
-                                            
-                                            <li>Total Amount:
-                                                <span> <b><?php echo $requestqueuex['total'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>Monthly Amount:
-                                                <span> <b><?php echo $requestqueuex['monthly'];?></b> 
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    </div>
-                                    <?php foreach ($RequestStyleEngineTransmissionColor as $key => $value) { ?>
-                                    
-                                    <div>
-                                       <div>
-                                        <ul class="tab-list">
-                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
-                                            </li>
-                                            <li><b>Body :</b> {!!  $value->styles->body !!}
-                                            </li>
-                                            <li><b>Style Name :</b> {!!  $value->styles->name !!}
-                                            </li>
-                                            <li><b>Compression Ratio :</b> {!!  $value->engines['compressionRatio'] !!}</li>
-                                            <li><b>Cylinder :</b> {!!  $value->engines['cylinder'] !!}</li>
-                                            <li><b>Size :</b> {!!  $value->engines['size'] !!}</li>
-                                            <li><b>Displacement :</b> {!!  $value->engines['displacement'] !!}</li>
-                                            <li><b>Configuration :</b> {!!  $value->engines['configuration'] !!}</li>
-                                            <li><b>Fuel Type :</b> {!!  $value->engines['fuelType'] !!}</li>
-                                            <li><b>Horsepower :</b> {!!  $value->engines['horsepower'] !!}</li>
-                                            <li><b>Torque :</b> {!!  $value->engines['torque'] !!}</li>
-                                            <li><b>Total Valves :</b> {!!  $value->engines['totalValves'] !!}</li>
-                                            <li><b>Type :</b> {!!  $value->engines['type'] !!}</li>
-                                            <li><b>Code :</b> {!!  $value->engines['code'] !!}</li>
-                                            <li><b>Compressor Type :</b> {!!  $value->engines['compressorType'] !!}</li>
-                                            <?php if(!empty($value->engines['rpm'])){foreach (json_decode($value->engines['rpm'],true) as $key => $rpm) { ?>
-                                           <li><b>RPM ({!! $key !!}):</b> {!!  $rpm !!}</li>
-                                            <?php }} ?>
-                                            <?php if(!empty($value->engines['valve'])){foreach (json_decode($value->engines['valve'],true) as $keyv => $valve) { ?>
-                                            <li><b>Valve ({!! $keyv !!}):</b> {!!  $valve !!}</li>
-                                            <?php }} ?>
-                                            
-                                        </ul>
-                                    </div>
-                                    </div>
-
-                                    <?php } ?>
-                                    <div>
-                                       <div>
-                                        <ul class="tab-list">
-                                            <li>User Name:
-                                                <span> <b><?php echo $requestqueuex['cfname'];?> <?php echo $requestqueuex['lem'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>User Email:
-                                                <span> <b><?php echo $requestqueuex['cemail'];?></b> 
-                                                </span>
-                                            </li>
-                                            <li>User Phone:
-                                                <span> <b><?php echo $requestqueuex['cphone'];?></b> 
-                                                </span>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                    </div>
-                                    @if(!empty($RequestQueue_row->trade_in))
-                                        <div>
-                                            <div>
-                                                <ul class="tab-list">
-                                                    <li>Make:
-                                                        <span> <b>{{$RequestQueue_row->trade_ins->makes->name}}</b> 
-                                                        </span>
-                                                    </li>
-                                                    <li>Model:
-                                                        <span> <b>{{$RequestQueue_row->trade_ins->models->name}}</b> 
-                                                        </span>
-                                                    </li>
-                                                    <li>Year:
-                                                        <span> <b>{{$RequestQueue_row->trade_ins->year}}</b> 
-                                                        </span>
-                                                    </li>
-                                                    <li>Conditions:
-                                                        <span> <b>{{$RequestQueue_row->trade_ins->condition}}</b> 
-                                                        </span>
-                                                    </li>
-                                                    @if($RequestQueue_row->trade_ins->owe==1)
-                                                    <li>OWE Amount:
-                                                        <span> <b>{{$RequestQueue_row->trade_ins->owe_amount}}</b> 
-                                                        </span>
-                                                    </li>
-                                                    @endif
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- .car single info -->
-
-                    
-
-                </div>
-                <!--. car single body -->
-
-
-            </div>
+<section>
+    <div class="container">
+        <div class="intro-text">
+            <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
+            <h2>{{$RequestQueue->makes->name}}</h2>
+            <P>POST A BID</P>
         </div>
-    </section>
+        <div class="row post-bid">
+            <div class="col-xs-8">
+                {{ Form::open(array('url' => 'postbid', 'files'=>true)) }}
+                    <div class="form_back">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Total Amount</label>
+                            {{ Form::hidden('id',$RequestQueue->id,'') }}
+                            {{ Form::hidden('request_id',$RequestQueue->request_dealer_log->id,'') }}
+                            {{ Form::text('total_amount','',['class' => 'form-control profile_control','required'=>'required']) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputName1">Monthly Amount</label>
+                            {{ Form::text('monthly_amount','',['class' => 'form-control profile_control','required'=>'required']) }}
+                        </div>
+                        @if(!empty($RequestQueue->trade_ins))
+                        <div class="form-group">
+                            <label for="exampleInputName1">Trade In Amount</label>
+                            {{ Form::text('trade_in','',['class' => 'form-control profile_control']) }}
+                        </div>
+                        @else
+                            {{ Form::hidden('trade_in',0,['class' => 'form-control profile_control']) }}
 
-    <!-- ================================================== CAR SINGLE ============================================== -->
+                                                        
+                        @endif
+                        <div class="form-group">
+                            <label for="exampleInputName1">Details</label>
+                           
+                            {{ Form::textarea('details','',['class'=>'form-control profile_control','rows'=>'5','required'=>'required']) }}
+                        </div>
+                        <div class="imagecontainer">
+                            
+                        </div>
+                        <div class="image-btn">
+                        <a class="btn btn-warning addimagecontain" href=""><i class="fa fa-picture-o"></i> Add Images</a>
 
+                        
+                        </div>
+                       
+                        {{ Form::submit('POST BID',array('class' => 'btn btn-default btn-lg btn-block')) }}
+                    </div> <!-- /form_back -->
+                {!! Form::close() !!}
+            </div>  <!-- /col-xs-8 -->
+            <div class="col-xs-4">
+                
+                <div id="content">
+                    <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
+                        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
+                        @if(!empty($RequestQueue->trade_ins))
+                        <li ><a href="#tradein" data-toggle="tab">Trade-In</a></li>
+                        @endif
+                        <li ><a href="#userinfo" data-toggle="tab">User-Info</a></li>
+                        @if(!empty($RequestQueue->options))
+                            @foreach($RequestQueue->options as $optionkey=>$option)
+                                <li><a href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
+                            @endforeach
+                        @endif
+                    </ul>
+                    <div id="my-tab-content" class="tab-content">
+                        <div class="tab-pane active form-head" id="requestdetail">
+                            <table class="table client-table"> 
+                                <tbody class="post-text"> 
+                                    <tr> 
+                                        <td>MAKE:</td> 
+                                        <td>{{$RequestQueue->makes->name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>MODEL:</td> 
+                                        <td>{{$RequestQueue->models->name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>YEAR:</td> 
+                                        <td>{{$RequestQueue->year}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>CONDITION:</td> 
+                                        <td>{{$RequestQueue->condition}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>TOTAL AMOUNT:</td> 
+                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>MONTHLY AMOUNT:</td> 
+                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                    </tr> 
+                                </tbody> 
+                            </table>
+                        </div>
+                        <div class="tab-pane form-head" id="userinfo">
+                            <table class="table client-table"> 
+                                <tbody class="post-text"> 
+                                    <tr> 
+                                        <td>Client Name:</td> 
+                                        <td>{{$RequestQueue->clients->first_name}} {{$RequestQueue->clients->last_name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Email:</td> 
+                                        <td>{{$RequestQueue->clients->email}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Phone:</td> 
+                                        <td>{{$RequestQueue->clients->phone}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Zip:</td> 
+                                        <td>{{$RequestQueue->clients->zip}}</td> 
+                                    </tr> 
+                                    
+                                </tbody> 
+                            </table>
+                        </div>
+                        @if(!empty($RequestQueue->trade_ins))
+                        <div class="tab-pane form-head" id="tradein">
+                            <table class="table client-table"> 
+                                <tbody class="post-text"> 
+                                    <tr> 
+                                        <td>Trade-IN MAKE:</td> 
+                                        <td>{{$RequestQueue->trade_ins->makes->name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Trade-IN MODEL:</td> 
+                                        <td>{{$RequestQueue->trade_ins->models->name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Trade-IN CONDITIONS:</td> 
+                                        <td>{{$RequestQueue->trade_ins->condition}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Trade-IN YEAR:</td> 
+                                        <td>{{$RequestQueue->trade_ins->year}}</td> 
+                                    </tr> 
+                                    @if($RequestQueue->trade_ins->owe==1)
+                                    <tr> 
+                                        <td>Trade-IN OWE Amount:</td> 
+                                        <td>{{$RequestQueue->trade_ins->owe_amount}}</td> 
+                                    </tr> 
+                                    @endif
+                                </tbody> 
+                            </table>
+                        </div>
+                        @endif
+                        @if(!empty($RequestQueue->options))
+                            @foreach($RequestQueue->options as $optionkey=>$option)
+                                <div class="tab-pane form-head" id="options{{$optionkey+1}}">
+                                    <table class="table client-table"> 
+                                        <tbody class="post-text">
+                                            @if(!empty($option->styles->price))
+                                                @foreach (json_decode($option->styles->price,true) as $key => $price)
+                                                    @if($key=="baseMSRP")
+                                                        <tr> 
+                                                            <td>{{$key}}:</td> 
+                                                            <td>{{$price}}</td> 
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                            <tr> 
+                                                <td>Style Name:</td> 
+                                                <td>{{$option->styles->name}}</td> 
+                                            </tr> 
+                                            <tr> 
+                                                <td>Body:</td> 
+                                                <td>{{$option->styles->body}}</td> 
+                                            </tr> 
+                                            <tr> 
+                                                <td>Compression Ratio:</td> 
+                                                <td>{{$option->engines['compressionRatio']}}</td> 
+                                            </tr> 
+                                            <tr> 
+                                                <td>Cylinder:</td> 
+                                                <td>{{$option->engines['cylinder']}}</td> 
+                                            </tr> 
+                                            <tr> 
+                                                <td>Displacement:</td> 
+                                                <td>{{$option->engines['displacement']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Configuration:</td> 
+                                                <td>{{$option->engines['configuration']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Fuel Type:</td> 
+                                                <td>{{$option->engines['fuelType']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Torque:</td> 
+                                                <td>{{$option->engines['torque']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Total Valves:</td> 
+                                                <td>{{$option->engines['totalValves']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Code:</td> 
+                                                <td>{{$option->engines['code']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Compressor Type:</td> 
+                                                <td>{{$option->engines['compressorType']}}</td> 
+                                            </tr>
+                                            <tr> 
+                                                <td>Compressor Type:</td> 
+                                                <td>{{$option->engines['compressorType']}}</td> 
+                                            </tr>
+                                            @if(!empty($option->engines['rpm']))
+                                                @foreach (json_decode($option->engines['rpm'],true) as $key => $rpm)
+                                                <tr> 
+                                                    <td>RPM ({{ $key }}):</td> 
+                                                    <td>{{  $rpm }}</td> 
+                                                </tr>
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($option->engines['valve']))
+                                                @foreach (json_decode($option->engines['valve'],true) as $keyv => $valve)
+                                                <tr> 
+                                                    <td>Valve ({{ $keyv }}):</td> 
+                                                    <td>{{  $valve }}</td> 
+                                                </tr>
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($option->excolor))
+                                                <tr> 
+                                                    <td>Exterior Color:</td> 
+                                                    <td>
+                                                        {{$option->excolor['name']}}
+                                                        @if($option->excolor['hex']!="")
+                                                        <div style="min-width: 10%;background-color:#{{$option->excolor['hex']}};">&nbsp;</div>
+                                                        @endif
+                                                    </td> 
+                                                </tr>
+                                            @endif
+                                            @if(!empty($option->incolor))
+                                                <tr> 
+                                                    <td>Interior Color:</td> 
+                                                    <td>
+                                                        {{$option->incolor['name']}}
+                                                        @if($option->incolor['hex']!="")
+                                                        <div style="min-width: 10%;background-color:#{{$option->incolor['hex']}};">&nbsp;</div>
+                                                        @endif
+                                                    </td> 
+                                                </tr>
+                                            @endif
+                                        </tbody> 
+                                    </table>
+                                </div>
+                            @endforeach
+                        @endif
+                        
+                    </div>
+                </div>
+            </div>  <!-- /col-xs-4 -->  
+        </div>
+    </div>
+</section>
 @stop
