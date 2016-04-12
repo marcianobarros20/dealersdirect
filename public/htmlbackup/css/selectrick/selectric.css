@@ -23,15 +23,20 @@
   text-overflow: ellipsis;
   margin: 0 38px 0 10px;
   font-size: 12px;
-  line-height: 30px;
-  color: #fff;
-  height: 33px;
+  line-height: 38px;
+  color: #444;
+  height: 38px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
-
+.selectric .label {
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+}
 .selectric .button {
   display: block;
   position: absolute;
@@ -192,4 +197,31 @@
 }
 .selectric-items .selectric-group li {
   padding-left: 25px;
+}
+
+
+/*Edited on 12 April */
+@media only screen and (max-width: 480px){
+
+.selectric-wrapper {
+    margin-bottom: 10px;
+    width: 300px !important;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+.selectric-wrapper {
+    margin-bottom: 10px;
+    width: 150px;
+    }
+.form-in-control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 150px;
+    height: 36px !important;
+    }
+.carousel_area {
+    width: 28% !important;
+    }
 }
