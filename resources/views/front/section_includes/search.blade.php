@@ -15,7 +15,7 @@
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
 		<div class="row home_next_btn">
-			<div class="col-md-offset-3 col-xs-2 col-md-2" id="trade-in" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-md-offset-3 col-xs-2 col-md-2 delr" id="trade-in" style="display:none;" data-appear-animation="slideInRight">
 				<h3>Trade In</h3>
 				<label class="radio-inline">
 				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes

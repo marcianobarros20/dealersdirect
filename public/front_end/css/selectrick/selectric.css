@@ -193,3 +193,28 @@
 .selectric-items .selectric-group li {
   padding-left: 25px;
 }
+/*Edited on 12 April */
+@media only screen and (max-width: 480px){
+
+.selectric-wrapper {
+    margin-bottom: 10px;
+    width: 300px !important;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+.selectric-wrapper {
+    margin-bottom: 10px;
+    width: 150px;
+    }
+.form-in-control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 150px;
+    height: 36px !important;
+    }
+.carousel_area {
+    width: 28% !important;
+    }
+}

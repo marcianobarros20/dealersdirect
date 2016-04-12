@@ -1016,3 +1016,111 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .information{
     margin-left: 25px;
 }
+/* Smartphones (portrait and landscape) ----------- */ 
+
+/*Edited on 12 April */
+
+@media only screen and (max-width: 480px){
+
+    /*index.html */
+    .text_new_area {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    }
+    .new_btn {
+    margin-left: 10px;
+    width: 100%;
+    }
+    .home_default {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    }
+    .form_in_control {
+    width: 300px;
+    }
+    .home_select_area {
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 25px;
+    border-bottom: 4px solid #F26722;
+    background: rgba(236,236,237,1);
+    background: -moz-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(236,236,237,1)), color-stop(54%, rgba(255,255,255,1)), color-stop(71%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    height: 650px;
+    }
+    .delr{
+        width: 48%;
+    }
+    #home_footer {
+    text-align: center;
+    }
+    .next_btn_next {
+    margin-right: 0px;
+    }
+
+    /*detail.html*/    
+    .sign_form {
+    padding: 13px;
+    }
+
+    /*dealers_request_detail_view.html*/
+    .detail-text {
+    margin-top: 60px;
+    }
+
+    /*dealer_request_list.html*/
+    .carousel_area {
+    width: 100% !important;
+    margin-left: 27px;
+    margin-top: 10px;
+    }
+    .list_request {
+    border: 1px solid #F26722;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    margin-left: 13px;
+    }
+    .form-in-control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 300px;
+    height: 36px !important;
+    }
+}
+
+
+@media only screen and (min-width: 768px){
+
+    .home_select_area {
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 25px;
+    border-bottom: 4px solid #F26722;
+    background: rgba(236,236,237,1);
+    background: -moz-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(236,236,237,1)), color-stop(54%, rgba(255,255,255,1)), color-stop(71%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
+    height: 450px;
+    }
+
+}
+
+
+@media only screen and (max-width: 1024px){
+    .delr{
+    width: 46%;
+    }
+    .next_btn_next {
+    background: #F26722;
+    width: 60%;
+    margin-top: 15px;
+    margin-right: 0px;
+    }
+}
