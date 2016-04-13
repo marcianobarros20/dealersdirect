@@ -399,6 +399,9 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
+        if($countnum==0){
+            return redirect('request_detail/'.$newrequest_id);
+        }
         $client=Session::get('client_userid');
         return view('front.client.client_add_exterior_color',compact('newrequest_id','client','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
     }
@@ -410,6 +413,9 @@ class ClientController extends BaseController
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
+        if($countnum==0){
+            return redirect('request_detail/'.$newrequest_id);
+        }
         $client=Session::get('client_userid');
         return view('front.client.client_add_interior_color',compact('newrequest_id','client','Color','RequestQueue','countnum'),array('title'=>'DEALERSDIRECT | Client Add Exterior Color'));
     }
