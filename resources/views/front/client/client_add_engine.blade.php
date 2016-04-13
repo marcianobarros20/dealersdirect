@@ -1,105 +1,49 @@
-@extends('front/layout/client_template')
+@extends('front/layout/clientfrontend_template')
 @section('content')
-    <!-- ================================================== BLOG POSTS ================================================== -->
-    <section class="space-top-and-bottom">
-        <div class="container">
-
-            <!-- blog posts -->
-            <div class="row">
-
-                <div class="twelve columns alpha">
-
-                    <!-- vertical blog post -->
-                    <div class="twelve columns alpha" data-appear-animation="bounceIn">
-                        <?php foreach ($Engine as $key => $value) {
-                        ?>
-                        <div class="latest-blog-post vertical clearfix">
-
-                           
-
-                            <!-- blog content -->
-                            <div class="blog-content">
-                                <div class="blog-content-wrap">
-
-                                    <!-- meta -->
-                                    <div class="blog-meta">
-                                        <ul class="clearfix">
-                                            <li>
-                                                
-                                                    <span class="icon-cogs"></span>{!! $RequestQueue->makes->name; !!}
-                                            </li>
-                                            <li>
-                                               
-                                                    <span class="icon-key"></span>{!! $RequestQueue->models->name; !!}
-                                            </li>
-                                            <li>
-                                                
-                                                    <span class="icon-clock"></span>{!! $RequestQueue->year; !!}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- meta -->
-
-                                    <!-- title -->
-                                    <div class="blog-title">
-                                        <h5><b>{!!  $value->name !!}</b>
-                                        </h5>
-                                    </div>
-                                    <!-- title -->
-
-                                    <!-- content -->
-                                    <div class="blog-excerpt-content">
-                                        <p><b>Compression Ratio :</b> {!!  $value->compressionRatio !!}</p>
-                                        <p><b>Cylinder :</b> {!!  $value->cylinder !!}</p>
-                                        <p><b>Size :</b> {!!  $value->size !!}</p>
-                                        <p><b>Displacement :</b> {!!  $value->displacement !!}</p>
-                                        <p><b>Configuration :</b> {!!  $value->configuration !!}</p>
-                                        <p><b>Fuel Type :</b> {!!  $value->fuelType !!}</p>
-                                        <p><b>Horsepower :</b> {!!  $value->horsepower !!}</p>
-                                        <p><b>Torque :</b> {!!  $value->torque !!}</p>
-                                        <p><b>Total Valves :</b> {!!  $value->totalValves !!}</p>
-                                        <p><b>Type :</b> {!!  $value->type !!}</p>
-                                        <p><b>Code :</b> {!!  $value->code !!}</p>
-                                        <p><b>Compressor Type :</b> {!!  $value->compressorType !!}</p>
-                                        <?php if(!empty($value->rpm)){foreach (json_decode($value->rpm,true) as $key => $rpm) { ?>
-                                        <p><b>RPM ({!! $key !!}):</b> {!!  $rpm !!}</p>
-                                        <?php }} ?>
-                                        <?php if(!empty($value->valve)){foreach (json_decode($value->valve,true) as $keyv => $valve) { ?>
-                                        <p><b>Valve ({!! $keyv !!}):</b> {!!  $valve !!}</p>
-                                        <?php }} ?>
-                                        
-                                    </div>
-                                    <!-- .content -->
-
-                                    <!-- read more -->
-                                    <div class="blog-read-more">
-                                        <br />
-                                        <a href=""  data-id="{!!  $RequestQueue->id !!}" data-count="{!!$countnum!!}" data-engineid="{!!  $value->engine_id !!}" class="button light small add_engine"><span class="icon-checkmark2"></span><b>Add This Engine</b></a>
-                                    </div>
-                                    <!-- .read more -->
-
-                                </div>
-                            </div>
-                            <!-- .blog content -->
-                            
-                        </div>
-                        <?php }
-                        ?>
-                    </div>
-                    <!-- .vertical blog post-->
-
+<section>
+    <div class="container">
+        @foreach ($Engine as $key => $value)
+        <div class="row col-xs-12 col-sm-12 col-md-12">
+            <div class="client-add">
+                <div class="font-text">
+                    <i class="fa fa-wrench"></i>{!! $RequestQueue->makes->name; !!}
+                    <i class="fa fa-key font-a"></i>{!! $RequestQueue->models->name; !!}
+                    <i class="fa fa-calendar font-a"></i>{!! $RequestQueue->year; !!}
+                </div>
+                <div class="dealer-info">
+                    <h3>{!!  $value->name !!}</h3>
                     
 
-
-                </div>
-
-                
-
-
+                    <p><span style="color:#000; font-weight: bold;">Compression Ratio :</span> {!!  $value->compressionRatio !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Cylinder :</span> {!!  $value->cylinder !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Size :</span> {!!  $value->size !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Displacement :</span> {!!  $value->displacement !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Configuration :</span> {!!  $value->configuration !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Fuel Type :</span> {!!  $value->fuelType !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Horsepower :</span> {!!  $value->horsepower !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Torque :</span> {!!  $value->torque !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Total Valves :</span> {!!  $value->totalValves !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Type :</span> {!!  $value->type !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Code :</span> {!!  $value->code !!}</p>
+                    <p><span style="color:#000; font-weight: bold;">Compressor Type :</span> {!!  $value->compressorType !!}</p>
+                    @if(!empty($value->rpm))
+                        @foreach (json_decode($value->rpm,true) as $key => $rpm)
+                    <p><span style="color:#000; font-weight: bold;">RPM ({!! $key !!}):</span> {!!  $rpm !!}</p>
+                        @endforeach
+                    @endif
+                    @if(!empty($value->valve))
+                        @foreach (json_decode($value->valve,true) as $keyv => $valve)
+                    <p><span style="color:#000; font-weight: bold;">Valve ({!! $keyv !!}):</span> {!!  $valve !!}</p>
+                        @endforeach
+                    @endif
+                    <button  data-id="{!!  $RequestQueue->id !!}" data-count="{!!$countnum!!}" data-engineid="{!!  $value->engine_id !!}"  type="button" class="btn btn-default c-p   add_engine"><i class="fa fa-check"></i>
+                    Add This Engine</button>
+                </div>  
             </div>
         </div>
-    </section>
+        @endforeach
+    </div>
+</section> 
 
-    <!-- ================================================== END BLOG POSTS ================================================== -->
 
 @stop

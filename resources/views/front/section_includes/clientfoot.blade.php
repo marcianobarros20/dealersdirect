@@ -405,6 +405,81 @@ $(document).ready(function(){
       return false;
     });
 
+      $('.add_style').click(function(){
+            var requestid=$(this).data("id");
+            var styleid=$(this).data("styleid");
+            $("#dvLoading").show();
+              $.ajax({
+                url: "<?php echo url('/');?>/ajax/addstyletorequestqueue",
+                data: {requestid:requestid,styleid:styleid,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  var newurl="<?php echo url('/');?>/client/add-engine/"+btoa(data);
+                  $(location).attr('href', newurl);
+                }
+              });
+            return false;
+      });
+      $('.add_engine').click(function(){
+          var requestid=$(this).data("id");
+          var engineid=$(this).data("engineid");
+          var count=$(this).data("count");
+              $.ajax({
+                  url: "<?php echo url('/');?>/ajax/addenginetorequestqueue",
+                  data: {requestid:requestid,engineid:engineid,count:count,_token: '{!! csrf_token() !!}'},
+                  type :"post",
+                  success: function( data ) {
+                      var newurl="<?php echo url('/');?>/client/add-transmission/"+btoa(data);
+                      $(location).attr('href', newurl);
+                  }
+              });
+          return false;
+      });
+      $('.add_transmission').click(function(){
+            var requestid=$(this).data("id");
+            var transmissionid=$(this).data("transmissionid");
+            var count=$(this).data("count");
+                $.ajax({
+                    url: "<?php echo url('/');?>/ajax/addtranstorequestqueue",
+                    data: {requestid:requestid,transmissionid:transmissionid,count:count,_token: '{!! csrf_token() !!}'},
+                    type :"post",
+                    success: function( data ) {
+                        var newurl="<?php echo url('/');?>/client/add-color-exterior/"+btoa(data);
+                        $(location).attr('href', newurl);
+                    }
+                });
+            return false;
+      });
+      $('.add_exterior_color').click(function(){
+          var requestid=$(this).data("id");
+          var colorid=$(this).data("colorid");
+          var count=$(this).data("count");
+              $.ajax({
+                    url: "<?php echo url('/');?>/ajax/addexcolortorequestqueue",
+                    data: {requestid:requestid,colorid:colorid,count:count,_token: '{!! csrf_token() !!}'},
+                    type :"post",
+                    success: function( data ) {
+                        var newurl="<?php echo url('/');?>/client/add-color-interior/"+btoa(data);
+                        $(location).attr('href', newurl);
+                    }
+              });
+          return false;
+      });
+      $('.add_interior_color').click(function(){
+          var requestid=$(this).data("id");
+          var colorid=$(this).data("colorid");
+          var count=$(this).data("count");
+            $.ajax({
+                url: "<?php echo url('/');?>/ajax/addincolortorequestqueue",
+                data: {requestid:requestid,colorid:colorid,count:count,_token: '{!! csrf_token() !!}'},
+                type :"post",
+                success: function( data ) {
+                  var newurl="<?php echo url('/');?>/client/request_detail/"+data;
+                  $(location).attr('href', newurl);
+                }
+            });
+          return false;
+      });
 });
 
 			</script>

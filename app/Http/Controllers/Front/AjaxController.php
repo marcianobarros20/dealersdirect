@@ -286,7 +286,7 @@ class AjaxController extends Controller
         $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$requestid)->where('count',$count)->first();
         $RequestStyleEngineTransmissionColor->interior_color_id = $colorid;
         $RequestStyleEngineTransmissionColor->save();
-        return $RequestStyleEngineTransmissionColor->requestqueue_id;
+        return base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
 
     }
     public function RejectDealerBid(){
