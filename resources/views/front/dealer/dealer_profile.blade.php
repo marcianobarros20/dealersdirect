@@ -12,7 +12,7 @@
 				</div>
 				@endif
 	  <h2 class="profile_head center-block">PROFILE & DETAILS</h2>
-	    <div class="row profile_details">
+	    <div class="profile_details">
 		    <div class="col-xs-12 profile_form">
 		     	<div id="content">
 			        <ul id="tabs" class="nav nav-tabs profile-browse" data-tabs="tabs">
