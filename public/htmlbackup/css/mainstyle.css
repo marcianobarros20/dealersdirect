@@ -350,6 +350,7 @@ input.search-form:hover {
     padding-bottom: 50px;
 }
 
+
 .thumbnail {
     border: 1px solid #F26722 !important;
     padding-top: 50px;
@@ -386,8 +387,10 @@ input.search-form:hover {
 #footer ul > li.active>a{
     color: #F26722;
 }
-.further_proceed_options{
-    margin-top: -23px;
+.further_proceed_options{ /*edited on 13-04-16*/
+    /*margin-top: -23px;*/
+    margin-left: 17px;
+    display: inline-block;
 }
 .next_button_area{
     padding-bottom:30px;
@@ -468,6 +471,7 @@ hr {
     border: 1px solid #F34B0A;
     border-radius: 5px;
     padding: 30px;
+    margin-bottom: 50px;
 }
 .profile_form h4{
     color:#F34B0A;
@@ -488,8 +492,11 @@ hr {
 .change_details{
     background-color: #dbdbdb;
 }
-.profile_btn{
-    margin-left: 0px;
+.profile_btn{ /*edited on 13-04-16*/
+    /*margin-left: 30px;*/
+    margin-left: 10px;
+    width: 17%;
+    display: inline-block;
 }
 
 /**********CSS OF HOME PAGE************/
@@ -760,6 +767,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .brand_request h2{
     color: rgb(0, 0, 0);
     font-weight: bold;
+    height: 75px;
 }
 .btn-success {
     color: #fff;
@@ -862,9 +870,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 }
  /*edited on 12-04-2016*/
-.carousel_area{
+/*.carousel_area{
     width: 27% !important; 
-}
+}*/
 /*edited on 12-04-2016*/
 /*.btns{
     padding:10px;
@@ -873,7 +881,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     color: rgb(51, 51, 51);
     background-color: rgba(230, 230, 230, 0.01);
     padding: 4px;
-    font-size:10px;
+    font-size:12px;
     margin-bottom: 5px;
 }
 .accept{
@@ -1017,7 +1025,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .information{
     margin-left: 25px;
 }
-
+.brand-view h2{  /*Edited on 13 April */
+    height:60px;
+}
 
 /* Smartphones (portrait and landscape) ----------- */ 
 
@@ -1078,7 +1088,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     /*dealer_request_list.html*/
     .carousel_area {
     width: 100% !important;
-    margin-left: 27px;
     margin-top: 10px;
     }
     .list_request {
@@ -1094,10 +1103,93 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 300px;
     height: 36px !important;
     }
+    .c-p-b {
+    width: 100%;
+    font-size:10px
+    }
+    .btns{
+    padding: 10px;
+    }
+    .c-p {
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 4px;
+    margin-bottom: 5px;
+    width: 100%;
+    }
+    .brand-sec {
+    padding-bottom: 50px;
+    margin-top: 30px;
+    width: 100%;
+    }
+    .c-v {
+    font-size: 13px;
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 8px 15px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    }
+    .next_btn {
+    background: #F26722;
+    width: 100%;
+    }
+    .further_proceed_options {
+    margin-top: 0px;
+    margin-left: 60px;
+    }
+    .profile_btn {
+    margin-left: 15px;
+    width: 100%;
+    display: inline-block;
+    }
+    .form_back {
+    background-color: #dbdbdb;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    }
+    #exampleInputFile{
+    font-size: 11px;
+    }
+    .next_button_area {
+    padding-bottom: 30px;
+    }
+    .profile_form {
+    border: 1px solid #F34B0A;
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 20px;
+    }
+    .nav-tabs > li {
+    float: left;
+    margin-bottom: -1px;
+    font-size: 10px;
+    }
+    .btn-default {
+    color: #FCFAFA;
+    background-color: rgb(70, 80, 90);
+    border-color: #0c0505;
+    font-size: 14px;
+    }
+    .d-v{
+    margin-left:15px;
+    }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 640px){
+    /*.profile_btn {
+    margin-left: 10px;
+    width: 100%;
+    display: inline-block;
+    }*/
+
 }
 
 
-@media only screen and (min-width: 768px){
+@media only screen and (min-width: 767px) and (max-width: 1023px){
 
     .home_select_area {
     text-align: center;
@@ -1113,8 +1205,33 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     height: 450px;
     }
 
+    .profile_btn {
+    /*margin-left: 30px;*/
+    margin-left: 36px;
+    width: 17%;
+    display: inline-block;
 }
 
+    /*.c-p-b {
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    padding: 4px;
+    font-size: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    }*/
+
+}
+@media only screen and (max-width: 769px){
+    .c-p-b {
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    padding: 4px;
+    font-size: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+}
 
 @media only screen and (max-width: 1024px){
     .delr{
