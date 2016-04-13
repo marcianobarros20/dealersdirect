@@ -51,7 +51,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="index.html">
+							<a class="navbar-brand" href="<?php echo url('/');?>">
 								<img src="<?php echo url('/');?>/public/front_end/images/logo.png" alt="logo">
 							</a>
 						</div>
