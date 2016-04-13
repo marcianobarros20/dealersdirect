@@ -1,19 +1,19 @@
 <section class="selection_area">
 	<div class="container" id="firsc" >
 		<div class="row select_option">
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('make_search', $Makes, '', array('id' => 'make_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('model_search', [''=>'Select Model'], '', array('id' => 'model_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('condition_search', [''=>'Select Condition','New'=>'New','Used'=>'Used'], '', array('id' => 'condition_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('year_search', [''=>'Select Year'], '', array('id' => 'year_search')) }}
 		</div>
-		<div class="col-xs-2 further_proceed_options" id="trade-in" style="display:none;">
+		<div class="further_proceed_options" id="trade-in" style="display:none;">
 			<h3>Trade In</h3>
 			<div class="radio">
 				<label>
@@ -26,7 +26,7 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-2 further_proceed_options" id="owe-money" style="display:none;" >
+		<div class="further_proceed_options" id="owe-money" style="display:none;" >
 			<h3>Owe Money</h3>
 			<div class="radio">
 				<label>

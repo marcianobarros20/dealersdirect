@@ -796,6 +796,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 /**********CSS OF DEALER REQUEST LIST PAGE************/
 .brand-section{
     padding-bottom: 50px;
+    padding-top: 50px;
 }
 .dealer_request_area{
     padding-bottom: 50px;
