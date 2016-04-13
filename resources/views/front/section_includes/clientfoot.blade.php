@@ -20,6 +20,7 @@
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/js/ajaxcaravanclient.js"></script>
 			<script>
 			$(function() {
 				$('select, .select').selectric();

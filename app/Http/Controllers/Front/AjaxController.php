@@ -894,4 +894,35 @@ class AjaxController extends Controller
         //dd($BidQueue);
         return view('front.ajax.get_bid_history',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+    public function GetAllBidChunkClient(){
+        $id=base64_decode(Request::input('requestid'));
+        $sortby=Request::input('sortby');
+        $pageend=Request::input('pageend');
+        $pagestart=Request::input('pagestart');
+        $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
+        if($sortby==1){
+            
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
+        }
+        if($sortby==2){
+            
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->get();
+        }
+        if($sortby==3){
+            
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
+        }
+        
+        return view('front.ajax.get_all_bid_chunk_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function GetBidCHistory(){
+        
+        $dealer=Request::input('dealer');
+        $requestid=Request::input('requestid');
+        
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->where('visable','=','1')->orderBy('created_at', 'desc')->get();
+        
+        //dd($BidQueue);
+        return view('front.ajax.get_bid_history_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
 }

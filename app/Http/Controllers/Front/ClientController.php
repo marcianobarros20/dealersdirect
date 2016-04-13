@@ -171,100 +171,31 @@ class ClientController extends BaseController
 				return redirect('client-signin');
 			}
             $client_userid=Session::get('client_userid');
-            $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes')->get();
-            
-            $requestqueuex=array();
-            foreach ($RequestQueue as $key=> $value) {
-                    $requestqueuex[$key]['id']=$value->id;
-                    $requestqueuex[$key]['status']=$value->status;
-                    $requestqueuex[$key]['make']=$value->makes->name;
-                    $requestqueuex[$key]['make_image']=$value->makes->image;
-                    $mid=$value->carmodel_id;
-                    $Carmodel=Carmodel::where("id",$mid)->first();
-                    $requestqueuex[$key]['model']=$Carmodel->name;
-                    $requestqueuex[$key]['year']=$value->year;
-                    $requestqueuex[$key]['conditions']=$value->condition;
-                    $requestqueuex[$key]['total']=$value->total_amount;
-                    $requestqueuex[$key]['monthly']=$value->monthly_amount;
-                    $requestqueuex[$key]['im_type']=$value->im_type;
-                    if($value->im_type==1){
-                    $local_path_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
-                        if($local_path_count!=0){
-                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
-                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                        }
-                        else{
-                           $requestqueuex[$key]['img']=""; 
-                        }
-                   
-                    }
-                    elseif ($value->im_type==2) {
-                    $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where('requestqueue_id',$value->id)->first();
-                    $RequestStyleEngineTransmissionColor->style_id;
-                    
-                    $EdmundsStyleImagecount=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->count();
-                    
-                        if($EdmundsStyleImagecount!=0){
-                            $EdmundsStyleImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor->style_id)->first();
-                            $requestqueuex[$key]['img']=$EdmundsStyleImage->local_path_smalll;
-                        }else{
-                             $requestqueuex[$key]['img']="";
-                        }
-                    }
-                    else{
-                        $local_path_smalll_count=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->count();
-                        if($local_path_smalll_count!=0){
-                            $local_path_smalll=EdmundsMakeModelYearImage::where('make_id',$value->make_id)->where('model_id',$value->carmodel_id)->where('year_id',$value->year)->first();
-                            $requestqueuex[$key]['img']=$local_path_smalll->local_path_smalll;
-                        }else{
-                            $requestqueuex[$key]['img']="";
-                        }
-                        
-                    }
+
+
+            $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->get();
+            foreach ($RequestQueue as $kei => $RQ) {
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year_id',$RQ->year)->groupBy('title')->get();
+                $RequestQueue[$kei]['imx']=$EdmundsMakeModelYearImage;
             }
-           
+            
             $client=Session::get('client_userid');
-            return view('front.client.client_request_list',compact('requestqueuex','client'),array('title'=>'DEALERSDIRECT | Client Request'));
+            return view('front.client.client_request_list',compact('client','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
     public function requestDetail($id=null){
-            $RequestQueue=RequestQueue::where('id', $id)->with('makes','trade_ins','trade_ins.makes','trade_ins.models')->first();
-            $requestqueuex['id']=$RequestQueue->id;
-            $requestqueuex['status']=$RequestQueue->status;
-            $requestqueuex['make']=$RequestQueue->makes->name;
-            $mid=$RequestQueue->carmodel_id;
-            $Carmodel=Carmodel::where("id",$mid)->first();
-            $requestqueuex['model']=$Carmodel->name;
-            $requestqueuex['year']=$RequestQueue->year;
-            $requestqueuex['conditions']=$RequestQueue->condition;
-            $requestqueuex['total']=$RequestQueue->total_amount;
-            $requestqueuex['monthly']=$RequestQueue->monthly_amount;
-            $requestqueuex['cat']=$RequestQueue->created_at;
-            $requestqueuex['im_type']=$RequestQueue->im_type;
-            $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->with('styles','engines','transmission','excolor','incolor')->get();
-            
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('status','!=','2')->where('visable','=','1')->with('dealers')->orderBy('acc_curve_poin', 'asc')->get();
+            $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+                return redirect('client-signin');
+            }
+            $client_userid=Session::get('client_userid');
+            $id=base64_decode($id);
+
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
+
             $client=Session::get('client_userid');
-            if($RequestQueue->im_type==1){
-                        
-                    $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
-                    
-                    }
-                    elseif($RequestQueue->im_type==2){
-                        $RequestStyleEngineTransmissionColor_isx=RequestStyleEngineTransmissionColor::where("requestqueue_id",$id)->orderBy('id', 'desc')->first();
-                        $RequestStyleEngineTransmissionColor_isx->style_id;
-                         $EdmundsMakeModelYearImage=EdmundsStyleImage::where('style_id', $RequestStyleEngineTransmissionColor_isx->style_id)->get();
-                    }
-                        else{
-                        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->count();
-                        if($EdmundsMakeModelYearImagecount!=0){
-                          $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();  
-                      }else{
-                        $EdmundsMakeModelYearImage="";
-                      }
-                        
-                    }
-            //dd();
-            return view('front.client.client_request_details',compact('BidQueue','client','requestqueuex','RequestStyleEngineTransmissionColor','EdmundsMakeModelYearImage','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function testmailnew(){
 			$user_name = "PRODIPTO";

@@ -143,6 +143,8 @@ Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxControll
 Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
 Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
 Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
+Route::post('ajax/getbidchunkclient/', 'Front\AjaxController@GetAllBidChunkClient');
+Route::post('ajax/getbidchistory/','Front\AjaxController@GetBidCHistory');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
