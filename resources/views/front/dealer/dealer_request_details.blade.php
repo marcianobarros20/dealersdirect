@@ -1,9 +1,10 @@
 @extends('front/layout/dealerfrontend_request_template')
 @section('content')
-<input type="hidden" id="sortby" value="1">
+<input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
 <input type="hidden" id="requestid" value="{{base64_encode($RequestQueue->id)}}">
+<input type="hidden" id="nsd" value="{{base64_encode($RequestQueue->request_dealer_log->id)}}">
 <section>
     <div class="container">
         <div class="row detail-text">
@@ -14,9 +15,9 @@
             <div class="col-md-offset-1 col-md-4 d-v">
                 <select id="shortoptions">
                         <option value="" >Sort By</option>
-                        <option value="1" selected="selected">Best Pick</option>
-                        <option value="2">Best Monthly</option>
-                        <option value="3">Best Onetime</option>
+                        <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
+                        <option value="2" @if($fill==2)selected="selected"@endif>Best Monthly</option>
+                        <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
                 </select>
             </div>
         </div>

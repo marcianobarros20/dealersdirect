@@ -178,6 +178,12 @@ class DealerController extends BaseController
             return redirect('dealer-signin');
             }
             $id=base64_decode($id);
+            if(Session::get('filter_sec_deal')){
+                $fill=Session::get('filter_sec_deal');
+            }
+            else{
+                $fill=1;
+            }
             $dealer_userid=Session::get('dealer_userid');
             $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
             $requestqueue_id=$RequestDealerLog->request_id;
@@ -193,7 +199,7 @@ class DealerController extends BaseController
                 $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
             //dd($RequestQueue);
 
-            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
+            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount','fill'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
     }
     public function DealerMakeList(){
         $obj = new helpers();

@@ -54,7 +54,9 @@ $(document).ready(function(){
 						type :"post",
 						success: function( data ) {
 							if(data){
-								$(".bidlist").html(data);
+								
+								var urlnew="../request_detail/"+requestid;
+                        		$(location).attr('href',urlnew);
 							}
 						}
 					});

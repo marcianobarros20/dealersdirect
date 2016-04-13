@@ -46,6 +46,7 @@ $(document).ready(function(){
 			var pagestart=$("#pagestart").val();
 			var pageend=$("#pageend").val();
 			var requestid=$("#requestid").val();
+			var nsd=$("#nsd").val();
 				if(typeof sortby!= "undefined"){
 					
 					$.ajax({
@@ -54,7 +55,8 @@ $(document).ready(function(){
 						type :"post",
 						success: function( data ) {
 							if(data){
-								$(".bidlist").html(data);
+								var urlnew="../request_detail/"+nsd;
+                        		$(location).attr('href',urlnew);
 							}
 						}
 					});

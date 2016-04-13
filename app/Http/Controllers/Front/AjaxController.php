@@ -857,6 +857,7 @@ class AjaxController extends Controller
         $sortby=Request::input('sortby');
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
+        Session::put('filter_sec_deal',$sortby);
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->lists('dealer_id');
         
         if($sortby==1){
@@ -899,6 +900,7 @@ class AjaxController extends Controller
         $sortby=Request::input('sortby');
         $pageend=Request::input('pageend');
         $pagestart=Request::input('pagestart');
+        Session::put('filter_sec',$sortby);
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
         if($sortby==1){
             
