@@ -1,159 +1,76 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_template')
 @section('content')
-		
-    <!-- ================================================== Home Listing ================================================== -->
 
-    <section>
-        <div class="container">
-        <div class="row ">
-
-                <!-- Home Single header -->
-                <div class="home-single-header clearfix">
-
-                    <div class="ten columns alpha" data-appear-animation="slideInLeft">
-
-                        
-
-                        <!-- car title -->
-                        <div class="single-car-title">
-                            <h3><?php echo Session::get('dealer_name');?> Your Admin List</h3>
-                        </div>
-                        <!-- .car title -->
-
-                    </div>
-
-
-                    <!-- car price -->
-                    <div class="two columns" data-appear-animation="slideInRight">
-                        <div class="single-car-price clearfix">
-                            <a href="<?php echo url('/');?>/dealers/dealer_add_admin" class="button light medium"><b>Add Admin</b></a>
-                        </div>
-                    </div>
-                    <!-- .car price -->
-
-                </div>
-                <!-- .Home Single header -->
-                <div class="home-single-body clearfix">
-
-
-                </div>
-                <div data-appear-animation="bounceIn" class="twelve columns alpha space-top-and-bottom small carell-animation bounceIn carell-animation-visible">
-               
-                {{--*/ $i =0 /*--}}
-                {{--*/ $start =0 /*--}}
-                {{--*/ $end =0 /*--}}
-               
-                @foreach ($Dealers as $Dealer)
-                    @if($i==0)
-                        {{--*/ $start++ /*--}}
-                    <div class="row">
-                    @endif
-                
-
-            
-
-                    <!-- car small -->
-                    <div class="six columns">
-                        <div class="car-box horizontal small clearfix">
-
-                            <!-- image -->
-                            <div class="car-image">
-                                <a href="#">
-                                    @if(!empty($Dealer->dealer_details))
-                                        @if($Dealer->dealer_details->image!="")
-                                        <img src="{{ url('/')}}/public/dealers/{{$Dealer->dealer_details->image}}" title="car" alt="car" />
-                                        @else
-                                        <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
-                                        @endif
-                                    @else
-                                    <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
-                                    @endif
-                                    
-                                </a>
-                            </div>
-                        <!-- .image -->
-
-                            <!-- content -->
-                            <div class="car-content">
-
-                                <!-- title -->
-                                <div class="car-title">
-                                    <p><strong>Name:</strong>{!! $Dealer->first_name !!} {!! $Dealer->last_name !!}</p>
-                                    <p><strong>Email:</strong>{!! $Dealer->email !!} </p>
-                                    @if(!empty($Dealer->dealer_details))
-                                    <p><strong>Zip:</strong>{!! $Dealer->dealer_details->zip !!}</p>
-                                    <p><strong>Phone:</strong>{!! $Dealer->dealer_details->phone !!}</p>
-                                    @endif
-                                </div>
-                                <!-- .title -->
-
-                                <!-- price -->
-                                <!-- <div class="car-price">
-                                    <a href=""  id="deletemake" data-id="" class="clearfix deletemake">
-                                        <span class="price">Delete</span>
-                                        <span class="icon-arrow-right2"></span>
-                                    </a>
-                                </div> -->
-                                <!-- .price -->
-
-                            </div>
-                            <!-- .content -->
-
-                        </div>
-                    </div>
-                    <!-- .car small -->
-
-                
-
-           
-                    @if($i==1)
-                        {{--*/ $end++ /*--}}
-                        </div>
-                        {{--*/ $i=0 /*--}}
-                        
-                    @else
-                        {{--*/ $i++ /*--}}
-                    @endif
-                @endforeach 
-                @if($start!=$end)
-                </div>
-                @endif
-
-
-                        @if(empty($Dealer))
-                        <div class="share">
-
-                            <ul>
-                                <li>Sorry No Admin List</li>
-                                
-                            </ul>
-
-                        </div>
-                        @endif
-                    </div>
-
-            </div>
-            
-            <!-- .pagination & sort by -->
-
-        
-
-
-
-
-           
-            
-
-            
-
-        </div>
-
-        </div>
-
-
+<section class="selection_area">
+     <div class="container">
+      <h2 class="profile_head center-block"><?php echo Session::get('dealer_name');?> Your Admin List</h2>
+       <div class="col-xs-12 next_button_area">
+        <a href="{{url('/')}}/dealers/dealer_add_admin" type="button" class="btn btn-warning next_btn pull-right"> Add Admin</a>
+       </div>
+     </div><!--  /container -->
     </section>
 
-    <!-- ================================================== END Home Listing ============================================== -->
 
+    <section class="brand_section">
+      <div class="container admin-cont">
+        <div class="">
+            
+        @foreach ($Dealers as $Dealer)
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="brand_request admin-brand-req">
+                @if(!empty($Dealer->dealer_details))
+                    @if($Dealer->dealer_details->image!="")
+                        <div class="img-set">
+                            <img src="{{ url('/')}}/public/dealers/{{$Dealer->dealer_details->image}}" title="car" alt="car" />
+                        </div>
+                    @else
+                        <div class="img-set">
+                            <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
+                        </div>
+                    @endif
+                @else
+                    <div class="img-set">
+                        <img src="<?php echo url('/');?>/public/front/images/car-1.jpg" title="car" alt="car" />
+                    </div>
+                @endif
+                    
+                    
+                        <p><strong>Name:</strong>{!! $Dealer->first_name !!} {!! $Dealer->last_name !!}</p>
+                        <p><strong>Email:</strong>{!! $Dealer->email !!} </p>
+                        @if(!empty($Dealer->dealer_details))
+                        <p><strong>Zip:</strong>{!! $Dealer->dealer_details->zip !!}</p>
+                        <p><strong>Phone:</strong>{!! $Dealer->dealer_details->phone !!}</p>
+                    
+                    @endif
+                      <div class="btn-group"  data-id="">
+                       <button id="" type="button" class="btn btn-success">Delete</button>
+                       <button type="button" class="btn btn-warning">
+                        <i class="fa fa-long-arrow-right"></i>
+                       </button>
+                      </div>
+                </div>
+            </div>    <!-- /col-xs-12 col-md-4-->
+
+            
+        @endforeach
+        
+        @if(empty($Dealer))
+                        <div class="col-xs-12 col-md-4">
+
+                            <div class="brand_request">
+                                <h2>Sorry No Admin List</h2>
+                                
+                            </div>
+
+                        </div>
+        @endif
+          
+          
+          
+        </div>
+      </div>
+    </section>
+		
+    
 
 @stop

@@ -1,9 +1,9 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
 <section>
-    <div class="container">
+    <div class="container add-interior">
         @foreach ($Color as $key => $value)
-        <div class="row col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="client-add">
                 <div class="font-text">
                     <i class="fa fa-wrench"></i>{!! $RequestQueue->makes->name; !!}

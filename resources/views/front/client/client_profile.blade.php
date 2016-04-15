@@ -3,7 +3,7 @@
 		
  
 <section>
-	<div class="container">
+	<div class="container pro-container">
 	@if(Session::get('message'))
 				<div class = "alert alert-success">
 					<a href = "#" class = "close" data-dismiss = "alert">

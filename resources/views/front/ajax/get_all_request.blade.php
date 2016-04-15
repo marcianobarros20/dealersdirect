@@ -1,7 +1,7 @@
 
 @foreach($RS as $key=>$RequestLog)
 
-    <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
+    <div class="col-xs-12 col-sm-4 col-md-4 costo-get-all">
         <div class="brand_request">
             
             <div id = "myCarousel{{$key}}" class = "carousel slide">
@@ -18,7 +18,7 @@
                 </ol>   
 
             
-                <div class = "carousel-inner">
+                <div class = "carousel-inner get-all-caro">
                 @if($RequestLog->imx!="")
                 @foreach($RequestLog->imx as $vx=>$img)
                     <div class = "item @if($vx==0) active @endif">
@@ -38,7 +38,7 @@
 
             </div> 
             <h2>{!! $RequestLog->makes->name !!} </h2>
-            <div class="btns">
+            <div class="btns coust-buton">
                 <button type="button" class="btn btn-default c-p-b">{!! $RequestLog->requestqueue->models->name !!}</button>
                 @if($RequestLog->blocked==1)
                 <button type="button" class="btn btn-default c-p-b">BLOCKED</button>

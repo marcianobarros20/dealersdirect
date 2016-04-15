@@ -1,10 +1,10 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
 <section>
-    <div class="container">
+    <div class="container add-client-container">
         @foreach ($Stylenew as $key => $value)
-        <div class="row col-xs-12 col-sm-12 col-md-12">
-            <div class="client-add">
+        <div class="col-xs-12 col-sm-12 col-md-12 client-row">
+            <div class="add-details">
                 <div class="font-text">
                     <i class="fa fa-wrench"></i>{!! $RequestQueue->makes->name; !!}
                     <i class="fa fa-key font-a"></i>{!! $RequestQueue->models->name; !!}

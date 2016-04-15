@@ -57,7 +57,7 @@
                         <div id="sorry" class="row"  style="font-style: italic;    font-weight: bolder;    padding-left: 21%;    padding-top: 21%;">
                             
                         </div>
-                        <div class="row" id="results">
+                        <div class="" id="results">
                             
                         </div>
                     </div>

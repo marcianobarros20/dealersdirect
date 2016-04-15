@@ -6,9 +6,9 @@
 	Indication for<strong>ERROR</strong> in further procedure.
 	</div> -->
 		<section>
-			<div class="container">
+			<div class="container deal-sign-up">
 			<h2 class="profile_head center-block">Sign Up As A Dealer</h2>
-				<div class="row profile_details">
+				<div class="profile_details">
 					<div class="col-xs-12 profile_form">
 						{{ Form::open(array('url' => 'dealerregister')) }}
 							<div class="form_back">
@@ -42,7 +42,7 @@
 									
 								</div>
 							<button type="submit" class="btn btn-warning btn-lg btn-block">SIGN UP</button>
-							<p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p>
+							<!-- <p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p> -->
 							</div>
 						{!! Form::close() !!}
 					</div>

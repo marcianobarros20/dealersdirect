@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="brand-section">
                     <div class="container">
-                        <div class="row">
+                        <div class="">
                         @foreach($RequestQueue as $rkey=>$Request)
                             <div class="col-xs-12 col-md-4 carousel_area">
                                 <div class="brand_request">
@@ -28,7 +28,7 @@
                                     </ol>   
                                    
                                    <!-- Carousel items -->
-                                   <div class = "carousel-inner">
+                                   <div class = "carousel-inner request-carousel-img">
                                     @if(!empty($Request->imx))
                                         @foreach($Request->imx as $vx=>$img)
                                             <div class = "item @if($vx==0) active @endif">

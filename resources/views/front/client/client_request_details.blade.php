@@ -6,7 +6,7 @@
 <input type="hidden" id="requestid" value="{{base64_encode($RequestQueue->id)}}">
 
 <section>
-    <div class="container">
+    <div class="container request-client-cont">
         <div class="row detail-text">
             <div class="col-md-4">
                 <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
@@ -23,8 +23,8 @@
         </div>
      
         
-        <div class="row post-bid">
-            <div class="col-xs-8">
+        <div class="post-bid">
+            <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
                 <div id = "myCarousel" class = "carousel slide">
                    
@@ -40,7 +40,7 @@
                     </ol>   
                    
                    <!-- Carousel items -->
-                   <div class = "carousel-inner">
+                   <div class = "carousel-inner client-carousel-img">
                    @if(!empty($EdmundsMakeModelYearImage))
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
@@ -63,7 +63,7 @@
                     
                 </div>
             </div>  <!-- /col-xs-8 -->
-            <div class="col-xs-4">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 
                 <a href="{{url('/')}}/client/add-style/{{base64_encode($RequestQueue->id)}}" class="btn btn-default c-v">Add More Details</a>
                 

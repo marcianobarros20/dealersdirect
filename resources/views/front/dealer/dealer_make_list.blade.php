@@ -13,16 +13,20 @@
 
 
     <section class="brand_section">
-      <div class="container">
-        <div class="row">
+      <div class="container deal-make-lis">
+        <div class="">
             
         @foreach ($DealerMakeMap as $DealerMake)
-            <div class="col-xs-12 col-md-4">
-                <div class="brand_request">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="brand_request make-pic">
                  @if($DealerMake->makes->image!="")
-                 <img src="{{ url('/')}}/public/uploads/carmake/thumb/{{$DealerMake->makes->image}}" title="car" alt="car" />
+                 <div class="img-make">
+                  <img src="{{ url('/')}}/public/uploads/carmake/thumb/{{$DealerMake->makes->image}}" title="car" alt="car" />
+                 </div>
                 @else
-                <img src="<?php echo url('/');?>/public/front_end/images/dealers_direct_pic_logo.png" title="car" alt="car" />
+                <div class="img-make">
+                  <img src="<?php echo url('/');?>/public/front_end/images/dealers_direct_pic_logo.png" title="car" alt="car" />
+                </div>
                 @endif
                     
                     <h2><?php echo $DealerMake->makes->name;?></h2>

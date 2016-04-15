@@ -16,7 +16,7 @@
                 </ol>   
 
             
-                <div class = "carousel-inner">
+                <div class = "carousel-inner small-carou">
                 @if(!empty($Bid->bid_image))
                 @foreach($Bid->bid_image as $vx=>$img)
                     <div class = "item @if($vx==0) active @endif">
@@ -36,7 +36,7 @@
 
             </div> 
             <h2>{!! $Bid->dealers->first_name !!} {!! $Bid->dealers->last_name !!} </h2>
-            <div class="btns">
+            <div class="btns eit-botons">
                 
                 @if($Bid->trade_in!=0)  
                 <button type="button" class="btn btn-default c-p-b">Trade In:{!! $Bid->trade_in !!}</button>

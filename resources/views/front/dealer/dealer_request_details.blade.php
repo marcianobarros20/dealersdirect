@@ -6,13 +6,13 @@
 <input type="hidden" id="requestid" value="{{base64_encode($RequestQueue->id)}}">
 <input type="hidden" id="nsd" value="{{base64_encode($RequestQueue->request_dealer_log->id)}}">
 <section>
-    <div class="container">
-        <div class="row detail-text">
-            <div class="col-md-4">
+    <div class="container d-r-d">
+        <div class="detail-text">
+            <div class="col-xs-8">
                 <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
                 <h2>{{$RequestQueue->makes->name}}</h2>
             </div>
-            <div class="col-md-offset-1 col-md-4 d-v">
+            <div class="col-md-offset-4 col-md-4 d-v">
                 <select id="shortoptions">
                         <option value="" >Sort By</option>
                         <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
@@ -23,8 +23,8 @@
         </div>
      
         
-        <div class="row post-bid">
-            <div class="col-xs-8">
+        <div class="post-bid">
+            <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
                 <div id = "myCarousel" class = "carousel slide">
                    
@@ -40,7 +40,7 @@
                     </ol>   
                    
                    <!-- Carousel items -->
-                   <div class = "carousel-inner">
+                   <div class = "carousel-inner d-r-d-caro">
                    @if(!empty($EdmundsMakeModelYearImage))
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
@@ -63,7 +63,7 @@
                     
                 </div>
             </div>  <!-- /col-xs-8 -->
-            <div class="col-xs-4">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 @if($RequestQueue->request_dealer_log->blocked=="1")
                     <button type="button" class="btn btn-default c-v">Blocked</button>
                 @else

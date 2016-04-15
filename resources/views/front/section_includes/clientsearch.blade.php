@@ -1,6 +1,6 @@
 <section class="selection_area">
 	<div class="container" id="firsc" >
-		<div class="row select_option">
+		<div class="select_option">
 		<div class="profile_btn">
 			{{ Form::select('make_search', $Makes, '', array('id' => 'make_search')) }}
 		</div>
@@ -52,20 +52,20 @@
 		</div>
 	</div>
 	<div class="container"  id="tradefirsc" style="display:none;" >
-		<div class="row select_option">
-		<div class="col-xs-2 text_new_area" id="owediv" style="display: none;">
+		<div class="select_option">
+		<div class="text_new_area" id="owediv" style="display: none;">
 				{{ Form::text('oweamount','', array('id' => 'oweamount','class'=>'form-control form_in_control','placeholder'=>'OWE Amount')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('trademake_search', $Makes, '', array('id' => 'trademake_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('trademodel_search', [''=>'Select Model'], '', array('id' => 'trademodel_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('tradecondition_search', [''=>'Select Condition','New'=>'New','Used'=>'Used'], '', array('id' => 'tradecondition_search')) }}
 		</div>
-		<div class="col-xs-2 profile_btn">
+		<div class="profile_btn">
 			{{ Form::select('tradeyear_search', [''=>'Select Year'], '', array('id' => 'tradeyear_search')) }}
 		</div>
 		

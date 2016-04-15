@@ -1,5 +1,5 @@
 @foreach($BidQueue as $key=>$Bid)
-<div class="detal-c">
+<div class="detal-c modal-down">
     <div class="row img-area">
         @if(!empty($Bid->bid_image))
         @foreach($Bid->bid_image as $vx=>$img)

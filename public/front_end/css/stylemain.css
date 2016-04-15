@@ -316,9 +316,9 @@ input.search-form:hover {
     border-color: #0c0505;
 }
 .select_option{
-    /*text-align: center;*/
+    text-align: center !important; /*added imp on 15-04-2016*/
     padding-bottom: 40px;
-    padding-top: 25px;
+    padding-top: 25px; /*added this on 15-04-2016*/
 }
 .next_btn{
     background: #F26722;
@@ -347,8 +347,8 @@ input.search-form:hover {
 .client_profile{
     text-align: center;
     padding-top: 50px;
-    padding-bottom: 50px;
-}
+    padding-bottom: 200px;
+} /*edited on 15-04-2016*/
 
 
 .thumbnail {
@@ -394,6 +394,7 @@ input.search-form:hover {
 }
 .next_button_area{
     padding-bottom:30px;
+    text-align: center; /*added this on 15-04-16*/
 }
 .profile-browse{
     
@@ -455,9 +456,11 @@ hr {
     background-color: #F26722;
     border-color: #FCB491;
 }
+
 .sign_form{
-    padding: 50px 0px;
-}
+    padding-top: 50px;
+    padding-bottom: 200px;
+} /*edited on 15-04-2016*/
 .dealer_option{
     text-align: center;
 }
@@ -611,6 +614,7 @@ small{
 .home_second_buttons{
     text-align: center;
     padding-top: 55px;
+    padding-bottom:100px; /*added this on 15-05-2016*/
 }
 .home_default {
     color: #565454;
@@ -788,14 +792,15 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display:none;
 }
 .brand_request img{
-    width:261px;
+    width:100%;
     height:161px;
 }
 
 
+
 /**********CSS OF DEALER REQUEST LIST PAGE************/
 .brand-section{
-    padding-bottom: 50px;
+    padding-bottom: 100px; /*edited its padding on 15-04-2016*/
     padding-top: 50px;
 }
 .dealer_request_area{
@@ -884,6 +889,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     padding: 4px;
     font-size:12px;
     margin-bottom: 5px;
+    width: 100%; /*added this on 15-04-2016*/
+    font-size: 9px;
 }
 .accept{
     border-color: rgb(23, 87, 28);
@@ -903,6 +910,19 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .
 
 /**********CSS OF CLIENT ADD OPTION PAGE************/
+.add-client-container{
+    padding-bottom: 150px;
+}
+.client-row .add-details{
+    border:2px solid #ccc;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 7px;
+}
+.client-engine{
+    padding-bottom:150px;
+}
 .client-add{
     border:2px solid #ccc;
     margin-bottom: 50px;
@@ -918,11 +938,23 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:#000;
     font-weight: bold;
 }
+.dealer-info .c-p{
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 4px;
+    margin-bottom: 5px; /*added this on 15-04-20`16*/
+    width: 30%; /*added this on 15-04-20`16
+    /*margin-top: 10px;*/
+}
 .c-p{
     color: rgb(51, 51, 51);
     background-color: rgba(230, 230, 230, 0.01);
     border-color: rgb(242, 103, 34);
     padding: 4px;
+    margin-bottom: 5px; /*added this on 15-04-20`16*/
+    width: 100%; /*added this on 15-04-20`16*/
+    margin-top: 10px;
 }
 
 .c-p:hover, .c-p:focus{
@@ -939,7 +971,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     font-size: 11px;
 }
 .intro-text h2 {
-    margin-top: 0px !important;
+    margin-top: 40px !important;
     font-size: 30px;
     color: #000;
     font-weight: bold;
@@ -954,6 +986,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     color: rgb(255, 255, 255);
     padding: 10px;
     border-radius: 5px;
+    width:100%;
 }
 .c-b{
     font-size: 16px;
@@ -977,7 +1010,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 /**********CSS OF dealers_request_detail_view PAGE************/
 .detail-text{
-    margin-top:15px;
+    margin-top:65px;
 }
 .detail-text h2 {
     margin-top: 0px !important;
@@ -1030,6 +1063,126 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     height:60px;
 }
 
+.request-carousel-img > .item > a > img, .request-carousel-img > .item > img {
+    line-height: 1;
+    width: 100% !important;
+    /*height: 185px !important;*/
+}
+.request-client-cont{
+    padding-bottom:100px;
+}
+.client-carousel-img > .item > a > img, .client-carousel-img > .item > img {
+    line-height: 1;
+    width: 100% !important;
+    /*height: 185px !important;*/
+}
+.img-area .image-view img{
+    width: 100%;
+    height: 173px;
+}
+.add-client-container{
+    padding-bottom: 150px;
+}
+.client-add-color{
+    padding-bottom: 150px;
+}
+.add-interior{
+    padding-bottom: 150px;
+}
+.pro-container{
+    padding-bottom: 150px;
+}
+.deal-sign-up{
+    padding-bottom: 150px;
+}
+.deal-make-lis{
+     padding-bottom: 150px;
+}
+.deal-make-lis .make-pic img {
+    width: 100%;
+    height: 150px;
+}
+.add-make-con{
+    padding-bottom: 150px;
+}
+.pro-file-bla{
+    padding-bottom: 150px;
+}
+.admin-cont{
+     padding-bottom: 150px;   
+}
+.img-set{
+    width: 100%;
+    height: 160px;
+}
+.admin-brand-req{
+    min-height: 390px;
+    height: 390px;
+}
+.admin-brand-req p{
+    font-size: 11px;
+}
+.add-deal-admin{
+    padding-bottom: 150px; 
+}
+.img-make{
+    width: 100%;
+    height: 160px;
+}
+.coust-buton{
+    height: 180px;
+}
+    
+.costo-get-all{
+    width:26%;
+}
+.get-all-caro > .item > img {
+    position: absolute;
+    top: 28px;
+    left: 0px;
+    min-width: 100%;
+    height: 173px !important;
+    width: 100%;
+}
+.d-r-d{
+    padding-bottom: 150px;
+}
+.d-r-d-caro > .item > img {
+    position: absolute;
+    top: 28px;
+    left: 0px;
+    width: 100%;
+    height: 175px !important;
+}
+.small-carou > .item > img {
+    position: absolute;
+    top: 28px;
+    left: 0px;
+    width: 100%;
+    height: 175px !important;
+}
+.eit-botons{
+    height: 135px;
+}
+.post-container{
+    padding-bottom: 150px;
+}
+.intro-text{
+    margin-left:20px;
+}
+.edit-bid-container{
+    padding-bottom: 150px;
+}
+.del-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.modal-down{
+    margin-bottom: 35px;
+    border: 1px solid #F26722;
+    padding: 10px;
+    border-radius: 10px;
+}
 /* Smartphones (portrait and landscape) ----------- */ 
 
 /*Edited on 12 April */
@@ -1078,8 +1231,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
     /*detail.html*/    
     .sign_form {
-    padding: 13px;
-    }
+    padding-top: 13px;
+    padding-bottom: 200px;
+    } /*added on 15-04-2016*/
 
     /*dealers_request_detail_view.html*/
     .detail-text {
@@ -1139,7 +1293,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .further_proceed_options {
     margin-top: 0px;
-    margin-left: 60px;
+    margin-left: 25px;
     }
     .profile_btn {
     margin-left: 15px;
@@ -1176,16 +1330,121 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     font-size: 14px;
     }
     .d-v{
-    margin-left:15px;
+    padding-top: 35px;
+    }
+    .home_second_buttons {
+    text-align: center;
+    padding-top: 55px;
+    padding-bottom: 150px;
+    }
+    .client_profile {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 175px;
+    }
+    .brand-section {
+    padding-bottom: 150px;
+    padding-top: 50px;
+    }
+    .select_option {
+    text-align: center !important;
+    padding-bottom: 40px;
+    padding-top: 25px;
+    /*margin-left: 15px;*/
+    }
+    .request-client-cont {
+    padding-bottom: 180px;
+    }
+    .client-add {
+    border: 2px solid #ccc;
+    margin-bottom: 200px;
+    margin-top: 50px;
+    padding: 15px;
+    border-radius: 7px;
+    }
+    .dealer-info .c-p {
+    color: rgb(51, 51, 51);
+    background-color: rgba(230, 230, 230, 0.01);
+    border-color: rgb(242, 103, 34);
+    padding: 4px;
+    margin-bottom: 5px;
+    width: 100%;
+    }
+    .add-client-container{
+        padding-bottom:200px;
+    }
+    .client-engine {
+    padding-bottom: 50px;
+    }
+    .client-add-color .client-add{
+     border: 2px solid #ccc;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    padding: 15px;
+    border-radius: 7px;   
+    }
+    .add-interior .client-add{
+     border: 2px solid #ccc;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    padding: 15px;
+    border-radius: 7px;   
+    }
+    .pro-container {
+    padding-bottom: 200px;
+    }
+    .deal-sign-up {
+    padding-bottom: 200px;
+    }
+    .deal-dash-cont .client_profile {
+    text-align: center;
+    /*padding-top: 10px;*/
+    padding-bottom: 160px;
+    }
+    .pro-file-bla {
+    padding-bottom: 200px;
+    }
+    .admin-cont{
+     padding-bottom: 200px;   
+    }
+    .add-deal-admin{
+    padding-bottom: 200px; 
+    }
+    .costo-get-all {
+    width: 100%;
+    }
+    .d-r-d{
+    padding-bottom: 200px;
+    }
+    .post-container{
+    padding-bottom: 200px;
+    }
+    .intro-text h2 {
+    margin-top: 50px !important;
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+    }
+    .edit-bid-container{
+    padding-bottom: 200px;
+    }
+    .textarea img{
+        width:100%;
     }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
-    /*.profile_btn {
+    .select_option {
+    text-align: center !important;
+    padding-bottom: 40px;
+    padding-top: 25px;
+    margin-left: 55px;
+    }
+    .profile_btn {
     margin-left: 10px;
     width: 100%;
     display: inline-block;
-    }*/
+    }
 
 }
 
@@ -1211,7 +1470,26 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 36px;
     width: 17%;
     display: inline-block;
-}
+    }
+    .form-in-control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 150px;
+    height: 36px !important;
+    }
+    .d-v{
+        padding-top: 50px;
+    }
+    .intro-text h2 {
+    margin-top: 40px !important;
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+    }
+    .textarea img{
+        width:100%;
+    }
 
     /*.c-p-b {
     color: rgb(51, 51, 51);

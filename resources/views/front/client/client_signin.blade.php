@@ -11,7 +11,7 @@
 				</div>
 			@endif
 				<h2 class="head center-block">SIGN IN AS A CLIENT</h2>
-					<div class="row">
+					<div class="">
 							<div class="col-xs-12 sign_form">
 								{{ Form::open(array('url' => 'client-signin','class'=>'form-horizontal')) }}
 									<div class="form-group">

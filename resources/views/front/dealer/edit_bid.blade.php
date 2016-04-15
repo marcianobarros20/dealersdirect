@@ -1,14 +1,14 @@
 @extends('front/layout/dealerfrontend_request_template')
 @section('content')
 <section>
-    <div class="container">
+    <div class="container edit-bid-container">
         <div class="intro-text">
             <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
             <h2>{{$RequestQueue->makes->name}}</h2>
             <P>Edit BID</P>
         </div>
-        <div class="row post-bid">
-            <div class="col-xs-8">
+        <div class="post-bid">
+            <div class="col-xs-12 col-sm-8 col-md-8">
                 {{ Form::open(array('url' => '/dealers/edit-bid/', 'files'=>true)) }}
                     <div class="form_back">
                         <div class="form-group">
@@ -46,7 +46,7 @@
                                                     <div class="textarea" id="imx{!!$bid_image->id!!}">
                                                     {{ Form::hidden('preimg[]',$bid_image->image,'') }}
                                                         <img src="<?php echo url('/');?>/public/uploads/project/thumb/{!! $bid_image->image!!}" title="car" alt="car" />
-                                                            <br><a class="button small green deleteprevious" data-id="imx{!!$bid_image->id!!}" href="">
+                                                            <br><a class="btn btn-warning del-btn button small green deleteprevious" data-id="imx{!!$bid_image->id!!}" href="">
                                                             <span class="icon-cancel-circle"></span>
                                                             Delete
                                                             </a>
@@ -72,7 +72,7 @@
                     </div> <!-- /form_back -->
                 {!! Form::close() !!}
             </div>  <!-- /col-xs-8 -->
-            <div class="col-xs-4">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">

@@ -1,5 +1,5 @@
 
-<footer id="home_footer" class="midnight-blue">
+<footer id="home_footer" class="midnight-blue  navbar-fixed-bottom">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">

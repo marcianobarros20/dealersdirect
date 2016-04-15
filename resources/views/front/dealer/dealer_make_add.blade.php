@@ -3,11 +3,11 @@
 	
 
 	<section class="brand_section">
-		  <div class="container">
+		  <div class="container add-make-con">
 		  	{{ Form::open(array('url' => 'dealeraddmake')) }}
-		    <div class="row">
+		    <div class="">
 		    	@foreach ($Make as $key=>$value)
-				<div class="col-xs-12 col-md-4">
+				<div class="col-xs-12 col-sm-4 col-md-4">
 					
 					<div class="brand_request checkpro">
 							{{ Form::checkbox('agree[]', $value->id, null, array('id'=>$value->id,'style'=>"display:none;")) }}
