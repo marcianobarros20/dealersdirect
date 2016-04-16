@@ -54,17 +54,6 @@ class AjaxController extends Controller
         }
         else{
             $Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
-            foreach($Caryear as $ykey=>$year){
-                if($year->year==$currentyear){
-                    unset($Caryear[$ykey]);
-                }
-                
-                if($year->year==$nextyear){
-                    unset($Caryear[$ykey]);
-                }
-            }
-            
-
         }
         
         
@@ -73,6 +62,7 @@ class AjaxController extends Controller
     public function getcondition(){
         $make_search=Request::input('make_search');
         $model_search=Request::input('model_search');
+        $tyx=Request::input('tyx');
         $Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
         $currentyear=date('Y');
         $previousyear=date('Y')-1;
@@ -91,7 +81,7 @@ class AjaxController extends Controller
             }
         }
         
-        return view('front.ajax.create_condition_types',compact('dope'));
+        return view('front.ajax.create_condition_types',compact('dope','tyx'));
     }
     public function requirmentqueue()
     {
@@ -660,7 +650,7 @@ class AjaxController extends Controller
               
           }
           
-          return $lastinsertedId;
+          return base64_encode($lastinsertedId);
     }
     public function SetTosignup(){
         $cachedata['make_search']=Request::input('make_search');
