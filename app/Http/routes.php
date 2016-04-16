@@ -145,6 +145,7 @@ Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
 Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
 Route::post('ajax/getbidchunkclient/', 'Front\AjaxController@GetAllBidChunkClient');
 Route::post('ajax/getbidchistory/','Front\AjaxController@GetBidCHistory');
+Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

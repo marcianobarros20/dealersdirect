@@ -518,7 +518,7 @@ hr {
     background: -webkit-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -o-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -ms-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
-    height: 400px;
+    height: 285px;
 }
 .search_icon{
     padding-top: 24px;
@@ -533,9 +533,9 @@ hr {
     background-color: #F3F3F3;
     height: 400px;
 }
-.home_next_btn{
+/*.home_next_btn{
     padding-top: 20px;
-}
+}*/
 
 .more_pick_option{
     background-color: #F26722 !important;
@@ -597,7 +597,7 @@ hr {
     text-align: center;
     font-size: 38px;
     color: #F26722;
-    margin-top: 60px;
+    /*margin-top: 60px;*/ /*edited on 16-04-2016*/
     font-family: NEOTERIC bold;
 }
 small{
@@ -613,8 +613,8 @@ small{
 }
 .home_second_buttons{
     text-align: center;
-    padding-top: 55px;
-    padding-bottom:100px; /*added this on 15-05-2016*/
+    /*padding-top: 55px;*/ /*edited on 16-04-2016*/
+    padding-bottom:55px; /*added this on 15-05-2016 & 16-04-2016 again*/
 }
 .home_default {
     color: #565454;
@@ -1217,7 +1217,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: -webkit-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -o-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -ms-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
-    height: 650px;
+    height: 500px;
     }
     .delr{
         width: 48%;
@@ -1462,7 +1462,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: -webkit-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -o-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
     background: -ms-linear-gradient(top, rgba(236,236,237,1) 0%, rgba(255,255,255,1) 54%, rgba(255,255,255,1) 71%, rgba(255,255,255,1) 100%);
-    height: 450px;
+    height: 300px;
     }
 
     .profile_btn {
@@ -1489,6 +1489,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .textarea img{
         width:100%;
+    }
+    .new_btn {
+    margin-left: 35px;
+    width: 17%;
+    display: inline-block;
+    }
+    .home_second_buttons {
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
     }
 
     /*.c-p-b {

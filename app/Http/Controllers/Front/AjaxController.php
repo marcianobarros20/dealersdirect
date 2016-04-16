@@ -44,15 +44,54 @@ class AjaxController extends Controller
     {
         $make_search=Request::input('make_search');
         $model_search=Request::input('model_search');
-        // print_r($make_search);
-        // print_r($model_search);
-        if($model_search==0){
-        	$Caryear=Caryear::where("make_id",$make_search)->groupBy('year')->get();
+        $condition_search=Request::input('condition_search');
+        $currentyear=date('Y');
+        $previousyear=date('Y')-1;
+        $nextyear=date('Y')+1;
+        
+        if($condition_search=="New"){
+            $Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->whereIn('year',array($currentyear,$previousyear,$nextyear))->groupBy('year')->get();
         }
         else{
-        	$Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
+            $Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
+            foreach($Caryear as $ykey=>$year){
+                if($year->year==$currentyear){
+                    unset($Caryear[$ykey]);
+                }
+                
+                if($year->year==$nextyear){
+                    unset($Caryear[$ykey]);
+                }
+            }
+            
+
         }
+        
+        
         return view('front.ajax.create_year_types',compact('Caryear'));
+    }
+    public function getcondition(){
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $Caryear=Caryear::where("make_id",$make_search)->where("carmodel_id",$model_search)->groupBy('year')->get();
+        $currentyear=date('Y');
+        $previousyear=date('Y')-1;
+        $nextyear=date('Y')+1;
+        
+        $dope=0;
+        foreach($Caryear as $year){
+            if($year->year==$currentyear){
+                $dope++;
+            }
+            if($year->year==$previousyear){
+                $dope++;
+            }
+            if($year->year==$nextyear){
+                $dope++;
+            }
+        }
+        
+        return view('front.ajax.create_condition_types',compact('dope'));
     }
     public function requirmentqueue()
     {

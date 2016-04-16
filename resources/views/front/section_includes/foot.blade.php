@@ -50,9 +50,28 @@ $(document).ready(function(){
     $('#model_search').change(function(){
       var make_search=$('#make_search').val();
       var model_search=$('#model_search').val();
+      
+      $.ajax({
+                        url: "<?php echo url('/');?>/ajax/get_condition",
+                        data: {make_search:make_search,model_search:model_search,_token: '{!! csrf_token() !!}'},
+                        type :"post",
+                        success: function( data ) {
+                            if (make_search!='' && data!="" && model_search!=""){
+                                $("#condition_search").html('');
+                                $("#condition_search").html(data); 
+                                $("#condition_search").selectric();
+                            }
+                        }
+              });
+    });
+
+    $('#condition_search').change(function(){
+      var make_search=$('#make_search').val();
+      var model_search=$('#model_search').val();
+      var condition_search=$('#condition_search').val();
       $.ajax({
                         url: "<?php echo url('/');?>/ajax/get_year",
-                        data: {make_search:make_search,model_search:model_search,_token: '{!! csrf_token() !!}'},
+                        data: {make_search:make_search,model_search:model_search,condition_search:condition_search,_token: '{!! csrf_token() !!}'},
                         type :"post",
                         success: function( data ) {
                             if (make_search!='' && data!=""){
@@ -62,15 +81,76 @@ $(document).ready(function(){
                             }
                         }
               });
+      
     });
 
     $('#year_search').change(function(){
-      var year_search=$('#year_search').val();
-      if(year_search!=""){
-        $("#trade-in").show();
-      }
+      $("#searchfirstnext").show();
+    });
+    $('#tradeyear_search').change(function(){
+       $("#tradenext").show();
+    });
+    $('#nextfirst').click(function(){
+      $("#searchfirst").hide();
+      $("#searchseconed").show();
+      return false;
+    });
+    $('#backfirst').click(function(){
+      $("#searchfirst").show();
+      $("#searchseconed").hide();
+      return false;
+    });
+    $('#nextsecond').click(function(){
+      $("#searchseconed").hide();
+      $("#searchthird").show();
+      return false;
     });
 
+    $('#backsecond').click(function(){
+      $("#searchseconed").show();
+      $("#searchthird").hide();
+      return false;
+    });
+    $('#backthird').click(function(){
+      $("#searchthird").show();
+      $("#searchfourth").hide();
+      return false;
+    });
+    $('#backfifth').click(function(){
+      $("#searchfourth").show();
+      $("#searchfifth").hide();
+      return false;
+    });
+    $('#third').click(function(){
+      $("#searchthird").show();
+      $("#searchfifth").hide();
+      return false;
+    });
+    $('#fourthownext').click(function(){
+      $("#searchthird").hide();
+      $("#searchfourth").show();
+      $("#owediv").show();
+      return false;
+    });
+    $('#fourthnext').click(function(){
+      $("#searchthird").hide();
+      $("#searchfourth").show();
+      $("#owediv").hide();
+      $("#owediv").val('');
+      return false;
+    });
+    $('#fifthnext').click(function(){
+      $("#searchfourth").hide();
+      $("#searchfifth").show();
+      $("#backfifth").show();
+      return false;
+    });
+    $('#nextfifth').click(function(){
+      $("#searchthird").hide();
+      $("#searchfifth").show();
+      $("#fifthback").show();
+      return false;
+    });
     $("input:radio[name=tradein]").click(function() {
       var value = $(this).val();
       if(value=="yes"){
@@ -85,7 +165,6 @@ $(document).ready(function(){
         $("#tradeinowe").hide();
       }
     });
-
     $("input:radio[name=owe]").click(function() {
       var owe = $(this).val();
       if(owe=="1"){
@@ -97,35 +176,6 @@ $(document).ready(function(){
         $("#tradeinowe").hide();
         $("#nextis").hide();
       }
-    });
-
-    $('#plsnex').click(function(){
-      $("#firsc").hide();
-      $("#secsc").show();
-      return false;
-    });
-
-    $('#plstradenex').click(function(){
-      $("#firsc").hide();
-      $("#tradefirsc").hide();
-      $("#secsc").show();
-      return false;
-    });
-
-    $('#tradeinowenex').click(function(){
-      $("#firsc").hide();
-      $("#tradefirsc").show();
-      $("#owediv").show();
-      $("#secsc").hide();
-      return false;
-    });
-
-    $('#tradeinnex').click(function(){
-      $("#firsc").hide();
-      $("#tradefirsc").show();
-      $("#owediv").hide();
-      $("#secsc").hide();
-      return false;
     });
 
     $('#trademake_search').change(function(){
@@ -147,62 +197,40 @@ $(document).ready(function(){
     $('#trademodel_search').change(function(){
       var trademake_search=$('#trademake_search').val();
       var trademodel_search=$('#trademodel_search').val();
-        $.ajax({
-          url: "<?php echo url('/');?>/ajax/get_year",
-          data: {make_search:trademake_search,model_search:trademodel_search,_token: '{!! csrf_token() !!}'},
-          type :"post",
-          success: function( data ) {
-            if (trademake_search!='' && data!=""){
-              $("#tradeyear_search").html('');
-              $("#tradeyear_search").html(data); 
-              $("#tradeyear_search").selectric();
-            }
+      $.ajax({
+        url: "<?php echo url('/');?>/ajax/get_condition",
+        data: {make_search:trademake_search,model_search:trademodel_search,_token: '{!! csrf_token() !!}'},
+        type :"post",
+        success: function( data ) {
+          if (make_search!='' && data!="" && model_search!=""){
+            $("#tradecondition_search").html('');
+            $("#tradecondition_search").html(data); 
+            $("#tradecondition_search").selectric();
           }
-        });
+        }
+      });
     });
 
-    $('#tradeyear_search').change(function(){
-      var year_search=$('#tradeyear_search').val();
-      if(year_search!=""){
-        $("#tradenext").show();
-      }
+    $('#tradecondition_search').change(function(){
+      var trademake_search=$('#trademake_search').val();
+      var trademodel_search=$('#trademodel_search').val();
+      var tradecondition_search=$('#tradecondition_search').val();
+      $.ajax({
+        url: "<?php echo url('/');?>/ajax/get_year",
+        data: {make_search:trademake_search,model_search:trademodel_search,condition_search:tradecondition_search,_token: '{!! csrf_token() !!}'},
+        type :"post",
+        success: function( data ) {
+          if (trademake_search!='' && data!=""){
+            $("#tradeyear_search").html('');
+            $("#tradeyear_search").html(data); 
+            $("#tradeyear_search").selectric();
+          }
+        }
+      });
     });
 
-    $('#npllses').click(function(){
-        var tamo=$('#tamo').val();
-        var mtamo=$('#mtamo').val();
-        var chkone=0;
-        var chktwo=0;
-        var chkthree=0;
-          if(!isNaN(tamo) && tamo!="")
-          {
-          
-          }else{
-            chkone+1;
-            alert("Please Provide Total Amount");
-            return false;
-          }
-          if(!isNaN(mtamo) && mtamo!="")
-          {
-          
-          }else{
-            chktwo+1;
-            alert("Please Provide Monthly Amount");
-            return false;
-          }
-          if(chkone==0 && chktwo==0 && (Number(tamo)>Number(mtamo))){
-            $("#secsc").hide();
-            $("#thirsc").show();
-          }else{
-            chkthree+1;
-            alert("Please Make sure Total Amount Is Greater Than Monthly Amount");
-            return false;
-          }
-        return false;
-    });
-
-
-    $('#dstes').click(function(){
+});
+$('#dstes').click(function(){
         var make_search=$('#make_search').val();
         console.log(make_search);
         var model_search=$('#model_search').val();
@@ -328,62 +356,6 @@ $(document).ready(function(){
         });
     return false;
     });
-    $('#sinses').click(function(){
-      $("#dvLoading").show();
-      var make_search=$('#make_search').val();
-      console.log(make_search);
-      var model_search=$('#model_search').val();
-      console.log(model_search);
-      var condition_search=$('#condition_search').val();
-      console.log(condition_search);
-      var year_search=$('#year_search').val();
-      console.log(year_search);
-      var tamo=$('#tamo').val();
-      console.log(tamo);
-      var mtamo=$('#mtamo').val();
-      console.log(mtamo);
-      var tradein=$('input[name=tradein]:checked').val();
-      console.log(tradein);
-      var owe=$('input[name=owe]:checked').val();
-      console.log(owe);
-      var oweamount=$('#oweamount').val();
-      console.log(oweamount);
-      var trademake_search=$('#trademake_search').val();
-      console.log(trademake_search);
-      var trademodel_search=$('#trademodel_search').val();
-      console.log(trademodel_search);
-      var tradecondition_search=$('#tradecondition_search').val();
-      console.log(tradecondition_search);
-      var tradeyear_search=$('#tradeyear_search').val();
-      console.log(tradeyear_search);
-              $.ajax({
-                          url: "<?php echo url('/');?>/ajax/client-request",
-                          data: {
-                                  make_search:make_search,
-                                  model_search:model_search,
-                                  condition_search:condition_search,
-                                  year_search:year_search,
-                                  tamo:tamo,
-                                  mtamo:mtamo,
-                                  tradein:tradein,
-                                  owe:owe,
-                                  oweamount:oweamount,
-                                  trademake_search:trademake_search,
-                                  trademodel_search:trademodel_search,
-                                  tradecondition_search:tradecondition_search,
-                                  tradeyear_search:tradeyear_search,                                
-                                  _token: '{!! csrf_token() !!}'
-                          },
-                          type :"post",
-                          success: function( data ) {
-                            var urlnew="<?php echo url('/');?>/client/request_detail/"+data;
-                          $(location).attr('href',urlnew);
-                          }
-                      });
-      return false;
-    });
-
-});
 
 
 </script>
