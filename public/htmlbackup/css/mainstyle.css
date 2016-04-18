@@ -627,12 +627,12 @@ small{
     margin-bottom: 80px;
     color: #000;
 }
-#home_footer {
+/*#home_footer {
     padding-top: 30px;
     padding-bottom: 30px;
     color: #FFF;
     background: #000;
-}
+}*/
 #home_footer a{
     color: #fff;
 }
@@ -640,12 +640,12 @@ small{
     color: #F26722;
 }
 
-#home_footer ul {
+/*#home_footer ul {
     list-style: none;
     padding: 0;
     margin: 0;
     padding-top: 30px;
-}
+}*/
 #home_footer ul>li {
     display: inline-block;
     margin-left: 15px;
@@ -1072,6 +1072,47 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 
 
+
+/*edited on 18-04*/
+#home_footer {
+    padding-top: 10px; /*edited on 18-04*/
+    /*padding-bottom: 30px;*/
+    color: #FFF;
+    background: #000;
+}
+#home_footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /*padding-top: 30px;*/ /*edited on 18-04*/
+}
+@media only screen and (max-width: 480px){
+.dealers-right{
+    text-align:center !important;
+}
+.pull-right {
+    float: none !important;
+}
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1023px){
+.pull-right {
+    float: right !important;
+} 
+.form_in_control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 151px;
+    height: 40px !important;
+}
+.new_btn {
+    margin-left: 38px;
+    width: 17%;
+    display: inline-block;
+}
+}
+
 /* Smartphones (portrait and landscape) ----------- */ 
 
 /*Edited on 12 April */
@@ -1287,6 +1328,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-right: 0px;
     }
 }
-
-
+/*need to be edited on live*/
+@media only screen and (min-width: 767px) and (max-width: 1023px){
+    .brand_request h2 {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    height: 75px;
+    font-size: 12px;
+    }
+}
 
