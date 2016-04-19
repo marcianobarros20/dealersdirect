@@ -213,6 +213,7 @@ input.search-form:hover {
     background: #ffffff;
     padding: 15px 0;
     padding-bottom: 0;
+    height:110px;
 }
 .navbar-nav {
     margin-top: 12px;
@@ -317,7 +318,7 @@ input.search-form:hover {
 }
 .select_option{
     text-align: center !important; /*added imp on 15-04-2016*/
-    padding-bottom: 40px;
+    padding-bottom: 10px;
     padding-top: 25px; /*added this on 15-04-2016*/
 }
 .next_btn{
@@ -671,6 +672,7 @@ small{
     background-color: #F26722;
     width: 150px;
     height: 40px !important;
+    margin-left: 5px;
 }
 /*.selectric-wrapper {
     margin-bottom: 10px;
@@ -1217,6 +1219,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .back-btn{
     margin-left: -15px;
 }
+.sea-btn{
+    margin-left: -30px;
+}
 /*.radio-area{
     width:25%;
     margin:0px auto;
@@ -1386,7 +1391,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .select_option {
     text-align: center !important;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     padding-top: 25px;
     /*margin-left: 15px;*/
     }

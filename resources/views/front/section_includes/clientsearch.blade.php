@@ -46,7 +46,7 @@
 
 	<div class="container" id="searchthird" style="display:none;">
 		<div class="row home_next_btn">
-			<div class="col-md-offset-4 col-xs-2 col-md-2 delr" id="trade-in" >
+			<div class="col-md-offset-5 col-xs-2 col-md-2 delr" id="trade-in" >
 				<h3>Trade In</h3>
 				<label class="radio-inline">
 				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes

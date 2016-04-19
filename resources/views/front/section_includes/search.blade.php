@@ -128,7 +128,7 @@
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
 		<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4"  id="backfifth" style="display:none;">
-				<button type="button"  id="four" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+				<button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="fifthback" style="display:none;">
 				<button type="button"  id="third" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
