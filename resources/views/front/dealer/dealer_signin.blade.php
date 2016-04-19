@@ -8,6 +8,10 @@
 			</br>
 		@endforeach
 	@endif
+
+	@if(Session::get('error1'))
+		<div class="alert alert-danger">{{ Session::get('error1') }}</div>
+	@endif
 	<div class="container">
 		<h2 class="head center-block">SIGN IN AS A DEALER</h2>
 		<div class="">
