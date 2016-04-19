@@ -8,7 +8,7 @@ class RequestDealerLog extends Model
 {
     //
     public $timestamps = true;
-    protected $fillable = array('dealer_id','request_id','status', 'make_id');
+    protected $guarded = array();
 
     protected $table = 'request_dealer_log';
     public function makes() {

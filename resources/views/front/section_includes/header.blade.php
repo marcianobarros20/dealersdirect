@@ -56,7 +56,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			 </button>
-			 <a class="navbar-brand" href="<?php echo url('/');?>"><img src="<?php echo url('/');?>/public/front_end/images/logo.png" alt="logo"></a>
+			 <a class="navbar-brand" href="{{ url('/') }}"><img src="<?php echo url('/');?>/public/front_end/images/logo.png" alt="logo"></a>
 			</div>
 			<div class="collapse navbar-collapse navbar-right">
 			  <ul class="nav navbar-nav">
@@ -66,7 +66,7 @@
 							class="active"
 						@endif
 					@endif
-				><a href="<?php echo url('/');?>">Home</a></li>
+				><a href="{{ url('/') }}">Home</a></li>
 				<!-- <li><a href="">About Us</a></li> -->
 				<li 
 					@if(isset($typex))
@@ -74,16 +74,16 @@
 							class="active"
 						@endif
 					@endif
-				><a href="<?php echo url('/');?>/services">Services</a></li>
+				><a href="{{url('/services')}}">Services</a></li>
 				<li 
 					@if(isset($typex))
 						@if($typex=="contact-us")
 							class="active"
 						@endif
 					@endif
-				><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
+				><a href="{{url('/contact-us')}}">Contact-Us</a></li>
 				@if($client!=0)
-				<li><a href="<?php echo url('/');?>/client_sign_out">Logout</a></li>
+				<li><a href="{{url('/client_sign_out')}}">Logout</a></li>
 				@endif
 			  </ul>
 			</div>

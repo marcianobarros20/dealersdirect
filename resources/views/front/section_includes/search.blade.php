@@ -20,7 +20,6 @@
 			</div>
 		</div>
 	</div><!--  /container -->
-
 	<div class="container" id="searchseconed" style="display:none;">
 		<div class="row col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" >
@@ -42,28 +41,28 @@
 			
 		</div>
 	</div>
-
-
 	<div class="container" id="searchthird" style="display:none;">
 		<div class="row home_next_btn">
-			<div class="col-md-offset-4 col-xs-2 col-md-2 delr" id="trade-in" >
-				<h3>Trade In</h3>
-				<label class="radio-inline">
-				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes
-				</label>
-				<label class="radio-inline">
-				{{ Form::radio('tradein', 'no', false, array('id'=>'no')) }} No
-				</label>
-			</div>
-			<div class="col-xs-6 col-sm-6 col-md-2" id="owe-money"style="display:none;" >
-				<h3>Owe Money</h3>
-				<label class="radio-inline">
-				{{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes
-				</label>
-				<label class="radio-inline">
-				{{ Form::radio('owe', '0', false, array('id'=>'0')) }} No
-				</label>
-			</div>
+			<div class="radio-div">
+		        <div class="col-md-offset-4 col-xs-2 col-md-2 delr" id="trade-in" >
+		          <h3>Trade In</h3>
+		          <label class="radio-inline">
+		          {{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes
+		          </label>
+		          <label class="radio-inline">
+		          {{ Form::radio('tradein', 'no', false, array('id'=>'no')) }} No
+		          </label>
+		        </div>
+		        <div class="col-xs-6 col-sm-6 col-md-2" id="owe-money"style="display:none;" >
+		          <h3>Owe Money</h3>
+		          <label class="radio-inline">
+		          {{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes
+		          </label>
+		          <label class="radio-inline">
+		          {{ Form::radio('owe', '0', false, array('id'=>'0')) }} No
+		          </label>
+		        </div>
+		    </div>
 			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" >
 				<button type="button"  id="backsecond" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
@@ -80,9 +79,6 @@
 			</div>
 		</div>
 	</div><!--  /container --> 
-
-
-
 	<div class="container" id="searchfourth" style="display:none;">
 		<div class="row col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" id="owediv" style="display: none;">
@@ -113,7 +109,6 @@
 			
 		</div>
 	</div><!--  /container --> 
-
 	<div class="container" id="searchfifth" style="display:none;">
 		<div class="row col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" >

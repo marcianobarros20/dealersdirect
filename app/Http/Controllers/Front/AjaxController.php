@@ -149,15 +149,29 @@ class AjaxController extends Controller
             $TradeinRequest=TradeinRequest::create($TradeinRequest);
            
         }
-        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->with('dealers')->get();
           foreach ($DealerMakeMap as $value) {
-              $RequestDealerLog['dealer_id']=$value->dealer_id;
-              $RequestDealerLog['request_id']=$lastinsertedId;
-              $RequestDealerLog['make_id']=$make_search;
-              $RequestDealerLog['status']=1;
-              $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
-              $lastlog = $RequestDealerLog_row->id;
-              self::SendRemindermail($lastlog);
+              
+              if($value->dealers->parent_id==0){
+                $RequestDealerLog['dealer_id']=$value->dealer_id;
+                $RequestDealerLog['dealer_admin']=0;
+                $RequestDealerLog['request_id']=$lastinsertedId;
+                $RequestDealerLog['make_id']=$make_search;
+                $RequestDealerLog['status']=1;
+                $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                $lastlog = $RequestDealerLog_row->id;
+                self::SendRemindermail($lastlog);
+            }
+            else{
+                $RequestDealerLog['dealer_id']=$value->dealers->parent_id;
+                $RequestDealerLog['dealer_admin']=$value->dealer_id;
+                $RequestDealerLog['request_id']=$lastinsertedId;
+                $RequestDealerLog['make_id']=$make_search;
+                $RequestDealerLog['status']=1;
+                $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                $lastlog = $RequestDealerLog_row->id;
+                self::SendRemindermail($lastlog);
+            }
               
           }
         
@@ -638,15 +652,29 @@ class AjaxController extends Controller
             $TradeinRequest=TradeinRequest::create($TradeinRequest);
            
         }
-        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+        $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->with('dealers')->get();
         foreach ($DealerMakeMap as $value) {
-              $RequestDealerLog['dealer_id']=$value->dealer_id;
-              $RequestDealerLog['request_id']=$lastinsertedId;
-              $RequestDealerLog['make_id']=$make_search;
-              $RequestDealerLog['status']=1;
-              $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
-              $lastlog = $RequestDealerLog_row->id;
-              self::SendRemindermail($lastlog);
+            if($value->dealers->parent_id==0){
+                $RequestDealerLog['dealer_id']=$value->dealer_id;
+                $RequestDealerLog['dealer_admin']=0;
+                $RequestDealerLog['request_id']=$lastinsertedId;
+                $RequestDealerLog['make_id']=$make_search;
+                $RequestDealerLog['status']=1;
+                $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                $lastlog = $RequestDealerLog_row->id;
+                self::SendRemindermail($lastlog);
+            }
+            else{
+                $RequestDealerLog['dealer_id']=$value->dealers->parent_id;
+                $RequestDealerLog['dealer_admin']=$value->dealer_id;
+                $RequestDealerLog['request_id']=$lastinsertedId;
+                $RequestDealerLog['make_id']=$make_search;
+                $RequestDealerLog['status']=1;
+                $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                $lastlog = $RequestDealerLog_row->id;
+                self::SendRemindermail($lastlog);
+            }
+              
               
           }
           
@@ -720,7 +748,7 @@ class AjaxController extends Controller
                     $makephoto['model_id']=$Model->id;
                     $makephoto['year_id']=$Year;
                     $makephoto['title']=$photos['title'];
-                    $makephoto['category']=$photos['category'];
+                    $makephoto['category']=($photos['category'] ?: '');
                     foreach ($photos['sources'] as $sources) {
                         if($sources['size']['width']=="500"){
                                 $makephoto['edmunds_path_big']=$sources['link']['href'];
@@ -776,7 +804,14 @@ class AjaxController extends Controller
         $monsearchmin=Request::input('monsearchmin');
         $monsearchmax=Request::input('monsearchmax');
         $status_search=Request::input('status_search');
-        $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->with('makes','requestqueue','requestqueue.models');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->with('makes','requestqueue','requestqueue.models');
+        }
+        else{
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->with('makes','requestqueue','requestqueue.models');
+        }
+        
         if($make_search!=0){
             $RequestDealerLog=$RequestDealerLog->where('make_id', $make_search);
         }
@@ -916,8 +951,13 @@ class AjaxController extends Controller
         $dealer_userid=Session::get('dealer_userid');
         $dealer=Request::input('dealer');
         $requestid=Request::input('requestid');
+        $inox=Request::input('inox');
         if($dealer_userid==$dealer){
             $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+        }
+        else if($inox==$dealer_userid){
+             $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_admin', $dealer_userid)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+
         }else{
             $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->where('visable','=','1')->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
         }

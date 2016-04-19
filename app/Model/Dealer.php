@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Dealer extends Model
 {
     //
@@ -20,4 +21,5 @@ class Dealer extends Model
         return $this->hasOne('App\Model\DealerDetail', 'dealer_id','id');
   
     }
+
 }

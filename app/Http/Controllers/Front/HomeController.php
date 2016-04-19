@@ -46,6 +46,7 @@ class HomeController extends BaseController
     public function index()
     {
         
+        //echo "something";
         $client=self::CheckLogin();
         if($client!=0){
              $client;
