@@ -196,7 +196,7 @@ class DealerController extends BaseController
                 $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
                 $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
-                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
                 if($par!=0){
                     $BidQueuecount=BidQueue::where('dealer_admin', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
                 }else{
