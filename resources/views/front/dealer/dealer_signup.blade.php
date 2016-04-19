@@ -24,31 +24,31 @@
 							<div class="form_back">
 								<div class="form-group">
 									<label for="exampleInputName1">First Name</label>
-										{{ Form::text('fname','',['class' => 'form-control profile_control']) }}
+										{{ Form::text('fname','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">Last Name</label>
-										{{ Form::text('lname','',['class' => 'form-control profile_control']) }}
+										{{ Form::text('lname','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Email/Username</label>
-										{{ Form::text('email','',['class' => 'form-control profile_control']) }}
+										{{ Form::text('email','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">Zip</label>
-										{{ Form::text('zip','',['class' => 'form-control profile_control']) }}
+										{{ Form::text('zip','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword3">Password</label>
-										{{ Form::password('password',['class' => 'form-control profile_control']) }}
+										{{ Form::password('password',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword3">Confirm Password</label>
-										{{ Form::password('conf_password',['class' => 'form-control profile_control']) }}
+										{{ Form::password('conf_password',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label>Make</label>
-									{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','multiple' => 'multiple','id'=>'ms')) }}
+									{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','multiple' => 'multiple','id'=>'ms', 'required' => 'required')) }}
 									
 								</div>
 							<button type="submit" class="btn btn-warning btn-lg btn-block">SIGN UP</button>
