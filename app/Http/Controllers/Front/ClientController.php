@@ -500,16 +500,28 @@ class ClientController extends BaseController
                     $lastinsertedId = $RequestQueue_row->id;
                     $TradeinRequest['request_queue_id'] =$lastinsertedId;
                     $TradeinRequest=TradeinRequest::create($TradeinRequest);
-                    $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->get();
+                    $DealerMakeMap = DealerMakeMap::where('make_id', $make_search)->with('dealers')->get();
                     foreach ($DealerMakeMap as $value) {
-                        $RequestDealerLog['dealer_id']=$value->dealer_id;
-                        $RequestDealerLog['request_id']=$lastinsertedId;
-                        $RequestDealerLog['make_id']=$make_search;
-                        $RequestDealerLog['status']=1;
-                        $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
-                        $lastlog = $RequestDealerLog_row->id;
-                        self::SendRemindermail($lastlog);
-
+                        if($value->dealers->parent_id==0){
+                            $RequestDealerLog['dealer_id']=$value->dealer_id;
+                            $RequestDealerLog['dealer_admin']=0;
+                            $RequestDealerLog['request_id']=$lastinsertedId;
+                            $RequestDealerLog['make_id']=$make_search;
+                            $RequestDealerLog['status']=1;
+                            $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                            $lastlog = $RequestDealerLog_row->id;
+                            self::SendRemindermail($lastlog);
+                        }
+                        else{
+                            $RequestDealerLog['dealer_id']=$value->dealers->parent_id;
+                            $RequestDealerLog['dealer_admin']=$value->dealer_id;
+                            $RequestDealerLog['request_id']=$lastinsertedId;
+                            $RequestDealerLog['make_id']=$make_search;
+                            $RequestDealerLog['status']=1;
+                            $RequestDealerLog_row=RequestDealerLog::create($RequestDealerLog);
+                            $lastlog = $RequestDealerLog_row->id;
+                            self::SendRemindermail($lastlog);
+                        }
                     }
 
                     return redirect('client-dashboard');
