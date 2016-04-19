@@ -121,18 +121,18 @@ class DealerController extends BaseController
             return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function signup(){
-            $obj = new helpers();
-                if($obj->checkDealerLogin())
-                {
-                    return redirect('dealer-dashboard');
-                }
-            $variable=Make::all();
-            $Makes=array();
-                foreach ($variable as $key => $value) {
-                    $Makes[$value->id]=$value->name;
-                }
-                $client=0;
-            return view('front.dealer.dealer_signup',compact('Makes','client'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+        $obj = new helpers();
+        if($obj->checkDealerLogin())
+        {
+            return redirect('dealer-dashboard');
+        }
+        $variable=Make::all();
+        $Makes=array();
+        foreach ($variable as $key => $value) {
+            $Makes[$value->id]=$value->name;
+        }
+        $client=0;
+        return view('front.dealer.dealer_signup',compact('Makes','client'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function signout(){
             Session::forget('dealer_userid');

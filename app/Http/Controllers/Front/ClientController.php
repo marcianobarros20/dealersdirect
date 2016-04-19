@@ -31,8 +31,6 @@ use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
 use App\Helper\helpers;
-
-
 class ClientController extends BaseController
 {
     //
@@ -76,8 +74,16 @@ class ClientController extends BaseController
         }
         if(Request::isMethod('post'))
         {
-           $email = Request::input('email');
+            
+            $email = Request::input('email');
             $password = Request::input('password');
+
+            // validating input type is email or not
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                Session::flash('error', 'Invalid Email Format');
+                return redirect('client-signin'); 
+            }
             $Client = Client::where('email', $email)->first();
             if($Client!=""){
 
