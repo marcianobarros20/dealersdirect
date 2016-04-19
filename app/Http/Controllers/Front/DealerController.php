@@ -116,7 +116,7 @@ class DealerController extends BaseController
                    
                 }
                 else{
-                        Session::flash('error', 'Email and password does not match.'); 
+                        Session::flash('error1', 'Email and password does not match.'); 
                         return redirect('dealer-signin');
                 }
 
