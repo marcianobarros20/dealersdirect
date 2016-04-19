@@ -28,6 +28,7 @@ use DB;
 use Imagine\Image\Box;
 
 use App\Helper\helpers;
+use Validator;
 
 
 class DealerController extends BaseController
@@ -75,39 +76,51 @@ class DealerController extends BaseController
         }
         if(Request::isMethod('post'))
         {
-           $email = Request::input('email');
-            $password = Request::input('password');
-            $Dealer = Dealer::where('email', $email)->first();
-            if($Dealer!=""){
+            $rules = array('email' => 'required|email', 'password' => 'required|min:6');
+            $validator = Validator::make(Request::all(), $rules);
+            if ($validator->fails())
+            {
+                $msg = $validator->messages();
+                //dd(Request::old('email'));
+                Session::flash('error',$msg );
+                return redirect('dealer-signin');
+            } 
+            else 
+            {
+                $email = Request::input('email');
+                $password = Request::input('password');
+                $Dealer = Dealer::where('email', $email)->first();
+                if($Dealer!=""){
 
-                $Dealer_pass = $Dealer->password;
-                // check for password
-                if(Hash::check($password, $Dealer_pass)){
+                    $Dealer_pass = $Dealer->password;
+                    // check for password
+                    if(Hash::check($password, $Dealer_pass)){
 
+                       
+                        
+                        $nam=ucfirst($Dealer->first_name)." ".ucfirst($Dealer->last_name);
+                        Session::put('dealer_userid', $Dealer->id);
+                        Session::put('dealer_email', $Dealer->email);
+                        Session::put('dealer_name', $nam);
+                        Session::put('dealer_parent', $Dealer->parent_id);
+                        
+                        Session::save();
+
+                        return redirect('dealer-dashboard');
+
+                    }
+                    else{
+                            Session::flash('error', 'Email and password does not match.'); 
+                            return redirect('dealer-signin');
+                        }
                    
-                    
-                    $nam=ucfirst($Dealer->first_name)." ".ucfirst($Dealer->last_name);
-                    Session::put('dealer_userid', $Dealer->id);
-                    Session::put('dealer_email', $Dealer->email);
-                    Session::put('dealer_name', $nam);
-                    Session::put('dealer_parent', $Dealer->parent_id);
-                    
-                    Session::save();
-
-                    return redirect('dealer-dashboard');
-
                 }
                 else{
                         Session::flash('error', 'Email and password does not match.'); 
                         return redirect('dealer-signin');
-                    }
-               
-            }
-            else{
-                    Session::flash('error', 'Email and password does not match.'); 
-                    return redirect('dealer-signin');
-            }
+                }
 
+            }
         }
         $client=0;
         return view('front.dealer.dealer_signin',compact('client'),array('title'=>'DEALERSDIRECT | Dealers Signin'));
