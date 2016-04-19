@@ -991,7 +991,7 @@ class AjaxController extends Controller
         $dealer=Request::input('dealer');
         $requestid=Request::input('requestid');
         
-            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->where('visable','=','1')->orderBy('created_at', 'desc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
         
         //dd($BidQueue);
         return view('front.ajax.get_bid_history_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
