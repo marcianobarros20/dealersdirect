@@ -185,6 +185,7 @@ class DealerController extends BaseController
                 $fill=1;
             }
             $dealer_userid=Session::get('dealer_userid');
+            $par=Session::get('dealer_parent');
             $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
             $requestqueue_id=$RequestDealerLog->request_id;
             $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
@@ -196,7 +197,12 @@ class DealerController extends BaseController
                 $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
                 $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
-                $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
+                if($par!=0){
+                    $BidQueuecount=BidQueue::where('dealer_admin', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
+                }else{
+                    $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
+                }
+                
             //dd($RequestQueue);
 
             return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount','fill'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
@@ -328,6 +334,7 @@ class DealerController extends BaseController
             }
             
                 $dealid=Session::get('dealer_userid');
+                $par=Session::get('dealer_parent');
                 $Dealerdet=Dealer::find($dealid);
                 if($Dealerdet->status==0){
                     return redirect('/dealers/blocked');
@@ -343,7 +350,11 @@ class DealerController extends BaseController
                         $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
                         $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
                         $RequestQueue->request_dealer_log=$RequestDealerLog;
-                        $BidQueue=BidQueue::where("dealer_id",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
+                        if($par!=0){
+                        $BidQueue=BidQueue::where("dealer_admin",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
+                        }else{
+                            $BidQueue=BidQueue::where("dealer_id",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
+                        }
                         return view('front.dealer.edit_bid',compact('RequestQueue','BidQueue'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
             }
     }
@@ -360,9 +371,26 @@ class DealerController extends BaseController
         // exit;
         $dealer_userid=Session::get('dealer_userid');
         $id=base64_encode(Request::input('request_id'));
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+            $inox=Request::input('id');
+        if($Dealers_check->parent_id==0){
+            $dealer_idp=$dealer_userid;
+            $dealer_ida=0;
+
+            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin','!=',0)->where('request_id',$inox)->delete();
+            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1));
+        }
+        else{
+            $dealer_ida=$dealer_userid;
+            $dealer_idp=$Dealers_check->parent_id;
+            RequestDealerLog::where('dealer_id',$dealer_idp)->whereNotIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->delete();
+            RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1));
+        }
+
 
         $BidQueue['requestqueue_id']=Request::input('id');
-        $BidQueue['dealer_id']=$dealer_userid;
+        $BidQueue['dealer_id']=$dealer_idp;
+        $BidQueue['dealer_admin']=$dealer_ida;
         $BidQueue['bid_id']=time()."BID";
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
@@ -409,6 +437,7 @@ class DealerController extends BaseController
         $id=base64_encode(Request::input('request_id'));
         $BidQueue['requestqueue_id']=$BidQueueprevious->requestqueue_id;
         $BidQueue['dealer_id']=$BidQueueprevious->dealer_id;
+        $BidQueue['dealer_admin']=$BidQueueprevious->dealer_admin;
         $BidQueue['bid_id']=time()."BID";
         $BidQueue['total_amount']=Request::input('total_amount');
         $BidQueue['monthly_amount']=Request::input('monthly_amount');
@@ -434,6 +463,7 @@ class DealerController extends BaseController
                     $BidImage['bid_id']=$BidQueue_row->id;
                     $BidImage['request_id']=$BidQueue_row->requestqueue_id;
                     $BidImage['dealer_id']=$BidQueue_row->dealer_id;
+
                     $BidImage['image']=$fileName;
                     BidImage::create($BidImage);
 
@@ -606,6 +636,26 @@ class DealerController extends BaseController
                     $DealerMakeMap['dealer_id']=$lastinsertedId;
                     $DealerMakeMap['make_id']=$value->make_id;
                     DealerMakeMap::create($DealerMakeMap);
+                }
+                $makex=DealerMakeMap::where('dealer_id',$lastinsertedId)->get();
+                
+                foreach ($makex as $key => $mid) {
+                    $dmid=$mid->make_id;
+                    $RequestDealerLogcount=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('reserved','!=',1)->count();
+                   
+                    if($RequestDealerLogcount!=0){
+                        $RequestDealerLogget=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('dealer_admin',0)->where('reserved','!=',1)->first();
+                        $RequestDealerLog['dealer_id']=$RequestDealerLogget->dealer_id;
+                        $RequestDealerLog['dealer_admin']=$lastinsertedId;
+                        $RequestDealerLog['request_id']=$RequestDealerLogget->request_id;
+                        $RequestDealerLog['status']=$RequestDealerLogget->status;
+                        $RequestDealerLog['blocked']=$RequestDealerLogget->blocked;
+                        $RequestDealerLog['reserved']=$RequestDealerLogget->reserved;
+                        $RequestDealerLog['make_id']=$RequestDealerLogget->make_id;
+                        RequestDealerLog::create($RequestDealerLog);
+                    }
+
+
                 }
                 return redirect('/dealer/admins');
             }

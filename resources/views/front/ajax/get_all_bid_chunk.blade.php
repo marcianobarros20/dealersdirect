@@ -45,7 +45,7 @@
                 <button type="button" class="btn btn-default c-p-b">Monthly:{!! $Bid->monthly_amount !!}</button>
                 
             </div>
-            <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
+            <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-inox={!! $Bid->dealer_admin!!} data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
                 <button type="button" class="btn btn-success">OPEN</button>
                 <button type="button" class="btn btn-warning">
                     <i class="fa fa-long-arrow-right"></i>
@@ -61,11 +61,13 @@ $(document).ready(function(){
 			
 			var dealer=$(this).data('id');
 			var requestid=$(this).data('idx');
+            var inox=$(this).data('inox');
+            alert(inox);
 			//$(".modal-body").html('');
 			//$(".modal-body").html(dx);
 			$.ajax({
 					url: "<?php echo url('/');?>/ajax/getbidhistory",
-					data: {dealer:dealer,requestid:requestid,_token: '{!! csrf_token() !!}'},
+					data: {dealer:dealer,requestid:requestid,inox:inox,_token: '{!! csrf_token() !!}'},
 					type :"post",
 					success: function( data ) {
 						if(data){
