@@ -101,17 +101,15 @@
 				{{ Form::select('tradeyear_search', [''=>'Select Year'], '', array('id' => 'tradeyear_search')) }}
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" >
-				<button type="button"  id="backthird" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+				<button type="button"  id="backthird" class="btn btn-warning next_btn_next back-btn"><i class="fa fa-share-square-o"></i> Back</button>
+			</div>
+			<div class="row home_next_btn">
+				<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradenext" style="display:none;" data-appear-animation="slideInRight">
+					<button type="button" id="sinses" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
+				</div>
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
-		<div class="row home_next_btn">
-			
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradenext" style="display:none;" data-appear-animation="slideInRight">
-				<button type="button" id="sinses" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
-				
-			</div>
-			
-		</div>
+		
 	</div><!--  /container --> 
 
 	

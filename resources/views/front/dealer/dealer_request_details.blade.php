@@ -26,7 +26,7 @@
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
-                <div id = "myCarousel" class = "carousel slide">
+                <div id = "myCarousel" class = "carousel slide deal-caro">
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
@@ -40,7 +40,7 @@
                     </ol>   
                    
                    <!-- Carousel items -->
-                   <div class = "carousel-inner d-r-d-caro">
+                   <div class = "carousel-inner client-caro-img">
                    @if(!empty($EdmundsMakeModelYearImage))
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">

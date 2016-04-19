@@ -361,8 +361,8 @@ input.search-form:hover {
      font-size: 28px;
 }
 #footer {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    /*padding-bottom: 30px;*/
     color: #000;
     background: #dbdbdb;
 }
@@ -377,7 +377,7 @@ input.search-form:hover {
     list-style: none;
     padding: 0;
     margin: 0;
-    padding-top: 30px;
+    /*padding-top: 30px;*/
 }
 #footer ul>li {
     display: inline-block;
@@ -590,9 +590,16 @@ hr {
 .next_btn_next{
     background: #F26722;
     width:60%;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-right: 140px;
+    margin-bottom: 10px;
 }
+/*.next_btn_next {
+    background: #F26722;
+    width: 25%;
+    margin-top: 15px;
+    margin-right: 0px;
+}*/
 .home_head_second{
     text-align: center;
     font-size: 38px;
@@ -632,8 +639,8 @@ small{
     color: #000;
 }
 #home_footer {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    /*padding-bottom: 30px;*/
     color: #FFF;
     background: #000;
 }
@@ -648,7 +655,7 @@ small{
     list-style: none;
     padding: 0;
     margin: 0;
-    padding-top: 30px;
+    /*padding-top: 30px;*/
 }
 #home_footer ul>li {
     display: inline-block;
@@ -825,6 +832,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 17%;
     display: inline-block;
 }
+/*.text_new_area {
+    width: 17%;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: 35px;
+}*/
 .text_new_area h3{
     color: #000;
 }
@@ -1066,7 +1079,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .request-carousel-img > .item > a > img, .request-carousel-img > .item > img {
     line-height: 1;
     width: 100% !important;
-    /*height: 185px !important;*/
+    height: 175px !important;
 }
 .request-client-cont{
     padding-bottom:100px;
@@ -1093,7 +1106,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     padding-bottom: 150px;
 }
 .deal-sign-up{
-    padding-bottom: 150px;
+    padding-bottom: 180px;
 }
 .deal-make-lis{
      padding-bottom: 150px;
@@ -1154,6 +1167,21 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 100%;
     height: 175px !important;
 }
+.deal-caro {
+  height: 350px !important;
+ /* margin-bottom: 60px;*/
+}
+.deal-caro .item {
+  height: 350px !important;
+  background-color: #777;
+}
+.client-caro-img > .item > img {
+    position: absolute;
+    top: 0px !important;
+    left: 0px;
+    width: 100% !important;
+    height: 350px !important;
+}
 .small-carou > .item > img {
     position: absolute;
     top: 28px;
@@ -1182,6 +1210,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border: 1px solid #F26722;
     padding: 10px;
     border-radius: 10px;
+}
+.text{
+    padding-bottom: 150px;
+}
+.back-btn{
+    margin-left: -15px;
 }
 /*.radio-area{
     width:25%;
@@ -1398,7 +1432,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     padding-bottom: 200px;
     }
     .deal-sign-up {
-    padding-bottom: 200px;
+    padding-bottom: 230px;
     }
     .deal-dash-cont .client_profile {
     text-align: center;
@@ -1434,6 +1468,18 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .textarea img{
         width:100%;
+    }
+    .dealers-right{
+    text-align:center !important;
+    }
+    .pull-right {
+    float: none !important;
+    }
+    .text{
+    padding-bottom: 200px;
+    }
+    .back-btn {
+    margin-left: -30px;
     }
 }
 
@@ -1479,8 +1525,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border-radius: 0px;
     color: #fff;
     background-color: #F26722;
-    width: 150px;
-    height: 36px !important;
+    width: 151px;
+    height: 40px !important;
     }
     .d-v{
         padding-top: 50px;
@@ -1503,6 +1549,28 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     text-align: center;
     padding-top: 0px;
     padding-bottom: 0px;
+    }
+    .pull-right {
+    float: right !important;
+    } 
+    /* .next_btn_next {
+    background: #F26722;
+    width: 60%;
+    margin-top: 15px;
+    margin-right: 0px;
+    }*/
+    .next_btn_next {
+    background: #F26722;
+    width: 30%;
+    margin-top: 15px;
+    margin-right: 0px;
+    margin-left: 256px;
+    }
+    .text_new_area {
+    width: 17%;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: 35px;
     }
 
     /*.c-p-b {
@@ -1527,13 +1595,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 
 @media only screen and (max-width: 1024px){
-    .delr{
+    /*.delr{
     width: 46%;
-    }
-    .next_btn_next {
-    background: #F26722;
-    width: 60%;
-    margin-top: 15px;
-    margin-right: 0px;
-    }
+    }*/
+   
 }
