@@ -1497,7 +1497,17 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
 
 }
-
+@media screen and (min-width: 640px) and (orientation: landscape){    
+    .new_btn {
+    margin-left: 38px;
+    width: 17%;
+    display: inline-block;
+    }
+    #footer .pull-right {
+    float: none !important;
+    text-align: center;
+    }
+}
 
 @media only screen and (min-width: 767px) and (max-width: 1023px){
 
