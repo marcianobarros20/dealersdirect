@@ -30,7 +30,6 @@ use Imagine\Image\Box;
 use App\Helper\helpers;
 use Validator;
 
-
 class DealerController extends BaseController
 {
     /**
@@ -110,13 +109,13 @@ class DealerController extends BaseController
 
                     }
                     else{
-                            Session::flash('error1', 'Email and password does not match.'); 
+                            Session::flash('error1', 'Email or password does not match.'); 
                             return redirect('dealer-signin');
                         }
                    
                 }
                 else{
-                        Session::flash('error1', 'Email and password does not match.'); 
+                        Session::flash('error1', 'Email or password does not match.'); 
                         return redirect('dealer-signin');
                 }
 
@@ -611,67 +610,140 @@ class DealerController extends BaseController
             {
             return redirect('dealer-signin');
             }
-            if(Request::isMethod('post')){
-                $dealer_userid=Session::get('dealer_userid');
-                //print_r(Request::input());
-                $tamo=time()."DEALERS";
-                $hashpassword = Hash::make(Request::input('password'));
-                $Dealer['first_name'] =Request::input('fname');
-                $Dealer['last_name'] =Request::input('lname');
-                $Dealer['email'] =Request::input('email');
-                $Dealer['password'] =$hashpassword;
-                $Dealer['code_number'] =$tamo;
-                $Dealer['parent_id'] =$dealer_userid;
-                $Dealers_row=Dealer::create($Dealer);
-                $lastinsertedId = $Dealers_row->id;
-                if(Request::hasFile('images')){
-                    $imgval=Request::file('images');
-                    $extension =$imgval->getClientOriginalExtension();
-                    $destinationPath = 'public/dealers/';   // upload path
-                    
-                    $extension =$imgval->getClientOriginalExtension(); // getting image extension
-                    $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
-                    $imgval->move($destinationPath, $fileName); // uploading file to given path
+            if(Request::isMethod('post'))
+            {
+                $rules = array(
+                    'fname' => 'required', 
+                    'lname' => 'required',
+                    'email' => 'required|email',
+                    'password' => 'required|min:6',
+                    'conf_password' => 'required|min:6',
+                    'zip' => 'required|numeric',
+                    'phone' => 'required|numeric',
+                    'address' => 'required',
+                    'images' => 'required|min:1'
+                );
+                $validator = Validator::make(Request::all(), $rules);
+                if ($validator->fails())
+                {
+                    $msg = $validator->messages();
+                    Session::flash('error',$msg );
+                    return redirect('dealers/dealer_add_admin');
+                } 
+                else 
+                {
+                    $dealer_userid=Session::get('dealer_userid');
+                    //print_r(Request::input());
+                    $tamo=time()."DEALERS";
+                    $hashpassword = Hash::make(Request::input('password'));
+                    $Dealer['first_name'] =Request::input('fname');
+                    $Dealer['last_name'] =Request::input('lname');
+                    $Dealer['email'] =Request::input('email');
+                    $Dealer['password'] =$hashpassword;
+                    $Dealer['code_number'] =$tamo;
+                    $Dealer['parent_id'] =$dealer_userid;
+                    $Dealers_row=Dealer::create($Dealer);
+                    $lastinsertedId = $Dealers_row->id;
+                    if(Request::hasFile('images')){
+                        $imgval=Request::file('images');
+                        $extension =$imgval->getClientOriginalExtension();
+                        $destinationPath = 'public/dealers/';   // upload path
+                        
+                        $extension =$imgval->getClientOriginalExtension(); // getting image extension
+                        $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
+                        $imgval->move($destinationPath, $fileName); // uploading file to given path
 
-                   
-                }else{
-                    $fileName = "";
-                }
-                $DealerDetail['dealer_id']=$lastinsertedId;
-                $DealerDetail['zip']=Request::input('zip');
-                $DealerDetail['phone']=Request::input('phone');
-                $DealerDetail['address']=Request::input('address');
-                $DealerDetail['image']=$fileName;
-                DealerDetail::create($DealerDetail);
-
-                $make=DealerMakeMap::where('dealer_id',$dealer_userid)->get();
-                foreach ($make as $key => $value) {
-                    $DealerMakeMap['dealer_id']=$lastinsertedId;
-                    $DealerMakeMap['make_id']=$value->make_id;
-                    DealerMakeMap::create($DealerMakeMap);
-                }
-                $makex=DealerMakeMap::where('dealer_id',$lastinsertedId)->get();
-                
-                foreach ($makex as $key => $mid) {
-                    $dmid=$mid->make_id;
-                    $RequestDealerLogcount=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('reserved','!=',1)->count();
-                   
-                    if($RequestDealerLogcount!=0){
-                        $RequestDealerLogget=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('dealer_admin',0)->where('reserved','!=',1)->first();
-                        $RequestDealerLog['dealer_id']=$RequestDealerLogget->dealer_id;
-                        $RequestDealerLog['dealer_admin']=$lastinsertedId;
-                        $RequestDealerLog['request_id']=$RequestDealerLogget->request_id;
-                        $RequestDealerLog['status']=$RequestDealerLogget->status;
-                        $RequestDealerLog['blocked']=$RequestDealerLogget->blocked;
-                        $RequestDealerLog['reserved']=$RequestDealerLogget->reserved;
-                        $RequestDealerLog['make_id']=$RequestDealerLogget->make_id;
-                        RequestDealerLog::create($RequestDealerLog);
+                       
+                    }else{
+                        $fileName = "";
                     }
+                    $DealerDetail['dealer_id']=$lastinsertedId;
+                    $DealerDetail['zip']=Request::input('zip');
+                    $DealerDetail['phone']=Request::input('phone');
+                    $DealerDetail['address']=Request::input('address');
+                    $DealerDetail['image']=$fileName;
+                    DealerDetail::create($DealerDetail);
+
+                    $make=DealerMakeMap::where('dealer_id',$dealer_userid)->get();
+                    foreach ($make as $key => $value) {
+                        $DealerMakeMap['dealer_id']=$lastinsertedId;
+                        $DealerMakeMap['make_id']=$value->make_id;
+                        DealerMakeMap::create($DealerMakeMap);
+                    }
+                    $makex=DealerMakeMap::where('dealer_id',$lastinsertedId)->get();
+                
+                    foreach ($makex as $key => $mid) {
+                        $dmid=$mid->make_id;
+                        $RequestDealerLogcount=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('reserved','!=',1)->count();
+                   
+                        if($RequestDealerLogcount!=0){
+                            $RequestDealerLogget=RequestDealerLog::where('make_id', $dmid)->where('dealer_id', $dealer_userid)->where('dealer_admin',0)->where('reserved','!=',1)->first();
+                            $RequestDealerLog['dealer_id']=$RequestDealerLogget->dealer_id;
+                            $RequestDealerLog['dealer_admin']=$lastinsertedId;
+                            $RequestDealerLog['request_id']=$RequestDealerLogget->request_id;
+                            $RequestDealerLog['status']=$RequestDealerLogget->status;
+                            $RequestDealerLog['blocked']=$RequestDealerLogget->blocked;
+                            $RequestDealerLog['reserved']=$RequestDealerLogget->reserved;
+                            $RequestDealerLog['make_id']=$RequestDealerLogget->make_id;
+                            RequestDealerLog::create($RequestDealerLog);
+                        }
 
 
+                    }
+                    return redirect('/dealer/admins');
                 }
-                return redirect('/dealer/admins');
             }
+
         return view('front.dealer.dealer_admin_add',compact(''),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+
+    public function EditAdminDetails($Dealer_id)
+    {
+        $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_details')->first();
+        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details'));
+    }
+    public function UpdateAdminDetails($id)
+    {
+        if (Request::file('new_image')) {
+            $image = Request::file('new_image');
+            $extension =$image->getClientOriginalExtension();
+            $destinationPath = 'public/dealers/';
+            $fileName = rand(111111111,999999999).'.'.$extension;
+            $image->move($destinationPath, $fileName);
+        }
+        else
+        {
+            $fileName = Request::input('old_image');
+        }
+        $update_details_dealers = array(
+            'first_name' => Request::input('new_fname'),
+            'last_name' => Request::input('new_lname')
+            );
+        $update_details = array(
+            'zip' => Request::input('new_zip'),
+            'address' => Request::input('new_address'),
+            'phone' => Request::input('new_phone'),
+            'image' => $fileName
+            );
+        $query_to_dealers = Dealer::find($id); //search
+        if ($query_to_dealers) {
+            $query_to_dealers->update($update_details_dealers); //update  
+            $query_to_dealer_details = DealerDetail::where('dealer_id', $id)->update($update_details);
+            if ($query_to_dealer_details) {
+                Session::flash('success', 'Successfully Updated'); 
+                return redirect('dealer/admins');
+            }
+            else
+            {
+               Session::flash('error', 'Fatal error! could not update details'); 
+                return redirect('dealer/admins');
+            }
+        }
+        else
+        {
+            Session::flash('error', 'Fatal error! could not update details'); 
+                return redirect('dealer/admins');
+        }
+        
     }
 }

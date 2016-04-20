@@ -177,6 +177,10 @@ Route:: get('/testemail/{id}', 'Front\AjaxController@SendAcceptancemail');
 Route:: get('/dealers/blocked', 'Front\DealerController@BlockAction');
 Route:: get('/dealers/stop-bid/{id}', 'Front\DealerController@DealerStopBid');
 Route:: get('/dealer/admins', 'Front\DealerController@DealerAdminList');
+//edit and update route
+Route::get('dealer/admins/edit/{admin_id}', ['uses' => 'Front\DealerController@EditAdminDetails','as' => 'dealer.admins.edit']);
+Route::post('dealer/admins/update/{update_id}', ['uses' => 'Front\DealerController@UpdateAdminDetails','as' =>'dealer.admins.update']);
+//edit and update
 Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 

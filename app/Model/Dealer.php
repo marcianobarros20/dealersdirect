@@ -21,5 +21,6 @@ class Dealer extends Model
         return $this->hasOne('App\Model\DealerDetail', 'dealer_id','id');
   
     }
+    
 
 }

@@ -4,6 +4,29 @@
 
 
 <section>
+
+	@if(Session::get('error'))
+		<?php $parrallal=Session::get('error');?>
+		@foreach($parrallal->all() as $key=>$value)
+			<div class="container">
+				<div class="col-xs-4"></div>
+				<div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{$value}} 
+					<a href="#" class="close" data-dismiss="alert">×</a>
+				</div>
+				<div class="col-xs-4"></div>
+			</div>
+		@endforeach
+	@endif
+<!-- 
+	@if(Session::get('error1'))
+			<div class="container">
+				<div class="col-xs-4"></div>
+				<div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{ Session::get('error1') }}
+					<a href="#" class="close" data-dismiss="alert">×</a>
+				 </div>
+				<div class="col-xs-4"></div>
+			</div>
+	@endif -->
 	<div class="container add-deal-admin">
 				@if(Session::get('message'))
 				<div class = "alert alert-success">
@@ -28,40 +51,40 @@
 								<div class="form_back">
 				              		<div class="form-group">
 									    <label for="exampleInputEmail1">First Name</label>
-									    {{ Form::text('fname','',['class' => 'form-control profile_control','required'=>'required']) }}
+									    {{ Form::text('fname','',['class' => 'form-control profile_control']) }}
 								  	</div>
 									<div class="form-group">
 										<label for="exampleInputName1">Last Name</label>
-										{{ Form::text('lname','',['class' => 'form-control profile_control','required'=>'required']) }}
+										{{ Form::text('lname','',['class' => 'form-control profile_control']) }}
 									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Email</label>
-									    {{ Form::text('email','',['class' => 'form-control profile_control','required'=>'required']) }}
+									    {{ Form::text('email','',['class' => 'form-control profile_control']) }}
 									</div>
 									
 									<div class="form-group">
 									    <label for="exampleInputName1">Password</label>
-									    {{ Form::password('password',['class' => 'form-control profile_control','required'=>'required']) }}
+									    {{ Form::password('password',['class' => 'form-control profile_control']) }}
 									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Confirm-Password</label>
-									    {{ Form::password('conf_password',['class' => 'form-control profile_control','required'=>'required']) }}
+									    {{ Form::password('conf_password',['class' => 'form-control profile_control']) }}
 									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Zip</label>
-									   {{ Form::text('zip','',['class' => 'form-control profile_control','required'=>'required']) }}
+									   {{ Form::text('zip','',['class' => 'form-control profile_control']) }}
 									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Phone</label>
-									   {{ Form::text('phone','',['class' => 'form-control profile_control','required'=>'required']) }}
+									   {{ Form::text('phone','',['class' => 'form-control profile_control']) }}
 									</div>
 									<div class="form-group">
-									    <label for="exampleInputName1">Password</label>
+									    <label for="exampleInputName1">Image</label>
 									    {!! Form::file('images', array('class'=>'add-image')) !!}
 									</div>
 									<div class="form-group">
-									    <label for="exampleInputName1">Password</label>
-									    {{ Form::textarea('address','',['class' => 'form-control profile_control','required'=>'required']) }}
+									    <label for="exampleInputName1">Address</label>
+									    {{ Form::textarea('address','',['class' => 'form-control profile_control']) }}
 									</div>
 									
 								        {{ Form::submit('ADD ADMIN',array('class' => 'btn btn-default btn-lg btn-block')) }}

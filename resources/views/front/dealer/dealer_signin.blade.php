@@ -4,13 +4,24 @@
 	@if(Session::get('error'))
 		<?php $parrallal=Session::get('error');?>
 		@foreach($parrallal->all() as $key=>$value)
-			<div class="alert alert-danger"> {{$value}} </div>
-			</br>
+			<div class="container">
+				<div class="col-xs-4"></div>
+				<div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{$value}} 
+					<a href="#" class="close" data-dismiss="alert">×</a>
+				</div>
+				<div class="col-xs-4"></div>
+			</div>
 		@endforeach
 	@endif
 
 	@if(Session::get('error1'))
-		<div class="alert alert-danger">{{ Session::get('error1') }}</div>
+			<div class="container">
+				<div class="col-xs-4"></div>
+				<div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{ Session::get('error1') }}
+					<a href="#" class="close" data-dismiss="alert">×</a>
+				 </div>
+				<div class="col-xs-4"></div>
+			</div>
 	@endif
 	<div class="container">
 		<h2 class="head center-block">SIGN IN AS A DEALER</h2>
