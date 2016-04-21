@@ -30,8 +30,7 @@ use Imagine\Image\Box;
 use App\Helper\helpers;
 use Validator;
 
-class DealerController extends BaseController
-{
+class DealerController extends BaseController {
     /**
      * Display a listing of the resource.
      *
@@ -649,7 +648,7 @@ class DealerController extends BaseController
                         $extension =$imgval->getClientOriginalExtension();
                         $destinationPath = 'public/dealers/';   // upload path
                         
-                        $extension =$imgval->getClientOriginalExtension(); // getting image extension
+                        //$extension =$imgval->getClientOriginalExtension(); // getting image extension
                         $fileName = rand(111111111,999999999).'.'.$extension; // renameing image
                         $imgval->move($destinationPath, $fileName); // uploading file to given path
 
@@ -700,50 +699,68 @@ class DealerController extends BaseController
     public function EditAdminDetails($Dealer_id)
     {
         $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_details')->first();
-        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details'));
+        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function UpdateAdminDetails($id)
     {
-        if (Request::file('new_image')) {
-            $image = Request::file('new_image');
-            $extension =$image->getClientOriginalExtension();
-            $destinationPath = 'public/dealers/';
-            $fileName = rand(111111111,999999999).'.'.$extension;
-            $image->move($destinationPath, $fileName);
-        }
-        else
-        {
-            $fileName = Request::input('old_image');
-        }
-        $update_details_dealers = array(
-            'first_name' => Request::input('new_fname'),
-            'last_name' => Request::input('new_lname')
-            );
-        $update_details = array(
-            'zip' => Request::input('new_zip'),
-            'address' => Request::input('new_address'),
-            'phone' => Request::input('new_phone'),
-            'image' => $fileName
-            );
-        $query_to_dealers = Dealer::find($id); //search
-        if ($query_to_dealers) {
-            $query_to_dealers->update($update_details_dealers); //update  
-            $query_to_dealer_details = DealerDetail::where('dealer_id', $id)->update($update_details);
-            if ($query_to_dealer_details) {
-                Session::flash('success', 'Successfully Updated'); 
-                return redirect('dealer/admins');
-            }
-            else
+          $rules = array(
+            'new_fname' => 'required', 
+            'new_lname' => 'required',
+            'new_zip' => 'required|numeric',
+            'new_phone' => 'required|numeric',
+            'new_address' => 'required');
+
+            $validator = Validator::make(Request::all(), $rules);
+            if ($validator->fails())
             {
-               Session::flash('error', 'Fatal error! could not update details'); 
+                $msg = $validator->messages();
+                Session::flash('error',$msg );
                 return redirect('dealer/admins');
+            } 
+            else 
+            {
+            
+                if (Request::file('new_image')) {
+                    $image = Request::file('new_image');
+                    $extension =$image->getClientOriginalExtension();
+                    $destinationPath = 'public/dealers/';
+                    $fileName = rand(111111111,999999999).'.'.$extension;
+                    $image->move($destinationPath, $fileName);
+                }
+                else
+                {
+                    $fileName = Request::input('old_image');
+                }
+                $update_details_dealers = array(
+                    'first_name' => Request::input('new_fname'),
+                    'last_name' => Request::input('new_lname')
+                    );
+                $update_details = array(
+                    'zip' => Request::input('new_zip'),
+                    'address' => Request::input('new_address'),
+                    'phone' => Request::input('new_phone'),
+                    'image' => $fileName
+                    );
+                $query_to_dealers = Dealer::find($id); //search
+                if ($query_to_dealers) {
+                    $query_to_dealers->update($update_details_dealers); //update  
+                    $query_to_dealer_details = DealerDetail::where('dealer_id', $id)->update($update_details);
+                    if ($query_to_dealer_details) {
+                        Session::flash('success', 'Successfully Updated'); 
+                        return redirect('dealer/admins');
+                    }
+                    else
+                    {
+                       Session::flash('error', 'Fatal error! could not update details'); 
+                        return redirect('dealer/admins');
+                    }
+                }
+                else
+                {
+                    Session::flash('error', 'Fatal error! could not update details'); 
+                        return redirect('dealer/admins');
+                }
             }
-        }
-        else
-        {
-            Session::flash('error', 'Fatal error! could not update details'); 
-                return redirect('dealer/admins');
-        }
-        
     }
+
 }

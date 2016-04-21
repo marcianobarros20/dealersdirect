@@ -17,7 +17,11 @@
         <!--Failed to update Admin Details-->
         @if(Session::get('error'))
           <div class="col-xs-4"></div>
-          <div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{ Session::get('error') }} 
+          <div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;">
+            <?php $err_msgs = Session::get('error'); ?>
+            @foreach($err_msgs->all() as $err)
+            {{ $err }}
+            @endforeach
             <a href="#" class="close" data-dismiss="alert">×</a>
           </div>
         <div class="col-xs-4"></div>
