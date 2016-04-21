@@ -1,5 +1,6 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
+<?php dd($RequestQueue); ?>
 <section class="dealer_request_area">
     <div class="container">
         <div class="row">
