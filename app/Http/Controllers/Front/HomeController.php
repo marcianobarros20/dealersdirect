@@ -220,11 +220,11 @@ class HomeController extends BaseController
         DB::table('bid_stop_log')->truncate();
         DB::table('clients')->truncate();
         DB::table('dealer_details')->truncate();
-        //DB::table('dealers')->delete();
+        DB::table('dealers')->delete();
         DB::table('dealers_makes_map')->delete();
         DB::table('edmunds_make_model_year_images')->truncate();
         DB::table('edmunds_style_images')->truncate();
-        //DB::table('request_queue')->delete();
+        DB::table('request_queue')->delete();
         DB::table('request_dealer_log')->delete();
         DB::table('tradein_request_queue')->truncate();
         DB::table('block_bid_log')->truncate();
