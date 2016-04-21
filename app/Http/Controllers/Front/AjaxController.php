@@ -796,7 +796,7 @@ class AjaxController extends Controller
 
     }
     public function GetAllRequest(){
-        echo "yes";
+        
         $RequestDealerLog = new RequestDealerLog;
          $dealer_userid=Session::get('dealer_userid');
         $make_search=Request::input('make_search');

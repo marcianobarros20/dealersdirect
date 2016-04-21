@@ -1,29 +1,19 @@
-@extends('front/layout/dealer_template')
+@extends('front/layout/dealerfrontend_template')
 @section('content')
-		
-    <!-- ================================================== TESTIMONIALS ================================================== -->
-    <section class="space-top-and-bottom medium">
+
+    <section>
         <div class="container">
-
-            <!-- heading -->
-            <div class="row">
-                <div class="twelve columns" data-appear-animation="bounceIn">
-                    <div class="heading">
-                        <h1>Sorry<b> <?php echo Session::get('dealer_name');?> </b> You Cant Bid Until You Are Aproved By Admin</h1>
-                        <span></span>
-                    </div>
+            @if(Session::get('message'))
+                <div class = "alert alert-danger">
+                    <a href = "#" class = "close" data-dismiss = "alert">
+                    &times;
+                    </a>
+                    <strong>{{Session::get('message')}}</strong> 
                 </div>
-            </div>
-            <!-- .heading -->
-
+            @endif
+            <h2 class="head center-block">Sorry<b> <?php echo Session::get('dealer_name');?> </b> You Cant Bid Until You Are Aproved By Admin</h2>
             
-            
-
-            
-
         </div>
     </section>
-
-    <!-- ================================================== END TESTIMONIALS ================================================== -->
 
 @stop
