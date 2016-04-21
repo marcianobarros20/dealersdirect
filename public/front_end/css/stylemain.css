@@ -213,7 +213,7 @@ input.search-form:hover {
     background: #ffffff;
     padding: 15px 0;
     padding-bottom: 0;
-    height:110px;
+    /*height:110px;*/
 }
 .navbar-nav {
     margin-top: 12px;
@@ -1220,7 +1220,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: -15px;
 }
 .sea-btn{
-    margin-left: -30px;
+    margin-left: -15px;
 }
 /*.radio-area{
     width:25%;
@@ -1486,6 +1486,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .back-btn {
     margin-left: -30px;
     }
+
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
@@ -1500,9 +1501,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 100%;
     display: inline-block;
     }
-
 }
-@media screen and (min-width: 640px) and (orientation: landscape){    
+@media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){    
     .new_btn {
     margin-left: 38px;
     width: 17%;
@@ -1512,6 +1512,28 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     float: none !important;
     text-align: center;
     }
+    .next_btn_next { 
+    background: #F26722;
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*margin-left: 248px;*/
+    }
+    .home_next_btn{
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 92px;
+    }
+    .text_new_area {
+    width: 17%;
+    display: inline-block;
+    margin-left: 38px;
+    }
+    .delr{
+    width: 50%
+    }
+
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1023px){
@@ -1576,16 +1598,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }*/
     .next_btn_next {
     background: #F26722;
-    width: 30%;
+    width: 50%;
     margin-top: 15px;
     margin-right: 0px;
-    margin-left: 256px;
+    margin-left: 64px;
     }
     .text_new_area {
     width: 17%;
     display: inline-block;
-    margin-left: 0px;
-    margin-right: 35px;
+    margin-left: 32px;
+    margin-right: 11px;
     }
 
     /*.c-p-b {
