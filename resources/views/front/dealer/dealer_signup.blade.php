@@ -6,7 +6,7 @@
 	Indication for<strong>ERROR</strong> in further procedure.
 	</div> -->
 		<section>
-			@if(Session::get('error'))
+			<!-- @if(Session::get('error'))
 				<?php $parrallal=Session::get('error');?>
 				@foreach($parrallal->all() as $key=>$value)
 					<div class="alert alert-danger"> {{$value}} </div>
@@ -15,7 +15,7 @@
 			@endif
 			@if(Session::get('error1'))
 				<div class="alert alert-danger"> {{Session::get('error1')}} </div>
-			@endif
+			@endif -->
 			<div class="container deal-sign-up">
 			<h2 class="profile_head center-block">Sign Up As A Dealer</h2>
 				<div class="profile_details">
@@ -32,26 +32,26 @@
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Email/Username</label>
-										{{ Form::text('email','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+										{{ Form::email('email','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">Zip</label>
-										{{ Form::text('zip','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+										{{ Form::number('zip','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword3">Password</label>
-										{{ Form::password('password',['class' => 'form-control profile_control', 'required' => 'required']) }}
+										{{ Form::password('password',['class' => 'form-control profile_control', 'id' => 'password' ,'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword3">Confirm Password</label>
-										{{ Form::password('conf_password',['class' => 'form-control profile_control', 'required' => 'required']) }}
+										{{ Form::password('conf_password',['class' => 'form-control profile_control', 'id' => 'conf_password', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label>Make</label>
 									{{ Form::select('make[]', $Makes,'',array('data-placeholder' => 'Choose Make...','multiple' => 'multiple','id'=>'ms', 'required' => 'required')) }}
 									
 								</div>
-							<button type="submit" class="btn btn-warning btn-lg btn-block">SIGN UP</button>
+							<button type="submit" class="btn btn-warning btn-lg btn-block" id="sign_up">SIGN UP</button>
 							<!-- <p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p> -->
 							</div>
 						{!! Form::close() !!}
@@ -59,6 +59,29 @@
 				</div>
 			</div>
 		</section>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#sign_up').click(function(){
+					var password = $('#password').val();
+					var conf_password = $('#conf_password').val();
+					var length = $('#password').val().length;
+					
+					if (length > 5) 
+					{
+						if (password != conf_password) 
+						{
+							alert('Password and Confirm password should be same');
+							return false;
+						}
+					}
+					else
+					{
+						alert('Password length minimum 6 charecters')
+						return false;
+					}
+				});
+			});
+		</script>
 	</div>
 </section>
 @stop

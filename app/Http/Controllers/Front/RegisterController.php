@@ -27,31 +27,8 @@ class RegisterController extends Controller
 
      public function dealerRegister(){
 
-     	$rules = array(
-     	'fname' => 'required', 
-     	'lname' => 'required',
-     	'email' => 'required|email',
-     	'zip' => 'required|numeric',
-     	'password' => 'required|min:6',
-     	'conf_password' => 'required|min:6',
-     	'make[]' => 'min:1'
-     	);
-
-     	$validator = Validator::make(Request::all(), $rules);
-     	if ($validator->fails())
-        {
-        	$msg = $validator->messages();
-        	Session::flash('error',$msg );
-        	return redirect('dealer-signup');
-        } 
-        else 
-        {
         	$password = Request::input('password');
         	$conf_password = Request::input('conf_password');
-        	if ($password !== $conf_password) {
-        		Session::flash('error1','Password and Confirm Password should be same' );
-        		return redirect('dealer-signup');
-        	}
 	       	$tamo=time()."DEALERS";
 	     	$hashpassword = Hash::make(Request::input('password'));
 	     	$Dealer['first_name'] =Request::input('fname');
@@ -60,10 +37,8 @@ class RegisterController extends Controller
 			$Dealer['zip'] =Request::input('zip');
 			$Dealer['password'] =$hashpassword;
 			$Dealer['code_number'] =$tamo;
-			
 			$Dealers_row=Dealer::create($Dealer);
 			$lastinsertedId = $Dealers_row->id;
-
 			$make=Request::input('make');
 			foreach ($make as $key => $value) {
 				$DealerMakeMap['dealer_id']=$lastinsertedId;
@@ -78,10 +53,11 @@ class RegisterController extends Controller
 			Session::put('dealer_name', $namx);
 			Session::put('dealer_parent', $Dealerx->parent_id);
 			Session::save();
+
 			return redirect('dealer-dashboard');
 		}
 
-     }
+     
      public function fetchRequestLog($lastinsertedId,$value){
      	$RequestQueue_row=RequestQueue::where('make_id', $value)->get();
      	foreach ($RequestQueue_row as $key => $RequestQueue) {
