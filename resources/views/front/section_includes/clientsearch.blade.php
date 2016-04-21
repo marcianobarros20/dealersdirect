@@ -46,7 +46,7 @@
 
 	<div class="container" id="searchthird" style="display:none;">
 		<div class="row home_next_btn">
-			<div class="col-md-offset-5 col-xs-2 col-md-2 delr" id="trade-in" >
+			<div class="col-xs-6 col-sm-offset-3 col-sm-3 col-md-offset-5 col-md-2 delr" id="trade-in" >
 				<h3>Trade In</h3>
 				<label class="radio-inline">
 				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes
@@ -55,7 +55,7 @@
 				{{ Form::radio('tradein', 'no', false, array('id'=>'no')) }} No
 				</label>
 			</div>
-			<div class="col-xs-6 col-sm-6 col-md-2" id="owe-money"style="display:none;" >
+			<div class="col-xs-3 col-sm-3 col-md-2" id="owe-money"style="display:none;" >
 				<h3>Owe Money</h3>
 				<label class="radio-inline">
 				{{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes

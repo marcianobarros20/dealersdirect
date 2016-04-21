@@ -217,6 +217,7 @@ input.search-form:hover {
 }
 .navbar-nav {
     margin-top: 12px;
+    height: 70px;
 }
 .navbar-nav>li {
     margin-left: 35px;
@@ -1236,7 +1237,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .text_new_area {
     width: 100%;
     margin-bottom: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     }
     .new_btn {
     margin-left: 10px;
@@ -1486,7 +1487,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .back-btn {
     margin-left: -30px;
     }
-
+    .sea-btn {
+    margin-left: -29px;
+    }
+    .navbar-nav {
+    margin-top: 12px;
+    height: auto;
+    }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
@@ -1500,6 +1507,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 10px;
     width: 100%;
     display: inline-block;
+    }
+    .navbar-nav {
+    margin-top: 12px;
+    height: auto;
     }
 }
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){    
@@ -1534,6 +1545,24 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 50%
     }
 
+    .form_in_control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 150px;
+    height: 40px !important;
+    margin-left: 0px;
+    }
+    .ne-sear{
+    margin-left: 193px;
+    }
+     .sea-btn {
+    margin-left: 183px;
+    }
+    .navbar-nav {
+    margin-top: 12px;
+    height: auto;
+    }
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1023px){
@@ -1609,7 +1638,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 32px;
     margin-right: 11px;
     }
-
+    .sea-btn {
+    margin-left: 35px;
+    }
+    .navbar-nav {
+    margin-top: 12px;
+    height: 50px;
+    }
     /*.c-p-b {
     color: rgb(51, 51, 51);
     background-color: rgba(230, 230, 230, 0.01);
