@@ -18,7 +18,7 @@
                                    
                                    <!-- Carousel indicators -->
                                     <ol class = "carousel-indicators">
-                                    @if($RequestLog->imx!="")
+                                    @if($Request->imx!="")
                                         @foreach($Request->imx as $vx=>$img)
                                         <li data-target = "#myCarousel{{$rkey}}" data-slide-to = "{{$vx}}" @if($vx==0)class = "active" @endif></li>
                                         @endforeach
@@ -30,7 +30,7 @@
                                    
                                    <!-- Carousel items -->
                                    <div class = "carousel-inner request-carousel-img">
-                                    @if($RequestLog->imx!="")
+                                    @if($Request->imx!="")
                                         @foreach($Request->imx as $vx=>$img)
                                             <div class = "item @if($vx==0) active @endif">
                                             <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
