@@ -189,7 +189,7 @@ return false;
                          $("#results").show();
                         }
                         else{
-                          alert("Sorry");
+                          
                           $("#sorry").html('Sorry No Request With This Monthly Payment Range !!!');
                           $("#sorry").show();
                           $("#loading").hide();

@@ -536,7 +536,7 @@ class AjaxController extends Controller
         
     }
     public function BlockDealerBid(){
-        $id=print_r(Request::input());
+        $id=Request::input('requestid');
         $BidQueue=BidQueue::where('id',$id)->first();
         
         $BidQueue->dealer_id;
@@ -547,9 +547,9 @@ class AjaxController extends Controller
         $BlockBidLog['request_id'] =$BidQueue->requestqueue_id;
         $BlockBidLog['details'] =Request::input('blockdetails');
         $BlockBidLog_row=BlockBidLog::create($BlockBidLog);
-        $RequestDealerLog=RequestDealerLog::where('dealer_id', $BidQueue->dealer_id)->where('request_id', $BidQueue->requestqueue_id)->first();
-        $RequestDealerLog->blocked=1;
-        $RequestDealerLog->save();
+        
+        RequestDealerLog::where('dealer_id',$BidQueue->dealer_id)->where('request_id', $BidQueue->requestqueue_id)->update(array('blocked' => 1));
+        
         $details_of_actions=Request::input('blockdetails');
         self::SendBlockemail($id,$details_of_actions);
         return 1;
@@ -796,6 +796,7 @@ class AjaxController extends Controller
 
     }
     public function GetAllRequest(){
+        echo "yes";
         $RequestDealerLog = new RequestDealerLog;
          $dealer_userid=Session::get('dealer_userid');
         $make_search=Request::input('make_search');

@@ -62,7 +62,7 @@ $(document).ready(function(){
 			var dealer=$(this).data('id');
 			var requestid=$(this).data('idx');
             var inox=$(this).data('inox');
-            alert(inox);
+            
 			//$(".modal-body").html('');
 			//$(".modal-body").html(dx);
 			$.ajax({

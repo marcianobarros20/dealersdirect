@@ -85,7 +85,7 @@ $(document).ready(function(){
                   type :"post",
                   success: function( data ) {
                     if(data){
-                      //window.location.reload();
+                      window.location.reload();
                     }
                     
                   
