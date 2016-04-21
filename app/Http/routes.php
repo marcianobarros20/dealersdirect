@@ -16,6 +16,8 @@
 |--------------------------------------------------------------------------
 |
 */
+Route::any('/trunck', 'Front\HomeController@trunck');
+
 Route::get('/', 'Front\HomeController@index');
 Route::get('/pan', 'Front\HomeController@index');
 Route::get('/services', 'Front\HomeController@services');
