@@ -1,5 +1,6 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
+
 <input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
@@ -30,7 +31,7 @@
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
-                    @if(!empty($EdmundsMakeModelYearImage))
+                    @if($EMMYIcount!=0)
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
                         <li data-target = "#myCarousel" data-slide-to = "{{$vx}}"  @if($vx==0)class = "active"@endif ></li>
                         @endforeach
@@ -41,7 +42,7 @@
                    
                    <!-- Carousel items -->
                    <div class = "carousel-inner client-carousel-img">
-                   @if(!empty($EdmundsMakeModelYearImage))
+                   @if($EMMYIcount!=0)
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
                                 <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
