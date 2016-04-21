@@ -591,9 +591,9 @@ hr {
 }
 .next_btn_next{
     background: #F26722;
-    width:60%;
+    width:25%;
     margin-top: 10px;
-    margin-right: 140px;
+    /*margin-right: 140px;*/
     margin-bottom: 10px;
 }
 /*.next_btn_next {
@@ -671,9 +671,9 @@ small{
     border-radius: 0px;
     color: #fff;
     background-color: #F26722;
-    width: 150px;
+    /*width: 150px;*/
     height: 40px !important;
-    margin-left: 5px;
+    /*margin-left: 5px;*/
 }
 /*.selectric-wrapper {
     margin-bottom: 10px;
@@ -686,7 +686,7 @@ small{
 }
 
 .new_btn{
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     width: 17%;
     display: inline-block;
 }
@@ -1223,6 +1223,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .sea-btn{
     margin-left: -15px;
 }
+.requs-make-list{
+    padding-bottom: 150px;
+}
 /*.radio-area{
     width:25%;
     margin:0px auto;
@@ -1230,6 +1233,39 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 /* Smartphones (portrait and landscape) ----------- */ 
 
 /*Edited on 12 April */
+@media only screen and (max-device-width: 480px) and (orientation: landscape){
+.select_option {
+    text-align: center !important;
+    padding-bottom: 40px;
+    padding-top: 25px;
+    margin-left: 0px;
+}
+.new_btn {
+    margin-left: 10px;
+    width: 33%;
+    display: inline-block;
+}
+.next_btn_next {
+    background: #F26722;
+    width: 35%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.text_new_area {
+    width: 33%;
+    display: inline-block;
+}
+.form_in_control {
+    border-radius: 0px;
+    color: #fff;
+    background-color: #F26722;
+    width: 150px;
+    height: 40px !important;
+    margin-left: 5px;
+}
+
+
+}
 
 @media only screen and (max-width: 480px){
 
@@ -1240,7 +1276,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 5px;
     }
     .new_btn {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     width: 100%;
     }
     .home_default {
@@ -1269,10 +1305,15 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     #home_footer {
     text-align: center;
     }
-    .next_btn_next {
+    /*.next_btn_next {
     margin-right: 0px;
+    }*/
+    .next_btn_next {
+    background: #F26722;
+    width: 60%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     }
-
     /*detail.html*/    
     .sign_form {
     padding-top: 13px;
@@ -1494,6 +1535,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-top: 12px;
     height: auto;
     }
+    .requs-make-list {
+    padding-bottom: 200px;
+    }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
@@ -1511,6 +1555,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .navbar-nav {
     margin-top: 12px;
     height: auto;
+    }
+    .requs-make-list {
+    padding-bottom: 200px;
     }
 }
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){    

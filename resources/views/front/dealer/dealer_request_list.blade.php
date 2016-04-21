@@ -2,7 +2,7 @@
 @section('content')
 		
 <section class="dealer_request_area">
-    <div class="container">
+    <div class="container requs-make-list">
         <div class="row">
             
             <div class="col-xs-12 col-sm-3 col-md-3 list_request">
@@ -50,7 +50,7 @@
             
             <div class="col-xs-12 col-sm-9 col-md-9">
                 <div class="brand-section">
-                    <div class="container">
+                    <!-- <div class="container"> -->
                         <div id="loading" class="row" >
                             <img  style=" height:100%;margin: auto; top: 0;left: 0; right: 0;  bottom: 0;" src="{{ url('/')}}/public/front/images/loader.gif">
                         </div>
@@ -60,7 +60,8 @@
                         <div class="" id="results">
                             
                         </div>
-                    </div>
+                    <!-- </div>
+                    </div> --> <!-- given for scroll bar -->
                 </div>
             </div>
         </div> <!-- /row col-xs-12 select_option -->    
