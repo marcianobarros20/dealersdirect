@@ -1086,6 +1086,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin: 0;
     /*padding-top: 30px;*/ /*edited on 18-04*/
 }
+.d-v{
+    margin-top: 10px;
+}
 @media only screen and (max-width: 480px){
 .dealers-right{
     text-align:center !important;
