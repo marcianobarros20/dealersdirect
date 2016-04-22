@@ -22,7 +22,7 @@
 	</div><!--  /container -->
 
 	<div class="container" id="searchseconed" style="display:none;">
-		<div class="col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 select_option cli-seach">
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}
 			</div>
@@ -84,7 +84,7 @@
 
 
 	<div class="container" id="searchfourth" style="display:none;">
-		<div class="col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 select_option mro-buttos">
 			<div class="text_new_area" id="owediv" style="display: none;">
 				{{ Form::text('oweamount','', array('id' => 'oweamount','class'=>'form-control form_in_control','placeholder'=>'OWE Amount')) }}
 			</div>
