@@ -1,7 +1,7 @@
 @extends('front/layout/dealerfrontend_signup_template')
 @section('content')
 <section>
-	@if(Session::get('error'))
+	<!-- @if(Session::get('error'))
 		<?php $parrallal=Session::get('error');?>
 		@foreach($parrallal->all() as $key=>$value)
 			<div class="container">
@@ -12,7 +12,7 @@
 				<div class="col-xs-4"></div>
 			</div>
 		@endforeach
-	@endif
+	@endif -->
 
 	@if(Session::get('error1'))
 			<div class="container">
@@ -31,13 +31,13 @@
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-9">
-							{{ Form::text('email','',['class'=>'form-control']) }}
+							{{ Form::email('email','',['class'=>'form-control', 'required' => 'required']) }}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-9">
-								{{ Form::password('password',['class'=>'form-control']) }}
+								{{ Form::password('password',['class'=>'form-control', 'required' => 'required']) }}
 							</div>
 					</div>
 					<div class="form-group">

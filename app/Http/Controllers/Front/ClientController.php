@@ -80,10 +80,10 @@ class ClientController extends BaseController
 
             // validating input type is email or not
             
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          /*  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 Session::flash('error', 'Invalid Email Format');
                 return redirect('client-signin'); 
-            }
+            }*/
             $Client = Client::where('email', $email)->first();
             if($Client!=""){
 

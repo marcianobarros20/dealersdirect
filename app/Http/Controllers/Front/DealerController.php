@@ -74,7 +74,7 @@ class DealerController extends BaseController {
         }
         if(Request::isMethod('post'))
         {
-            $rules = array('email' => 'required|email', 'password' => 'required|min:6');
+           /* $rules = array('email' => 'required|email', 'password' => 'required|min:6');
             $validator = Validator::make(Request::all(), $rules);
             if ($validator->fails())
             {
@@ -82,9 +82,9 @@ class DealerController extends BaseController {
                 //dd(Request::old('email'));
                 Session::flash('error',$msg );
                 return redirect('dealer-signin');
-            } 
-            else 
-            {
+            } */
+            //else 
+            //{
                 $email = Request::input('email');
                 $password = Request::input('password');
                 $Dealer = Dealer::where('email', $email)->first();
@@ -118,7 +118,7 @@ class DealerController extends BaseController {
                         return redirect('dealer-signin');
                 }
 
-            }
+            //}
         }
         $client=0;
         return view('front.dealer.dealer_signin',compact('client'),array('title'=>'DEALERSDIRECT | Dealers Signin'));

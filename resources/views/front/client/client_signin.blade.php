@@ -17,7 +17,7 @@
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 										<div class="col-sm-9">
-										{{ Form::text('email','',['required'=>'required','class'=>'form-control']) }}
+										{{ Form::email('email','',['required'=>'required','class'=>'form-control']) }}
 										</div>
 									</div>
 									<div class="form-group">
