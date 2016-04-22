@@ -172,8 +172,6 @@ class HomeController extends BaseController
 
     }
     public function ClientRegister(){
-
-        
         $guest_user=Request::input('id');
         
 
