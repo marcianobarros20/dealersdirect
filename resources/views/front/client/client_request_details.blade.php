@@ -1,6 +1,6 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
-
+<?php  echo $bcount=count($RequestQueue->bids); ?>
 <input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
@@ -13,14 +13,7 @@
                 <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
                 <h2>{{$RequestQueue->makes->name}}</h2>
             </div>
-            <div class="col-md-offset-1 col-md-4 d-v">
-                <select id="shortoptions">
-                        <option value="" >Sort By</option>
-                        <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
-                        <option value="2" @if($fill==2)selected="selected"@endif>Best Monthly</option>
-                        <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
-                </select>
-            </div>
+            
         </div>
      
         
@@ -60,6 +53,14 @@
                    <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
                    
                 </div> <!-- /.carousel -->
+                <div class="col-md-12 d-v">
+                    <select id="shortoptions">
+                        <option value="" >Sort By</option>
+                        <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
+                        <option value="2" @if($fill==2)selected="selected"@endif>Best Monthly</option>
+                        <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
+                    </select>
+                </div>
                 <div class="brand-sec bidlist">
                     
                 </div>
