@@ -22,6 +22,10 @@
 					<div class="col-xs-12 profile_form">
 						{{ Form::open(array('url' => 'dealerregister')) }}
 							<div class="form_back">
+							<div class="form-group">
+									<label for="exampleInputName1">Dealership Name</label>
+										{{ Form::text('d_name','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">First Name</label>
 										{{ Form::text('fname','',['class' => 'form-control profile_control', 'required' => 'required']) }}

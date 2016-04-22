@@ -12,6 +12,8 @@
 				</div>
 				@endif
 	  <h2 class="profile_head center-block">PROFILE & DETAILS</h2>
+
+
 	    <div class="profile_details">
 		    <div class="col-xs-12 profile_form">
 		     	<div id="content">
@@ -24,9 +26,19 @@
 				            {{ Form::open(array('url' => 'dealereditdetails','id'=>'detedit')) }}
 				            	<h3>Change Details</h3>
 								<div class="form_back">
+								<div class="form-group">
+								    <label for="d_name1">Dealership Name</label>
+									@if($Dealer->parent_id == 0 )
+									{{ Form::text('d_name1',$Dealer->dealership_name,['class' => 'form-control profile_control', 'required'=>'required']) }}
+
+									@else
+									{{ Form::text('d_name1',$Dealer->dealer_parent->dealership_name,['class' => 'form-control profile_control','readonly' => 'true']) }}
+
+									@endif
+								</div>
 				              		<div class="form-group">
 									    <label for="exampleInputEmail1">Email/Username</label>
-									    {{ Form::text('email',$Dealer->email,['class' => 'form-control profile_control','readonly' => 'true']) }}
+									    {{ Form::email('email',$Dealer->email,['class' => 'form-control profile_control','readonly' => 'true']) }}
 								  	</div>
 									<div class="form-group">
 										<label for="exampleInputName1">First Name</label>
@@ -39,7 +51,7 @@
 									
 									<div class="form-group">
 									    <label for="exampleInputName1">Zip</label>
-									    {{ Form::text('zip',$Dealer->zip,['class' => 'form-control profile_control','required'=>'required']) }}
+									    {{ Form::number('zip',$Dealer->zip,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
 									
 								        

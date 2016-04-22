@@ -25,12 +25,12 @@ class RegisterController extends Controller
 {
     //
 
-     public function dealerRegister(){
-
-        	$password = Request::input('password');
-        	$conf_password = Request::input('conf_password');
+     public function dealerRegister() {
+        	//$password = Request::input('password');
+        	//$conf_password = Request::input('conf_password');
 	       	$tamo=time()."DEALERS";
 	     	$hashpassword = Hash::make(Request::input('password'));
+            $Dealer['dealership_name'] =Request::input('d_name');
 	     	$Dealer['first_name'] =Request::input('fname');
 			$Dealer['last_name'] =Request::input('lname');
 			$Dealer['email'] =Request::input('email');

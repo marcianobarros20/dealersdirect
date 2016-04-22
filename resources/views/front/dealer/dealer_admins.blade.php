@@ -29,6 +29,7 @@
 
        <div class="col-xs-12 next_button_area">
         <a href="{{url('/')}}/dealers/dealer_add_admin" type="button" class="btn btn-warning next_btn pull-right"> Add Admin</a>
+       <!--  {{ $Dealers }} -->
        </div>
      </div><!--  /container -->
     </section>

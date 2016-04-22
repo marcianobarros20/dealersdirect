@@ -277,18 +277,22 @@ class DealerController extends BaseController {
             return redirect('dealer-signin');
             }
        $dealer_userid=Session::get('dealer_userid');
-       $Dealer = Dealer::where('id', $dealer_userid)->first();
+       $Dealer = Dealer::where('id', $dealer_userid)->with('dealer_parent')->first();
+       //dd($Dealer);
        return view('front.dealer.dealer_profile',compact('Dealer'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
        //print_r($Dealer);
 
     }
     public function ProfileEditDetails(){
 
+        //dd(Request::all());
         $dealer_userid=Session::get('dealer_userid');
+        $dealership_name = Request::input('d_name1');
         $fname=Request::input('fname');
         $lname=Request::input('lname');
         $zip=Request::input('zip');
         $Dealer = Dealer::find($dealer_userid);
+        $Dealer->dealership_name = $dealership_name;
         $Dealer->first_name = $fname;
         $Dealer->last_name = $lname;
         $Dealer->zip = $zip;
@@ -600,7 +604,7 @@ class DealerController extends BaseController {
             }
             $dealer_userid=Session::get('dealer_userid');
             $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details')->get();
-            
+            //dd('dealer_userid');
         return view('front.dealer.dealer_admins',compact('Dealers'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function DealerAdminAdd(){
@@ -609,9 +613,11 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
+            $Dealer_xid= Session::get('dealer_userid');
+            $dealer_admin_details = Dealer::where('id',$Dealer_xid)->first();
             if(Request::isMethod('post'))
             {
-                $rules = array(
+                /*$rules = array(
                     'fname' => 'required', 
                     'lname' => 'required',
                     'email' => 'required|email',
@@ -628,9 +634,9 @@ class DealerController extends BaseController {
                     $msg = $validator->messages();
                     Session::flash('error',$msg );
                     return redirect('dealers/dealer_add_admin');
-                } 
-                else 
-                {
+                } */
+               // else 
+                //{
                     $dealer_userid=Session::get('dealer_userid');
                     //print_r(Request::input());
                     $tamo=time()."DEALERS";
@@ -690,10 +696,12 @@ class DealerController extends BaseController {
 
                     }
                     return redirect('/dealer/admins');
-                }
+                //}
             }
-
-        return view('front.dealer.dealer_admin_add',compact(''),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+            /*$dealer_admin_details = Dealer::all();
+            dd($dealer_admin_details);*/
+           // dd('hi');
+        return view('front.dealer.dealer_admin_add',compact('dealer_admin_details'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
 
     public function EditAdminDetails($Dealer_id)

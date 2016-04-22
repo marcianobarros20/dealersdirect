@@ -21,6 +21,9 @@ class Dealer extends Model
         return $this->hasOne('App\Model\DealerDetail', 'dealer_id','id');
   
     }
-    
+   public function dealer_parent(){
+        return $this->hasOne('App\Model\Dealer', 'id','parent_id');
+  
+    } 
 
 }
