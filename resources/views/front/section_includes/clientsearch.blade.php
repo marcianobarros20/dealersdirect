@@ -1,6 +1,6 @@
 <section class="selection_area">
 	<div class="container" id="searchfirst">
-		<div class="row col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 select_option">
 			<div class="new_btn">
 				{{ Form::select('make_search', $Makes, '', array('id' => 'make_search')) }}
 			</div>
@@ -14,15 +14,15 @@
 				{{ Form::select('year_search', [''=>'Select Year'], '', array('id' => 'year_search')) }}
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
-		<div class="row home_next_btn">
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="searchfirstnext" style="display:none;" data-appear-animation="slideInRight">
+		<div class="home_next_btn">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="searchfirstnext" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="nextfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 			</div>
 		</div>
 	</div><!--  /container -->
 
 	<div class="container" id="searchseconed" style="display:none;">
-		<div class="row col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}
 			</div>
@@ -30,9 +30,9 @@
 				{{ Form::text('mtamo','', array('id' => 'mtamo','class'=>'form-control form_in_control','placeholder'=>'Monthly Amount')) }}
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
-		<div class="row home_next_btn">
+		<div class="home_next_btn">
 			
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="nextistwo" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="nextistwo" data-appear-animation="slideInRight">
 				
 				<button type="button"  id="backfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
 								
@@ -45,8 +45,8 @@
 
 
 	<div class="container" id="searchthird" style="display:none;">
-		<div class="row home_next_btn">
-			<div class="col-xs-6 col-sm-offset-3 col-sm-3 col-md-offset-5 col-md-2 delr" id="trade-in" >
+		<div class="home_next_btn">
+			<div class="col-xs-6 col-sm-offset-3 col-sm-3 col-md-12 delr" id="trade-in" >
 				<h3>Trade In</h3>
 				<label class="radio-inline">
 				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes
@@ -55,7 +55,7 @@
 				{{ Form::radio('tradein', 'no', false, array('id'=>'no')) }} No
 				</label>
 			</div>
-			<div class="col-xs-3 col-sm-3 col-md-2" id="owe-money"style="display:none;" >
+			<div class="col-xs-3 col-sm-3 col-md-12" id="owe-money"style="display:none;" >
 				<h3>Owe Money</h3>
 				<label class="radio-inline">
 				{{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes
@@ -84,7 +84,7 @@
 
 
 	<div class="container" id="searchfourth" style="display:none;">
-		<div class="row col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" id="owediv" style="display: none;">
 				{{ Form::text('oweamount','', array('id' => 'oweamount','class'=>'form-control form_in_control','placeholder'=>'OWE Amount')) }}
 			</div>
@@ -103,7 +103,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" >
 				<button type="button"  id="backthird" class="btn btn-warning next_btn_next back-btn"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
-			<div class="row home_next_btn">
+			<div class="home_next_btn">
 				<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradenext" style="display:none;" data-appear-animation="slideInRight">
 					<button type="button" id="sinses" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				</div>

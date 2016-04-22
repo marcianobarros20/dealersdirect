@@ -1220,9 +1220,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .back-btn{
     margin-left: -15px;
 }
-.sea-btn{
+/*.sea-btn{
     margin-left: -15px;
-}
+}*/
 .requs-make-list{
     padding-bottom: 150px;
 }
@@ -1233,7 +1233,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 /* Smartphones (portrait and landscape) ----------- */ 
 
 /*Edited on 12 April */
-@media only screen and (max-device-width: 480px) and (orientation: landscape){
+@media only screen and (max-width: 480px) and (orientation: landscape){
 .select_option {
     text-align: center !important;
     padding-bottom: 40px;
@@ -1273,7 +1273,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .text_new_area {
     width: 100%;
     margin-bottom: 10px;
-    margin-left: 5px;
+    /*margin-left: 5px;*/
     }
     .new_btn {
     /*margin-left: 10px;*/
@@ -1529,7 +1529,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: -30px;
     }
     .sea-btn {
-    margin-left: -29px;
+    /*margin-left: -29px;*/
     }
     .navbar-nav {
     margin-top: 12px;
@@ -1575,7 +1575,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 50%;
     margin-top: 10px;
     margin-bottom: 10px;
-    /*margin-left: 248px;*/
     }
     .home_next_btn{
     width: 50%;
@@ -1676,8 +1675,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: #F26722;
     width: 50%;
     margin-top: 15px;
-    margin-right: 0px;
-    margin-left: 64px;
+    /*margin-right: 0px;
+    margin-left: 64px;*/
     }
     .text_new_area {
     width: 17%;

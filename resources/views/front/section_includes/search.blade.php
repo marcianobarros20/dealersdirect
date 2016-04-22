@@ -14,7 +14,7 @@
 				{{ Form::select('year_search', [''=>'Select Year'], '', array('id' => 'year_search')) }}
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
-		<div class="row home_next_btn">
+		<div class="home_next_btn">
 			<div class="col-xs-12 col-sm-12 col-md-12" id="searchfirstnext" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="nextfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 			</div>
@@ -29,7 +29,7 @@
 				{{ Form::text('mtamo','', array('id' => 'mtamo','class'=>'form-control form_in_control','placeholder'=>'Monthly Amount')) }}
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
-		<div class="row home_next_btn">
+		<div class="home_next_btn">
 			
 			<div class="col-xs-12 col-sm-12 col-md-12" id="nextistwo" data-appear-animation="slideInRight">
 				
@@ -66,14 +66,14 @@
 			<div class="col-xs-12 col-sm-12 col-md-12" >
 				<button type="button"  id="backsecond" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="nextis" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="nextis" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="nextfifth" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12" id="tradeinowe" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="fourthownext" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradein" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="tradein" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="fourthnext" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				
 			</div>
@@ -110,7 +110,7 @@
 		<!-- </div> -->
 	</div><!--  /container --> 
 	<div class="container" id="searchfifth" style="display:none;">
-		<div class="col-xs-12 col-sm-12 select_option">
+		<div class="col-xs-12 col-sm-12 col-md-12 select_option">
 			<div class="text_new_area" >
 				{{ Form::text('fname','', array('id' => 'fname','class'=>'form-control form_in_control','placeholder'=>'First Name')) }}
 			</div>

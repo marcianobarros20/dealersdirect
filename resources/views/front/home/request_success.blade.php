@@ -10,7 +10,7 @@
                 <p>Your Request have been sent to the irrespective Dealers, you will be contacted as soon as possible for better options please SIGN-UP with us Or SKIP the Form Below</p>
 			</div>
 			<h2 class="head center-block">SIGN-UP AS A CLIENT</h2>
-			<div class="row">
+			<div class="">
 				<div class="col-xs-12 sign_form">
 					{{ Form::open(array('url' => 'clientregister','class'=>'form-horizontal')) }}
 					{{ Form::hidden('id',$RequestQueue->id,'') }}

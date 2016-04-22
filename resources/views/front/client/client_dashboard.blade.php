@@ -3,7 +3,7 @@
 <section>
                 <div class="container">
                     <h2 class="head center-block">WELCOME {{Session::get('client_name')}} TO YOUR DASHBOARD</h2>
-                    <div class="row">
+                    <div class="">
                         <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
                             <div class="thumbnail">
                                 <a href="<?php echo url('/');?>/client/profile"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
