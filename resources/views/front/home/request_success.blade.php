@@ -29,36 +29,37 @@
 						<div class="form-group">
 							<label for="inputName3" class="col-sm-2 control-label">Contact No.</label>
 							<div class="col-sm-9">
-								{{ Form::text('phone',$RequestQueue->phone,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
+								{{ Form::number('phone',$RequestQueue->phone,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-9">
-								{{ Form::text('email',$RequestQueue->email,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
+								{{ Form::email('email',$RequestQueue->email,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputName3" class="col-sm-2 control-label">Zip</label>
 							<div class="col-sm-9">
-								{{ Form::text('zip',$RequestQueue->zip,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
+								{{ Form::number('zip',$RequestQueue->zip,['placeholder' => '','required'=>'required','class'=>'form-control']) }}
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-9">
-								{{ Form::password('password',['required'=>'required','class'=>'form-control']) }}
+								{{ Form::password('password',['required'=>'required','class'=>'form-control', 'id' => 'password']) }}
 							</div>
 						</div> 
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
 							<div class="col-sm-9">
-								{{ Form::password('conf_password',['required'=>'required','class'=>'form-control']) }}
+								{{ Form::password('conf_password',['required'=>'required','class'=>'form-control', 'id' =>
+								'conf_password']) }}
 							</div>
 						</div>   
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
-								{{ Form::submit('SIGN-UP',array('class' => 'btn btn-default btn-lg btn-block sign_btn')) }}
+								{{ Form::submit('SIGN-UP',array('class' => 'btn btn-default btn-lg btn-block sign_btn', 'id' => 'signup_client')) }}
 							</div>
 						</div>
 						<div class="form-group">
@@ -72,6 +73,29 @@
 			</div>
 		</div>
 	</section>
+	<script type="text/javascript">
+		$(document).ready(function(){
+				$('#signup_client').click(function(){
+					var password = $('#password').val();
+					var conf_password = $('#conf_password').val();
+					var length = $('#password').val().length;
+					
+					if (length > 5) 
+					{
+						if (password != conf_password) 
+						{
+							alert('Password and Confirm password should be same');
+							return false;
+						}
+					}
+					else
+					{
+						alert('Password length minimum 6 charecters')
+						return false;
+					}
+				});
+			});
+	</script>
 
     <!-- ================================================== END TESTIMONIALS ================================================== -->
 @stop
