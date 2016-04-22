@@ -71,7 +71,7 @@
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
                         <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins) && $RequestQueue->trade_ins->make_id!=0)
                             <li><a href="#trad" data-toggle="tab">Trade In</a></li>
                         @endif
                         @if(!empty($RequestQueue->options))
@@ -111,7 +111,7 @@
                                 </tbody> 
                             </table>
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins) && $RequestQueue->trade_ins->make_id!=0)
                             <div class="tab-pane form-head" id="trad">
                                 <table class="table client-table"> 
                                     <tbody class="post-text"> 

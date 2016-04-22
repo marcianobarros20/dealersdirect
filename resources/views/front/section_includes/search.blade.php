@@ -110,23 +110,7 @@
 		<!-- </div> -->
 	</div><!--  /container --> 
 	<div class="container" id="searchfifth" style="display:none;">
-		<div class="col-xs-12 col-sm-12 col-md-12 select_option">
-			<div class="text_new_area" >
-				{{ Form::text('fname','', array('id' => 'fname','class'=>'form-control form_in_control','placeholder'=>'First Name')) }}
-			</div>
-			<div class="text_new_area" >
-				{{ Form::text('lname','', array('id' => 'lname','class'=>'form-control form_in_control','placeholder'=>'Last Name')) }}
-			</div>
-			<div class="text_new_area" >
-				{{ Form::text('phone','', array('id' => 'phone','class'=>'form-control form_in_control','placeholder'=>'Phone')) }}
-			</div>
-			<div class="text_new_area" >
-				{{ Form::text('email','', array('id' => 'email','class'=>'form-control form_in_control','placeholder'=>'Email')) }}
-			</div>
-			<div class="text_new_area" >
-				{{ Form::text('zip','', array('id' => 'zip','class'=>'form-control form_in_control','placeholder'=>'Zip')) }}
-			</div>
-		</div> <!-- /row col-xs-12 select_option -->
+		
 		<div class="col-xs-12 col-sm-12 col-md-12"  id="backfifth" style="display:none;">
 				<button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
@@ -137,9 +121,9 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-12" id="donetes" data-appear-animation="slideInRight">
 				
-				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Done</button>
+				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button>
 				
-				<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Request As A User</button>
+				<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
 				
 				
 			</div>

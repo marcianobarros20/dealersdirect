@@ -116,7 +116,7 @@ class AjaxController extends Controller
         $RequestQueue['email'] =$email;
         $RequestQueue['zip'] =$zip;
         $RequestQueue['im_type'] =0;
-        if($tradein=="yes"){
+        if($tradein=="yes" && $trademake_search!="" && $trademodel_search!="" && $tradeyear_search!="" ){
         $RequestQueue['trade_in']=1;
         $TradeinRequest['make_id'] =$trademake_search;
         $TradeinRequest['carmodel_id'] =$trademodel_search;
