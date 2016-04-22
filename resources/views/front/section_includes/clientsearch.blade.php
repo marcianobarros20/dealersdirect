@@ -15,7 +15,7 @@
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
 		<div class="home_next_btn">
-			<div class="col-xs-12 col-sm-12 col-md-12" id="searchfirstnext" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12 first-next-client" id="searchfirstnext" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="nextfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 			</div>
 		</div>
@@ -32,9 +32,9 @@
 		</div> <!-- /row col-xs-12 select_option -->
 		<div class="home_next_btn">
 			
-			<div class="col-xs-12 col-sm-12 col-md-12" id="nextistwo" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12  button-next" id="nextistwo" data-appear-animation="slideInRight">
 				
-				<button type="button"  id="backfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+				<button type="button"  id="backfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button><br>
 								
 				<button type="button" id="nextsecond" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 							
@@ -44,9 +44,9 @@
 	</div>
 
 
-	<div class="container" id="searchthird" style="display:none;">
+	<div class="container client-sea-buton" id="searchthird" style="display:none;">
 		<div class="home_next_btn">
-			<div class="col-xs-6 col-sm-offset-3 col-sm-3 col-md-12 delr" id="trade-in" >
+			<div class="delr" id="trade-in" >
 				<h3>Trade In</h3>
 				<label class="radio-inline">
 				{{ Form::radio('tradein', 'yes', false, array('id'=>'yes')) }} Yes
@@ -55,7 +55,7 @@
 				{{ Form::radio('tradein', 'no', false, array('id'=>'no')) }} No
 				</label>
 			</div>
-			<div class="col-xs-3 col-sm-3 col-md-12" id="owe-money"style="display:none;" >
+			<div class="" id="owe-money"style="display:none;" >
 				<h3>Owe Money</h3>
 				<label class="radio-inline">
 				{{ Form::radio('owe', '1', false, array('id'=>'1')) }} Yes
@@ -64,17 +64,17 @@
 				{{ Form::radio('owe', '0', false, array('id'=>'0')) }} No
 				</label>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" >
+			<div class="col-xs-12 col-sm-12 col-md-12" >
 				<button type="button"  id="backsecond" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="nextis" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="nextis" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="nextfifth" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradeinowe" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="tradeinowe" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="fourthownext" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradein" style="display:none;" data-appear-animation="slideInRight">
+			<div class="col-xs-12 col-sm-12 col-md-12" id="tradein" style="display:none;" data-appear-animation="slideInRight">
 				<button type="button" id="fourthnext" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				
 			</div>
@@ -100,11 +100,11 @@
 			<div class="new_btn">
 				{{ Form::select('tradeyear_search', [''=>'Select Year'], '', array('id' => 'tradeyear_search')) }}
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" >
+			<div class="col-xs-12 col-sm-12 col-md-12" >
 				<button type="button"  id="backthird" class="btn btn-warning next_btn_next back-btn"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
 			<div class="home_next_btn">
-				<div class="col-xs-12 col-sm-12 col-md-offset-5 col-md-4" id="tradenext" style="display:none;" data-appear-animation="slideInRight">
+				<div class="col-xs-12 col-sm-12 col-md-12" id="tradenext" style="display:none;" data-appear-animation="slideInRight">
 					<button type="button" id="sinses" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 				</div>
 			</div>

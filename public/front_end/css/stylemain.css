@@ -1217,14 +1217,26 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .text{
     padding-bottom: 150px;
 }
-.back-btn{
+/*.back-btn{
     margin-left: -15px;
-}
+}*/
 /*.sea-btn{
     margin-left: -15px;
 }*/
 .requs-make-list{
     padding-bottom: 150px;
+}
+.first-next-client{
+    text-align: center;
+}
+.button-next{
+    text-align: center;
+}
+.client-sea-buton{
+    text-align: center;
+}
+.d-v{
+    margin-top: 10px;
 }
 /*.radio-area{
     width:25%;

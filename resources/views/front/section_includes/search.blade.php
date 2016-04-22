@@ -33,7 +33,7 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-12" id="nextistwo" data-appear-animation="slideInRight">
 				
-				<button type="button"  id="backfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+				<button type="button"  id="backfirst" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button><br>
 								
 				<button type="button" id="nextsecond" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Next</button>
 							
@@ -121,7 +121,7 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-12" id="donetes" data-appear-animation="slideInRight">
 				
-				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button>
+				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button><br>
 				
 				<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
 				
