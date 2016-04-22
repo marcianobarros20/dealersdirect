@@ -1,6 +1,6 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
-<?php  echo $bcount=count($RequestQueue->bids); ?>
+<?php  $bcount=count($RequestQueue->bids); ?>
 <input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
@@ -53,6 +53,7 @@
                    <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
                    
                 </div> <!-- /.carousel -->
+                @if(count($RequestQueue->bids)!=0)
                 <div class="col-md-12 d-v">
                     <select id="shortoptions">
                         <option value="" >Sort By</option>
@@ -61,6 +62,7 @@
                         <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
                     </select>
                 </div>
+                @endif
                 <div class="brand-sec bidlist">
                     
                 </div>
