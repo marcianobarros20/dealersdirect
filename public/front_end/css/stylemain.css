@@ -493,7 +493,7 @@ hr {
 }
 .profile_control{
     background-color: rgba(255, 255, 255, 0);
-    padding:0px;
+    padding: 0px 5px;
 }
 .change_details{
     background-color: #dbdbdb;
@@ -812,7 +812,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 /**********CSS OF DEALER REQUEST LIST PAGE************/
 .brand-section{
     padding-bottom: 100px; /*edited its padding on 15-04-2016*/
-    padding-top: 50px;
+    /*padding-top: 50px;*/
 }
 .dealer_request_area{
     padding-bottom: 50px;
@@ -1226,6 +1226,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }*/
 .requs-make-list{
     padding-bottom: 150px;
+    padding-top:50px;
 }
 .first-next-client{
     text-align: center;
@@ -1255,7 +1256,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 /* Smartphones (portrait and landscape) ----------- */ 
 
 /*Edited on 12 April */
-@media only screen and (max-width: 480px) and (orientation: landscape){
+/*@media only screen and (min-width: 430px) and (orientation: landscape)*/
+@media screen and (min-width: 430px) and (max-width: 766px) and (orientation: landscape){
 .select_option {
     text-align: center !important;
     padding-bottom: 40px;
@@ -1264,7 +1266,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 .new_btn {
     margin-left: 10px;
-    width: 33%;
+    width: 50%;
     display: inline-block;
 }
 .next_btn_next {
@@ -1583,10 +1585,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
 }
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){    
-    .new_btn {
+    /*.new_btn {
     margin-left: 38px;
     width: 17%;
     display: inline-block;
+    }*/
+    .new_btn {
+    margin-left: 18px;
+    width: 17%;
+    display: inline-block;
+    margin-right: 18px;
     }
     #footer .pull-right {
     float: none !important;
@@ -1631,6 +1639,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-top: 12px;
     height: auto;
     }
+    /*#searchfirstnext{
+    text-align: center;
+    }*/
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1023px){
