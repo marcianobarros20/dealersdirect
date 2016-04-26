@@ -67,7 +67,7 @@
                     
                 </div>
             </div>  <!-- /col-xs-8 -->
-            <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="col-xs-12 col-sm-4 col-md-4">
                 
                 <a href="{{url('/')}}/client/add-style/{{base64_encode($RequestQueue->id)}}" class="btn btn-default c-v">Add More Details</a>
                 
