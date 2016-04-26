@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Model\Make;          /* Model name*/
-use App\Model\Carmodel;          /* Model name*/
-use App\Model\Caryear;          /* Model name*/
-use App\Model\Style;          /* Model name*/
-use App\Model\State;          /* Model name*/
+use App\Model\Make;          		/* Model name*/
+use App\Model\Carmodel;          	/* Model name*/
+use App\Model\Caryear;          	/* Model name*/
+use App\Model\Style;          		/* Model name*/
+use App\Model\State;          		/* Model name*/
+use App\Model\City; 				/* Model name*/
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -25,7 +26,7 @@ class ApiController extends Controller
     	public function apistate()
 		{
 			
-			//echo "hi";
+			
 			$url = "http://iamrohit.in/lab/php_ajax_country_state_city_dropdown/api.php?type=getStates&countryId=231";
 			
 			$ch = curl_init();
@@ -37,11 +38,41 @@ class ApiController extends Controller
 			curl_close($ch);
 			$resuls=json_decode($result, true);
 			foreach ($resuls['result'] as $key => $value) {
-				
+				$count=State::where('id',$key)->count();
+				if($count==0){
 				$State['id'] =$key;
 				$State['state'] =$value;
 				State::create($State);
+				}
 
+			}
+				
+		}
+		public function apicity()
+		{
+			
+			$States=State::all();
+			foreach ($States as $key => $State) {
+				
+				$url = "http://iamrohit.in/lab/php_ajax_country_state_city_dropdown/api.php?type=getCities&stateId=".$State->id;
+
+				$ch = curl_init();
+				curl_setopt($ch,CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				$resuls=json_decode($result, true);
+				foreach ($resuls['result'] as $key => $value) {
+					$count=City::where('id',$key)->where('state_id',$State->id)->count();
+					if($count==0){
+						$City['id'] =$key;
+						$City['state_id'] =$State->id;
+						$City['city'] =$value;
+						City::create($City);
+					}
+				}
 			}
 				
 		}
