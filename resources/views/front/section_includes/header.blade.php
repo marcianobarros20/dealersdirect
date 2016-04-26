@@ -29,8 +29,9 @@
 						<li>
 							<a href="<?php echo url('/');?>/dealer-signin">
 								<i class="fa fa-user"> </i>
-							</a>
+							
 							<span style="color:#fff">Dealer's login</span>
+							</a>
 						</li>
 					@endif
 					
