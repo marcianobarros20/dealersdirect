@@ -75,6 +75,17 @@
 									    {{ Form::password('conf_password',['class' => 'form-control profile_control', 'required' => 'required','id' =>'conf_password']) }}
 									</div>
 									<div class="form-group">
+									    <label for="exampleInputName1">Address</label>
+									    {{ Form::text('address','',['class' => 'form-control profile_control','required' => 'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">State</label>
+									    {{ Form::select('state_id', $State,'',array('class' => 'form-control  profile_control','id'=>'state_id', 'required' => 'required')) }}
+									</div>
+									<div class="form-group"  id="city_div" style="display: none;">
+									    
+									</div>
+									<div class="form-group">
 									    <label for="exampleInputName1">Zip</label>
 									   {{ Form::number('zip','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 									</div>
@@ -86,10 +97,7 @@
 									    <label for="exampleInputName1">Image</label>
 									    {!! Form::file('images', array('class'=>'add-image')) !!}
 									</div>
-									<div class="form-group">
-									    <label for="exampleInputName1">Address</label>
-									    {{ Form::textarea('address','',['class' => 'form-control profile_control','required' => 'required']) }}
-									</div>
+									
 									
 								        {{ Form::submit('ADD ADMIN',array('class' => 'btn btn-default btn-lg btn-block','id' => 'add_admin')) }}
 								</div> <!-- /form_back -->
@@ -123,6 +131,24 @@
 						alert('Password length minimum 6 charecters')
 						return false;
 					}
+				});
+				$('#state_id').change(function(){
+					var state_id = $('#state_id').val();
+					
+					$.ajax({
+                            url: "<?php echo url('/');?>/ajax/get_all_edit_city",
+                            data: {state_id:state_id,_token: '{!! csrf_token() !!}'},
+                            type :"post",
+                            success: function( data ) {
+                                if (data){
+                                    $("#city_div").html('');
+                                    $("#city_div").html(data);
+                                    $("#city_id").selectric();  
+                                    $("#city_div").show();
+
+                                }
+                            }
+                  	});
 				});
 			});
 	</script>

@@ -703,6 +703,8 @@ class DealerController extends BaseController {
                     $DealerDetail['zip']=Request::input('zip');
                     $DealerDetail['phone']=Request::input('phone');
                     $DealerDetail['address']=Request::input('address');
+                    $DealerDetail['state_id']=Request::input('state_id');
+                    $DealerDetail['city_id']=Request::input('city_id');
                     $DealerDetail['image']=$fileName;
                     DealerDetail::create($DealerDetail);
 
@@ -741,8 +743,19 @@ class DealerController extends BaseController {
 
     public function EditAdminDetails($Dealer_id)
     {
-        $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_details')->first();
-        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        $State=[''=>'Select State']+State::lists('state', 'id')->all();
+       $dealer_userid=Session::get('dealer_userid');
+       $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       if(isset($dealer_admin_details->dealer_details->dealer_city)){
+        $cityarr=1;
+        $City=[''=>'Select City']+City::where('state_id',$dealer_admin_details->dealer_details->dealer_state->id)->lists('city', 'id')->all();
+       }else{
+        $cityarr=0;
+        $City="";
+       }
+        
+
+        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function UpdateAdminDetails($id)
     {
@@ -782,6 +795,8 @@ class DealerController extends BaseController {
                     'zip' => Request::input('new_zip'),
                     'address' => Request::input('new_address'),
                     'phone' => Request::input('new_phone'),
+                    'state_id' => Request::input('state_id'),
+                    'city_id' => Request::input('city_id'),
                     'image' => $fileName
                     );
                 $query_to_dealers = Dealer::find($id); //search

@@ -111,7 +111,7 @@
 				
 				$('#state_id').change(function(){
 					var state_id = $('#state_id').val();
-					alert(state_id);
+					
 					$.ajax({
                             url: "<?php echo url('/');?>/ajax/get_all_edit_city",
                             data: {state_id:state_id,_token: '{!! csrf_token() !!}'},

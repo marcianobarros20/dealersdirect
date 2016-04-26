@@ -37,8 +37,18 @@
 									    <input type="text" value="{{$dealer_admin_details->dealer_details->phone}}" name="new_phone" class="form-control profile_control">
 									</div>
 									<div class="form-group">
-										<label for="new_address">Address:</label>
-										<textarea name="new_address" class="form-control profile_control">{{$dealer_admin_details->dealer_details->address}}</textarea>
+									    <label for="exampleInputName1">Address</label>
+									    {{ Form::text('new_address',isset($dealer_admin_details->dealer_details->address)?$dealer_admin_details->dealer_details->address:null,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">State</label>
+									    {{ Form::select('state_id', $State,isset($dealer_admin_details->dealer_details->dealer_state->id)?$dealer_admin_details->dealer_details->dealer_state->id:null,array('class' => 'form-control','id'=>'state_id', 'required' => 'required')) }}
+									</div>
+									<div class="form-group" id="city_div" @if($cityarr!=1)style="display:none;"@endif>
+										@if($cityarr==1)
+										    <label for="exampleInputName1">City</label>
+										    {{ Form::select('city_id', $City,isset($dealer_admin_details->dealer_details->dealer_city->id)?$dealer_admin_details->dealer_details->dealer_city->id:null,array('class' => 'form-control profile_control','id'=>'city_id', 'required' => 'required')) }}
+									    @endif
 									</div>
 									<div class="form-group">
 									    <label for="new_image">Upload New Image:</label>
@@ -75,6 +85,28 @@
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+			$(document).ready(function(){
+				
+				$('#state_id').change(function(){
+					var state_id = $('#state_id').val();
+					
+					$.ajax({
+                            url: "<?php echo url('/');?>/ajax/get_all_edit_city",
+                            data: {state_id:state_id,_token: '{!! csrf_token() !!}'},
+                            type :"post",
+                            success: function( data ) {
+                                if (data){
+                                    $("#city_div").html('');
+                                    $("#city_div").html(data);
+                                    $("#city_id").selectric();  
+                                    $("#city_div").show();
 
+                                }
+                            }
+                  	});
+				});
+			});
+		</script>
 
 @stop
