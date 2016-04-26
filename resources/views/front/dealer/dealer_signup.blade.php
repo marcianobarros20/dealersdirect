@@ -43,11 +43,11 @@
 									<label for="exampleInputEmail1">Address</label>
 										{{ Form::text('address','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
-								<div class="form-group">
+								<div class="form-group select-state">
 									<label for="exampleInputEmail1">State</label>
 										{{ Form::select('state_id', $State,'',array('data-placeholder' => 'Choose State...','id'=>'state_id', 'required' => 'required')) }}
 								</div>
-								<div class="form-group" id="city_div" style="display: none;">
+								<div class="form-group select-state" id="city_div" style="display: none;">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">Zip</label>
