@@ -20,4 +20,7 @@ class RequestDealerLog extends Model
     public function requestqueue() {
         return $this->hasOne('App\Model\RequestQueue', 'id', 'request_id');
     }
+    public function bids() {
+        return $this->hasMany('App\Model\BidQueue', 'requestqueue_id','request_id')->where('visable','=',1);
+        }
 }

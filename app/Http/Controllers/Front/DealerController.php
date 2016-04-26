@@ -203,12 +203,24 @@ class DealerController extends BaseController {
             $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
             $requestqueue_id=$RequestDealerLog->request_id;
             $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
-            
+                
+                if($RequestQueue->client_id!=0){
+                
                 $RequestQueue->clients->first_name=self::maskcreate($RequestQueue->clients->first_name);
                 $RequestQueue->clients->last_name=self::maskcreate($RequestQueue->clients->last_name);
                 $RequestQueue->clients->phone=self::maskcreate($RequestQueue->clients->phone);
                 $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
                 $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
+                $clx=array();
+                }
+                else{
+                $clx['first_name']=self::maskcreate($RequestQueue->fname);
+                $clx['last_name']=self::maskcreate($RequestQueue->lname);
+                $clx['phone']=self::maskcreate($RequestQueue->phone);
+                $clx['email']=self::maskcreate($RequestQueue->email);
+                $clx['zip']=self::maskcreate($RequestQueue->zip); 
+                }
+                //dd($RequestQueue);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
                 $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
                 if($par!=0){
@@ -217,9 +229,9 @@ class DealerController extends BaseController {
                     $BidQueuecount=BidQueue::where('dealer_id', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
                 }
                 
-            //dd($RequestQueue);
+            
 
-            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount','fill'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
+            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount','fill','clx'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
     }
     public function DealerMakeList(){
         $obj = new helpers();

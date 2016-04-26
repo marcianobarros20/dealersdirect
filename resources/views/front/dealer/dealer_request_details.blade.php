@@ -84,7 +84,7 @@
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
                         <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins) && $RequestQueue->trade_ins->make_id!=0)
                         <li ><a href="#tradein" data-toggle="tab">Trade-In</a></li>
                         @endif
                         <li ><a href="#userinfo" data-toggle="tab">User-Info</a></li>
@@ -127,6 +127,7 @@
                         </div>
                         <div class="tab-pane form-head" id="userinfo">
                             <table class="table client-table"> 
+                            @if($RequestQueue->client_id!=0)
                                 <tbody class="post-text"> 
                                     <tr> 
                                         <td>Client Name:</td> 
@@ -146,9 +147,30 @@
                                     </tr> 
                                     
                                 </tbody> 
+                            @else
+                                <tbody class="post-text"> 
+                                    <tr> 
+                                        <td>Client Name:</td> 
+                                        <td>{{$clx['first_name']}} {{$clx['last_name']}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Email:</td> 
+                                        <td>{{$clx['email']}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Phone:</td> 
+                                        <td>{{$clx['phone']}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>Client Zip:</td> 
+                                        <td>{{$clx['zip']}}</td> 
+                                    </tr> 
+                                    
+                                </tbody>
+                            @endif
                             </table>
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                             <div class="tab-pane form-head" id="tradein">
                                 <table class="table client-table"> 
                                     <tbody class="post-text"> 

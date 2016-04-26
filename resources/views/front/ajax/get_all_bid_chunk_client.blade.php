@@ -35,7 +35,13 @@
                 <a class = "carousel-control right" href = "#myCarousel{{$key}}" data-slide = "next">&rsaquo;</a>
 
             </div> 
-            <h2>{!! $Bid->dealers->first_name !!} {!! $Bid->dealers->last_name !!} </h2>
+            <h2>
+                @if($Bid->dealers->parent_id==0)
+            {!! $Bid->dealers->dealership_name !!} 
+            @else
+            {!! $Bid->dealers->dealer_parent->dealership_name !!} 
+            @endif
+            </h2>
             <div class="btns">
                 
                 @if($Bid->trade_in!=0)  

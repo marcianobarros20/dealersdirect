@@ -809,10 +809,10 @@ class AjaxController extends Controller
         $status_search=Request::input('status_search');
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
         if($Dealers_check->parent_id==0){
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->with('makes','requestqueue','requestqueue.models');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->with('makes','requestqueue','requestqueue.models','bids');
         }
         else{
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->with('makes','requestqueue','requestqueue.models');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->with('makes','requestqueue','requestqueue.models','bids');
         }
         
         if($make_search!=0){
@@ -905,7 +905,7 @@ class AjaxController extends Controller
                 }
             }
         }
-        //dd($RS);
+        dd($RS);
         //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
         return view('front.ajax.get_all_request',compact('RS'));
     }
@@ -929,15 +929,15 @@ class AjaxController extends Controller
         
         if($sortby==1){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
         }
         if($sortby==2){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('mp_curve_poin', 'asc')->get();
         }
         if($sortby==3){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
         }
         
         foreach ($BidQueue as $key => $Bid) {
@@ -956,13 +956,13 @@ class AjaxController extends Controller
         $requestid=Request::input('requestid');
         $inox=Request::input('inox');
         if($dealer_userid==$dealer){
-            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('created_at', 'desc')->get();
         }
         else if($inox==$dealer_userid){
-             $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_admin', $dealer_userid)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+             $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_admin', $dealer_userid)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('created_at', 'desc')->get();
 
         }else{
-            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->where('visable','=','1')->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->where('visable','=','1')->with('dealers','bid_image','dealers.dealer_parent')->orderBy('created_at', 'desc')->get();
         }
         //dd($BidQueue);
         return view('front.ajax.get_bid_history',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
@@ -976,15 +976,15 @@ class AjaxController extends Controller
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->where('blocked','!=',1)->lists('dealer_id');
         if($sortby==1){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('acc_curve_poin', 'asc')->get();
         }
         if($sortby==2){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('mp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('mp_curve_poin', 'asc')->get();
         }
         if($sortby==3){
             
-            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('status','!=','2')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('tp_curve_poin', 'asc')->get();
         }
         
         return view('front.ajax.get_all_bid_chunk_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
@@ -994,7 +994,7 @@ class AjaxController extends Controller
         $dealer=Request::input('dealer');
         $requestid=Request::input('requestid');
         
-            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image')->orderBy('created_at', 'desc')->get();
+            $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id', $dealer)->with('dealers','bid_image','dealers.dealer_parent')->orderBy('created_at', 'desc')->get();
         
         //dd($BidQueue);
         return view('front.ajax.get_bid_history_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));

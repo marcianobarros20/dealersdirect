@@ -13,7 +13,11 @@
         </div>
         @endif 
     </div>
-    <h2><i class="fa fa-reply"></i> {!! $Bid->dealers->first_name!!} {!! $Bid->dealers->last_name!!} <small>{!! $Bid->dealers->created_at!!}</small></h2>
+    <h2><i class="fa fa-reply"></i> @if($Bid->dealers->parent_id==0)
+            {!! $Bid->dealers->dealership_name !!} 
+            @else
+            {!! $Bid->dealers->dealer_parent->dealership_name !!} 
+            @endif <small>{!! $Bid->dealers->created_at!!}</small></h2>
     <div class="information">
         <p>Monthly: {!! $Bid->monthly_amount !!}</p>
         <p>Total: {!! $Bid->total_amount !!}</p>
