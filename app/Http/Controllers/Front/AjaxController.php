@@ -905,7 +905,7 @@ class AjaxController extends Controller
                 }
             }
         }
-        dd($RS);
+        //dd($RS);
         //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
         return view('front.ajax.get_all_request',compact('RS'));
     }
