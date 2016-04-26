@@ -1,6 +1,6 @@
 @extends('front/layout/dealerfrontend_template')
 @section('content')
-		
+
  <section>
 	<div class="container pro-file-bla">
 				@if(Session::get('message'))
@@ -48,12 +48,35 @@
 									    <label for="exampleInputName1">Last Name</label>
 									    {{ Form::text('lname',$Dealer->last_name,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
-									
+									<div class="form-group">
+									    <label for="exampleInputName1">Phone</label>
+									    {{ Form::text('phone',isset($Dealer->dealer_details->phone)?$Dealer->dealer_details->phone:null,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">Address</label>
+									    {{ Form::text('address',isset($Dealer->dealer_details->address)?$Dealer->dealer_details->address:null,['class' => 'form-control profile_control','required'=>'required']) }}
+									</div>
+									<div class="form-group">
+									    <label for="exampleInputName1">State</label>
+									    {{ Form::select('state_id', $State,isset($Dealer->dealer_details->dealer_state->id)?$Dealer->dealer_details->dealer_state->id:null,array('class' => 'form-control','id'=>'state_id', 'required' => 'required')) }}
+									</div>
+									<div class="form-group" id="city_div" @if($cityarr!=1)style="display:none;"@endif>
+										@if($cityarr==1)
+										    <label for="exampleInputName1">City</label>
+										    {{ Form::select('city_id', $City,isset($Dealer->dealer_details->dealer_city->id)?$Dealer->dealer_details->dealer_city->id:null,array('class' => 'form-control profile_control','id'=>'city_id', 'required' => 'required')) }}
+									    @endif
+									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Zip</label>
 									    {{ Form::number('zip',$Dealer->zip,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
+									<div class="form-group">
+									    <label for="new_image">Upload New Image:</label>
+									   <input type="file" name="new_image" class="form-control profile_control">
+									</div>
 									
+								      
+								    {{ Form::hidden('old_image',isset($Dealer->dealer_details->image)?$Dealer->dealer_details->image:null,['class' => 'form-control profile_control']) }}
 								        
 								        {{ Form::submit('EDIT',array('class' => 'btn btn-default btn-lg btn-block')) }}
 								</div> <!-- /form_back -->
@@ -83,6 +106,28 @@
 		</div>
 	</div>
 </section>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+				$('#state_id').change(function(){
+					var state_id = $('#state_id').val();
+					alert(state_id);
+					$.ajax({
+                            url: "<?php echo url('/');?>/ajax/get_all_edit_city",
+                            data: {state_id:state_id,_token: '{!! csrf_token() !!}'},
+                            type :"post",
+                            success: function( data ) {
+                                if (data){
+                                    $("#city_div").html('');
+                                    $("#city_div").html(data);
+                                    $("#city_id").selectric();  
+                                    $("#city_div").show();
 
+                                }
+                            }
+                  	});
+				});
+			});
+		</script>
 
 @stop

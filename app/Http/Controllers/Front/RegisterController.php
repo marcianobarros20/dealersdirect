@@ -9,6 +9,7 @@ use App\Model\Carmodel;                                     /* Model name*/
 use App\Model\Caryear;                                      /* Model name*/
 use App\Model\RequestQueue;		                            /* Model name*/
 use App\Model\RequestDealerLog;                             /* Model name*/
+use App\Model\DealerDetail;                                 /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Input;
@@ -28,34 +29,44 @@ class RegisterController extends Controller
      public function dealerRegister() {
         	//$password = Request::input('password');
         	//$conf_password = Request::input('conf_password');
-	       	$tamo=time()."DEALERS";
-	     	$hashpassword = Hash::make(Request::input('password'));
+            // dd(Request::input());
+            $tamo=time()."DEALERS";
+            $hashpassword = Hash::make(Request::input('password'));
             $Dealer['dealership_name'] =Request::input('d_name');
-	     	$Dealer['first_name'] =Request::input('fname');
-			$Dealer['last_name'] =Request::input('lname');
-			$Dealer['email'] =Request::input('email');
-			$Dealer['zip'] =Request::input('zip');
-			$Dealer['password'] =$hashpassword;
-			$Dealer['code_number'] =$tamo;
-			$Dealers_row=Dealer::create($Dealer);
-			$lastinsertedId = $Dealers_row->id;
-			$make=Request::input('make');
-			foreach ($make as $key => $value) {
-				$DealerMakeMap['dealer_id']=$lastinsertedId;
-				$DealerMakeMap['make_id']=$value;
-				DealerMakeMap::create($DealerMakeMap);
-				self::fetchRequestLog($lastinsertedId,$value);
-			}
-			$Dealerx = Dealer::where('id', $lastinsertedId)->first();
-			$namx=ucfirst($Dealerx->first_name)." ".ucfirst($Dealerx->last_name);
-			Session::put('dealer_userid', $Dealerx->id);
-			Session::put('dealer_email', $Dealerx->email);
-			Session::put('dealer_name', $namx);
-			Session::put('dealer_parent', $Dealerx->parent_id);
-			Session::save();
+            $Dealer['first_name'] =Request::input('fname');
+            $Dealer['last_name'] =Request::input('lname');
+            $Dealer['email'] =Request::input('email');
+            $Dealer['zip'] =Request::input('zip');
+            $Dealer['password'] =$hashpassword;
+            $Dealer['code_number'] =$tamo;
+            $Dealers_row=Dealer::create($Dealer);
+            $lastinsertedId = $Dealers_row->id;
 
-			return redirect('dealer-dashboard');
-		}
+                    $DealerDetail['dealer_id']=$lastinsertedId;
+                    $DealerDetail['zip']=Request::input('zip');
+                    $DealerDetail['phone']=Request::input('phone');
+                    $DealerDetail['address']=Request::input('address');
+                    $DealerDetail['state_id']=Request::input('state_id');
+                    $DealerDetail['city_id']=Request::input('city_id');
+                    $DealerDetail['image']="";
+                    DealerDetail::create($DealerDetail);
+                    $make=Request::input('make');
+                        foreach ($make as $key => $value) {
+                            $DealerMakeMap['dealer_id']=$lastinsertedId;
+                            $DealerMakeMap['make_id']=$value;
+                            DealerMakeMap::create($DealerMakeMap);
+                            self::fetchRequestLog($lastinsertedId,$value);
+                        }
+                    $Dealerx = Dealer::where('id', $lastinsertedId)->first();
+                    $namx=ucfirst($Dealerx->first_name)." ".ucfirst($Dealerx->last_name);
+                    Session::put('dealer_userid', $Dealerx->id);
+                    Session::put('dealer_email', $Dealerx->email);
+                    Session::put('dealer_name', $namx);
+                    Session::put('dealer_parent', $Dealerx->parent_id);
+                    Session::save();
+                    return redirect('dealer-dashboard');
+            
+	   }
 
      
      public function fetchRequestLog($lastinsertedId,$value){

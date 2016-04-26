@@ -34,13 +34,28 @@
 									<label for="exampleInputName1">Last Name</label>
 										{{ Form::text('lname','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
+								
 								<div class="form-group">
-									<label for="exampleInputEmail1">Email/Username</label>
-										{{ Form::email('email','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+									<label for="exampleInputEmail1">Phone</label>
+										{{ Form::number('phone','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Address</label>
+										{{ Form::text('address','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">State</label>
+										{{ Form::select('state_id', $State,'',array('data-placeholder' => 'Choose State...','id'=>'state_id', 'required' => 'required')) }}
+								</div>
+								<div class="form-group" id="city_div" style="display: none;">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1">Zip</label>
 										{{ Form::number('zip','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Email/Username</label>
+										{{ Form::email('email','',['class' => 'form-control profile_control', 'required' => 'required']) }}
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword3">Password</label>
@@ -83,6 +98,22 @@
 						alert('Password length minimum 6 charecters')
 						return false;
 					}
+				});
+				$('#state_id').change(function(){
+					var state_id = $('#state_id').val();
+					alert(state_id);
+					$.ajax({
+                            url: "<?php echo url('/');?>/ajax/get_all_city",
+                            data: {state_id:state_id,_token: '{!! csrf_token() !!}'},
+                            type :"post",
+                            success: function( data ) {
+                                if (data){
+                                    $("#city_div").html('');
+                                    $("#city_div").html(data); 
+                                    $("#city_div").show();
+                                }
+                            }
+                  	});
 				});
 			});
 		</script>
