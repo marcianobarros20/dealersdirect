@@ -1596,6 +1596,16 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .requs-make-list {
     padding-bottom: 200px;
     }
+    #searchseconed .select_option .text_new_area {
+    width: 100%;
+    display: inline-block;
+    margin-right: 0px;
+    }
+    #searchfourth .select_option .text_new_area {
+    width: 100%;
+    display: inline-block;
+    margin-right: 0px;
+    }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
@@ -1766,6 +1776,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display: inline-block;
     /*margin-left: 32px;
     margin-right: 11px;*/
+    }
+    #searchseconed .select_option .text_new_area {
+    width: 22%;
+    display: inline-block;
+    margin-right: 0px;
     }
     /*.sea-btn {
     margin-left: 35px;

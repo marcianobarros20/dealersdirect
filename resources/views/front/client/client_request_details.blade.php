@@ -10,7 +10,7 @@
     <div class="container request-client-cont">
         <div class="row detail-text">
             <div class="col-md-4">
-                <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
+                <h4><i class="fa fa-calendar"></i> {{$RequestQueue->created_at}}<h4>
                 <h2>{{$RequestQueue->makes->name}}</h2>
             </div>
             
