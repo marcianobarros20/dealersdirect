@@ -17,6 +17,8 @@ use App\Model\Dealer;                                       /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
+use App\Model\State;                                        /* Model name*/
+use App\Model\City;                                         /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -996,5 +998,19 @@ class AjaxController extends Controller
         
         //dd($BidQueue);
         return view('front.ajax.get_bid_history_client',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function getAllCity(){
+        $state_id=Request::input('state_id');
+
+        $City=[''=>'Select City']+City::where('state_id',$state_id)->lists('city', 'id')->all();
+        
+        return view('front.ajax.get_all_city',compact('City'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function getAllEditCity(){
+        $state_id=Request::input('state_id');
+
+        $City=[''=>'Select City']+City::where('state_id',$state_id)->lists('city', 'id')->all();
+        
+        return view('front.ajax.get_all_edit_city',compact('City'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
 }

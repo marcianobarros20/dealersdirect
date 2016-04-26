@@ -15,6 +15,8 @@ use App\Model\BidStopLog;                                   /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\DealerDetail;                                 /* Model name*/
+use App\Model\State;                                        /* Model name*/
+use App\Model\City;                                         /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -142,8 +144,9 @@ class DealerController extends BaseController {
         foreach ($variable as $key => $value) {
             $Makes[$value->id]=$value->name;
         }
+        $State=[''=>'Select State']+State::lists('state', 'id')->all();
         $client=0;
-        return view('front.dealer.dealer_signup',compact('Makes','client'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+        return view('front.dealer.dealer_signup',compact('Makes','client','State'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function signout(){
             Session::forget('dealer_userid');
@@ -276,27 +279,80 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
+            $State=[''=>'Select State']+State::lists('state', 'id')->all();
        $dealer_userid=Session::get('dealer_userid');
-       $Dealer = Dealer::where('id', $dealer_userid)->with('dealer_parent')->first();
+       $Dealer = Dealer::where('id', $dealer_userid)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       if(isset($Dealer->dealer_details->dealer_city)){
+        $cityarr=1;
+        $City=[''=>'Select City']+City::where('state_id',$Dealer->dealer_details->dealer_state->id)->lists('city', 'id')->all();
+       }else{
+        $cityarr=0;
+        $City="";
+       }
        //dd($Dealer);
-       return view('front.dealer.dealer_profile',compact('Dealer'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
+       return view('front.dealer.dealer_profile',compact('Dealer','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
        //print_r($Dealer);
 
     }
     public function ProfileEditDetails(){
 
         //dd(Request::all());
-        $dealer_userid=Session::get('dealer_userid');
-        $dealership_name = Request::input('d_name1');
         $fname=Request::input('fname');
         $lname=Request::input('lname');
         $zip=Request::input('zip');
+        $dealer_userid=Session::get('dealer_userid');
+        $dealership_name = Request::input('d_name1');
         $Dealer = Dealer::find($dealer_userid);
-        $Dealer->dealership_name = $dealership_name;
+        $parent=Session::get('dealer_parent');
+        if($parent==0){
+            $Dealer->dealership_name = $dealership_name;
+        }else{
+            $Dealer->dealership_name ="";
+        }
+        
+        
         $Dealer->first_name = $fname;
         $Dealer->last_name = $lname;
         $Dealer->zip = $zip;
         $Dealer->save();
+
+                if (Request::file('new_image')) {
+                    $image = Request::file('new_image');
+                    $extension =$image->getClientOriginalExtension();
+                    $destinationPath = 'public/dealers/';
+                    $fileName = rand(111111111,999999999).'.'.$extension;
+                    $image->move($destinationPath, $fileName);
+                }
+                else
+                {
+                    $fileName = Request::input('old_image');
+                }
+
+        $Dealerdetailscount = DealerDetail::where('dealer_id',$dealer_userid)->count();
+        if($Dealerdetailscount==0){
+                    $DealerDetail['dealer_id']=$dealer_userid;
+                    $DealerDetail['zip']=Request::input('zip');
+                    $DealerDetail['phone']=Request::input('phone');
+                    $DealerDetail['address']=Request::input('address');
+                    $DealerDetail['state_id']=Request::input('state_id');
+                    $DealerDetail['city_id']=Request::input('city_id');
+                    $DealerDetail['image']=$fileName;
+                    DealerDetail::create($DealerDetail);
+        }
+        else{
+            $Dealerdetails = DealerDetail::where('dealer_id',$dealer_userid)->first();
+
+                $Dealerdetails->zip=Request::input('zip');
+                $Dealerdetails->phone=Request::input('phone');
+                $Dealerdetails->address=Request::input('address');
+                $Dealerdetails->state_id=Request::input('state_id');
+                $Dealerdetails->city_id=Request::input('city_id');
+                $Dealerdetails->image=$fileName;
+                $Dealerdetails->save();
+        }
+        
+        
+        
         $nam=ucfirst($fname)." ".ucfirst($lname);
         Session::forget('dealer_name');
         Session::put('dealer_name', $nam);
@@ -617,28 +673,9 @@ class DealerController extends BaseController {
             $dealer_admin_details = Dealer::where('id',$Dealer_xid)->first();
             if(Request::isMethod('post'))
             {
-                /*$rules = array(
-                    'fname' => 'required', 
-                    'lname' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|min:6',
-                    'conf_password' => 'required|min:6',
-                    'zip' => 'required|numeric',
-                    'phone' => 'required|numeric',
-                    'address' => 'required',
-                    'images' => 'required|min:1'
-                );
-                $validator = Validator::make(Request::all(), $rules);
-                if ($validator->fails())
-                {
-                    $msg = $validator->messages();
-                    Session::flash('error',$msg );
-                    return redirect('dealers/dealer_add_admin');
-                } */
-               // else 
-                //{
+                
                     $dealer_userid=Session::get('dealer_userid');
-                    //print_r(Request::input());
+                   
                     $tamo=time()."DEALERS";
                     $hashpassword = Hash::make(Request::input('password'));
                     $Dealer['first_name'] =Request::input('fname');
@@ -698,10 +735,8 @@ class DealerController extends BaseController {
                     return redirect('/dealer/admins');
                 //}
             }
-            /*$dealer_admin_details = Dealer::all();
-            dd($dealer_admin_details);*/
-           // dd('hi');
-        return view('front.dealer.dealer_admin_add',compact('dealer_admin_details'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        $State=[''=>'Select State']+State::lists('state', 'id')->all();
+        return view('front.dealer.dealer_admin_add',compact('dealer_admin_details','State'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
 
     public function EditAdminDetails($Dealer_id)

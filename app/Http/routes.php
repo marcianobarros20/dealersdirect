@@ -150,6 +150,8 @@ Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
 Route::post('ajax/getbidchunkclient/', 'Front\AjaxController@GetAllBidChunkClient');
 Route::post('ajax/getbidchistory/','Front\AjaxController@GetBidCHistory');
 Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
+Route::post('ajax/get_all_city/', 'Front\AjaxController@getAllCity');
+Route::post('ajax/get_all_edit_city/', 'Front\AjaxController@getAllEditCity');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
