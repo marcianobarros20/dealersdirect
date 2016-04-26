@@ -30,7 +30,7 @@
 							<a href="<?php echo url('/');?>/dealer-signin">
 								<i class="fa fa-user"> </i>
 							
-							<span style="color:#fff">Dealer's login</span>
+							<!-- <span style="color:#fff" -->Dealer's login<!-- </span> -->
 							</a>
 						</li>
 					@endif
