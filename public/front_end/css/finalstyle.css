@@ -1278,6 +1278,24 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border-radius: 4px;
     background-color: #fff;
 }
+#custom-select .selectric-wrapper .selectric{
+    display: block;
+    width: 100% !important;
+    height: 37px;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #F26722;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 33px;
+    color: #444;
+    text-decoration: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #fff;
+}
 /*.radio-area{
     width:25%;
     margin:0px auto;
@@ -1806,12 +1824,19 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display: inline-block;
     margin-right: 0px;
     }*/
-    #searchfirst .select_option .new_btn {
+    /*#searchfirst .select_option .new_btn {
     margin-left: 6px;
     width: 17%;
     display: inline-block;
     margin-right: 25px;
+    }*/
+    #searchfirst .select_option .new_btn {
+    margin-left: 1px;
+    width: 22%;
+    display: inline-block;
+    margin-right: 1px;
     }
+    
 }
 @media only screen and (max-width: 769px){
     .c-p-b {

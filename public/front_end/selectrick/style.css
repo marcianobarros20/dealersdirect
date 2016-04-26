@@ -778,9 +778,13 @@ label p {
 .row { width: 100%; display: table; table-layout: fixed; }
 .col { display: table-cell; vertical-align: bottom; }
 
-.selectric-wrapper {
+/*.selectric-wrapper {
   margin-bottom: 10px;
   width: 150px;
+}*/
+.selectric-wrapper {
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .selectric {

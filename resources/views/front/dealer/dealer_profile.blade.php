@@ -56,7 +56,7 @@
 									    <label for="exampleInputName1">Address</label>
 									    {{ Form::text('address',isset($Dealer->dealer_details->address)?$Dealer->dealer_details->address:null,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
-									<div class="form-group">
+									<div class="form-group" id="custom-select">
 									    <label for="exampleInputName1">State</label>
 									    {{ Form::select('state_id', $State,isset($Dealer->dealer_details->dealer_state->id)?$Dealer->dealer_details->dealer_state->id:null,array('class' => 'form-control','id'=>'state_id', 'required' => 'required')) }}
 									</div>
