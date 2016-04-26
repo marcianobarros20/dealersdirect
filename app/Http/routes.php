@@ -61,6 +61,7 @@ Route:: get('/api-edmunds-make','Admin\ApiController@apimake');
 Route:: get('/api-edmunds-model','Admin\ApiController@apimodel');
 Route:: get('/api-edmunds-style-id','Admin\ApiController@apistyleid');
 Route:: get('/api-edmunds-style-generator','Admin\ApiController@apistylegenerator');
+Route:: get('/apistate','Admin\ApiController@apistate');
 /*
 |--------------------------------------------------------------------------
 | Admin Routes

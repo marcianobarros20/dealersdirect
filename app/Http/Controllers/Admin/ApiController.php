@@ -5,6 +5,7 @@ use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\Caryear;          /* Model name*/
 use App\Model\Style;          /* Model name*/
+use App\Model\State;          /* Model name*/
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,6 +21,30 @@ use App\Helper\helpers;
 class ApiController extends Controller
 {
     //
+
+    	public function apistate()
+		{
+			
+			//echo "hi";
+			$url = "http://iamrohit.in/lab/php_ajax_country_state_city_dropdown/api.php?type=getStates&countryId=231";
+			
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$result = curl_exec($ch);
+			curl_close($ch);
+			$resuls=json_decode($result, true);
+			foreach ($resuls['result'] as $key => $value) {
+				
+				$State['id'] =$key;
+				$State['state'] =$value;
+				State::create($State);
+
+			}
+				
+		}
 
 		public function apimake()
 		{
