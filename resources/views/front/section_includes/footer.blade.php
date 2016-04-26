@@ -21,7 +21,7 @@
 								class="active"
 							@endif
 						@endif
-					><a href="<?php echo url('/');?>/services">Services</a></li>
+					><a href="<?php echo url('/');?>/services">Privacy Policy</a></li>
 					<li 
 						@if(isset($typex))
 							@if($typex=="contact-us")

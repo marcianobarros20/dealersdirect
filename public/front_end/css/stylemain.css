@@ -1250,6 +1250,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 #searchfourth .select_option{
     text-align: center;
 }
+.cli-req{
+    margin-top: 50px;
+}
 /*.radio-area{
     width:25%;
     margin:0px auto;
@@ -1258,6 +1261,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 /*Edited on 12 April */
 /*@media only screen and (min-width: 430px) and (orientation: landscape)*/
+/* @media screen and (min-width: 430px) and (max-width: 640px) and (orientation: landscape){
+
+
+
+ }*/
 @media screen and (min-width: 430px) and (max-width: 766px) and (orientation: landscape){
 .select_option {
     text-align: center !important;
@@ -1568,9 +1576,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 @media only screen and (min-width: 481px) and (max-width: 640px){
     .select_option {
     text-align: center !important;
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
     padding-top: 25px;
-    margin-left: 55px;
+    /*margin-left: 55px;*/
     }
     .profile_btn {
     margin-left: 10px;
@@ -1583,6 +1591,21 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .requs-make-list {
     padding-bottom: 200px;
+    }
+    .new_btn {
+    margin-left: 0px;
+    width: 33%;
+    display: inline-block;
+    }
+    .text_new_area {
+    width: 30%;
+    display: inline-block;
+    }
+    .next_btn_next {
+    background: #F26722;
+    width: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     }
 }
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){    
@@ -1708,7 +1731,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }*/
     .next_btn_next {
     background: #F26722;
-    width: 50%;
+    width: 30%;
     margin-top: 15px;
     /*margin-right: 0px;
     margin-left: 64px;*/
@@ -1719,9 +1742,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     /*margin-left: 32px;
     margin-right: 11px;*/
     }
-    .sea-btn {
+    /*.sea-btn {
     margin-left: 35px;
-    }
+    }*/
     .navbar-nav {
     margin-top: 12px;
     height: 50px;
@@ -1737,11 +1760,17 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     .mro-buttos{
     text-align: center;
     }
-    #searchfirst .select_option .new_btn{
+   /* #searchfirst .select_option .new_btn{
     margin-left: 35px;
     width: 17%;
     display: inline-block;
     margin-right: 0px;
+    }*/
+    #searchfirst .select_option .new_btn {
+    margin-left: 6px;
+    width: 17%;
+    display: inline-block;
+    margin-right: 25px;
     }
 }
 @media only screen and (max-width: 769px){

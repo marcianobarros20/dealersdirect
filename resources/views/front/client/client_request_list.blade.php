@@ -8,10 +8,10 @@
            <?php //dd($RequestQueue);?> 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="brand-section">
-                    <div class="container">
+                    <div class="container cli-req">
                         <div class="">
                         @foreach($RequestQueue as $rkey=>$Request)
-                            <div class="col-xs-12 col-md-4 carousel_area">
+                            <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
                                 <div class="brand_request">
                                     <!-- Carousel ============ -->
                                 <div id = "myCarousel{{$rkey}}" class = "carousel slide">

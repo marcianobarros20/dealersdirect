@@ -75,7 +75,7 @@
 							class="active"
 						@endif
 					@endif
-				><a href="{{url('/services')}}">Services</a></li>
+				><a href="{{url('/services')}}">Privacy Policy</a></li>
 				<li 
 					@if(isset($typex))
 						@if($typex=="contact-us")
