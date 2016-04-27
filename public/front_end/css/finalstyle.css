@@ -840,8 +840,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 #searchfourth .select_option .text_new_area {
     width: 17%;
-    display: inline-block;
+    /*display: inline-block;*/
     /*margin-right: 36px;*/
+    float:left;
+    margin-left: 45px;
+    margin-right: -75px;
 }
 
 /*.text_new_area {
