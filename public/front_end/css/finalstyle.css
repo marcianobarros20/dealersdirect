@@ -1475,6 +1475,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .next_button_area {
     padding-bottom: 30px;
+    padding-top:20px;
     }
     .profile_form {
     border: 1px solid #F34B0A;
