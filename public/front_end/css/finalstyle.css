@@ -1320,7 +1320,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 0px;
 }
 .new_btn {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
     width: 50%;
     display: inline-block;
 }
@@ -1671,10 +1671,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display: inline-block;
     }*/
     .new_btn {
-    margin-left: 18px;
+    /*margin-left: 18px;*/
     width: 17%;
     display: inline-block;
-    margin-right: 18px;
+    /*margin-right: 18px;*/
     }
     #footer .pull-right {
     float: none !important;
