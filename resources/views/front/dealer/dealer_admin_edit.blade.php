@@ -19,6 +19,10 @@
 									    <label for="new_fname">Dealership Name:</label>
 									    <input type="text" value="{{$dealer_admin_details->dealer_parent->dealership_name}}" name="new_fname" class="form-control profile_control" readonly="true">
 								  	</div>
+								  	<div class="form-group">
+									    <label for="new_fname">Email/Username:</label>
+									    <input type="text" value="{{$dealer_admin_details->email}}" name="new_fname" class="form-control profile_control" readonly="true">
+								  	</div>
 				              		<div class="form-group">
 									    <label for="new_fname">Firstname:</label>
 									    <input type="text" value="{{$dealer_admin_details->first_name}}" name="new_fname" class="form-control profile_control">

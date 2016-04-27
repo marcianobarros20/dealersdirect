@@ -281,6 +281,31 @@ class DealerController extends BaseController {
                         RequestDealerLog::create($RequestDealerLog);
                     }
                 }
+                $Dealer = Dealer::where('id', $dealer_userid)->first();
+                
+                if($Dealer->parent_id==0){
+                    $Dealerset = Dealer::where('parent_id', $dealer_userid)->get();
+                    foreach ($Dealerset as $key => $eachdealer) {
+                        $DealerMakeMap['dealer_id']=$eachdealer->id;
+                        $DealerMakeMap['make_id']=$value;
+                        DealerMakeMap::create($DealerMakeMap);
+                        $RequestQueue_rowset=RequestQueue::where('make_id', '=', $value)->get();
+
+                        if(isset($RequestQueue_rowset)){
+                            foreach ($RequestQueue_rowset as $rqueueset) {
+                                    $RequestDealerLogx['dealer_id']=$dealer_userid;
+                                    $RequestDealerLogx['dealer_admin']=$eachdealer->id;
+                                    $RequestDealerLogx['request_id']=$rqueueset->id;
+                                    $RequestDealerLogx['make_id']=$rqueueset->make_id;
+                                    $RequestDealerLogx['status']=1;
+
+                                    RequestDealerLog::create($RequestDealerLogx);
+                                    //dd($RequestDealerLogx);
+                            }
+                        }
+                    }
+                }
+
             }
         }
         return redirect('dealer/dealer_make');

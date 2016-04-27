@@ -217,6 +217,14 @@ class AjaxController extends Controller
       $dealer_userid=Session::get('dealer_userid');
       DealerMakeMap::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
       RequestDealerLog::where('dealer_id', '=', $dealer_userid)->where('make_id', '=', $makeid)->delete();
+      $Dealer = Dealer::where('id', $dealer_userid)->first();
+      if($Dealer->parent_id==0){
+        $Dealerset = Dealer::where('parent_id', $dealer_userid)->get();
+        foreach ($Dealerset as $key => $eachdealer) {
+            DealerMakeMap::where('dealer_id', '=', $eachdealer->id)->where('make_id', '=', $makeid)->delete();
+            RequestDealerLog::where('dealer_id', '=', $dealer_userid)->where('dealer_admin', '=', $eachdealer->id)->where('make_id', '=', $makeid)->delete();
+        }
+      }
       echo "Deleted";
     }
     public function AddStyleToRequestqueue(){
