@@ -839,9 +839,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-right: 0px;
 }
 #searchfourth .select_option .text_new_area {
-    width: 14%;
+    width: 17%;
     display: inline-block;
-    margin-right: 36px;
+    /*margin-right: 36px;*/
 }
 
 /*.text_new_area {
@@ -1360,7 +1360,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-left: 20px;
     }
     .form_in_control {
-    width: 300px;
+    width: 100%;
     }
     .home_select_area {
     text-align: center;
@@ -1416,7 +1416,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border-radius: 0px;
     color: #fff;
     background-color: #F26722;
-    width: 300px;
+    width: 100%;
     height: 36px !important;
     }
     .c-p-b {
@@ -1747,7 +1747,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     border-radius: 0px;
     color: #fff;
     background-color: #F26722;
-    width: 151px;
+    width: 100%;
     height: 40px !important;
     }
     .d-v{
@@ -1766,7 +1766,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     /*margin-left: 35px;*/
     width: 17%;
     display: inline-block;
-    margin-right: 32px;
+    /*margin-right: 32px;*/
     }
     .home_second_buttons {
     text-align: center;
@@ -1836,7 +1836,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display: inline-block;
     margin-right: 1px;
     }
-    
+
 }
 @media only screen and (max-width: 769px){
     .c-p-b {

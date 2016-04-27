@@ -198,14 +198,14 @@
 
 .selectric-wrapper {
     margin-bottom: 10px;
-    width: 300px !important;
+    width: 100% !important;
     }
 }
 
 @media only screen and (max-width: 1024px){
 .selectric-wrapper {
     margin-bottom: 10px;
-    width: 150px;
+    width: 100%;
     }
 /*.form-in-control {
     border-radius: 0px;
