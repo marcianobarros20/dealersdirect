@@ -1631,6 +1631,130 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     display: inline-block;
     margin-right: 0px;
     }
+    select#make_search {
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;
+    }
+    select#make_search option{
+        width: 100%
+    }
+    select#model_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#condition_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#year_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px; 
+    }
+   input#oweamount{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    /*margin-bottom: 10px;*/
+    width: 100% !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;    
+    }
+    select#trademake_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;   
+    }
+    select#trademodel_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;    
+    }
+    select#tradecondition_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;    
+    }
+    select#tradeyear_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;    
+    }
+    #make_search option {
+    display: block;
+    padding: 15px;
+    color: #fff;
+    cursor: pointer;
+    width:100% !important;
+    background-color: #F26722;
+
+    }
+    #make_search option .selected {
+    color: #FFF !important;
+    width:100% !important;
+    background-color: #F26722;
+}
+#searchfourth .select_option .text_new_area {
+   /* width: 17%;*/
+    /* display: inline-block; */
+    /* margin-right: 36px; */
+    float: left;
+    margin-left: 0px;
+    /*margin-right: -75px;*/
+}
 }
 
 @media only screen and (min-width: 481px) and (max-width: 640px){
@@ -1726,6 +1850,50 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     /*#searchfirstnext{
     text-align: center;
     }*/
+    select#make_search {
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;
+    }
+    select#model_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#condition_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#year_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px; 
+    }
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1023px){
@@ -1842,6 +2010,50 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     width: 22%;
     display: inline-block;
     margin-right: 1px;
+    }
+    select#make_search {
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;
+    }
+    select#model_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#condition_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px;  
+    }
+    select#year_search{
+    border: 1px solid #C6611E !important;
+    background: #F26722 !important;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 31px !important;
+    font-weight: bold !important;
+    height: 38px; 
     }
 
 }
