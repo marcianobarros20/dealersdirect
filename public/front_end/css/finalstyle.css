@@ -1521,7 +1521,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .select_option {
     text-align: center !important;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
     padding-top: 25px;
     /*margin-left: 15px;*/
     }
