@@ -675,8 +675,11 @@ small{
     background-color: #F26722;
     /*width: 150px;*/
     height: 40px !important;
-    /*margin-left: 5px;*/
+     margin-left: -3px
 }
+/*.text_new_area input#oweamount {
+    margin-left: -20px !important;
+}*/
 /*.selectric-wrapper {
     margin-bottom: 10px;
     width: 150px !important;
@@ -1367,6 +1370,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }
     .form_in_control {
     width: 100%;
+    margin-left: 0px !important;
     }
     .home_select_area {
     text-align: center;
@@ -1424,6 +1428,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background-color: #F26722;
     width: 100%;
     height: 36px !important;
+    margin-left: 0px !important;
     }
     .c-p-b {
     width: 100%;
