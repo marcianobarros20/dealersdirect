@@ -1021,4 +1021,54 @@ class AjaxController extends Controller
         
         return view('front.ajax.get_all_edit_city',compact('City'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+    public function getMsrpRange(){
+
+        //print_r(Request::input());
+        $year_search=Request::input('year_search');
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $condition_search=Request::input('condition_search');
+        $Caryear=Caryear::where('make_id',$make_search)->where('carmodel_id',$model_search)->where('year',$year_search)->with('makes','models')->first();
+        $url = "https://api.edmunds.com/api/vehicle/v2/".$Caryear->makes->nice_name."/".$Caryear->models->nice_name."/".$Caryear->year."/styles?state=".strtolower($condition_search)."&view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        $price=array();
+                    $ch = curl_init();
+                    curl_setopt($ch,CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    $results=json_decode($result, true);
+                    //dd($results);
+                    foreach ($results['styles'] as $key => $value) {
+
+                        if(isset($value['price']['baseMSRP'])){
+                          $price[$value['price']['baseMSRP']]=$value['id'];  
+                        }
+                        
+                    }
+                    if(!empty($price)){
+                       $amortaization=array();
+                    $i=0;
+                     $max=max(array_keys($price));
+                     $min=min(array_keys($price));
+                    
+                        $up=0.00708333333*pow((1.00708333333),60);
+                        $down=(pow((1.00708333333),60))-1;
+                        $balmax=$max*($up/$down);
+                        $balmin=$min*($up/$down);
+                        $amortaization['max']['base']=$max;
+                        $amortaization['max']['monthly']=round($balmax,2);
+                        $amortaization['min']['base']=$min;
+                        $amortaization['min']['monthly']=round($balmin,2);
+                        
+                   
+                    $amortaization=json_encode($amortaization);
+                    return $amortaization; 
+                }else{
+                    return 0; 
+                }
+        
+
+    }
 }

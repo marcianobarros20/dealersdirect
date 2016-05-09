@@ -152,6 +152,7 @@ Route::post('ajax/getbidchistory/','Front\AjaxController@GetBidCHistory');
 Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
 Route::post('ajax/get_all_city/', 'Front\AjaxController@getAllCity');
 Route::post('ajax/get_all_edit_city/', 'Front\AjaxController@getAllEditCity');
+Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

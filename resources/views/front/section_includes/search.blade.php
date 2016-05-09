@@ -21,6 +21,16 @@
 		</div>
 	</div><!--  /container -->
 	<div class="container" id="searchseconed" style="display:none;">
+		<div class="col-xs-12 col-sm-12 select_option"  id="amortaization">
+			<div class="text_new_area" id="minauto">
+
+			</div>
+			<div class="text_new_area" id="toto">
+			TO
+			</div>
+			<div class="text_new_area" id="maxauto">
+			</div>
+		</div>
 		<div class="col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}

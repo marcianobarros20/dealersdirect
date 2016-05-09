@@ -90,8 +90,41 @@
           }
         });
         $('#nextfirst').click(function(){
-          $("#searchfirst").hide();
-          $("#searchseconed").show();
+          
+
+          var make_search=$('#make_search').val();
+          console.log(make_search);
+          var model_search=$('#model_search').val();
+          console.log(model_search);
+          var condition_search=$('#condition_search').val();
+          console.log(condition_search);
+          var year_search=$('#year_search').val();
+          console.log(year_search);
+          $.ajax({
+            dataType: 'json',
+            url: "<?php echo url('/');?>/ajax/getmsrp_range",
+            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              if(data!=0){
+                $("#minauto").html(data.min.base+"<br>"+data.min.monthly);
+                $("#maxauto").html(data.max.base+"<br>"+data.max.monthly);
+                $("#amortaization").show();
+                $("#searchfirst").hide();
+                $("#searchseconed").show();
+                // alert(data);
+                // $("#minauto").html(data.min.base);
+                // $("#maxauto").html(data.max.base);
+              }
+              else{
+                $("#amortaization").hide();
+                 $("#searchfirst").hide();
+                $("#searchseconed").show();
+              }
+            }
+          });
+          
+
           return false;
         });
         $('#backfirst').click(function(){

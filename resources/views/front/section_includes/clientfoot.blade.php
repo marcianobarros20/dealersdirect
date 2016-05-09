@@ -101,6 +101,16 @@ $(document).ready(function(){
         $('#nextfirst').click(function(){
           $("#searchfirst").hide();
           $("#searchseconed").show();
+
+          // var make_search=$('#make_search').val();
+          // console.log(make_search);
+          // var model_search=$('#model_search').val();
+          // console.log(model_search);
+          // var condition_search=$('#condition_search').val();
+          // console.log(condition_search);
+          // var year_search=$('#year_search').val();
+
+
           return false;
         });
         $('#backfirst').click(function(){
