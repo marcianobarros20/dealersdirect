@@ -913,7 +913,7 @@ class AjaxController extends Controller
                 }
             }
         }
-        dd($RS);
+        //dd($RS);
         //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
         return view('front.ajax.get_all_request',compact('RS'));
     }
@@ -1078,6 +1078,14 @@ class AjaxController extends Controller
         $BidQueue->req_contact=1;
         $BidQueue->details_of_actions=Request::input('acceptdetails');
         $BidQueue->save();
-        echo "Done";
+        $BidQueue->requestqueue_id;
+        $BidQueue->dealer_id;
+        $BidQueue->dealer_admin;
+        
+        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        $RequestDealerLog->req_contact=1;
+        
+        $RequestDealerLog->save();
+        
     }
 }
