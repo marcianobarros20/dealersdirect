@@ -36,10 +36,14 @@
 
             </div> 
             <h2>
-                @if($Bid->dealers->parent_id==0)
+            @if($Bid->req_contact=="1" && $Bid->payment_status=="1")
+            @if($Bid->dealers->parent_id==0)
             {!! $Bid->dealers->dealership_name !!} 
             @else
             {!! $Bid->dealers->dealer_parent->dealership_name !!} 
+            @endif
+            @else
+            Anyonymus
             @endif
             </h2>
             <div class="btns">

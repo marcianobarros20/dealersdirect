@@ -913,7 +913,7 @@ class AjaxController extends Controller
                 }
             }
         }
-        //dd($RS);
+        dd($RS);
         //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
         return view('front.ajax.get_all_request',compact('RS'));
     }
@@ -1070,5 +1070,14 @@ class AjaxController extends Controller
                 }
         
 
+    }
+    public function ContactDealerBid(){
+        
+        $Bidid=Request::input('requestid');
+        $BidQueue=BidQueue::where('id', $Bidid)->first();
+        $BidQueue->req_contact=1;
+        $BidQueue->details_of_actions=Request::input('acceptdetails');
+        $BidQueue->save();
+        echo "Done";
     }
 }

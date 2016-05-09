@@ -13,11 +13,16 @@
         </div>
         @endif 
     </div>
-    <h2><i class="fa fa-reply"></i> @if($Bid->dealers->parent_id==0)
+    <h2><i class="fa fa-reply"></i>
+            @if($Bid->req_contact=="1" && $Bid->payment_status=="1")
+            @if($Bid->dealers->parent_id==0)
             {!! $Bid->dealers->dealership_name !!} 
             @else
             {!! $Bid->dealers->dealer_parent->dealership_name !!} 
             @endif <small>{!! $Bid->dealers->created_at!!}</small></h2>
+            @else
+            Anyonymus
+            @endif
     <div class="information">
         <p>Monthly: {!! $Bid->monthly_amount !!}</p>
         <p>Total: {!! $Bid->total_amount !!}</p>
@@ -46,15 +51,20 @@
         @if($Bid->blocked==1)
         <button type="button" class="btn btn-danger">Blocked</button>
         @endif
-        @if($Bid->visable==1 && $Bid->blocked!=1 && $Bid->status!=2)
+        @if($Bid->visable==1 && $Bid->blocked!=1 && $Bid->status!=2 && $Bid->req_contact!="1")
+
         <div class="form-group">
             <label for="exampleInputName1">Details</label>
             <textarea type="name" class="form-control profile_control" rows="5" id="detresx" placeholder=""></textarea>
             <div class="btns">
-                <button type="button" data-request="{!! $Bid->id !!}" class="btn btn-default c-p accepttrigger"><i class="fa fa-check"></i> Accept</button>
+                <button type="button" data-request="{!! $Bid->id !!}" class="btn btn-default c-p contacttrigger"><i class="fa fa-check"></i> Contact</button>
                 <button type="button" data-request="{!! $Bid->id !!}"  class="btn btn-default c-p rejecttrigger"><i class="fa fa-times"></i> Reject</button>
                 <button type="button" data-request="{!! $Bid->id !!}"  class="btn btn-default c-p blocktrigger"><i class="fa fa-ban"></i> Block</button>
             </div>
+        </div>
+        @else
+        <div class="form-group">
+            <label for="exampleInputName1">Dealer Will Contact You Soon</label>
         </div>
         @endif
     </div>
@@ -83,20 +93,20 @@
           });
           return false;
   });
-  $('.accepttrigger').click(function(){
+  $('.contacttrigger').click(function(){
         var requestid=$(this).data("request");
           var acceptdetails=$("#detresx").val();
           console.log(requestid);
           console.log(acceptdetails);
           
           $.ajax({
-                  url: "../../ajax/bidaccept",
+                  url: "../../ajax/bidcontact",
                   data: {requestid:requestid,acceptdetails:acceptdetails,_token: 'LmnW2p5nvlPNeVCzA9OXLmOKhnovxzVmAp2UsOkE'
-},
+                },
                   type :"post",
                   success: function( data ) {
                     if(data){
-                      window.location.reload();
+                     // window.location.reload();
                     }
                     
                   
