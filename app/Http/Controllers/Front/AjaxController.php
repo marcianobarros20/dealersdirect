@@ -19,6 +19,7 @@ use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
+use App\Model\ContactList;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -1084,8 +1085,17 @@ class AjaxController extends Controller
         
         $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
         $RequestDealerLog->req_contact=1;
-        
+        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
         $RequestDealerLog->save();
+        $ContactList['request_id']=$BidQueue->requestqueue_id;
+        $ContactList['bid_id']=$BidQueue->id;
+        $ContactList['dealer_id']=$BidQueue->dealer_id;
+        $ContactList['admin_id']=$BidQueue->dealer_admin;
+        $ContactList['client_id']=$RequestQueue->client_id;
+        $ContactList['contact_details']=Request::input('acceptdetails');
+        $ContactList['payment_status']=0;
+        $ContactList['status']=0;
+        ContactList::create($ContactList);
         
     }
 }

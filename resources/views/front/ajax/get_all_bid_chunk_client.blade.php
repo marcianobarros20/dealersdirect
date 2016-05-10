@@ -1,6 +1,7 @@
 @foreach($BidQueue as $key=>$Bid)
+
 <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
-        <div class="brand_request">
+        <div class="brand_request" @if($Bid->req_contact=="1")style="background-color:#fff0e6;"@endif>
             
             <div id = "myCarousel{{$key}}" class = "carousel slide">
 
