@@ -892,6 +892,7 @@ class DealerController extends BaseController {
             }else{
             $ContactDetail['imx']=""; 
             }
-        dd($ContactDetail);
+        //dd($ContactDetail);
+        return view('front.dealer.contact_details',compact('ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
 }
