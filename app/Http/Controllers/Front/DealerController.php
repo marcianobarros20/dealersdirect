@@ -17,6 +17,7 @@ use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\DealerDetail;                                 /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
+use App\Model\ContactList;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -857,5 +858,40 @@ class DealerController extends BaseController {
                 }
             }
     }
+    public function DealerContactList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        if($Dealer->parent_id==0){
+            $ContactList=ContactList::where('dealer_id',$dealer_userid)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+        }else{
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->with('request_details','bid_details','client_details')->get();
+        }
+        
+        foreach ($ContactList as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->get();
+             $ContactList[$key]['imx']=$imx;
+            }else{
+               $ContactList[$key]['imx']=""; 
+            }
 
+        }
+        // foreach ($ContactList as $key => $Contact) {
+        //      dd($Contact->imx->local_path_smalll);
+        // }
+        
+        return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+    public function DealerContactDetails($id=null){
+        $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->first();
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
+            if($countimg!=0){
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $ContactDetail['imx']=$imx;
+            }else{
+            $ContactDetail['imx']=""; 
+            }
+        dd($ContactDetail);
+    }
 }
