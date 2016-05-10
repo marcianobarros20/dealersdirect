@@ -884,7 +884,7 @@ class DealerController extends BaseController {
         return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function DealerContactDetails($id=null){
-        $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->first();
+        $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
             $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
             if($countimg!=0){
             $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();

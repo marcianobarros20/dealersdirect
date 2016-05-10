@@ -49,20 +49,47 @@
 					
 				<div class="brand-sec  bidlist">
 					<div class="col-xs-12 col-sm-12 col-md-12  carousel_area">
-						<div  class="brand_request" style="background-color:#fff0e6;">
-							<div class="row img-area">
-								<div class="col-xs-12 col-sm-12 col-md-6 image-view">
-									<img src="images/pic1.jpg" class="img-responsive" alt="Responsive image">
-								</div>
-								<div class="col-xs-12 col-sm-12 col-md-6 image-view">
-									<img src="images/pic2.jpg" class="img-responsive" alt="Responsive image">
-								</div>
+						<div  class="brand_request">
+							<div id = "myCarousel1" class = "carousel slide deal-caro">
+
+
+							<ol class = "carousel-indicators">
+							@if(!empty($ContactDetail->bid_details->bid_image))
+							@foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
+							<li data-target = "#myCarousel1" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
+							@endforeach
+							@else
+							<li data-target = "#myCarousel1" data-slide-to = "0" class = "active"></li>
+							@endif
+							</ol>   
+
+
+							<div class = "carousel-inner client-caro-img">
+							@if(!empty($ContactDetail->bid_details->bid_image))
+							@foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
+							<div class = "item @if($vx==0) active @endif">
+							<img src = "{{ url('/')}}/public/uploads/project/{{$img->image}}" alt = "x">
 							</div>
-							<h2>Acura GG</h2>
+							@endforeach 
+							@else
+							<div class = "item active">
+							<img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+							</div>
+							@endif 
+							</div>
+
+
+							<a class = "carousel-control left" href = "#myCarousel1" data-slide = "prev">&lsaquo;</a>
+							<a class = "carousel-control right" href = "#myCarousel1" data-slide = "next">&rsaquo;</a>
+							</div>
+							<h2>Your Responces</h2>
 							<div class="btns">
-								<button type="button" class="btn btn-default c-p-b">Monthly 675</button>
-								<button type="button" class="btn btn-default c-p-b">67500</button>
-								<button type="button" class="btn btn-default c-p-b">OneTime:3000</button>
+								<button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
+								<button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
+								<button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details_of_actions}}</button>
+								@if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
+								<button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
+								@endif
 							</div>
 							<div class="btn-group">
 								<button type="button" class="btn btn-success">View</button>
