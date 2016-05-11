@@ -121,39 +121,42 @@
 	</div><!--  /container --> 
 	<div class="container" id="searchfifth" style="display:none;">
 		<div class="col-xs-12 col-sm-12 col-md-12 top-overview-box">
-			<h2>Overview</h2>
+			<!-- <h2>Overview</h2> -->
 			<div class="overview-box-section">
 				<div class="overview-box setslider">
 					
+				</div> 
+				<div class="overview-box">
+					<p>New 2015 audi</p>
+					<p>Msrp range: 3431-12345</p>
+					<p>Monthly payment: 6453-14243</p>
+					<p><span>Total budget:</span> 234567.0 <span class="tooltiptext">Tooltip text</span></p>
+					<p><span>Monthly amount:</span> 32143</p>
+					<a href="#" class="overview-edit">Update details budget</a>
 				</div>
 				<div class="overview-box">
-					<p>Car name= Acura</p>
-					<p>Model Name= CL</p>
-					<p>Condition= used</p>
-					<p>Model year= 1998</p>
-					<a href="#" class="overview-edit">Edit</a>
-				</div>
-				<div class="overview-box">
-					<p>Total amt= 234567</p>
-					<p>monthly amt= 321043</p>
-					<a href="#" class="overview-edit">Edit</a>
-				</div>
-				<div class="overview-box">
-					<p>Trade in= Yes</p>
-					<p>Owe money= yes</p>
-					<p>Owe amt= 23211</p>
-					<a href="#" class="overview-edit">Edit</a>
-				</div>
-				<div class="overview-box">
-					<p>Car name= Acura</p>
-					<p>Model Name= CL</p>
-					<p>Condition= used</p>
-					<p>Model year= 1998</p>
-					<a href="#" class="overview-edit">Edit</a>
+					<div id="backfifth" style="display:none;">
+					    <button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
+					</div>
+					<div id="fifthback" style="display:none;">
+						<button type="button"  id="third" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+					</div>
+					<div class="home_next_btn">
+						
+						<div id="donetes" data-appear-animation="slideInRight">
+							
+							<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button><br>
+							
+							<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
+							
+							
+						</div>
+						
+					</div>
 				</div>
 			</div>	
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-12"  id="backfifth" style="display:none;">
+		<!-- <div class="col-xs-12 col-sm-12 col-md-12"  id="backfifth" style="display:none;">
 				<button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
 		</div>
 			<div class="col-xs-12 col-sm-12 col-md-12" id="fifthback" style="display:none;">
@@ -166,11 +169,8 @@
 				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button><br>
 				
 				<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
-				
-				
 			</div>
-			
-		</div>
+		</div> -->
 	</div><!--  /container -->
 	
 </section>
