@@ -131,25 +131,25 @@
 					<p>Model Name= CL</p>
 					<p>Condition= used</p>
 					<p>Model year= 1998</p>
-					<a href="#">Edit</a>
+					<a href="#" class="overview-edit">Edit</a>
 				</div>
 				<div class="overview-box">
 					<p>Total amt= 234567</p>
 					<p>monthly amt= 321043</p>
-					<a href="#">Edit</a>
+					<a href="#" class="overview-edit">Edit</a>
 				</div>
 				<div class="overview-box">
 					<p>Trade in= Yes</p>
 					<p>Owe money= yes</p>
 					<p>Owe amt= 23211</p>
-					<a href="#">Edit</a>
+					<a href="#" class="overview-edit">Edit</a>
 				</div>
 				<div class="overview-box">
 					<p>Car name= Acura</p>
 					<p>Model Name= CL</p>
 					<p>Condition= used</p>
 					<p>Model year= 1998</p>
-					<a href="#">Edit</a>
+					<a href="#" class="overview-edit">Edit</a>
 				</div>
 			</div>	
 		</div>

@@ -12,7 +12,7 @@
 				<div id = "myCarousel" class = "carousel slide">
 				   
 				   <!-- Carousel indicators -->
-				    <ol class = "carousel-indicators">
+				    <ol class = "carousel-indicators carousel-indicatoredit">
 				    @foreach($EdmundsMakeModelYearImage as $key=>$Img)
 					    <li data-target = "#myCarousel" data-slide-to = {{$key}} 
 					    @if($key==0)

@@ -747,7 +747,7 @@ small{
     text-align: left;
 }
 
-.top-overview-box a {
+.top-overview-box a.overview-edit {
     background: #fff;
     font-size: 10px;
     padding: 0 10px;
@@ -760,7 +760,7 @@ small{
     box-shadow: 1px 1px 1px 1px rgb(208, 80, 17);
 }
 
-.top-overview-box a:hover {
+.top-overview-box a.overview-edit:hover {
     background: #000;
     color: #fff;
     box-shadow: 1px 1px 1px 1px rgb(208, 80, 17);
@@ -794,6 +794,12 @@ small{
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-indicators.carousel-indicatoredit li {
+    width: 5px;
+    height: 5px;
+    margin: 1px;
 }
 
 @media only screen and (max-width: 739px){
