@@ -775,6 +775,13 @@ small{
     
 }
 
+#minauto, #maxauto{
+    border: 1px solid #F26722;
+    box-shadow: 1px 1px 5px 1px #bababa;
+    padding: 3px;
+    border-radius: 4px;
+}
+
 @media only screen and (max-width: 739px){
     .overview-box:first-child {
         margin-bottom: 20px;
