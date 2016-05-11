@@ -777,9 +777,18 @@ small{
 
 #minauto, #maxauto{
     border: 1px solid #F26722;
-    box-shadow: 1px 1px 5px 1px #bababa;
+    box-shadow: 1px 1px 3px 1px #bababa;
     padding: 3px;
     border-radius: 4px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#minauto:hover, #maxauto:hover{
+    color: #000;
+    background-color: #e6e6e6;
+    box-shadow: none;
+    border-color: #adadad;
 }
 
 @media only screen and (max-width: 739px){
