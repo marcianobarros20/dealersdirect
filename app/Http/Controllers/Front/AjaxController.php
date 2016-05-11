@@ -1098,4 +1098,73 @@ class AjaxController extends Controller
         ContactList::create($ContactList);
         
     }
+    public function GetImageView(){
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
+        $Year=Request::input('year_search');
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        
+        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
+
+        if($EdmundsMakeModelYearImagecount==0){
+            $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?category=exterior&pagenum=1&pagesize=10&view=basic&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $resuls=json_decode($result, true);
+            //dd($resuls);
+                foreach ($resuls['photos'] as $photoskey => $photos) {
+                    $makephoto['make_id']=$Make->id;
+                    $makephoto['model_id']=$Model->id;
+                    $makephoto['year_id']=$Year;
+                    $makephoto['title']=$photos['title'];
+                    $makephoto['category']=($photos['category'] ?: '');
+                    foreach ($photos['sources'] as $sources) {
+                        if($sources['size']['width']=="500"){
+                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                        }
+                        if($sources['size']['width']=="1600"){
+                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                        }
+                        if($sources['size']['width']=="276"){
+                            $makephoto['edmunds_path_small']=$sources['link']['href'];
+                        }
+                    }
+                    if(!isset($makephoto['edmunds_path_big'])){
+                        foreach ($photos['sources'] as $sourcesx) {
+                            if($sourcesx['size']['width']==$photos['originalSize']['width']){
+                                $makephoto['edmunds_path_big']=$sourcesx['link']['href'];
+                            }
+                        }
+                    }
+                    $bcontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_big']);
+                    $bnpath=time().".jpg";
+                    $bigpathe="public/edmunds/make/big/".$bnpath;
+                    $fbp = fopen($bigpathe, "w");
+                    fwrite($fbp, $bcontent);
+                    fclose($fbp);
+
+                    $scontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_small']);
+                    $smpath=time().".jpg";
+                    $smallpathe="public/edmunds/make/small/".$smpath;
+                    $fsp = fopen($smallpathe, "w");
+                    fwrite($fsp, $scontent);
+                    fclose($fsp);
+                    $makephoto['local_path_big']=$bnpath;
+                    $makephoto['local_path_smalll']=$smpath;
+                    EdmundsMakeModelYearImage::create($makephoto);
+
+                }
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+        }else{
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+        }
+        //dd($EdmundsMakeModelYearImage);
+       return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
+    }
 }

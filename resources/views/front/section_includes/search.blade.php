@@ -123,7 +123,9 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 top-overview-box">
 			<h2>Overview</h2>
 			<div class="overview-box-section">
-				<div class="overview-box"><img src="http://localhost/dealers/public/front_end/images/demo-image.jpg"></div>
+				<div class="overview-box setslider">
+					
+				</div>
 				<div class="overview-box">
 					<p>Car name= Acura</p>
 					<p>Model Name= CL</p>

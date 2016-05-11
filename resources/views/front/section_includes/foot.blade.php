@@ -106,20 +106,23 @@
             data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
+              
+              
               if(data!=0){
-                $("#minauto").html(data.min.base+"<br>"+data.min.monthly);
-                $("#maxauto").html(data.max.base+"<br>"+data.max.monthly);
-                $("#amortaization").show();
-                $("#searchfirst").hide();
-                $("#searchseconed").show();
-                // alert(data);
-                // $("#minauto").html(data.min.base);
-                // $("#maxauto").html(data.max.base);
+                $("#minauto").html("Minimum Price<br>"+"Total :"+data.min.base+"<br>"+"Monthly :"+data.min.monthly);
+                $("#maxauto").html("Maximum Price<br>"+"Total :"+data.max.base+"<br>"+"Monthly :"+data.max.monthly);
+                getimageedmunds(make_search,model_search,condition_search,year_search,1);
+                //$("#amortaization").show();
+                //$("#searchfirst").hide();
+                //$("#searchseconed").show();
+                alert("yes");
               }
               else{
-                $("#amortaization").hide();
-                 $("#searchfirst").hide();
-                $("#searchseconed").show();
+                getimageedmunds(make_search,model_search,condition_search,year_search,0);
+                // $("#amortaization").hide();
+                // $("#searchfirst").hide();
+                // $("#searchseconed").show();
+                alert("no");
               }
             }
           });
@@ -127,6 +130,32 @@
 
           return false;
         });
+        function getimageedmunds(make_search,model_search,condition_search,year_search,e){
+          // alert(make_search);
+          // alert(model_search);
+          // alert(condition_search);
+          // alert(year_search);
+          console.log("abcd");
+          $.ajax({
+            
+            url: "<?php echo url('/');?>/ajax/getimagesviews",
+            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              if(e==1){
+                $("#amortaization").show();
+                $("#searchfirst").hide();
+                $("#searchseconed").show();
+                $(".setslider").html(data);
+              }else{
+                $("#amortaization").hide();
+                $("#searchfirst").hide();
+                $("#searchseconed").show();
+                $(".setslider").html(data);
+              }
+            }
+          });
+        }
         $('#backfirst').click(function(){
           $("#searchfirst").show();
           $("#searchseconed").hide();
