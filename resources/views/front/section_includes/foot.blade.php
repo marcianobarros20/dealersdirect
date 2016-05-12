@@ -100,6 +100,7 @@
           console.log(condition_search);
           var year_search=$('#year_search').val();
           console.log(year_search);
+          $("#dvLoading").show();
           $.ajax({
             dataType: 'json',
             url: "<?php echo url('/');?>/ajax/getmsrp_range",
@@ -111,18 +112,30 @@
               if(data!=0){
                 $("#minauto").html("Minimum Price<br>"+"Total :"+data.min.base+"<br>"+"Monthly :"+data.min.monthly);
                 $("#maxauto").html("Maximum Price<br>"+"Total :"+data.max.base+"<br>"+"Monthly :"+data.max.monthly);
+                $("#minmsrp").html(data.min.base);
+                $("#maxmsrp").html(data.max.base);
+                $("#minmp").html(data.min.monthly);
+                $("#maxmp").html(data.max.monthly);
+                $("#fmp").show();
+                $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
-                //$("#amortaization").show();
-                //$("#searchfirst").hide();
-                //$("#searchseconed").show();
-                alert("yes");
+                // //$("#amortaization").show();
+                // //$("#searchfirst").hide();
+                // //$("#searchseconed").show();
+                // alert("yes");
               }
               else{
+                $("#fmp").hide();
+                $("#fmsrfp").hide();
+                $("#minmsrp").html('');
+                $("#maxmsrp").html('');
+                $("#minmp").html('');
+                $("#maxmp").html('');
                 getimageedmunds(make_search,model_search,condition_search,year_search,0);
-                // $("#amortaization").hide();
-                // $("#searchfirst").hide();
-                // $("#searchseconed").show();
-                alert("no");
+                // // $("#amortaization").hide();
+                // // $("#searchfirst").hide();
+                // // $("#searchseconed").show();
+                // alert("no");
               }
             }
           });
@@ -130,12 +143,27 @@
 
           return false;
         });
+        $("#upbudget").click(function(){
+          $("#searchseconed").show();
+          $("#searchfifth").hide();
+          return false;
+        });
         function getimageedmunds(make_search,model_search,condition_search,year_search,e){
           // alert(make_search);
           // alert(model_search);
           // alert(condition_search);
           // alert(year_search);
-          console.log("abcd");
+          // console.log("abcd");
+          $.ajax({
+            dataType: 'json',
+            url: "<?php echo url('/');?>/ajax/getmakemodel",
+            data: {make_search:make_search,model_search:model_search,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              $("#carselect").html(condition_search+" "+data.Makes+" "+data.Models+" "+year_search);
+            }
+
+          });
           $.ajax({
             
             url: "<?php echo url('/');?>/ajax/getimagesviews",
@@ -143,11 +171,13 @@
             type :"post",
             success: function( data ) {
               if(e==1){
+                $("#dvLoading").hide();
                 $("#amortaization").show();
                 $("#searchfirst").hide();
                 $("#searchseconed").show();
                 $(".setslider").html(data);
               }else{
+                $("#dvLoading").hide();
                 $("#amortaization").hide();
                 $("#searchfirst").hide();
                 $("#searchseconed").show();
@@ -162,6 +192,55 @@
           return false;
         });
         $('#nextsecond').click(function(){
+
+          var minmsrp =parseFloat($("#minmsrp").html());
+          var maxmsrp =parseFloat($("#maxmsrp").html());
+          var minmp=parseFloat($("#minmp").html());
+          var maxmp=parseFloat($("#maxmp").html());
+          var tamo=parseFloat($("#tamo").val());
+          var mtamo=parseFloat($("#mtamo").val());
+          if((isNaN(tamo) || tamo=="") ){
+              alert("Sorry Please fill The Total Amount");
+              return false;
+            }
+            if((isNaN(mtamo) || mtamo=="")){
+              alert("Sorry Please Fill The Monthly Amount");
+              return false;
+            }
+            if(minmsrp!="" && maxmsrp!="" && minmp!="" && maxmp!="" && tamo!="" && mtamo!="" ){
+                if(tamo<minmsrp){
+                  $("#tb").html(tamo.toFixed( 2 ));
+                  $("#tb").removeClass("value-green");
+                  $("#tb").addClass("value-red");
+                  $("#tttb").html("Total budget Is Less than MSRP Range");
+                }else{
+                  $("#tb").html(tamo.toFixed( 2 ));
+                  $("#tb").removeClass("value-red");
+                  $("#tb").addClass("value-green");
+                  $("#tttb").html("Total budget Is With In The MSRP Range");
+                }
+                if(mtamo<minmp){
+                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").removeClass("value-green");
+                  $("#mb").addClass("value-red");
+                  $("#ttmb").html("Mounthly budget Is Less than Monthly Range");
+                }else{
+                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").removeClass("value-red");
+                  $("#mb").addClass("value-green");
+                  $("#ttmb").html("Mounthly budget Is With In The Monthly Range");
+                }
+            }
+            else{
+              alert("YES");
+              // $("#tb").removeClass("value-red");
+              // $("#tb").removeClass("value-green");
+              //  $("#mb").removeClass("value-red");
+              // $("#mb").removeClass("value-green");
+              $("#tb").html(tamo.toFixed( 2 ));
+              $("#mb").html(mtamo.toFixed( 2 ));
+            }
+            
           $("#searchseconed").hide();
           $("#searchthird").show();
           return false;

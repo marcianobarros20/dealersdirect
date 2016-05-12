@@ -128,11 +128,11 @@
 				</div> 
 				<div class="overview-box">
 					<p id="carselect">New 2015 audi</p>
-					<p >Msrp range: <span class="overview-values">3431</span>-<span class="overview-values">12345</span></p>
-					<p>Monthly payment: <span class="overview-values">3431</span>-<span class="overview-values">12345</span></p>
-					<p><span class="budget-label">Total budget:</span> <span class="overview-values value-green">3431</span><span class="tooltiptext">Tooltip text</span></p>
-					<p><span class="budget-label">Monthly amount:</span> <span class="overview-values value-red">3431</span></p>
-					<a href="#" class="overview-edit">Update details budget</a>
+					<p id="fmsrfp">Msrp range: <span class="overview-values" id="minmsrp">3431</span> - <span class="overview-values"  id="maxmsrp">12345</span></p>
+					<p id="fmp">Monthly payment: <span class="overview-values" id="minmp">3431</span> - <span class="overview-values"  id="maxmp">12345</span></p>
+					<p><span class="budget-label">Total budget:</span> <span class="overview-values " id="tb">3431</span><span class="tooltiptext" id="tttb">Tooltip text</span></p>
+					<p><span class="budget-label">Monthly amount:</span> <span class="overview-values "  id="mb">3431</span><span class="tooltiptext" id="ttmb">Tooltip text</span></p>
+					<a href="#" class="overview-edit" id="upbudget">Update Budget</a>
 				</div>
 				<div class="overview-box">
 					<div id="backfifth" style="display:none;">

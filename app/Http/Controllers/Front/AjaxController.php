@@ -1058,9 +1058,9 @@ class AjaxController extends Controller
                         $down=(pow((1.00708333333),60))-1;
                         $balmax=$max*($up/$down);
                         $balmin=$min*($up/$down);
-                        $amortaization['max']['base']=$max;
+                        $amortaization['max']['base']=sprintf('%0.2f', $max);
                         $amortaization['max']['monthly']=round($balmax,2);
-                        $amortaization['min']['base']=$min;
+                        $amortaization['min']['base']=sprintf('%0.2f', $min,2);
                         $amortaization['min']['monthly']=round($balmin,2);
                         
                    
@@ -1166,5 +1166,14 @@ class AjaxController extends Controller
         }
         //dd($EdmundsMakeModelYearImage);
        return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
+    }
+    public function GetMakeModel(){
+    $Makes=Request::input('make_search');
+    $Models=Request::input('model_search');
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        $viewdet['Makes']=$Make->name;
+        $viewdet['Models']=$Model->name;
+        return $viewdet=json_encode($viewdet);
     }
 }
