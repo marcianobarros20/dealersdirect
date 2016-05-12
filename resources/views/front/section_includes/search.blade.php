@@ -21,6 +21,16 @@
 		</div>
 	</div><!--  /container -->
 	<div class="container" id="searchseconed" style="display:none;">
+		<div class="col-xs-12 col-sm-12 select_option"  id="amortaization">
+			<div class="text_new_area" id="minauto">
+
+			</div>
+			<div class="text_new_area" id="toto">
+			TO
+			</div>
+			<div class="text_new_area" id="maxauto">
+			</div>
+		</div>
 		<div class="col-xs-12 col-sm-12 select_option">
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}
@@ -110,10 +120,45 @@
 		<!-- </div> -->
 	</div><!--  /container --> 
 	<div class="container" id="searchfifth" style="display:none;">
-		
-		<div class="col-xs-12 col-sm-12 col-md-12"  id="backfifth" style="display:none;">
+		<div class="col-xs-12 col-sm-12 col-md-12 top-overview-box">
+			<!-- <h2>Overview</h2> -->
+			<div class="overview-box-section">
+				<div class="overview-box setslider">
+					
+				</div> 
+				<div class="overview-box">
+					<p id="carselect">New 2015 audi</p>
+					<p id="fmsrfp">Msrp range: <span class="overview-values" id="minmsrp">3431</span> - <span class="overview-values"  id="maxmsrp">12345</span></p>
+					<p id="fmp">Monthly payment: <span class="overview-values" id="minmp">3431</span> - <span class="overview-values"  id="maxmp">12345</span></p>
+					<p><span class="budget-label">Total budget:</span> <span class="overview-values " id="tb">3431</span><span class="tooltiptext" id="tttb">Tooltip text</span></p>
+					<p><span class="budget-label">Monthly amount:</span> <span class="overview-values "  id="mb">3431</span><span class="tooltiptext" id="ttmb">Tooltip text</span></p>
+					<a href="#" class="overview-edit" id="upbudget">Update Budget</a>
+				</div>
+				<div class="overview-box">
+					<div id="backfifth" style="display:none;">
+					    <button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
+					</div>
+					<div id="fifthback" style="display:none;">
+						<button type="button"  id="third" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
+					</div>
+					<div class="home_next_btn">
+						
+						<div id="donetes" data-appear-animation="slideInRight">
+							
+							<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button><br>
+							
+							<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
+							
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>	
+		</div>
+		<!-- <div class="col-xs-12 col-sm-12 col-md-12"  id="backfifth" style="display:none;">
 				<button type="button"  id="four" class="btn btn-warning next_btn_next sea-btn"><i class="fa fa-share-square-o"></i> Back</button>
-			</div>
+		</div>
 			<div class="col-xs-12 col-sm-12 col-md-12" id="fifthback" style="display:none;">
 				<button type="button"  id="third" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Back</button>
 			</div>
@@ -124,11 +169,8 @@
 				<button type="button"  id="dstes" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign Up</button><br>
 				
 				<button type="button" id="newdeset" class="btn btn-warning next_btn_next"><i class="fa fa-share-square-o"></i> Sign In</button>
-				
-				
 			</div>
-			
-		</div>
+		</div> -->
 	</div><!--  /container -->
 	
 </section>

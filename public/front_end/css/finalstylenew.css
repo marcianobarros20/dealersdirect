@@ -710,6 +710,236 @@ small{
     color: #FFF !important;
 }
 
+
+
+.top-overview-box{
+    /*background: #f60;
+    padding-bottom: 20px;*/
+}
+
+.top-overview-box h2{
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 5px;
+}
+
+.overview-box {
+    border: 1px solid #F26722;
+    position: relative;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    width: 30%;
+    height: 200px;
+}
+
+.overview-box .next_btn_next{
+    width: 100%;
+}
+
+.top-overview-box p{
+    color: #F26722;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin: 0 3px;
+    line-height: 20px;
+    text-align: left;
+}
+
+.top-overview-box p span.budget-label{
+    display: inline-block;
+    width: 56%;
+}
+.top-overview-box p span.overview-values{
+    display: inline;
+    width: auto;
+}
+
+.top-overview-box p span.value-green{
+    color: green;
+}
+
+.top-overview-box p span.value-red{
+    color: red;
+}
+
+.top-overview-box p span.tooltiptext {
+    display: none;
+    position: absolute;
+    top: 35%;
+    left: 75%;
+    width: 25%;
+    z-index: 100;
+    background: #F26722;
+    color: #fff;
+    -moz-border-radius: 5px; /* this works only in camino/firefox */
+    -webkit-border-radius: 5px; /* this is just for Safari */
+    border-radius: 5px;
+    font-size: 7px;
+    padding: 2px;
+    line-height: 15px;
+    box-shadow: 0 1px 3px 0 #D8D8D8;
+}
+
+#ttmb{
+    top: 45%;
+}
+
+.top-overview-box p .tooltiptext::before{
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #F26722;
+    left: -5px;
+    top: 7px;
+}
+
+.top-overview-box p:hover .tooltiptext{
+    display: block;
+}
+
+.top-overview-box a.overview-edit {
+    background: #F26722;
+    font-size: 10px;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 25px;
+    left: 40px;
+    box-shadow: 1px 1px 1px 1px rgb(208, 80, 17);
+}
+
+.top-overview-box a.overview-edit:hover {
+    border:: 1px solid #F26722;
+    color: #F26722;
+    box-shadow: 1px 1px 1px 1px rgb(208, 80, 17);
+    text-decoration: none;
+    background: #fff;
+}
+
+.overview-box:first-child {
+    margin: 0;
+}
+
+.top-overview-box img{
+    width: 100%;
+    height: 100%;
+    
+}
+
+#minauto, #maxauto{
+    border: 1px solid #F26722;
+    box-shadow: 1px 1px 3px 1px #bababa;
+    padding: 3px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+#minauto:hover, #maxauto:hover{
+    color: #000;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-indicators.carousel-indicatoredit{
+   bottom: 0;
+}
+
+.carousel-indicators.carousel-indicatoredit li {
+    width: 5px;
+    height: 5px;
+    margin: 1px;
+}
+
+#myCarousel .carousel-inner>.item>img{
+    height: 175px;
+}
+
+
+
+@media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){
+    .overview-box .home_next_btn {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+
+    }
+}
+
+@media only screen and (max-width: 740px){
+    .overview-box:first-child {
+        margin-bottom: 20px;
+    }
+
+    .overview-box {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .top-overview-box img {
+        width: 30%;
+    }
+
+    .top-overview-box p {
+        text-align: center;
+    }
+
+    .top-overview-box a.overview-edit{
+        position: relative;
+        bottom: 0;
+        left: 0;
+    }
+
+    #myCarousel .carousel-inner>.item>img {
+        height: auto;
+        margin: auto;
+    }
+
+    .top-overview-box p span.tooltiptext {
+        top: 48%;
+        left: 65%;
+        width: 15%;
+    }
+
+    #ttmb{
+        top: 60%;
+    }
+
+    .top-overview-box p span.budget-label {
+        display: inline;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 639px){
+    select#make_search, select#model_search, select#condition_search, select#year_search {
+        border: 1px solid #C6611E !important;
+        background: #F26722 !important;
+        margin-bottom: 10px;
+        width: 100%;
+        color: #fff !important;
+        font-size: 10px !important;
+        line-height: 31px !important;
+        font-weight: bold !important;
+        height: 38px;
+    }
+}
 /**********CSS OF BUFFER PAGE************/
 .buffer{
    background-color: RGBA(0, 0, 0, 0.77); 
@@ -2079,3 +2309,5 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }*/
    
 }
+
+/*prodipto*/

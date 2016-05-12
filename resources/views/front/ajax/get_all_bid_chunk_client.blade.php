@@ -1,6 +1,7 @@
 @foreach($BidQueue as $key=>$Bid)
+
 <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
-        <div class="brand_request">
+        <div class="brand_request" @if($Bid->req_contact=="1")style="background-color:#fff0e6;"@endif>
             
             <div id = "myCarousel{{$key}}" class = "carousel slide">
 
@@ -36,10 +37,14 @@
 
             </div> 
             <h2>
-                @if($Bid->dealers->parent_id==0)
+            @if($Bid->req_contact=="1" && $Bid->payment_status=="1")
+            @if($Bid->dealers->parent_id==0)
             {!! $Bid->dealers->dealership_name !!} 
             @else
             {!! $Bid->dealers->dealer_parent->dealership_name !!} 
+            @endif
+            @else
+            Anyonymus
             @endif
             </h2>
             <div class="btns">

@@ -152,6 +152,10 @@ Route::post('ajax/getbidchistory/','Front\AjaxController@GetBidCHistory');
 Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
 Route::post('ajax/get_all_city/', 'Front\AjaxController@getAllCity');
 Route::post('ajax/get_all_edit_city/', 'Front\AjaxController@getAllEditCity');
+Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
+Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
+Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
+Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -190,6 +194,8 @@ Route::post('dealer/admins/update/{update_id}', ['uses' => 'Front\DealerControll
 Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 
+Route::get('dealers/contact_list', ['uses' => 'Front\DealerController@DealerContactList','as' => 'dealer.contact.list']);
+Route::get('dealer/contact/detail/{contact_id}', ['uses' => 'Front\DealerController@DealerContactDetails','as' => 'dealer.contact.details']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

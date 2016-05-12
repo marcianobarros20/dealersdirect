@@ -69,6 +69,13 @@
                 				</li>
                 				@endif 
                                 <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
+
+                                </li>
+                                <li><a href="<?php echo url('/');?>/dealers/contact_list">Contact</a>
+                                
+                                </li>
+                                <li><a href="<?php echo url('/');?>/dealers/lead_list">Lead</a>
+                                
                                 </li>
                                 <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
 

@@ -19,6 +19,7 @@ use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
+use App\Model\ContactList;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -1020,5 +1021,159 @@ class AjaxController extends Controller
         $City=[''=>'Select City']+City::where('state_id',$state_id)->lists('city', 'id')->all();
         
         return view('front.ajax.get_all_edit_city',compact('City'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+    }
+    public function getMsrpRange(){
+
+        //print_r(Request::input());
+        $year_search=Request::input('year_search');
+        $make_search=Request::input('make_search');
+        $model_search=Request::input('model_search');
+        $condition_search=Request::input('condition_search');
+        $Caryear=Caryear::where('make_id',$make_search)->where('carmodel_id',$model_search)->where('year',$year_search)->with('makes','models')->first();
+        $url = "https://api.edmunds.com/api/vehicle/v2/".$Caryear->makes->nice_name."/".$Caryear->models->nice_name."/".$Caryear->year."/styles?state=".strtolower($condition_search)."&view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        $price=array();
+                    $ch = curl_init();
+                    curl_setopt($ch,CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                    curl_setopt($ch, CURLOPT_HEADER, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    $results=json_decode($result, true);
+                    //dd($results);
+                    foreach ($results['styles'] as $key => $value) {
+
+                        if(isset($value['price']['baseMSRP'])){
+                          $price[$value['price']['baseMSRP']]=$value['id'];  
+                        }
+                        
+                    }
+                    if(!empty($price)){
+                       $amortaization=array();
+                    $i=0;
+                     $max=max(array_keys($price));
+                     $min=min(array_keys($price));
+                    
+                        $up=0.00708333333*pow((1.00708333333),60);
+                        $down=(pow((1.00708333333),60))-1;
+                        $balmax=$max*($up/$down);
+                        $balmin=$min*($up/$down);
+                        $amortaization['max']['base']=sprintf('%0.2f', $max);
+                        $amortaization['max']['monthly']=round($balmax,2);
+                        $amortaization['min']['base']=sprintf('%0.2f', $min,2);
+                        $amortaization['min']['monthly']=round($balmin,2);
+                        
+                   
+                    $amortaization=json_encode($amortaization);
+                    return $amortaization; 
+                }else{
+                    return 0; 
+                }
+        
+
+    }
+    public function ContactDealerBid(){
+        
+        $Bidid=Request::input('requestid');
+        $BidQueue=BidQueue::where('id', $Bidid)->first();
+        $BidQueue->req_contact=1;
+        $BidQueue->details_of_actions=Request::input('acceptdetails');
+        $BidQueue->save();
+        $BidQueue->requestqueue_id;
+        $BidQueue->dealer_id;
+        $BidQueue->dealer_admin;
+        
+        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        $RequestDealerLog->req_contact=1;
+        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
+        $RequestDealerLog->save();
+        $ContactList['request_id']=$BidQueue->requestqueue_id;
+        $ContactList['bid_id']=$BidQueue->id;
+        $ContactList['dealer_id']=$BidQueue->dealer_id;
+        $ContactList['admin_id']=$BidQueue->dealer_admin;
+        $ContactList['client_id']=$RequestQueue->client_id;
+        $ContactList['contact_details']=Request::input('acceptdetails');
+        $ContactList['payment_status']=0;
+        $ContactList['status']=0;
+        ContactList::create($ContactList);
+        
+    }
+    public function GetImageView(){
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
+        $Year=Request::input('year_search');
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        
+        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
+
+        if($EdmundsMakeModelYearImagecount==0){
+            $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?category=exterior&pagenum=1&pagesize=10&view=basic&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $resuls=json_decode($result, true);
+            //dd($resuls);
+                foreach ($resuls['photos'] as $photoskey => $photos) {
+                    $makephoto['make_id']=$Make->id;
+                    $makephoto['model_id']=$Model->id;
+                    $makephoto['year_id']=$Year;
+                    $makephoto['title']=$photos['title'];
+                    $makephoto['category']=($photos['category'] ?: '');
+                    foreach ($photos['sources'] as $sources) {
+                        if($sources['size']['width']=="500"){
+                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                        }
+                        if($sources['size']['width']=="1600"){
+                            $makephoto['edmunds_path_big']=$sources['link']['href'];
+                        }
+                        if($sources['size']['width']=="276"){
+                            $makephoto['edmunds_path_small']=$sources['link']['href'];
+                        }
+                    }
+                    if(!isset($makephoto['edmunds_path_big'])){
+                        foreach ($photos['sources'] as $sourcesx) {
+                            if($sourcesx['size']['width']==$photos['originalSize']['width']){
+                                $makephoto['edmunds_path_big']=$sourcesx['link']['href'];
+                            }
+                        }
+                    }
+                    $bcontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_big']);
+                    $bnpath=time().".jpg";
+                    $bigpathe="public/edmunds/make/big/".$bnpath;
+                    $fbp = fopen($bigpathe, "w");
+                    fwrite($fbp, $bcontent);
+                    fclose($fbp);
+
+                    $scontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_small']);
+                    $smpath=time().".jpg";
+                    $smallpathe="public/edmunds/make/small/".$smpath;
+                    $fsp = fopen($smallpathe, "w");
+                    fwrite($fsp, $scontent);
+                    fclose($fsp);
+                    $makephoto['local_path_big']=$bnpath;
+                    $makephoto['local_path_smalll']=$smpath;
+                    EdmundsMakeModelYearImage::create($makephoto);
+
+                }
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+        }else{
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+        }
+        //dd($EdmundsMakeModelYearImage);
+       return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
+    }
+    public function GetMakeModel(){
+    $Makes=Request::input('make_search');
+    $Models=Request::input('model_search');
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        $viewdet['Makes']=$Make->name;
+        $viewdet['Models']=$Model->name;
+        return $viewdet=json_encode($viewdet);
     }
 }
