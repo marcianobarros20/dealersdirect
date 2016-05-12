@@ -6,7 +6,7 @@
 			<title>{{ $title }}</title>
 				<link href="<?php echo url('/');?>/public/front_end/css/bootstrap.min.css" rel="stylesheet">
 				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-				<link href="<?php echo url('/');?>/public/front_end/css/finalstyle.css" rel="stylesheet">
+				<link href="<?php echo url('/');?>/public/front_end/css/finalstylenew.css" rel="stylesheet">
 				<link href="<?php echo url('/');?>/public/front_end/css/responsive.css" rel="stylesheet">
 				<link href="<?php echo url('/');?>/public/front_end/css/carousel.css" rel="stylesheet">
 				
