@@ -749,9 +749,21 @@ small{
     text-align: left;
 }
 
-.top-overview-box p span{
+.top-overview-box p span.budget-label{
     display: inline-block;
     width: 56%;
+}
+.top-overview-box p span.overview-values{
+    display: inline;
+    width: auto;
+}
+
+.top-overview-box p span.value-green{
+    color: green;
+}
+
+.top-overview-box p span.value-red{
+    color: red;
 }
 
 .top-overview-box p span.tooltiptext {
@@ -853,7 +865,7 @@ small{
 
 
 
-@media screen and (max-width: 766px) and (min-width: 640px) and (orientation: landscape){
+@media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){
     .overview-box .home_next_btn {
         width: 100%;
         margin-left: 0;
@@ -895,9 +907,27 @@ small{
     }
 
     .top-overview-box p span.tooltiptext {
-    top: 48%;
-    left: 80%;
-    width: 15%;
+        top: 48%;
+        left: 65%;
+        width: 15%;
+    }
+
+    .top-overview-box p span.budget-label {
+        display: inline;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 639px){
+    select#make_search, select#model_search, select#condition_search, select#year_search {
+        border: 1px solid #C6611E !important;
+        background: #F26722 !important;
+        margin-bottom: 10px;
+        width: 100%;
+        color: #fff !important;
+        font-size: 10px !important;
+        line-height: 31px !important;
+        font-weight: bold !important;
+        height: 38px;
     }
 }
 /**********CSS OF BUFFER PAGE************/
