@@ -780,6 +780,12 @@ small{
     border-radius: 5px;
     font-size: 7px;
     padding: 2px;
+    line-height: 15px;
+    box-shadow: 0 1px 3px 0 #D8D8D8;
+}
+
+#ttmb{
+    top: 45%;
 }
 
 .top-overview-box p .tooltiptext::before{
@@ -808,7 +814,7 @@ small{
     border-radius: 5px;
     position: absolute;
     bottom: 25px;
-    left: 20px;
+    left: 40px;
     box-shadow: 1px 1px 1px 1px rgb(208, 80, 17);
 }
 
@@ -910,6 +916,10 @@ small{
         top: 48%;
         left: 65%;
         width: 15%;
+    }
+
+    #ttmb{
+        top: 60%;
     }
 
     .top-overview-box p span.budget-label {
