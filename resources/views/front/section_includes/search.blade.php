@@ -127,11 +127,11 @@
 					
 				</div> 
 				<div class="overview-box">
-					<p>New 2015 audi</p>
-					<p>Msrp range: 3431-12345</p>
-					<p>Monthly payment: 6453-14243</p>
-					<p><span>Total budget:</span> 234567.0 <span class="tooltiptext">Tooltip text</span></p>
-					<p><span>Monthly amount:</span> 32143</p>
+					<p id="carselect">New 2015 audi</p>
+					<p >Msrp range: <span>3431</span>-<span>12345</span></p>
+					<p>Monthly payment: <span>3431</span>-<span>12345</span></p>
+					<p><span>Total budget:</span> <span>3431</span><span class="tooltiptext">Tooltip text</span></p>
+					<p><span>Monthly amount:</span> <span>3431</span></p>
 					<a href="#" class="overview-edit">Update details budget</a>
 				</div>
 				<div class="overview-box">
