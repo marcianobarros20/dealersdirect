@@ -119,10 +119,7 @@
                 $("#fmp").show();
                 $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
-                // //$("#amortaization").show();
-                // //$("#searchfirst").hide();
-                // //$("#searchseconed").show();
-                // alert("yes");
+                
               }
               else{
                 $("#fmp").hide();
@@ -132,10 +129,7 @@
                 $("#minmp").html('');
                 $("#maxmp").html('');
                 getimageedmunds(make_search,model_search,condition_search,year_search,0);
-                // // $("#amortaization").hide();
-                // // $("#searchfirst").hide();
-                // // $("#searchseconed").show();
-                // alert("no");
+                
               }
             }
           });
@@ -149,11 +143,7 @@
           return false;
         });
         function getimageedmunds(make_search,model_search,condition_search,year_search,e){
-          // alert(make_search);
-          // alert(model_search);
-          // alert(condition_search);
-          // alert(year_search);
-          // console.log("abcd");
+          
           $.ajax({
             dataType: 'json',
             url: "<?php echo url('/');?>/ajax/getmakemodel",
@@ -223,20 +213,17 @@
                   $("#mb").html(mtamo.toFixed( 2 ));
                   $("#mb").removeClass("value-green");
                   $("#mb").addClass("value-red");
-                  $("#ttmb").html("Mounthly budget Is Less than Monthly Range");
+                  $("#ttmb").html("Monthly budget Is Less than Monthly Range");
                 }else{
                   $("#mb").html(mtamo.toFixed( 2 ));
                   $("#mb").removeClass("value-red");
                   $("#mb").addClass("value-green");
-                  $("#ttmb").html("Mounthly budget Is With In The Monthly Range");
+                  $("#ttmb").html("Monthly budget Is With In The Monthly Range");
                 }
             }
             else{
-              alert("YES");
-              // $("#tb").removeClass("value-red");
-              // $("#tb").removeClass("value-green");
-              //  $("#mb").removeClass("value-red");
-              // $("#mb").removeClass("value-green");
+              
+              
               $("#tb").html(tamo.toFixed( 2 ));
               $("#mb").html(mtamo.toFixed( 2 ));
             }
