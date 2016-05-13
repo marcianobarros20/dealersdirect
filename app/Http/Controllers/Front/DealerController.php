@@ -917,7 +917,7 @@ class DealerController extends BaseController {
         return redirect('dealers/lead_list');
     }
     public function DealerLeadList(){
-        echo $dealer_userid=Session::get('dealer_userid');
+        $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
             $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
