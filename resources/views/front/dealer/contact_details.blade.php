@@ -92,10 +92,11 @@
 								@endif
 							</div>
 							<div class="btn-group">
-								<button type="button" class="btn btn-success">View</button>
+								<a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn btn-success">Buy</button>
 								<button type="button" class="btn btn-warning">
 									<i class="fa fa-long-arrow-right"></i>
 								</button>
+                                </a>
 							</div>
 						</div>
 					</div>	<!-- /col-xs-12 col-md-4-->

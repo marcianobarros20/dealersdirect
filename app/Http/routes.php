@@ -196,6 +196,8 @@ Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd'
 
 Route::get('dealers/contact_list', ['uses' => 'Front\DealerController@DealerContactList','as' => 'dealer.contact.list']);
 Route::get('dealer/contact/detail/{contact_id}', ['uses' => 'Front\DealerController@DealerContactDetails','as' => 'dealer.contact.details']);
+Route::get('dealer/contact/pay/{contact_id}', ['uses' => 'Front\DealerController@DealerContactPay','as' => 'dealer.contact.pay']);
+Route::get('dealers/lead_list', ['uses' => 'Front\DealerController@DealerLeadList','as' => 'dealer.lead.list']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes
