@@ -16,6 +16,11 @@
 			<link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/selectrick/customoptions.css">
 			<link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.css">
 
+			<!--for carosal css -->
+<link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/css/slick/slick.css">
+<link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/css/slick/slick-theme.css">
+<!--for carosal css -->
+
 
 			<link rel="shortcut icon" href="<?php echo url('/');?>/public/front_end/images/favicon.ico">
 </head> 

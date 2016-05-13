@@ -21,7 +21,11 @@
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/js/ajaxcaravanclient.js"></script>
-			<script>
+			<!--Price format js-->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
+      <!--Price format js-->
+      <script>
 			$(function() {
 				$('select, .select').selectric();
 

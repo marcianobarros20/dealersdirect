@@ -1,8 +1,5 @@
 @extends('front/layout/dealerfrontend_template')
 @section('content')
-
-
-
 <section>
 
 	@if(Session::get('error'))
@@ -42,6 +39,7 @@
 		     	<div id="content">
 			        <ul id="tabs" class="nav nav-tabs profile-browse" data-tabs="tabs">
 				        <li class="active"><a href="#red" data-toggle="tab">Details</a></li>
+				        
 				        
 			        </ul>
 			        <div id="my-tab-content" class="tab-content">
@@ -93,6 +91,16 @@
 									    <label for="exampleInputName1">Phone</label>
 									   {{ Form::number('phone','',['class' => 'form-control profile_control','required' => 'required']) }}
 									</div>
+
+									<div class="form-group">
+									    <label for="total_amount">Total Amount Per Bid</label>
+									    {{Form::text('total_amount','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								  	</div>
+								  	<div class="form-group">
+									    <label for="monthly_amount">Monthly Amount Per Bid</label>
+									    {{Form::text('monthly_amount','',['class' => 'form-control profile_control', 'required' => 'required']) }}
+								  	</div>
+
 									<div class="form-group">
 									    <label for="exampleInputName1">Image</label>
 									    {!! Form::file('images', array('class'=>'add-image')) !!}

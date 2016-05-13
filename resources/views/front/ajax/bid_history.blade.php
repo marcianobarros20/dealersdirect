@@ -31,10 +31,10 @@
             </div>
 
             <div class="comment-content">
-                <p><strong>Monthly:</strong>{!! $bid->monthly_amount !!}</p>
-                <p><strong>Total:</strong>{!! $bid->total_amount !!}</p>
+                <p><strong>Monthly:</strong><?php $DoubleMonthly=floatval($bid->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></p>
+                <p><strong>Total:</strong><?php $DoubleTotal=floatval($bid->total_amount);echo "$".number_format($DoubleTotal,2);?></p>
                 @if($bid->trade_in!=0)
-                <li><strong>Trade In:</strong>{!! $bid->trade_in !!}</li>
+                <li><strong>Trade In:</strong> <?php $DoubleTrade_in=floatval($bid->trade_in);echo "$".number_format($DoubleTrade_in,2);?></li>
                 @endif
                 <p><strong>Details:</strong>{!! $bid->details!!} ....</p>
 

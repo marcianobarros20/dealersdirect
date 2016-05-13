@@ -18,6 +18,13 @@ use App\Model\DealerDetail;                                 /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
+use App\Model\LeadContact;                                  /* Model name*/
+use App\Model\ReminderLead;                                 /* Model name*/
+use App\Model\SiteContactPrice;                                 /* Model name*/
+use App\Model\DealersInfo;                                 /* Model name*/
+use App\Model\DealersAdminBidManagement;                                 /* Model name*/
+use App\Model\DealerMembership;                                 /* Model name*/
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -27,6 +34,7 @@ use Session;
 use Illuminate\Support\Facades\Request;
 use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
+
 use DB;
 use Imagine\Image\Box;
 
@@ -179,6 +187,29 @@ class DealerController extends BaseController {
             
             return view('front.dealer.dealer_request_list',compact('Makes','Status'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
+    public function bidList(){
+        $obj = new helpers();
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            $id=Session::get('dealer_userid');
+            $DealerMake=DealerMakeMap::where('dealer_id', $id)->with('makes')->orderBy('make_id', 'asc')->get();
+            $Makes=array();
+            $Makes['0']="All MAKES";
+            foreach($DealerMake as $DealerM){
+                $Makes[$DealerM->makes->id]=$DealerM->makes->name;
+            }
+            $Status=array();
+            $Status['0']="All STATUS";
+            $Status['1']="Active";
+            $Status['2']="Rejected";
+            $Status['3']="Blocked";
+            $Status['4']="Accepted";
+            //dd($Makes);
+            
+            return view('front.dealer.dealer_bid_list',compact('Makes','Status'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    }
     public function maskcreate($maskval){
             $mm=strlen($maskval)-2;
             $mask = preg_replace ( "/\S/", "X", $maskval );
@@ -201,6 +232,7 @@ class DealerController extends BaseController {
             }
             $dealer_userid=Session::get('dealer_userid');
             $par=Session::get('dealer_parent');
+
             $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
             $requestqueue_id=$RequestDealerLog->request_id;
             $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
@@ -223,7 +255,7 @@ class DealerController extends BaseController {
                 }
                 //dd($RequestQueue);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
-                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
                 if($par!=0){
                     $BidQueuecount=BidQueue::where('dealer_admin', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
                 }else{
@@ -320,6 +352,8 @@ class DealerController extends BaseController {
             $State=[''=>'Select State']+State::lists('state', 'id')->all();
        $dealer_userid=Session::get('dealer_userid');
        $Dealer = Dealer::where('id', $dealer_userid)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       $dealer_info=DealersInfo::where('dealer_id','=',$dealer_userid)->first();
+     //  dd($dealer_info);
        if(isset($Dealer->dealer_details->dealer_city)){
         $cityarr=1;
         $City=[''=>'Select City']+City::where('state_id',$Dealer->dealer_details->dealer_state->id)->lists('city', 'id')->all();
@@ -328,7 +362,7 @@ class DealerController extends BaseController {
         $City="";
        }
        //dd($Dealer);
-       return view('front.dealer.dealer_profile',compact('Dealer','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
+       return view('front.dealer.dealer_profile',compact('Dealer','State','cityarr','City','dealer_info'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
        //print_r($Dealer);
 
     }
@@ -409,6 +443,56 @@ class DealerController extends BaseController {
        
         return redirect('/dealer/profile');
     }
+
+
+    
+
+    public function ProfileMoreDetails(Request $request){
+        
+        $dealer_userid=Session::get('dealer_userid');
+
+        $web_url=Request::input('web_url');
+        $phone_no=Request::input('phone_no');
+        $email_id=Request::input('email_id');
+        $contact_address=Request::input('contact_address');
+        $details=Request::input('details');
+        if (Request::file('dealer_logo')){
+                    $logo = Request::file('dealer_logo');
+                    $extension =$logo->getClientOriginalExtension();
+                    $destinationPath = 'public/dealers/';
+                    $fileName = rand(111111111,999999999).'.'.$extension;
+                    $logo->move($destinationPath, $fileName);
+        }else{
+            $fileName=Request::input('old_image');
+        }
+        if(Request::input('info_id')){
+            $id=Request::input('info_id');
+            $DealersInfo=DealersInfo::find($id);
+            $DealersInfo->dealer_id=$dealer_userid;
+            $DealersInfo->website_url=$web_url;
+            $DealersInfo->phone_no=$phone_no;
+            $DealersInfo->email_id=$email_id;
+            $DealersInfo->contact_address=$contact_address;
+            $DealersInfo->details=$details;
+            $DealersInfo->logo=$fileName;
+            $DealersInfo->update();
+        }else{
+        $DealersInfo = new DealersInfo;
+        $DealersInfo->dealer_id=$dealer_userid;
+        $DealersInfo->website_url=$web_url;
+        $DealersInfo->phone_no=$phone_no;
+        $DealersInfo->email_id=$email_id;
+        $DealersInfo->contact_address=$contact_address;
+        $DealersInfo->details=$details;
+        $DealersInfo->logo=$fileName;
+        $DealersInfo->save();
+        }
+        
+
+        return \Redirect::back()->with('success','Information Updated');
+    }
+
+
     public function postBid($id=null){
         $obj = new helpers();
             if(!$obj->checkDealerLogin())
@@ -459,11 +543,13 @@ class DealerController extends BaseController {
                         $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
                         $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
                         $RequestQueue->request_dealer_log=$RequestDealerLog;
+                        
                         if($par!=0){
                         $BidQueue=BidQueue::where("dealer_admin",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
                         }else{
                             $BidQueue=BidQueue::where("dealer_id",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
                         }
+
                         return view('front.dealer.edit_bid',compact('RequestQueue','BidQueue'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
             }
     }
@@ -473,27 +559,33 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
-
-            
-            //dd(Request::input());
-            //dd(Request::file('images'));
-        // exit;
         $dealer_userid=Session::get('dealer_userid');
         $id=base64_encode(Request::input('request_id'));
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
-            $inox=Request::input('id');
+        $inox=Request::input('id');
         if($Dealers_check->parent_id==0){
             $dealer_idp=$dealer_userid;
             $dealer_ida=0;
 
             RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin','!=',0)->where('request_id',$inox)->delete();
-            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1));
+            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
         else{
             $dealer_ida=$dealer_userid;
             $dealer_idp=$Dealers_check->parent_id;
+            $get_dealer_admin_bid_info=DealersAdminBidManagement::where('dealer_id',$dealer_ida)->first();
+            if(!empty($get_dealer_admin_bid_info)){
+                $total_amount=Request::input('total_amount');
+                $monthly_amount=Request::input('monthly_amount');
+                if($total_amount > $get_dealer_admin_bid_info->total_amount_per_bid){
+                    return \Redirect::back()->with('error','Maximum bid amount exceed');
+                }
+                if($monthly_amount > $get_dealer_admin_bid_info->monthly_amount_per_bid){
+                   return \Redirect::back()->with('error','Maximum bid amount exceed'); 
+                }
+            }
             RequestDealerLog::where('dealer_id',$dealer_idp)->whereNotIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->delete();
-            RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1));
+            RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
 
 
@@ -553,6 +645,13 @@ class DealerController extends BaseController {
         $BidQueue['details']=Request::input('details');
         $BidQueue['trade_in']=Request::input('trade_in');
         $BidQueue_row=BidQueue::create($BidQueue);
+
+
+        
+
+
+
+
         $OtherImage=Request::file('images');
             if(Request::hasFile('images')){
                 $this->obj = $obj;
@@ -697,8 +796,8 @@ class DealerController extends BaseController {
             return redirect('dealer-signin');
             }
             $dealer_userid=Session::get('dealer_userid');
-            $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details')->get();
-            //dd('dealer_userid');
+            $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details','dealer_bid_info')->get();
+            
         return view('front.dealer.dealer_admins',compact('Dealers'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function DealerAdminAdd(){
@@ -722,6 +821,7 @@ class DealerController extends BaseController {
                     $Dealer['password'] =$hashpassword;
                     $Dealer['code_number'] =$tamo;
                     $Dealer['parent_id'] =$dealer_userid;
+                    $Dealer['zip']=Request::input('zip');
                     $Dealers_row=Dealer::create($Dealer);
                     $lastinsertedId = $Dealers_row->id;
                     if(Request::hasFile('images')){
@@ -745,7 +845,14 @@ class DealerController extends BaseController {
                     $DealerDetail['city_id']=Request::input('city_id');
                     $DealerDetail['image']=$fileName;
                     DealerDetail::create($DealerDetail);
-
+                  
+                    
+                    $DealersAdminBidManagement['dealer_id']=$lastinsertedId;
+                    $DealersAdminBidManagement['parent_id']=$dealer_userid;
+                    $DealersAdminBidManagement['total_amount_per_bid']=Request::input('total_amount');
+                    $DealersAdminBidManagement['monthly_amount_per_bid']=Request::input('monthly_amount');
+                    DealersAdminBidManagement::create($DealersAdminBidManagement);
+                    
                     $make=DealerMakeMap::where('dealer_id',$dealer_userid)->get();
                     foreach ($make as $key => $value) {
                         $DealerMakeMap['dealer_id']=$lastinsertedId;
@@ -784,6 +891,7 @@ class DealerController extends BaseController {
         $State=[''=>'Select State']+State::lists('state', 'id')->all();
        $dealer_userid=Session::get('dealer_userid');
        $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       $dealer_admin_bid_info=DealersAdminBidManagement::where('dealer_id',$Dealer_id)->first();
        if(isset($dealer_admin_details->dealer_details->dealer_city)){
         $cityarr=1;
         $City=[''=>'Select City']+City::where('state_id',$dealer_admin_details->dealer_details->dealer_state->id)->lists('city', 'id')->all();
@@ -793,8 +901,9 @@ class DealerController extends BaseController {
        }
         
 
-        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details','State','cityarr','City','dealer_admin_bid_info'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
+
     public function UpdateAdminDetails($id)
     {
           $rules = array(
@@ -858,19 +967,34 @@ class DealerController extends BaseController {
                 }
             }
     }
+    
+    public function UpdateAdminBid($id){
+
+        $update_arr=array(
+            'total_amount_per_bid'=>Request::input('total_amount'),
+            'monthly_amount_per_bid'=>Request::input('monthly_amount')
+            );
+        $update_bid_info=DealersAdminBidManagement::where('dealer_id',$id)->update($update_arr);
+        
+        Session::flash('success', 'Bid Information Successfully Updated'); 
+        return redirect('dealer/admins');
+       
+    }
+
+
     public function DealerContactList(){
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
-            $ContactList=ContactList::where('dealer_id',$dealer_userid)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+            $ContactList=ContactList::where('dealer_id',$dealer_userid)->where('payment_status','!=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
         }else{
-            $ContactList=ContactList::where('admin_id',$dealer_userid)->with('request_details','bid_details','client_details')->get();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->where('payment_status','!=',1)->with('request_details','bid_details','client_details')->get();
         }
         
         foreach ($ContactList as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
             if($countimg!=0){
-                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->get();
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('local_path_smalll')->get();
              $ContactList[$key]['imx']=$imx;
             }else{
                $ContactList[$key]['imx']=""; 
@@ -881,18 +1005,251 @@ class DealerController extends BaseController {
         //      dd($Contact->imx->local_path_smalll);
         // }
         
-        return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Contacts'));
     }
+
     public function DealerContactDetails($id=null){
         $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
             $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
             if($countimg!=0){
-            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->groupBy('local_path_big')->get();
+            $additional_price=SiteContactPrice::all();
+            //dd($additional_price[0]->price);
+            //die();
             $ContactDetail['imx']=$imx;
+            $ContactDetail['additional_price']=$additional_price[0]->price;
             }else{
             $ContactDetail['imx']=""; 
             }
         //dd($ContactDetail);
         return view('front.dealer.contact_details',compact('ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+
+
+    public function DealerContactPay($contact_id=null){
+        $contact_id=base64_decode($contact_id);
+        $ContactDetail=ContactList::where('id',$contact_id)->first();
+        //dd($ContactDetail);
+        $ContactDetail->payment_status=1;
+        $ContactDetail->status=1;
+        $ContactDetail->save();
+        
+        $LeadContact = new LeadContact;
+        $LeadContact->request_id=$ContactDetail->request_id;
+        $LeadContact->bid_id=$ContactDetail->bid_id;
+        $LeadContact->dealer_id=$ContactDetail->dealer_id;
+        $LeadContact->admin_id=$ContactDetail->admin_id;
+        $LeadContact->client_id=$ContactDetail->client_id;
+        $LeadContact->contact_id=$ContactDetail->id;
+        $LeadContact->payment_status=1;
+        $LeadContact->lead_status=1;
+        $LeadContact->save(); 
+        return redirect('dealers/lead_list');
+    }
+    //Dealers Membership 
+
+    public function DealerMembership(){
+        $dealer_userid=Session::get('dealer_userid');
+        $get_dealer_membership_info=DealerMembership::where('dealer_id',$dealer_userid)->where('is_active',1)->first();
+        
+        return view('front.dealer.membership',array('title'=>'DEALERSDIRECT | Dealers Membership'),compact('get_dealer_membership_info'));
+    }
+
+    public function DealerMembershipPost(){
+        $dealer_userid=Session::get('dealer_userid');
+        $get_dealer_membership_info=DealerMembership::where('dealer_id',$dealer_userid)->first();
+        if($get_dealer_membership_info){
+            $id=$get_dealer_membership_info->id;
+            $membership=DealerMembership::find($id);
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=Request::input('member_type');
+            $membership->update();
+            $get_dealer_membertype=DealerMembership::where('dealer_id',$dealer_userid)->first();
+            $member_type=$get_dealer_membertype->membership_type;
+            return \Redirect::back()->with('massage','You are now upgraded to Level '.$member_type.' Membership');
+        }
+        if(Request::input('member_type')==1){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=1;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 1 Membership');
+        }
+        if(Request::input('member_type')==2){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=2;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 2 Membership');
+        }
+        if(Request::input('member_type')==3){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=3;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 3 Membership');
+        }
+        
+    }
+
+    public function DealerLeadList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        if($Dealer->parent_id==0){
+            $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+        }else{
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','bid_details','client_details')->get();
+        }
+        foreach ($LeadContact as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('local_path_big')->get();
+             $LeadContact[$key]['imx']=$imx;
+            }else{
+               $LeadContact[$key]['imx']=""; 
+            }
+
+        }
+        
+        return view('front.dealer.lead_list',compact('LeadContact'),array('title'=>'DEALERSDIRECT | Dealers Leads'));
+    }
+    public function DealerReminderList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        if($Dealer->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $dealer_userid)->where('status','!=' ,1)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealer->parent_id)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $Dealer->parent_id)->where('status','!=' ,1)->count();
+        }
+        return view('front.dealer.reminder_list',compact('ReminderLead'),array('title'=>'DEALERSDIRECT | Dealers Reminder List'));
+    }
+    public function DealerReminderDetails($reminder_id=null){
+         $reminder_id=base64_decode($reminder_id);
+         $Reminder=ReminderLead::where('id',$reminder_id)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->first();
+         $ContactDetail=ContactList::where('id',$Reminder->contact_id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
+         $Reminder->status=1;
+         $Reminder->save(); 
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
+            if($countimg!=0){
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->groupBy('local_path_big')->get();
+            $ContactDetail['imx']=$imx;
+            }else{
+            $ContactDetail['imx']=""; 
+            }
+            return view('front.dealer.reminder_details',compact('Reminder','ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+    public function DealerAnalytics(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+
+        $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+
+        $RequestDealerLogids=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+        $ContactListid=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+        $ContactList=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $LeadContactid=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+        $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $BidQueue=BidQueue::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->groupBy('requestqueue_id')->get();
+        $BidQueuecount=count($BidQueue);
+        }
+        else{
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $RequestDealerLogids=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+            $ContactListid=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $LeadContactid=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $BidQueue=BidQueue::where('dealer_admin',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->groupBy('requestqueue_id')->get();
+            $BidQueuecount=count($BidQueue);
+        }
+        
+        $rq=array();
+        $bq=array();
+        $cq=array();
+        $ld=array();
+        foreach ($RequestDealerLogids as $key => $value) {
+            $rq[]=$value->request_id;
+        }
+        $RequestQueue=RequestQueue::whereIn('id',$rq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        //dd($rq);
+        $requ="";
+        $bidu="";
+        $conu="";
+        $ledu="";
+        foreach ($RequestQueue as $key => $Request) {
+            $RequestQueuecount=RequestQueue::whereIn('id',$rq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($requ==""){
+                $requ="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecount."]";
+            }else{
+                $requ=$requ.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecount."]";
+            }
+        }
+        foreach ($BidQueue as $key => $value) {
+            $bq[]=$value->requestqueue_id;
+        }
+
+        $RequestQueuebq=RequestQueue::whereIn('id',$bq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueuebq as $key => $Request) {
+            $RequestQueuecountbq=RequestQueue::whereIn('id',$bq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($bidu==""){
+                $bidu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountbq."]";
+            }else{
+                $bidu=$bidu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountbq."]";
+            }
+        }
+        foreach ($ContactListid as $key => $value) {
+            $cq[]=$value->request_id;
+        }
+
+        $RequestQueuecq=RequestQueue::whereIn('id',$cq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueuecq as $key => $Request) {
+            $RequestQueuecountcq=RequestQueue::whereIn('id',$cq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($conu==""){
+                $conu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountcq."]";
+            }else{
+                $conu=$conu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountcq."]";
+            }
+        }
+        
+        foreach ($LeadContactid as $key => $value) {
+            $ld[]=$value->request_id;
+        }
+
+        $RequestQueueld=RequestQueue::whereIn('id',$ld)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueueld as $key => $Request) {
+            $RequestQueuecountld=RequestQueue::whereIn('id',$ld)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($ledu==""){
+                $ledu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountld."]";
+            }else{
+                $ledu=$ledu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountld."]";
+            }
+        }
+        
+        $request_queues[0]['name']="REQUESTs";
+        $request_queues[0]['y']=$RequestDealerLog;
+        $request_queues[0]['drilldown']="REQUESTs";
+        $request_queues[1]['name']="BIDs";
+        $request_queues[1]['y']=$BidQueuecount;
+        $request_queues[1]['drilldown']="BIDs";
+        $request_queues[2]['name']="CONTACTs";
+        $request_queues[2]['y']=$ContactList;
+        $request_queues[2]['drilldown']="CONTACTs";
+        $request_queues[3]['name']="LEADs";
+        $request_queues[3]['y']=$LeadContact;
+        $request_queues[3]['drilldown']="LEADs";
+        $request_queues=json_encode($request_queues);
+        
+        //dd($request_queues);
+        return view('front.dealer.analytics',compact('request_queues','requ','bidu','conu','ledu'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
+    }
+    public function DealerAnalyticsone(){
+
+        
+        return view('front.dealer.analyticsone',compact('request_queues'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
     }
 }

@@ -8,12 +8,12 @@
 							<div class="col-sm-8 col-xs-8">
 								<div class="social">
 									<ul class="social-share">
-										<!-- <li>
-											<a href="#">
-												<i class="fa fa-google-plus"></i>
+										<li class="note-bell">
+											<a href="" id="rembox">
+												<i class="fa fa fa-bell"></i> <span id="remindernot"> </span>
 											</a>
 										</li>
-										<li>
+										<!-- <li>
 											<a href="#">
 												<i class="fa fa-facebook"></i>
 											</a>
@@ -36,9 +36,18 @@
 											</a>
 											<span style="color:#fff">{{Session::get('dealer_name')}}</span>
 										</li>
+										<!--Notification box start-->
+										<div class="notification-box" style="display:none;">
+											
+
+										</div>
+										<!--Notification box end-->
+										
 									</ul>
+
 								</div>
 							</div>
+
 						</div>
 					</div> 
 				</div> 
@@ -68,14 +77,19 @@
 								<li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a>
                 				</li>
                 				@endif 
-                                <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
+                                <li><a href="<?php echo url('/');?>/dealers/request_list">Requests</a>
 
                                 </li>
-                                <li><a href="<?php echo url('/');?>/dealers/contact_list">Contact</a>
+                                <li><a href="<?php echo url('/');?>/dealers/bid_list">Bids</a>
+
+                                </li>
+                                <li><a href="<?php echo url('/');?>/dealers/contact_list">Contacts</a>
                                 
                                 </li>
-                                <li><a href="<?php echo url('/');?>/dealers/lead_list">Lead</a>
+                                <li><a href="<?php echo url('/');?>/dealers/lead_list">Leads</a>
                                 
+                                </li>
+                                <li><a href="<?php echo url('/');?>/dealers/analytics">Analytics</a>
                                 </li>
                                 <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
 

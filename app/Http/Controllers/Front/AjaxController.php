@@ -20,6 +20,10 @@ use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
+use App\Model\ReminderLead;                                 /* Model name*/
+use App\Model\LeadContact;                                  /* Model name*/
+use App\Model\DealerDetail;                                 /* Model name*/
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -30,6 +34,7 @@ use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
 use App\Helper\helpers;
+use Cache;
 
 class AjaxController extends Controller
 {
@@ -628,6 +633,7 @@ class AjaxController extends Controller
         $RequestQueue['fname'] =$Client->first_name;
         $RequestQueue['lname'] =$Client->last_name;
         $RequestQueue['phone'] =$Client->phone;
+        $RequestQueue['zip'] =$Client->zip;
         $RequestQueue['type'] =1;
         $RequestQueue['email'] =$Client->email;
         $RequestQueue['client_id']=$Client->id;
@@ -818,10 +824,10 @@ class AjaxController extends Controller
         $status_search=Request::input('status_search');
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
         if($Dealers_check->parent_id==0){
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->with('makes','requestqueue','requestqueue.models','bids');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('bid_flag','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
         }
         else{
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->with('makes','requestqueue','requestqueue.models','bids');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('bid_flag','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
         }
         
         if($make_search!=0){
@@ -870,7 +876,118 @@ class AjaxController extends Controller
         foreach ($RS as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
             if($countimg!=0){
-                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->get();
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->groupby('local_path_smalll')->get();
+             $RS[$key]['imx']=$imx;
+            }else{
+               $RS[$key]['imx']=""; 
+            }
+
+        }
+        if($status_search==1){
+            foreach ($RS as $key => $act) {
+                if($act->blocked==1){
+                    unset($RS[$key]);
+                }
+                if($act->accepted_state!=0){
+                    unset($RS[$key]);
+                }
+                if($act->rejected_state!=0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==2){
+            foreach ($RS as $key => $act) {
+                
+                if($act->rejected_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==3){
+            foreach ($RS as $key => $act) {
+                
+                if($act->blocked==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==4){
+            foreach ($RS as $key => $act) {
+                
+                if($act->accepted_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        //dd($RS);
+        //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
+        return view('front.ajax.get_all_request',compact('RS'));
+    }
+    public function GetAllBid(){
+        $RequestDealerLog = new RequestDealerLog;
+         $dealer_userid=Session::get('dealer_userid');
+        $make_search=Request::input('make_search');
+        $onesearchmin=Request::input('onesearchmin');
+        $onesearchmax=Request::input('onesearchmax');
+        $monsearchmin=Request::input('monsearchmin');
+        $monsearchmax=Request::input('monsearchmax');
+        $status_search=Request::input('status_search');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('bid_flag', 1)->where('req_contact','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
+        }
+        else{
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('bid_flag', 1)->where('req_contact','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
+        }
+        
+        if($make_search!=0){
+            $RequestDealerLog=$RequestDealerLog->where('make_id', $make_search);
+        }
+        
+        $RS=$RequestDealerLog->get();
+
+        if($onesearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount < $onesearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($onesearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount > $onesearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        if($monsearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount < $monsearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($monsearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount > $monsearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        foreach($RS as $key => $rsq){
+            $accep=self::FindDealerBidAccepted($rsq->request_id,$dealer_userid);
+            $RS[$key]['accepted_state']=$accep;
+            $rejcet=self::FindDealerBidReject($rsq->request_id,$dealer_userid);
+            $RS[$key]['rejected_state']=$rejcet;
+        }
+        
+        foreach ($RS as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->groupby('local_path_smalll')->get();
              $RS[$key]['imx']=$imx;
             }else{
                $RS[$key]['imx']=""; 
@@ -925,7 +1042,7 @@ class AjaxController extends Controller
 
     }
     public function FindDealerBidReject($request_id,$dealer_id){
-        return $BidQueuecount=BidQueue::where('requestqueue_id',$request_id)->where('dealer_id',$dealer_id)->where('status',2)->where('visable',1)->count();
+            return $BidQueuecount=BidQueue::where('requestqueue_id',$request_id)->where('dealer_id',$dealer_id)->where('status',2)->where('visable',1)->count();
     }
     public function GetAllBidChunk(){
         $dealer_userid=Session::get('dealer_userid');
@@ -936,6 +1053,7 @@ class AjaxController extends Controller
         Session::put('filter_sec_deal',$sortby);
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->lists('dealer_id');
         
+       // dd($sortby);
         if($sortby==1){
             
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
@@ -948,7 +1066,32 @@ class AjaxController extends Controller
             
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
         }
-        
+
+        if($sortby==4){
+            $get_client_id=RequestQueue::where('id', $id)->select('client_id')->first();
+            $get_client_zip_code=Client::where('id',$get_client_id->client_id)->select('zip')->first();
+            $get_dealers_zip_codes=DealerDetail::whereIn('dealer_id', $RequestDealerLog_row)->select('dealer_id','zip')->get();   
+            $index = 0; 
+            $distance_id_Array = array();
+            foreach($get_dealers_zip_codes as $zip_code){
+            $postcode1=$get_client_zip_code->zip;
+            $postcode2=$zip_code->zip;
+            $url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=$postcode2&destinations=$postcode1&mode=driving&language=en-EN&sensor=false";
+            $data = @file_get_contents($url);
+            $result = json_decode($data, true);                       
+            foreach($result['rows'] as $distance) {    
+            $distance_id_Array[$index]['dealer_id'] = $zip_code->dealer_id;
+            $distance_id_Array[$index]['distance'] = $distance['elements'][0]['distance']['value'];
+            $distance_id_Array[$index]['BidQueue']=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('dealer_id',$zip_code->dealer_id)->with('dealers','dealers.dealer_parent','bid_image')->get();
+            $index++;
+                }    
+            }    
+            $distance_id_Array = array_values(array_sort($distance_id_Array, function ($value) {
+                    return $value['distance'];
+                }));
+        return view('front.ajax.get_all_bid_chunk',compact('distance_id_Array'),array('title'=>'DEALERSDIRECT | Client Request Details'));       
+        }
+
         foreach ($BidQueue as $key => $Bid) {
             if($Bid->status!=0){
                 if($Bid->dealer_id!=$dealer_userid){
@@ -956,9 +1099,11 @@ class AjaxController extends Controller
                 }
             }
         }
-        //dd($BidQueue);
+        
         return view('front.ajax.get_all_bid_chunk',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+
+    
     public function GetBidHistory(){
         $dealer_userid=Session::get('dealer_userid');
         $dealer=Request::input('dealer');
@@ -1030,7 +1175,9 @@ class AjaxController extends Controller
         $model_search=Request::input('model_search');
         $condition_search=Request::input('condition_search');
         $Caryear=Caryear::where('make_id',$make_search)->where('carmodel_id',$model_search)->where('year',$year_search)->with('makes','models')->first();
+        
         $url = "https://api.edmunds.com/api/vehicle/v2/".$Caryear->makes->nice_name."/".$Caryear->models->nice_name."/".$Caryear->year."/styles?state=".strtolower($condition_search)."&view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        //dd($url);
         $price=array();
                     $ch = curl_init();
                     curl_setopt($ch,CURLOPT_URL, $url);
@@ -1051,12 +1198,11 @@ class AjaxController extends Controller
                     if(!empty($price)){
                        $amortaization=array();
                     $i=0;
-                     $max=max(array_keys($price));
-                     $min=min(array_keys($price));
-                    
+                        $max=max(array_keys($price));
+                        $min=min(array_keys($price));
                         $up=0.00708333333*pow((1.00708333333),60);
                         $down=(pow((1.00708333333),60))-1;
-                        $balmax=$max*($up/$down);
+                        $balmax=$max*($up/$down);              
                         $balmin=$min*($up/$down);
                         $amortaization['max']['base']=sprintf('%0.2f', $max);
                         $amortaization['max']['monthly']=round($balmax,2);
@@ -1069,9 +1215,21 @@ class AjaxController extends Controller
                 }else{
                     return 0; 
                 }
-        
+       
 
     }
+    public function amortization_calculator(){
+        $loan_amount=Request::input('loan_amount');
+        $interest_rate=Request::input('interest_rate');
+        $loan_term=Request::input('loan_term');
+        $months=$loan_term*12;
+        $rate_of_interest=($interest_rate/100)/12;
+        $up=$rate_of_interest*pow(($rate_of_interest+1),$months);
+        $down=(pow(($rate_of_interest+1),$months))-1;
+        $monthly_rate=$loan_amount*($up/$down);              
+        return sprintf('%0.2f',$monthly_rate);
+    }
+
     public function ContactDealerBid(){
         
         $Bidid=Request::input('requestid');
@@ -1083,10 +1241,23 @@ class AjaxController extends Controller
         $BidQueue->dealer_id;
         $BidQueue->dealer_admin;
         
-        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        // $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        if($BidQueue->dealer_admin==0){
+        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
         $RequestDealerLog->req_contact=1;
-        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
         $RequestDealerLog->save();
+        }
+        if($BidQueue->dealer_admin!=0){
+            $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
+        $RequestDealerLog->req_contact=1;
+        $RequestDealerLog->save();
+        $RequestDealerLogNew=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        $RequestDealerLogNew->req_contact=1;
+        $RequestDealerLogNew->save();
+        }
+        
+        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
+        
         $ContactList['request_id']=$BidQueue->requestqueue_id;
         $ContactList['bid_id']=$BidQueue->id;
         $ContactList['dealer_id']=$BidQueue->dealer_id;
@@ -1104,6 +1275,15 @@ class AjaxController extends Controller
         $Year=Request::input('year_search');
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
+
+
+
+
+
+ 
+
+
+
         
         $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
 
@@ -1160,20 +1340,334 @@ class AjaxController extends Controller
                     EdmundsMakeModelYearImage::create($makephoto);
 
                 }
-                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
         }else{
-            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->get();
+            //check for fix
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
         }
         //dd($EdmundsMakeModelYearImage);
-       return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
+       //return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
     }
+
+    // Fuel API Begin 
+
+
+
+  public function GetImageViewNew(){
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
+        $Year=Request::input('year_search');
+
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        $viewdet['Makes']=$Make->name;
+        $viewdet['Models']=$Model->name;
+        
+        //echo "Manufacturer".$Make->name."<br/>".$Model->name."<br/>".$Year;
+     
+       //$FuelApiImagePath = array();
+       $ImageAPIPath = array();
+       
+            $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $results=json_decode($result, true);
+            //print_r($results);
+
+            if($results)
+            {
+                
+                $FuelProduct_Id=array();
+                foreach($results as $rowData=>$FuelPid)
+                {
+                    
+
+                array_push($FuelProduct_Id, $FuelPid['id']);
+
+                }
+
+                
+                 $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+            $chImg = curl_init();
+            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
+            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($chImg, CURLOPT_HEADER, 0);
+            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
+            $resultImg = curl_exec($chImg);
+            curl_close($chImg);
+            $resultsImg=json_decode($resultImg, true);
+
+            //echo "<pre>";
+            //print_r($resultsImg['products']);
+            //echo "</pre>";
+
+
+        $productsArray = $resultsImg['products'];
+
+
+
+        while (list($key, $value) = each($productsArray)) {
+            $productFormatsArray = $value["productFormats"];
+
+            while (list($key1, $value1) = each($productFormatsArray)) {
+
+                //echo "<pre>";
+
+               // print_r($value1["assets"]);
+
+                //echo "</pre>";
+
+                $ImgPathArray = $value1["assets"];
+
+              
+
+                 }
+
+
+            }
+
+            //echo "<pre>";
+            //print_r($ImgPathArray);
+            //echo "</pre>";
+            //Cache::flush();
+
+             return view('front.ajax.slider_new', compact('ImgPathArray'));
+
+        
+
+            /*foreach($resultsImg['products'] as $FuelImg=>$FuelImgValue)
+
+                    {
+                        foreach($FuelImgValue as $ApiImg)
+                        {
+                            echo $ApiImg['url'];
+                        }
+                    }*/
+
+            
+
+            
+            }
+
+            else
+            {
+              echo "No Image Found!";
+            }
+
+
+            //print_r($FuelApiImagePath);
+
+            
+     
+    } 
+
+
+
+    // Fuel API END
     public function GetMakeModel(){
-    $Makes=Request::input('make_search');
-    $Models=Request::input('model_search');
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
         $viewdet['Makes']=$Make->name;
         $viewdet['Models']=$Model->name;
         return $viewdet=json_encode($viewdet);
+    }
+    public function SetLeadReminder(){
+        
+        $inox=Request::input('lead_id');
+       return view('front.ajax.set_lead_reminder',compact('inox')); 
+    }
+    public function SetLeadReminderSubmit(){
+        $datatime=Request::input('datatime');
+        $lead_id=Request::input('lead_id');
+        $details=Request::input('details');
+        $dt=explode(" ",$datatime);
+        $date=$dt['0'];
+        $time=$dt['1'];
+        $id=base64_decode(Request::input('lead_id'));
+
+        $LeadContact=LeadContact::where('id',$id)->first();
+        
+        $ReminderLead = new ReminderLead;
+        $ReminderLead->rdate=$date;
+        $ReminderLead->rtime=$time;
+        $ReminderLead->reminder_time=$datatime;
+        $ReminderLead->note=$details;
+        $ReminderLead->lead_id=$LeadContact->id;
+        $ReminderLead->contact_id=$LeadContact->contact_id;
+        $ReminderLead->dealer_id=$LeadContact->dealer_id;
+        $ReminderLead->admin_id=$LeadContact->admin_id;
+        $ReminderLead->email_status=0;
+        $ReminderLead->status=0;
+        $ReminderLead->save(); 
+        if($date==""){
+           return 1; 
+        }
+        elseif($time==""){
+           return 2; 
+        }
+        else{
+           return 3; 
+        }
+
+    }
+    public function GetLeadReminder(){
+        //dd(Request::input());
+        $dealer_userid=Session::get('dealer_userid');
+        $dateconst=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $newtime=date('Y-m-d H:i:s',strtotime('+1 hour', strtotime($dateconst." ".$timeconst)));
+        
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('status','!=' ,1)->where('reminder_time','<=',$dateconst." ".$timeconst)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
+        }
+        return $ReminderLead;
+    }
+    public function sendreminderleadmail(){
+        $newtime=date('Y-m-d');
+        $admin_users_email="hello@tier5.us";
+        
+        $ReminderLeadfind=ReminderLead::where('rdate',$newtime)->where('email_status','!=',1)->get();
+        foreach ($ReminderLeadfind as $key => $Reminder) {
+         $ReminderLead = ReminderLead::where('id', $Reminder->id)->first();
+            if($ReminderLead->dealer_id!=0){
+                
+                $activateLink = url('/').'/dealers/reminder/'.base64_encode($ReminderLead->id);
+                $Dealers_check=Dealer::where('id', $ReminderLead->dealer_id)->first();
+                $dealername=$Dealers_check->name;
+                $dealeremail=$Dealers_check->email;
+                $sent = Mail::send('front.email.reminderleadmail', array('dealer_name'=>$dealername,'email'=>$dealeremail,'activateLink'=>$activateLink, 'note'=>$ReminderLead->note,'rdate'=>$ReminderLead->rdate,'rtime'=>$ReminderLead->rtime), 
+                function($message) use ($admin_users_email, $dealeremail,$dealername)
+                {
+                    $message->from($admin_users_email);
+                    $message->to($dealeremail,$dealername)->subject('Reminder Mail');
+                });
+            }
+            if($ReminderLead->admin_id!=0){
+                $activateLink = url('/').'/dealers/reminder/'.base64_encode($ReminderLead->id);
+                $Dealers_check=Dealer::where('id', $ReminderLead->admin_id)->first();
+                $dealername=$Dealers_check->name;
+                $dealeremail=$Dealers_check->email;
+                $sent = Mail::send('front.email.reminderleadmail', array('dealer_name'=>$dealername,'email'=>$dealeremail,'activateLink'=>$activateLink, 'note'=>$ReminderLead->note,'rdate'=>$ReminderLead->rdate,'rtime'=>$ReminderLead->rtime), 
+                function($message) use ($admin_users_email, $dealeremail,$dealername)
+                {
+                    $message->from($admin_users_email);
+                    $message->to($dealeremail,$dealername)->subject('Reminder Mail');
+                });
+            }
+
+        $ReminderLead->email_status=1;
+        $ReminderLead->save();
+        }
+        
+    }
+    public function GetunreadLeadReminder(){
+       
+        $dealer_userid=Session::get('dealer_userid');
+        $dateconst=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $dealer_userid)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
+        }
+        return view('front.ajax.set_unread_lead_reminder',compact('ReminderLead','ReminderLeadcount')); 
+      }
+    public function setleadtype(){
+         //dd(Request::input());
+         $id=base64_decode(Request::input('lead_id'));
+         $LeadContact=LeadContact::where('id',$id)->first();
+         $LeadContact->lead_types=Request::input('type');
+         $LeadContact->save(); 
+    }
+    public function GetAnalyticGraphtest()
+    {
+        $interval=7;
+        $today=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $date = strtotime("-".$interval." day", strtotime($today));
+        $previousdate= date('Y-m-d H:i:s', $date);
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        // if($Dealers_check->parent_id==0){
+
+        // $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0);
+        // }
+        // else{
+        //     $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid);
+        // }
+
+        $request_queues=array();
+        
+        for($i=0;$i<=$interval;$i++){
+            echo $i;
+            $x=$i+1;
+            echo "<br>";
+            echo $daystart=date('Y-m-d H:i:s', strtotime("+".$i." day", strtotime($previousdate)));
+             echo "<br>";
+            echo $dayend=date('Y-m-d H:i:s', strtotime("+".$x." day", strtotime($previousdate)));
+             echo "<br>";
+                if($Dealers_check->parent_id==0){
+                    echo $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('created_at','>=',$daystart)->where('created_at','<=',$dayend)->count();
+                    echo "<br>";
+                    echo "=====";
+                }
+                else{
+                    $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('created_at','>=',$daystart)->where('created_at','<=',$dayend)->count();
+                    echo "<br>";
+                    echo "=====";
+                }
+                $request_queues[$i]['x']= date('Y-m-d',strtotime($dayend));
+                $request_queues[$i]['y']= $RequestDealerLog;
+        }
+        $request_queues=json_encode($request_queues);
+        dd($request_queues);
+    }
+    public function GetAnalyticGraph(){
+        $today=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+
+        $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+
+        $ContactList=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        else{
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        $request_queues[0]['y']=$RequestDealerLog;
+        $request_queues[0]['label']="REQUEST";
+        $request_queues[1]['y']=$ContactList;
+        $request_queues[1]['label']="Contacts";
+        $request_queues[2]['y']=$LeadContact;
+        $request_queues[2]['label']="Leads";
+        $request_queues=json_encode($request_queues);
+        //dd($request_queues);
+        return view('front.ajax.get_analytic_graph',compact('request_queues'));
+
+    }
+    public function GetClientInfo(){
+        $id=base64_decode(Request::input('lead_id'));
+        $LeadContact=LeadContact::where('id',$id)->with('client_details')->first();
+    return view('front.ajax.get_client_info',compact('LeadContact'));        
     }
 }

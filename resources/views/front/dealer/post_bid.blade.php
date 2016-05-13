@@ -1,11 +1,21 @@
 @extends('front/layout/dealerfrontend_request_template')
 @section('content')
+            
 <section> 
+
     <div class="container post-container">
+
         <div class="intro-text">
             <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
+            
             <h2>{{$RequestQueue->makes->name}}</h2>
-            <P>POST A BID</P>
+            
+            <P>POST A BID </P>
+            @if(Session::get('error'))
+            <div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{ Session::get('error') }} 
+                <a href="#" class="close" data-dismiss="alert">×</a>
+            </div>
+            @endif  
         </div>
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
@@ -21,7 +31,7 @@
                             <label for="exampleInputName1">Monthly Amount</label>
                             {{ Form::text('monthly_amount','',['class' => 'form-control profile_control','required'=>'required']) }}
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <div class="form-group">
                             <label for="exampleInputName1">Trade In Amount</label>
                             {{ Form::text('trade_in','',['class' => 'form-control profile_control']) }}
@@ -54,7 +64,7 @@
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
                         <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <li ><a href="#tradein" data-toggle="tab">Trade-In</a></li>
                         @endif
                         <li ><a href="#userinfo" data-toggle="tab">User-Info</a></li>
@@ -86,11 +96,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -118,7 +128,7 @@
                                 </tbody> 
                             </table>
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <div class="tab-pane form-head" id="tradein">
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 

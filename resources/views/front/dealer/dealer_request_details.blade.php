@@ -19,7 +19,7 @@
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
-                <div id = "myCarousel" class = "carousel slide deal-caro">
+                <div id = "myCarousel" class = "carousel slide deal-caro ctborder">
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
@@ -59,6 +59,7 @@
                         <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
                         <option value="2" @if($fill==2)selected="selected"@endif>Best Monthly</option>
                         <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
+                        <option value="4" @if($fill==4)selected="selected"@endif>Best Location</option>
                 </select>
                 </div>
                 @endif
@@ -99,28 +100,28 @@
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 
                                     <tr> 
-                                        <td>MAKE:</td> 
+                                        <td>MAKE :</td> 
                                         <td>{{$RequestQueue->makes->name}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>MODEL:</td> 
+                                        <td>MODEL :</td> 
                                         <td>{{$RequestQueue->models->name}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>YEAR:</td> 
+                                        <td>YEAR :</td> 
                                         <td>{{$RequestQueue->year}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>CONDITION:</td> 
+                                        <td>CONDITION :</td> 
                                         <td>{{$RequestQueue->condition}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                        <td>TOTAL AMOUNT :</td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
-                                        <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                        <td>MONTHLY AMOUNT :</td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -130,19 +131,19 @@
                             @if($RequestQueue->client_id!=0)
                                 <tbody class="post-text"> 
                                     <tr> 
-                                        <td>Client Name:</td> 
+                                        <td>Client Name :</td> 
                                         <td>{{$RequestQueue->clients->first_name}} {{$RequestQueue->clients->last_name}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Email:</td> 
+                                        <td>Client Email :</td> 
                                         <td>{{$RequestQueue->clients->email}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Phone:</td> 
+                                        <td>Client Phone :</td> 
                                         <td>{{$RequestQueue->clients->phone}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Zip:</td> 
+                                        <td>Client Zip :</td> 
                                         <td>{{$RequestQueue->clients->zip}}</td> 
                                     </tr> 
                                     
@@ -150,19 +151,19 @@
                             @else
                                 <tbody class="post-text"> 
                                     <tr> 
-                                        <td>Client Name:</td> 
+                                        <td>Client Name :</td> 
                                         <td>{{$clx['first_name']}} {{$clx['last_name']}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Email:</td> 
+                                        <td>Client Email :</td> 
                                         <td>{{$clx['email']}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Phone:</td> 
+                                        <td>Client Phone :</td> 
                                         <td>{{$clx['phone']}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>Client Zip:</td> 
+                                        <td>Client Zip :</td> 
                                         <td>{{$clx['zip']}}</td> 
                                     </tr> 
                                     
@@ -175,25 +176,25 @@
                                 <table class="table client-table"> 
                                     <tbody class="post-text"> 
                                         <tr> 
-                                            <td>Trade-IN MAKE:</td> 
+                                            <td>Trade-IN MAKE :</td> 
                                             <td>{{$RequestQueue->trade_ins->makes->name}}</td> 
                                         </tr> 
                                         <tr> 
-                                            <td>Trade-IN MODEL:</td> 
+                                            <td>Trade-IN MODEL :</td> 
                                             <td>{{$RequestQueue->trade_ins->models->name}}</td> 
                                         </tr> 
                                         <tr> 
-                                            <td>Trade-IN CONDITIONS:</td> 
+                                            <td>Trade-IN CONDITIONS :</td> 
                                             <td>{{$RequestQueue->trade_ins->condition}}</td> 
                                         </tr> 
                                         <tr> 
-                                            <td>Trade-IN YEAR:</td> 
+                                            <td>Trade-IN YEAR :</td> 
                                             <td>{{$RequestQueue->trade_ins->year}}</td> 
                                         </tr> 
                                         @if($RequestQueue->trade_ins->owe==1)
                                         <tr> 
-                                            <td>Trade-IN OWE Amount:</td> 
-                                            <td>{{$RequestQueue->trade_ins->owe_amount}}</td> 
+                                            <td>Trade-IN OWE Amount :</td> 
+                                            <td><?php $DoubleTrade_ins=floatval($RequestQueue->trade_ins->owe_amount);echo "$".number_format($DoubleTrade_ins,2);?></td> 
                                         </tr> 
                                         @endif
                                     </tbody> 
@@ -209,64 +210,64 @@
                                                 @foreach (json_decode($option->styles->price,true) as $key => $price)
                                                     @if($key=="baseMSRP")
                                                         <tr> 
-                                                            <td>{{$key}}:</td> 
-                                                            <td>{{$price}}</td> 
+                                                            <td>{{$key}} :</td> 
+                                                            <td>${{$price}}</td> 
                                                         </tr>
                                                     @endif
                                                 @endforeach
                                             @endif
                                             <tr> 
-                                                <td>Style Name:</td> 
+                                                <td>Style Name :</td> 
                                                 <td>{{$option->styles->name}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Body:</td> 
+                                                <td>Body :</td> 
                                                 <td>{{$option->styles->body}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Compression Ratio:</td> 
+                                                <td>Compression Ratio :</td> 
                                                 <td>{{$option->engines['compressionRatio']}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Cylinder:</td> 
+                                                <td>Cylinder :</td> 
                                                 <td>{{$option->engines['cylinder']}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Displacement:</td> 
+                                                <td>Displacement :</td> 
                                                 <td>{{$option->engines['displacement']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Configuration:</td> 
+                                                <td>Configuration :</td> 
                                                 <td>{{$option->engines['configuration']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Fuel Type:</td> 
+                                                <td>Fuel Type :</td> 
                                                 <td>{{$option->engines['fuelType']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Torque:</td> 
+                                                <td>Torque :</td> 
                                                 <td>{{$option->engines['torque']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Total Valves:</td> 
+                                                <td>Total Valves :</td> 
                                                 <td>{{$option->engines['totalValves']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Code:</td> 
+                                                <td>Code :</td> 
                                                 <td>{{$option->engines['code']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Compressor Type:</td> 
+                                                <td>Compressor Type :</td> 
                                                 <td>{{$option->engines['compressorType']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Compressor Type:</td> 
+                                                <td>Compressor Type :</td> 
                                                 <td>{{$option->engines['compressorType']}}</td> 
                                             </tr>
                                             @if(!empty($option->engines['rpm']))
                                                 @foreach (json_decode($option->engines['rpm'],true) as $key => $rpm)
                                                 <tr> 
-                                                    <td>RPM ({{ $key }}):</td> 
+                                                    <td>RPM ({{ $key }}) :</td> 
                                                     <td>{{  $rpm }}</td> 
                                                 </tr>
                                                 @endforeach
@@ -274,14 +275,14 @@
                                             @if(!empty($option->engines['valve']))
                                                 @foreach (json_decode($option->engines['valve'],true) as $keyv => $valve)
                                                 <tr> 
-                                                    <td>Valve ({{ $keyv }}):</td> 
+                                                    <td>Valve ({{ $keyv }}) :</td> 
                                                     <td>{{  $valve }}</td> 
                                                 </tr>
                                                 @endforeach
                                             @endif
                                             @if(!empty($option->excolor))
                                                 <tr> 
-                                                    <td>Exterior Color:</td> 
+                                                    <td>Exterior Color :</td> 
                                                     <td>
                                                         {{$option->excolor['name']}}
                                                         @if($option->excolor['hex']!="")
@@ -292,7 +293,7 @@
                                             @endif
                                             @if(!empty($option->incolor))
                                                 <tr> 
-                                                    <td>Interior Color:</td> 
+                                                    <td>Interior Color :</td> 
                                                     <td>
                                                         {{$option->incolor['name']}}
                                                         @if($option->incolor['hex']!="")
@@ -320,7 +321,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Bid</h4>
+          <h4 class="modal-title">Bid Information</h4>
         </div>
         <div class="modal-body">
                         

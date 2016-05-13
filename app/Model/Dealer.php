@@ -24,6 +24,10 @@ class Dealer extends Model
    public function dealer_parent(){
         return $this->hasOne('App\Model\Dealer', 'id','parent_id');
   
-    } 
+    }
+    public function dealer_bid_info(){
+        return $this->hasOne('App\Model\DealersAdminBidManagement','dealer_id','id');
+  
+    }   
 
 }

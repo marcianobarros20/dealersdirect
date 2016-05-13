@@ -51,6 +51,10 @@ Route:: get('/client/add-color-exterior/{id}', 'Front\ClientController@AddColorE
 Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorInterior');
 Route:: get('/signin-client', 'Front\ClientController@SigninClient');
 Route:: post('/signin-client', 'Front\ClientController@SigninClient');
+Route:: get('/client/contact_list', 'Front\ClientController@contactList');
+Route:: get('/client/contact_details/{id}', 'Front\ClientController@contactDetails');
+Route:: get('/client/update-budget/{id}', 'Front\ClientController@UpdateBudget');
+Route:: post('/client/update-budget', 'Front\ClientController@UpdateBudgetPost');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,6 +95,18 @@ $router->group([
     Route::resource('/admin/year', 'CarYearController@getYear');
     Route::resource('/admin/dealers', 'DealerController@getDealer');
     Route::resource('/admin/request', 'RequestController@getRequest');
+
+    Route::resource('/admin/price', 'PriceController@getIndex');
+    Route::post('/admin/price', 'PriceController@AddPrice');
+    Route::get('/admin/edit-price/{id}','PriceController@EditPrice');
+    Route::post('/admin/edit-price',['as'=>'edit_price','uses'=>'PriceController@EditPricePost']);
+    Route::get('/admin/delete-price/{id}','PriceController@DeletePrice');
+
+
+    Route::resource('/admin/loan', 'LoanDetails@index');
+    Route::get('/admin/edit-loan/{id}', 'LoanDetails@edit');
+    Route::post('/admin/edit-loan', ['as'=>'edit_loan','uses'=>'LoanDetails@update']);
+
 
     Route::post('/admin/ajax/getoptiondetails', 'AjaxController@getOptionDetails');
     Route::post('/admin/ajax/getclientdetails', 'AjaxController@getClientDetails');
@@ -145,6 +161,7 @@ Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDeal
 Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
 Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
 Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
+Route::post('ajax/getallbid/', 'Front\AjaxController@GetAllBid');
 Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
 Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
 Route::post('ajax/getbidchunkclient/', 'Front\AjaxController@GetAllBidChunkClient');
@@ -153,9 +170,23 @@ Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
 Route::post('ajax/get_all_city/', 'Front\AjaxController@getAllCity');
 Route::post('ajax/get_all_edit_city/', 'Front\AjaxController@getAllEditCity');
 Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
+Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculator');
+
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
+
+Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+
+
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
+Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
+Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderSubmit');
+Route::post('ajax/getleadreminder', 'Front\AjaxController@GetLeadReminder');
+Route::post('ajax/getunreadleadreminder','Front\AjaxController@GetunreadLeadReminder');
+Route::get('ajax/sendreminderleadmail','Front\AjaxController@sendreminderleadmail');
+Route::post('ajax/setleadtype','Front\AjaxController@setleadtype');
+Route::post('ajax/getanalyticgraph','Front\AjaxController@GetAnalyticGraph');
+Route::post('ajax/getclientinfo','Front\AjaxController@GetClientInfo');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -171,6 +202,7 @@ Route:: post('/dealerregister','Front\RegisterController@dealerRegister');
 Route:: get('/dealer-dashboard', 'Front\DealerController@dashboard');
 Route:: get('/dealer_sign_out', 'Front\DealerController@signout');
 Route:: get('/dealers/request_list', 'Front\DealerController@requestList');
+Route:: get('/dealers/bid_list', 'Front\DealerController@bidList');
 Route:: get('dealers/request_detail/{id}', 'Front\DealerController@requestDetail');
 Route:: get('/dealer/dealer_make', 'Front\DealerController@DealerMakeList');
 Route:: get('dealers/dealer_add_make', 'Front\DealerController@DealerMakeAdd');
@@ -178,6 +210,12 @@ Route:: post('/dealeraddmake', 'Front\DealerController@DealerAddMake');
 Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake');
 Route:: get('/dealer/profile', 'Front\DealerController@profile');
 Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
+//dealers membership routes 
+Route::get('/dealers/membership','Front\DealerController@DealerMembership');
+Route::post('/dealers/membership',['as'=>'membership','uses'=>'Front\DealerController@DealerMembershipPost']);
+
+Route:: post('/dealeremoreditdetails', 'Front\DealerController@ProfileMoreDetails');
+
 Route:: post('/dealereditpassword', 'Front\DealerController@ProfileEditPassword');
 Route:: get('/dealers/post-bid/{id}', 'Front\DealerController@postBid');
 Route:: get('/dealers/edit-bid/{id}', 'Front\DealerController@editBid');
@@ -190,12 +228,19 @@ Route:: get('/dealer/admins', 'Front\DealerController@DealerAdminList');
 //edit and update route
 Route::get('dealer/admins/edit/{admin_id}', ['uses' => 'Front\DealerController@EditAdminDetails','as' => 'dealer.admins.edit']);
 Route::post('dealer/admins/update/{update_id}', ['uses' => 'Front\DealerController@UpdateAdminDetails','as' =>'dealer.admins.update']);
+Route::post('dealer/admins/update_bid/{update_id}', ['uses' => 'Front\DealerController@UpdateAdminBid','as' =>'dealer.admins.updateBid']);
 //edit and update
 Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 
 Route::get('dealers/contact_list', ['uses' => 'Front\DealerController@DealerContactList','as' => 'dealer.contact.list']);
 Route::get('dealer/contact/detail/{contact_id}', ['uses' => 'Front\DealerController@DealerContactDetails','as' => 'dealer.contact.details']);
+Route::get('dealer/contact/pay/{contact_id}', ['uses' => 'Front\DealerController@DealerContactPay','as' => 'dealer.contact.pay']);
+Route::get('dealers/lead_list', ['uses' => 'Front\DealerController@DealerLeadList','as' => 'dealer.lead.list']);
+Route::get('dealers/reminder_list', ['uses' => 'Front\DealerController@DealerReminderList','as' => 'dealer.reminder.list']);
+Route::get('/dealers/reminder/{reminder_id}', ['uses' => 'Front\DealerController@DealerReminderDetails','as' => 'dealer.reminder.details']);
+Route::get('dealers/analytics', ['uses' => 'Front\DealerController@DealerAnalytics','as' => 'dealer.analytics']);
+Route::get('dealers/analyticsone', ['uses' => 'Front\DealerController@DealerAnalyticsone','as' => 'dealer.analyticsone']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

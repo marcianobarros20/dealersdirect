@@ -2,6 +2,7 @@
 @section('content')
 <section>
     <div class="container add-client-container">
+    <div class="col-md-2 col-md-offset-5"><h2>Body Style</h2></div>
         @foreach ($Stylenew as $key => $value)
         <div class="col-xs-12 col-sm-12 col-md-12 client-row">
             <div class="add-details">

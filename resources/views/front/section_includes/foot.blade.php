@@ -20,7 +20,9 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
-
+<!--Price format js-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+<!--Price format js *-->
 <script>
 
     $(function() {
@@ -100,7 +102,22 @@
           console.log(condition_search);
           var year_search=$('#year_search').val();
           console.log(year_search);
+          var interest_rate = $('#rateofinterest').val();
+          console.log(interest_rate);
+          var loan_term = $('#terms').val();
+          console.log(loan_term);
           $("#dvLoading").show();
+
+
+
+
+
+
+
+
+
+
+
           $.ajax({
             dataType: 'json',
             url: "<?php echo url('/');?>/ajax/getmsrp_range",
@@ -110,12 +127,45 @@
               
               
               if(data!=0){
-                $("#minauto").html("Minimum Price<br>"+"Total :"+data.min.base+"<br>"+"Monthly :"+data.min.monthly);
-                $("#maxauto").html("Maximum Price<br>"+"Total :"+data.max.base+"<br>"+"Monthly :"+data.max.monthly);
-                $("#minmsrp").html(data.min.base);
-                $("#maxmsrp").html(data.max.base);
-                $("#minmp").html(data.min.monthly);
-                $("#maxmp").html(data.max.monthly);
+
+
+
+                //Calculate Value on base of Minimum Amount Custom Interest Rate Begin
+    var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var top_min_monthly_rate=parseFloat(numeral(data.min.base).format('00.00')*(up/down)).toFixed(2);
+
+    //END
+
+
+    //Calculate Value on base of Maximum Amount Custom Interest Rate Begin
+    var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var top_max_monthly_rate=parseFloat(numeral(data.max.base).format('00.00')*(up/down)).toFixed(2);
+
+    //END
+
+
+
+
+
+                /*  $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
+                $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
+                */
+
+                $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_min_monthly_rate);
+                $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_max_monthly_rate);
+
+                $("#disclaimer_data").html("*Amount shown as "+interest_rate+"% interest per year for " +loan_term +" years.");
+                $('#toto').html('<input type="hidden" id="min_amt" name="min_amt" value="'+numeral(data.min.base).format('00.00')+'"><input type="hidden" id="max_amt" name="max_amt" value="'+numeral(data.max.base).format('00.00')+'">');
+                $("#minmsrp").html(numeral(data.min.base).format('$0,0.00'));
+                $("#maxmsrp").html(numeral(data.max.base).format('$0,0.00'));
+                $("#minmp").html(numeral(data.min.monthly).format('$0,0.00'));
+                $("#maxmp").html(numeral(data.max.monthly).format('$0,0.00')); 
                 $("#fmp").show();
                 $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
@@ -133,6 +183,30 @@
               }
             }
           });
+
+
+
+
+             //New Fuel Api Begin 
+
+        
+
+       $.ajax({
+            
+            url: "<?php echo url('/');?>/ajax/getimagesviewsnew",
+            data: {make_search:make_search,model_search:model_search,year_search:year_search},
+            type :"post",
+            success: function( data ) {
+              
+                $("#dvLoading").hide();
+                $(".setsliderNew").html(data);
+              
+            }
+          });
+
+          
+
+          // Fuel Api End
           
 
           return false;
@@ -151,6 +225,8 @@
             type :"post",
             success: function( data ) {
               $("#carselect").html(condition_search+" "+data.Makes+" "+data.Models+" "+year_search);
+
+              
             }
 
           });
@@ -175,6 +251,8 @@
               }
             }
           });
+
+       
         }
         $('#backfirst').click(function(){
           $("#searchfirst").show();
@@ -199,23 +277,25 @@
             }
             if(minmsrp!="" && maxmsrp!="" && minmp!="" && maxmp!="" && tamo!="" && mtamo!="" ){
                 if(tamo<minmsrp){
-                  $("#tb").html(tamo.toFixed( 2 ));
+
+                  $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
+                  
                   $("#tb").removeClass("value-green");
                   $("#tb").addClass("value-red");
                   $("#tttb").html("Total budget Is Less than MSRP Range");
                 }else{
-                  $("#tb").html(tamo.toFixed( 2 ));
+                  $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
                   $("#tb").removeClass("value-red");
                   $("#tb").addClass("value-green");
                   $("#tttb").html("Total budget Is With In The MSRP Range");
                 }
                 if(mtamo<minmp){
-                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));  
                   $("#mb").removeClass("value-green");
                   $("#mb").addClass("value-red");
                   $("#ttmb").html("Monthly budget Is Less than Monthly Range");
                 }else{
-                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));
                   $("#mb").removeClass("value-red");
                   $("#mb").addClass("value-green");
                   $("#ttmb").html("Monthly budget Is With In The Monthly Range");
@@ -224,8 +304,8 @@
             else{
               
               
-              $("#tb").html(tamo.toFixed( 2 ));
-              $("#mb").html(mtamo.toFixed( 2 ));
+              $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
+              $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));
             }
             
           $("#searchseconed").hide();
@@ -486,4 +566,8 @@
     });
 
 
+  
+
 </script>
+
+

@@ -61,6 +61,7 @@
 								<li><a href="<?php echo url('/');?>/client-dashboard">Dashboard</a></li>
 								<li><a href="<?php echo url('/');?>/client/profile">Profile</a></li>
 								<li><a href="<?php echo url('/');?>/client/request_list">Request</a></li>
+								<li><a href="<?php echo url('/');?>/client/contact_list">Contacts</a></li>
 								<li><a href="<?php echo url('/');?>/client_sign_out">Logout</a></li>
 							</ul>
 						</div>

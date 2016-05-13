@@ -24,10 +24,10 @@
             Anyonymus
             @endif
     <div class="information">
-        <p>Monthly: {!! $Bid->monthly_amount !!}</p>
-        <p>Total: {!! $Bid->total_amount !!}</p>
+        <p>Monthly:<?php $DoubleMonthly=floatval($Bid->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></p>
+        <p>Total: <?php $DoubleTotal=floatval($Bid->total_amount);echo "$".number_format($DoubleTotal,2);?></p>
         @if($Bid->trade_in!=0)
-        <p><i class="fa fa-suitcase"></i> Trade In: {!! $Bid->trade_in !!}</p>
+        <p><i class="fa fa-suitcase"></i> Trade In: <?php $DoubleTrade_in=floatval($Bid->trade_in);echo "$".number_format($DoubleTrade_in,2);?></p>
         @endif
         <p>Details: {!! $Bid->details !!}</p>
         @if($Bid->status==3)
@@ -85,7 +85,7 @@
                   type :"post",
                   success: function( data ) {
                     if(data){
-                      window.location.reload();
+                      window.location.reload(true);
                     }
                     
                   
@@ -105,9 +105,8 @@
                 },
                   type :"post",
                   success: function( data ) {
-                    if(data){
-                     // window.location.reload();
-                    }
+                    
+                      window.location.reload(true);
                     
                   
                   }
@@ -139,3 +138,4 @@
   });
 
 </script>
+

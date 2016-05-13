@@ -53,8 +53,8 @@
                                     <div class="btns">
                                         <button type="button" class="btn btn-default c-p">{{$Request->models->name}}</button>
                                         <button type="button" class="btn btn-default c-p">{{$Request->year}}</button>
-                                        <button type="button" class="btn btn-default c-p">OneTime:{{$Request->total_amount}}</button>
-                                        <button type="button" class="btn btn-default c-p">Monthly:{{$Request->monthly_amount}}</button>
+                                        <button type="button" class="btn btn-default c-p">OneTime :<?php $DoubleOneTime=floatval($Request->total_amount);echo "$".number_format($DoubleOneTime,2);?></button>
+                                        <button type="button" class="btn btn-default c-p">Monthly :<?php $DoubleMonthly=floatval($Request->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                                     </div>
                                     <a href="{{url('/')}}/client/request_detail/{{base64_encode($Request->id)}}" class="btn-group">
                                         <button type="button" class="btn btn-success">OPEN</button>
@@ -72,7 +72,10 @@
             
         </div> <!-- /row col-xs-12 select_option -->    
     </div><!--  /container --> 
+
+    
 </section> <!--  /dealer_request_area -->
 
 
 @stop
+

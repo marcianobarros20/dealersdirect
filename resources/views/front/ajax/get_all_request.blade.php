@@ -50,8 +50,8 @@
                 <button type="button" class="btn btn-default c-p-b">Rejected</button>
                 @endif
                 <button type="button" class="btn btn-default c-p-b">{!! $RequestLog->requestqueue->year !!}</button>
-                <button type="button" class="btn btn-default c-p-b">OneTime:{!! $RequestLog->requestqueue->total_amount !!}</button>
-                <button type="button" class="btn btn-default c-p-b">Monthly:{!! $RequestLog->requestqueue->monthly_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime : <?php $DoubleTotal=floatval($RequestLog->requestqueue->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
+                <button type="button" class="btn btn-default c-p-b">Monthly : <?php $DoubleMonthly=floatval($RequestLog->requestqueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                 
             </div>
             <a href="<?php echo url('/');?>/dealers/request_detail/<?php echo base64_encode($RequestLog->id);?>" class="btn-group">
