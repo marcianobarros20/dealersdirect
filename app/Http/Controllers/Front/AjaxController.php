@@ -1176,4 +1176,8 @@ class AjaxController extends Controller
         $viewdet['Models']=$Model->name;
         return $viewdet=json_encode($viewdet);
     }
+    public function SetLeadReminder(){
+        $inox=Request::input('inox');
+       return view('front.ajax.set_lead_reminder',compact('inox')); 
+    }
 }
