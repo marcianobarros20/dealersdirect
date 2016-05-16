@@ -14,7 +14,7 @@
 </style>
 <div class="form-group">
 			<label  >Remider Time</label>
-			<input type="text" value="" class="form-control profile_control" id="datetimepicker_mask"/>
+			<input type="text" value=""  class="form-control profile_control" id="datetimepicker_mask"/>
             <label >Remider Note</label>
             <textarea type="name" class="form-control profile_control" rows="5" id="detresx" placeholder=""></textarea>
             <div class="btns">
@@ -43,7 +43,28 @@ $('#datetimepicker_mask').datetimepicker({
 	format:'Y/m/d H:i:s',
 });
 
+$(document).ready(function(){
 
+	$('.reminderset').click(function(){
+		var inox=$(this).data('request');
+		var datatime=$("#datetimepicker_mask").val();
+		var details=$("#detresx").val();
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadremindersubmit",
+					data: {lead_id:inox,datatime:datatime,details:details,_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							if(data==3){
+							var urlnew="<?php echo url('/');?>/dealers/lead_list";
+                          	$(location).attr('href',urlnew);
+							}
+							
+						
+					}
+				});
+	});
+});
 
 
 </script>
