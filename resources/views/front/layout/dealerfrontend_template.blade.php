@@ -62,7 +62,7 @@ $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
 </script> -->
 <script type="text/javascript">
 $(document).ready(function(){
-
+FetchData();
 	$('.remindbox').click(function(){
 		var inox=$(this).data('inox');
 		console.log(inox);
@@ -73,7 +73,7 @@ $(document).ready(function(){
 					success: function( data ) {
 						
 							$(".modal-body").html('');
-							$(".modal-body").html(data)
+							$(".modal-body").html(data);
 						
 					}
 				});
@@ -88,9 +88,21 @@ $(document).ready(function(){
 		var newDate = new Date();
 		newDate.setDate(newDate.getDate());
 		var max=newDate.getMonth()+1
-		console.log(newDate.getFullYear()+"/"+max+"/"+newDate.getDate());
-		console.log(newDate.getHours()+"/"+newDate.getMinutes()+"/"+newDate.getSeconds());
-		
+		console.log(newDate.getFullYear()+"/"+( max < 10 ? "0" : "" ) +max+"/"+( newDate.getDate() < 10 ? "0" : "" ) +newDate.getDate());
+		console.log(( newDate.getHours() < 10 ? "0" : "" ) +newDate.getHours()+"/"+( newDate.getMinutes() < 10 ? "0" : "" ) +newDate.getMinutes()+"/"+( newDate.getSeconds() < 10 ? "0" : "" ) +newDate.getSeconds());
+		var timeconst=( newDate.getHours() < 10 ? "0" : "" ) +newDate.getHours()+":"+( newDate.getMinutes() < 10 ? "0" : "" ) +newDate.getMinutes()+":"+( newDate.getSeconds() < 10 ? "0" : "" ) +newDate.getSeconds();
+		var dateconst=newDate.getFullYear()+"-"+( max < 10 ? "0" : "" ) +max+"-"+( newDate.getDate() < 10 ? "0" : "" ) +newDate.getDate();
+
+			$.ajax({
+				url: "<?php echo url('/');?>/ajax/getleadreminder",
+				data: {dateconst:dateconst,timeconst:timeconst,_token: '{!! csrf_token() !!}'},
+				type :"post",
+				success: function( data ) {
+					
+						$("#remindernot").html(data);
+					
+				}
+			});
 		}
 });
 </script>

@@ -8,12 +8,12 @@
 							<div class="col-sm-8 col-xs-8">
 								<div class="social">
 									<ul class="social-share">
-										<!-- <li>
+										<li>
 											<a href="#">
-												<i class="fa fa-google-plus"></i>
+												<i class="fa fa fa-bell"></i> <span id="remindernot"> </span>
 											</a>
 										</li>
-										<li>
+										<!-- <li>
 											<a href="#">
 												<i class="fa fa-facebook"></i>
 											</a>

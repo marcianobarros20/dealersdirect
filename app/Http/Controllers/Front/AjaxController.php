@@ -1214,5 +1214,20 @@ class AjaxController extends Controller
         else{
            return 3; 
         }
+
+    }
+    public function GetLeadReminder(){
+        //dd(Request::input());
+        $dealer_userid=Session::get('dealer_userid');
+        $dateconst=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+        }
+        return $ReminderLead;
     }
 }

@@ -158,6 +158,7 @@ Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
 Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
 Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderSubmit');
+Route::post('ajax/getleadreminder', 'Front\AjaxController@GetLeadReminder');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
