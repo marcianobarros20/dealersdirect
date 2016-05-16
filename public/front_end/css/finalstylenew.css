@@ -381,6 +381,7 @@ input.search-form:hover {
     color: #fff;
     text-shadow: 1px 1px 1px #1B1A1A;
     line-height: 20px;
+    display: block;
 }
 
 .notification-box a:hover{
