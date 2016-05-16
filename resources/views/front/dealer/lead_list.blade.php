@@ -76,7 +76,7 @@
               <p><strong>Year:</strong>{!! $Lead->request_details->year !!}</p>
               <p><strong>Conditions:</strong>{!! $Lead->request_details->condition !!}</p>
               
-                <button id="" type="submit" class="btn btn-primary"><i class="fa fa fa-bell"></i> Reminder</button>
+                <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox"><i class="fa fa fa-bell"></i> Reminder</button>
                 <button id="" type="submit" class="btn btn-primary"><i class="fa fa-sticky-note-o"></i> Note</button>
                 <button id="" type="submit" class="btn btn-success"><i class="fa fa fa-cubes"></i> Cold Lead</button>
                 <button id="" type="submit" class="btn btn-info"><i class="fa fa fa-fire"></i> Hot Lead</button>
@@ -103,5 +103,24 @@
   </section>
 		
     
-
+<!-- modal fade -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Bid</h4>
+        </div>
+        <div class="modal-body">
+                        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close</button>
+          
+        </div>
+      </div>
+    </div>
+</div>
+<!-- ./modal fade -->
 @stop

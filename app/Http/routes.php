@@ -156,6 +156,7 @@ Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
+Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

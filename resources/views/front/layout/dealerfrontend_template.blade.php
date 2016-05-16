@@ -20,7 +20,7 @@
 			@include('front.section_includes.dealerfooter') 
 			<!-- <script src="js/jquery.js"></script> -->
 			@include('front.section_includes.dealerfoot')
-<div  id="Date"></div>
+<!-- <div  id="Date"></div>
 <div  id="hours"></div>
 <div id="min"></div>
 <div  id="sec"></div>
@@ -59,6 +59,26 @@ $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
 }, 1000); 
 });
 
+</script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('.remindbox').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadreminder",
+					data: {lead_id:inox,_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							$(".modal-body").html('');
+							$(".modal-body").html(data)
+						
+					}
+				});
+	});
+});
 </script>
 
 		</body>
