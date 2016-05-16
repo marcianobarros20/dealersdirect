@@ -309,6 +309,71 @@ input.search-form:hover {
     color:#ffffff;
     font-weight: bold
 }
+
+/********************CSS FOR NOTIFICATION BOX*******************/
+.notification-box{
+    position: absolute;
+    background: #F26722;
+    left: 0;
+    top: 28px;
+    z-index: 9999;
+    width: 260px;
+    text-align: left;
+    color: #fff;
+    padding: 10px;
+    font-size: 10px;
+    border-radius: 2px;
+    box-shadow: 0px 1px 2px #676767;
+    display: none;
+    height: 165px;
+    overflow-y: scroll;
+
+}
+
+.notification-box::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+.notification-box::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+.notification-box::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+.note-bell{
+    position: relative;
+}
+
+ul.social-share .note-bell:hover .notification-box{
+    display: block;
+}
+
+ul.social-share li .notification-box a{
+    display: inline;
+    margin: 0 3px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #1B1A1A;
+}
+
+ul.social-share li .notification-box a:hover{
+    color: #333;
+    text-shadow: none;
+}
+
+ul.social-share li .notification-box a.viewall{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    font-size: 10px;
+    font-style: italic;
+    text-decoration: underline;
+}
+/**************************************************************/
 /********************CSS FOR SEARCH FORM*******************/
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: 150px !important;

@@ -8,10 +8,28 @@
 							<div class="col-sm-8 col-xs-8">
 								<div class="social">
 									<ul class="social-share">
-										<li>
+										<li class="note-bell">
 											<a href="#">
 												<i class="fa fa fa-bell"></i> <span id="remindernot"> </span>
 											</a>
+											<div class="notification-box">
+												<i class="fa fa-flag" aria-hidden="true"></i>
+												<a href="#">Pellentesque in ipsum id orci porta... </a>
+												<div class="clear"></div>
+												<i class="fa fa-flag" aria-hidden="true"></i>
+												<a href="#">Mauris blandit aliquet elit...</a>
+												<div class="clear"></div>
+												<i class="fa fa-flag" aria-hidden="true"></i>
+												<a href="#">Vivamus suscipit tortor eget felis porttitor...</a>
+												<div class="clear"></div>
+												<i class="fa fa-flag" aria-hidden="true"></i>
+												<a href="#">Vivamus suscipit tortor eget felis porttitor ...</a>
+												
+												<div class="clear"></div>
+
+												<a class="viewall" href="">View all <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+
+											</div>
 										</li>
 										<!-- <li>
 											<a href="#">
