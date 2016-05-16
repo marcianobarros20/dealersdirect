@@ -78,6 +78,20 @@ $(document).ready(function(){
 					}
 				});
 	});
+	setInterval(function() { FetchData(); },10000);
+	function FetchData(){
+		console.log("hi");
+		//return true;
+		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]; 
+		var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+		
+		var newDate = new Date();
+		newDate.setDate(newDate.getDate());
+		var max=newDate.getMonth()+1
+		console.log(newDate.getFullYear()+"/"+max+"/"+newDate.getDate());
+		console.log(newDate.getHours()+"/"+newDate.getMinutes()+"/"+newDate.getSeconds());
+		
+		}
 });
 </script>
 
