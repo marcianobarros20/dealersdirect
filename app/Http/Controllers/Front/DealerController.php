@@ -18,6 +18,7 @@ use App\Model\DealerDetail;                                 /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
+use App\Model\LeadContact;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -862,9 +863,9 @@ class DealerController extends BaseController {
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
-            $ContactList=ContactList::where('dealer_id',$dealer_userid)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+            $ContactList=ContactList::where('dealer_id',$dealer_userid)->where('payment_status','!=',1)->where('status','!=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
         }else{
-            $ContactList=ContactList::where('admin_id',$dealer_userid)->with('request_details','bid_details','client_details')->get();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->where('payment_status','!=',1)->where('status','!=',1)->with('request_details','bid_details','client_details')->get();
         }
         
         foreach ($ContactList as $key => $value) {
@@ -881,7 +882,7 @@ class DealerController extends BaseController {
         //      dd($Contact->imx->local_path_smalll);
         // }
         
-        return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Contacts'));
     }
     public function DealerContactDetails($id=null){
         $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
@@ -894,5 +895,45 @@ class DealerController extends BaseController {
             }
         //dd($ContactDetail);
         return view('front.dealer.contact_details',compact('ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+    public function DealerContactPay($contact_id=null){
+        $contact_id=base64_decode($contact_id);
+        $ContactDetail=ContactList::where('id',$contact_id)->first();
+        //dd($ContactDetail);
+        $ContactDetail->payment_status=1;
+        $ContactDetail->status=1;
+        $ContactDetail->save();
+        
+        $LeadContact = new LeadContact;
+        $LeadContact->request_id=$ContactDetail->request_id;
+        $LeadContact->bid_id=$ContactDetail->bid_id;
+        $LeadContact->dealer_id=$ContactDetail->dealer_id;
+        $LeadContact->admin_id=$ContactDetail->admin_id;
+        $LeadContact->client_id=$ContactDetail->client_id;
+        $LeadContact->contact_id=$ContactDetail->id;
+        $LeadContact->payment_status=1;
+        $LeadContact->lead_status=1;
+        $LeadContact->save(); 
+        return redirect('dealers/lead_list');
+    }
+    public function DealerLeadList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        if($Dealer->parent_id==0){
+            $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+        }else{
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','bid_details','client_details')->get();
+        }
+        foreach ($LeadContact as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->get();
+             $LeadContact[$key]['imx']=$imx;
+            }else{
+               $LeadContact[$key]['imx']=""; 
+            }
+
+        }
+        return view('front.dealer.lead_list',compact('LeadContact'),array('title'=>'DEALERSDIRECT | Dealers Leads'));
     }
 }

@@ -156,6 +156,9 @@ Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
+Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
+Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderSubmit');
+Route::post('ajax/getleadreminder', 'Front\AjaxController@GetLeadReminder');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -196,6 +199,8 @@ Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd'
 
 Route::get('dealers/contact_list', ['uses' => 'Front\DealerController@DealerContactList','as' => 'dealer.contact.list']);
 Route::get('dealer/contact/detail/{contact_id}', ['uses' => 'Front\DealerController@DealerContactDetails','as' => 'dealer.contact.details']);
+Route::get('dealer/contact/pay/{contact_id}', ['uses' => 'Front\DealerController@DealerContactPay','as' => 'dealer.contact.pay']);
+Route::get('dealers/lead_list', ['uses' => 'Front\DealerController@DealerLeadList','as' => 'dealer.lead.list']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

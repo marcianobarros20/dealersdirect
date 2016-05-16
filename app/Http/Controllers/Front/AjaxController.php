@@ -20,6 +20,8 @@ use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
+use App\Model\ReminderLead;                                 /* Model name*/
+use App\Model\LeadContact;                                  /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -1168,12 +1170,64 @@ class AjaxController extends Controller
        return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
     }
     public function GetMakeModel(){
-    $Makes=Request::input('make_search');
-    $Models=Request::input('model_search');
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
         $viewdet['Makes']=$Make->name;
         $viewdet['Models']=$Model->name;
         return $viewdet=json_encode($viewdet);
+    }
+    public function SetLeadReminder(){
+        
+        $inox=Request::input('lead_id');
+       return view('front.ajax.set_lead_reminder',compact('inox')); 
+    }
+    public function SetLeadReminderSubmit(){
+        $datatime=Request::input('datatime');
+        $lead_id=Request::input('lead_id');
+        $details=Request::input('details');
+        $dt=explode(" ",$datatime);
+        $date=$dt['0'];
+        $time=$dt['1'];
+        $id=base64_decode(Request::input('lead_id'));
+
+        $LeadContact=LeadContact::where('id',$id)->first();
+        
+        $ReminderLead = new ReminderLead;
+        $ReminderLead->rdate=$date;
+        $ReminderLead->rtime=$time;
+        $ReminderLead->note=$details;
+        $ReminderLead->lead_id=$LeadContact->id;
+        $ReminderLead->contact_id=$LeadContact->contact_id;
+        $ReminderLead->dealer_id=$LeadContact->dealer_id;
+        $ReminderLead->admin_id=$LeadContact->admin_id;
+        $ReminderLead->email_status=0;
+        $ReminderLead->status=0;
+        $ReminderLead->save(); 
+        if($date==""){
+           return 1; 
+        }
+        elseif($time==""){
+           return 2; 
+        }
+        else{
+           return 3; 
+        }
+
+    }
+    public function GetLeadReminder(){
+        //dd(Request::input());
+        $dealer_userid=Session::get('dealer_userid');
+        $dateconst=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+        }
+        return $ReminderLead;
     }
 }
