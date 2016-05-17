@@ -1237,12 +1237,12 @@ class AjaxController extends Controller
         $newtime=date('Y-m-d');
         $admin_users_email="hello@tier5.us";
         
-        $ReminderLeadfind=ReminderLead::where('rdate',$newtime)->get();
+        $ReminderLeadfind=ReminderLead::where('rdate',$newtime)->where('email_status','!=',1)->get();
         foreach ($ReminderLeadfind as $key => $Reminder) {
          $ReminderLead = ReminderLead::where('id', $Reminder->id)->first();
             if($ReminderLead->dealer_id!=0){
                 echo "yes";
-                $activateLink = url('/').'/dealers/reminder_list'.base64_encode($ReminderLead->id);
+                $activateLink = url('/').'/dealers/reminder/'.base64_encode($ReminderLead->id);
                 $Dealers_check=Dealer::where('id', $ReminderLead->dealer_id)->first();
                 $dealername=$Dealers_check->name;
                 $dealeremail=$Dealers_check->email;
@@ -1254,7 +1254,7 @@ class AjaxController extends Controller
                 });
             }
             if($ReminderLead->admin_id!=0){
-                $activateLink = url('/').'/dealers/reminder_list'.base64_encode($ReminderLead->id);
+                $activateLink = url('/').'/dealers/reminder/'.base64_encode($ReminderLead->id);
                 $Dealers_check=Dealer::where('id', $ReminderLead->admin_id)->first();
                 $dealername=$Dealers_check->name;
                 $dealeremail=$Dealers_check->email;
