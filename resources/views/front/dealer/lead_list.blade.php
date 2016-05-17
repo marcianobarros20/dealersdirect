@@ -37,7 +37,7 @@
   <div class="">
 
   @foreach ($LeadContact as $key => $Lead)
-    <div class="col-xs-12 col-md-4">
+    <div class="col-md-12">
         <div class="brand_request">
               <div id = "myCarousel{{$key}}" class = "carousel slide">
 
@@ -76,13 +76,13 @@
               <p><strong>Year:</strong>{!! $Lead->request_details->year !!}</p>
               <p><strong>Conditions:</strong>{!! $Lead->request_details->condition !!}</p>
               
-                <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox"><i class="fa fa fa-bell"></i> Reminder</button>
-                <button id="" type="submit" class="btn btn-primary lead_note" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-sticky-note-o"></i> Note</button>
-                <button id="" type="submit" class="btn btn-success lead_cold" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
-                <button id="" type="submit" class="btn btn-info lead_hot" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-fire"></i> Hot Lead</button>
-                <button id="" type="submit" class="btn btn-warning lead_lost" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-ban"></i> Lost Lead</button>
-                <button id="" type="submit" class="btn btn-danger" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-times lead_lost_sale"></i> Lost SALE</button>
-                <button id="" type="submit" class="btn btn-secondary lead_success_sale" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-check-square "></i> Success SALE</button>
+                <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox lead-btns"><i class="fa fa fa-bell"></i> Reminder</button>
+                <button id="" type="submit" class="btn btn-primary lead_note lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-sticky-note-o"></i> Note</button>
+                <button id="" type="submit" class="btn btn-success lead_cold lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
+                <button id="" type="submit" class="btn btn-info lead_hot lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-fire"></i> Hot Lead</button>
+                <button id="" type="submit" class="btn btn-warning lead_lost lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-ban"></i> Lost Lead</button>
+                <button id="" type="submit" class="btn btn-danger lost_sale lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-times lead_lost_sale"></i> Lost SALE</button>
+                <button id="" type="submit" class="btn btn-secondary lead_success_sale lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-check-square "></i> Success SALE</button>
               
         </div>
       </div>

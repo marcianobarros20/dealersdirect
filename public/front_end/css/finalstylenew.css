@@ -325,7 +325,7 @@ input.search-form:hover {
     font-size: 10px;
     border-radius: 2px;
     box-shadow: 0px 1px 2px #676767;
-    /*display: none;*/
+    display: none;
     height: 320px;
     overflow-y: scroll;
 
@@ -371,7 +371,7 @@ input.search-form:hover {
     float: right;
     display: block;
 }
-/*ul.social-share .note-bell:hover .notification-box{
+/*.note-bell a:hover .notification-box{
     display: block;
 }*/
 
@@ -395,6 +395,90 @@ input.search-form:hover {
     font-size: 10px;
     font-style: italic;
     text-decoration: underline;
+}
+/**************************************************************/
+/********************CSS FOR LEAD BUTTONS*******************/
+
+
+.btn.lead-btns{
+    color: #fff !important;
+    padding: 8px;
+    font-size: 10px;
+    margin: 0 0 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+ border:1px solid #ebaf6b !important;
+ -webkit-border-radius: 2px; 
+ -moz-border-radius: 2px;
+ border-radius: 2px;
+ text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+ background-color: #F2CA9D !important; 
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#F2CA9D), to(#F26722));
+ background-image: -webkit-linear-gradient(top, #F2CA9D, #F26722);
+ background-image: -moz-linear-gradient(top, #F2CA9D, #F26722);
+ background-image: -ms-linear-gradient(top, #F2CA9D, #F26722);
+ background-image: -o-linear-gradient(top, #F2CA9D, #F26722);
+ background-image: linear-gradient(to bottom, #F2CA9D, #F26722);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F2CA9D, endColorstr=#F26722);
+}
+
+.btn.lead-btns:hover{
+  border:1px solid #e69943 !important;
+ background-color: #ecb270 !important; 
+ background-image: -webkit-gradient(linear, left top, left bottom, from(#ecb270), to(#d44f0d));
+ background-image: -webkit-linear-gradient(top, #ecb270, #d44f0d);
+ background-image: -moz-linear-gradient(top, #ecb270, #d44f0d);
+ background-image: -ms-linear-gradient(top, #ecb270, #d44f0d);
+ background-image: -o-linear-gradient(top, #ecb270, #d44f0d);
+ background-image: linear-gradient(to bottom, #ecb270, #d44f0d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#ecb270, endColorstr=#d44f0d);
+}
+
+.remindbox.lead-btns i{
+    border: 1px solid #E91E63;
+    border-radius: 50%;
+    padding: 3px 1px;
+    background: rgba(233, 30, 99, 0.5);
+}
+
+.lead_note.lead-btns i{
+    border: 1px solid #6C1EE9;
+    border-radius: 50%;
+    padding: 3px 2px;
+    background: rgba(108, 30, 233, 0.5);
+}
+
+.lead_cold.lead-btns i{
+    border: 1px solid #4CAF50;
+    border-radius: 50%;
+    padding: 3px 1px;
+    background: rgba(76, 175, 80, 0.5);
+}
+
+.lead_hot.lead-btns i{
+    border: 1px solid #7D211F;
+    border-radius: 50%;
+    padding: 3px 2px;
+    background: rgba(125, 33, 31, 0.5);
+}
+
+.lead_lost.lead-btns i{
+    border: 1px solid #555;
+    border-radius: 50%;
+    padding: 3px 2px;
+    background: rgba(85,85,85,0.5);
+}
+
+.lost_sale.lead-btns i{
+    border: 1px solid #776444;
+    border-radius: 50%;
+    padding: 3px 2px;
+    background: rgba(138, 109, 59, 0.5);
+}
+
+.lead_success_sale.lead-btns i{
+    border: 1px solid #FF0000;
+    border-radius: 50%;
+    padding: 3px 2px;
+    background: rgba(255,0,0,0.5);
 }
 /**************************************************************/
 /********************CSS FOR SEARCH FORM*******************/
