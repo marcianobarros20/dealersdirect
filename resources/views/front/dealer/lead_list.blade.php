@@ -77,12 +77,12 @@
               <p><strong>Conditions:</strong>{!! $Lead->request_details->condition !!}</p>
               
                 <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox"><i class="fa fa fa-bell"></i> Reminder</button>
-                <button id="" type="submit" class="btn btn-primary"><i class="fa fa-sticky-note-o"></i> Note</button>
-                <button id="" type="submit" class="btn btn-success"><i class="fa fa fa-cubes"></i> Cold Lead</button>
-                <button id="" type="submit" class="btn btn-info"><i class="fa fa fa-fire"></i> Hot Lead</button>
-                <button id="" type="submit" class="btn btn-warning"><i class="fa fa-ban"></i> Lost Lead</button>
-                <button id="" type="submit" class="btn btn-danger"><i class="fa fa-times"></i> Closed Lead</button>
-                <button id="" type="submit" class="btn btn-secondary"><i class="fa fa-check-square "></i> Success Lead</button>
+                <button id="" type="submit" class="btn btn-primary lead_note" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-sticky-note-o"></i> Note</button>
+                <button id="" type="submit" class="btn btn-success lead_cold" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
+                <button id="" type="submit" class="btn btn-info lead_hot" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-fire"></i> Hot Lead</button>
+                <button id="" type="submit" class="btn btn-warning lead_lost" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-ban"></i> Lost Lead</button>
+                <button id="" type="submit" class="btn btn-danger" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-times lead_lost_sale"></i> Lost SALE</button>
+                <button id="" type="submit" class="btn btn-secondary lead_success_sale" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-check-square "></i> Success SALE</button>
               
         </div>
       </div>
