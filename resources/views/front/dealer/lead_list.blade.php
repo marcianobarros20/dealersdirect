@@ -75,14 +75,39 @@
                       <p><strong>Model:</strong>{!! $Lead->request_details->models->name !!} </p>
                       <p><strong>Year:</strong>{!! $Lead->request_details->year !!}</p>
                       <p><strong>Conditions:</strong>{!! $Lead->request_details->condition !!}</p>
+                      <p><strong>Lead Status:</strong>
+                      @if($Lead->lead_types==0)
+                      COLD LEAD
+                      @elseif($Lead->lead_types==1)
+                      HOT LEAD
+                      @elseif($Lead->lead_types==2)
+                      LOST LEAD
+                      @elseif($Lead->lead_types==3)
+                      LOST SALE
+                      @elseif($Lead->lead_types==4)
+                      SUCCESS SALE
+                      @else
+                      NO STATUS
+                      @endif
+                      </p>
                       
                         <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox lead-btns"><i class="fa fa fa-bell"></i> Reminder</button>
-                        <button id="" type="submit" class="btn btn-primary lead_note lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-sticky-note-o"></i> Note</button>
+                        @if($Lead->lead_types!=0)
                         <button id="" type="submit" class="btn btn-success lead_cold lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
+                        @endif
+                        @if($Lead->lead_types!=1)
                         <button id="" type="submit" class="btn btn-info lead_hot lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-fire"></i> Hot Lead</button>
+                        @endif
+                        @if($Lead->lead_types!=2)
                         <button id="" type="submit" class="btn btn-warning lead_lost lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-ban"></i> Lost Lead</button>
+                        @endif
+                        @if($Lead->lead_types!=3)
                         <button id="" type="submit" class="btn btn-danger lost_sale lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-times lead_lost_sale"></i> Lost SALE</button>
+                        @endif
+                        @if($Lead->lead_types!=4)
                         <button id="" type="submit" class="btn btn-secondary lead_success_sale lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-check-square "></i> Success SALE</button>
+                        @endif
+                        
                       
                 </div>
               </div>

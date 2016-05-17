@@ -161,6 +161,7 @@ Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderS
 Route::post('ajax/getleadreminder', 'Front\AjaxController@GetLeadReminder');
 Route::post('ajax/getunreadleadreminder','Front\AjaxController@GetunreadLeadReminder');
 Route::get('ajax/sendreminderleadmail','Front\AjaxController@sendreminderleadmail');
+Route::post('ajax/setleadtype','Front\AjaxController@setleadtype');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

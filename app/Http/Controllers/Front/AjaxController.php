@@ -1241,7 +1241,7 @@ class AjaxController extends Controller
         foreach ($ReminderLeadfind as $key => $Reminder) {
          $ReminderLead = ReminderLead::where('id', $Reminder->id)->first();
             if($ReminderLead->dealer_id!=0){
-                echo "yes";
+                
                 $activateLink = url('/').'/dealers/reminder/'.base64_encode($ReminderLead->id);
                 $Dealers_check=Dealer::where('id', $ReminderLead->dealer_id)->first();
                 $dealername=$Dealers_check->name;
@@ -1287,4 +1287,11 @@ class AjaxController extends Controller
         }
         return view('front.ajax.set_unread_lead_reminder',compact('ReminderLead','ReminderLeadcount')); 
       }
+    public function setleadtype(){
+         //dd(Request::input());
+         $id=base64_decode(Request::input('lead_id'));
+         $LeadContact=LeadContact::where('id',$id)->first();
+         $LeadContact->lead_types=Request::input('type');
+         $LeadContact->save(); 
+    }
 }

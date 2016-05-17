@@ -85,7 +85,7 @@
                   type :"post",
                   success: function( data ) {
                     if(data){
-                      window.location.reload();
+                      window.location.reload(true);
                     }
                     
                   
@@ -105,9 +105,8 @@
                 },
                   type :"post",
                   success: function( data ) {
-                    if(data){
-                     // window.location.reload();
-                    }
+                    
+                      window.location.reload(true);
                     
                   
                   }

@@ -21,7 +21,7 @@
                             <label for="exampleInputName1">Monthly Amount</label>
                             {{ Form::text('monthly_amount','',['class' => 'form-control profile_control','required'=>'required']) }}
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <div class="form-group">
                             <label for="exampleInputName1">Trade In Amount</label>
                             {{ Form::text('trade_in','',['class' => 'form-control profile_control']) }}
@@ -54,7 +54,7 @@
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
                         <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <li ><a href="#tradein" data-toggle="tab">Trade-In</a></li>
                         @endif
                         <li ><a href="#userinfo" data-toggle="tab">User-Info</a></li>
@@ -118,7 +118,7 @@
                                 </tbody> 
                             </table>
                         </div>
-                        @if(!empty($RequestQueue->trade_ins))
+                        @if(!empty($RequestQueue->trade_ins)&& $RequestQueue->trade_ins->make_id!=0)
                         <div class="tab-pane form-head" id="tradein">
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 

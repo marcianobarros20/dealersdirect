@@ -123,6 +123,78 @@ FetchData();
 		});
 		return false;
 	});
+	$('.lead_hot').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadtype",
+					data: {lead_id:inox,type:'1',_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							window.location.reload(true);
+						
+					}
+				});
+	});
+	$('.lead_cold').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadtype",
+					data: {lead_id:inox,type:'0',_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							window.location.reload(true);
+						
+					}
+				});
+	});
+	$('.lead_lost').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadtype",
+					data: {lead_id:inox,type:'2',_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							window.location.reload(true);
+						
+					}
+				});
+	});
+	$('.lost_sale').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadtype",
+					data: {lead_id:inox,type:'3',_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							window.location.reload(true);
+						
+					}
+				});
+	});
+	$('.lead_success_sale').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/setleadtype",
+					data: {lead_id:inox,type:'4',_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						
+							window.location.reload(true);
+						
+					}
+				});
+	});
+	
+
 });
 </script>
 
