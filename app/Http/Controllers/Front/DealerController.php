@@ -19,6 +19,7 @@ use App\Model\State;                                        /* Model name*/
 use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
+use App\Model\ReminderLead;                                 /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -935,5 +936,33 @@ class DealerController extends BaseController {
 
         }
         return view('front.dealer.lead_list',compact('LeadContact'),array('title'=>'DEALERSDIRECT | Dealers Leads'));
+    }
+    public function DealerReminderList(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        if($Dealer->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $dealer_userid)->where('status','!=' ,1)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealer->parent_id)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $Dealer->parent_id)->where('status','!=' ,1)->count();
+        }
+        return view('front.dealer.reminder_list',compact('ReminderLead'),array('title'=>'DEALERSDIRECT | Dealers Reminder List'));
+    }
+    public function DealerReminderDetails($reminder_id=null){
+         $reminder_id=base64_decode($reminder_id);
+         $Reminder=ReminderLead::where('id',$reminder_id)->with('lead_details.request_details','lead_details.request_details.makes','lead_details.request_details.models','lead_details.request_details.options','contact_details')->first();
+         $ContactDetail=ContactList::where('id',$Reminder->contact_id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
+         $Reminder->status=1;
+         $Reminder->save(); 
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
+            if($countimg!=0){
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $ContactDetail['imx']=$imx;
+            }else{
+            $ContactDetail['imx']=""; 
+            }
+            return view('front.dealer.reminder_details',compact('Reminder','ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
 }

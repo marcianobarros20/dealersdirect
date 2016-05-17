@@ -1197,6 +1197,7 @@ class AjaxController extends Controller
         $ReminderLead = new ReminderLead;
         $ReminderLead->rdate=$date;
         $ReminderLead->rtime=$time;
+        $ReminderLead->reminder_time=$datatime;
         $ReminderLead->note=$details;
         $ReminderLead->lead_id=$LeadContact->id;
         $ReminderLead->contact_id=$LeadContact->contact_id;
@@ -1221,13 +1222,31 @@ class AjaxController extends Controller
         $dealer_userid=Session::get('dealer_userid');
         $dateconst=Request::input('dateconst');
         $timeconst=Request::input('timeconst');
+        $newtime=date('Y-m-d H:i:s',strtotime('+1 hour', strtotime($dateconst." ".$timeconst)));
+        
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
         if($Dealers_check->parent_id==0){
-            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('status','!=' ,1)->where('reminder_time','<=',$dateconst." ".$timeconst)->count();
         }
         else{
-            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('rdate','<=',$dateconst)->where('rtime','<=',$timeconst)->count();
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
         }
         return $ReminderLead;
     }
+    public function GetunreadLeadReminder(){
+        //dd(Request::input());
+        $dealer_userid=Session::get('dealer_userid');
+        $dateconst=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $ReminderLead=ReminderLead::where('dealer_id', $dealer_userid)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $dealer_userid)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
+        }
+        else{
+            $ReminderLead=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->get();
+            $ReminderLeadcount=ReminderLead::where('dealer_id', $Dealers_check->parent_id)->where('reminder_time','<=',$dateconst." ".$timeconst)->where('status','!=' ,1)->count();
+        }
+        return view('front.ajax.set_unread_lead_reminder',compact('ReminderLead','ReminderLeadcount')); 
+      }
 }

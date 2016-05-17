@@ -159,6 +159,7 @@ Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
 Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
 Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderSubmit');
 Route::post('ajax/getleadreminder', 'Front\AjaxController@GetLeadReminder');
+Route::post('ajax/getunreadleadreminder','Front\AjaxController@GetunreadLeadReminder');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes
@@ -201,6 +202,8 @@ Route::get('dealers/contact_list', ['uses' => 'Front\DealerController@DealerCont
 Route::get('dealer/contact/detail/{contact_id}', ['uses' => 'Front\DealerController@DealerContactDetails','as' => 'dealer.contact.details']);
 Route::get('dealer/contact/pay/{contact_id}', ['uses' => 'Front\DealerController@DealerContactPay','as' => 'dealer.contact.pay']);
 Route::get('dealers/lead_list', ['uses' => 'Front\DealerController@DealerLeadList','as' => 'dealer.lead.list']);
+Route::get('dealers/reminder_list', ['uses' => 'Front\DealerController@DealerReminderList','as' => 'dealer.reminder.list']);
+Route::get('/dealers/reminder/{reminder_id}', ['uses' => 'Front\DealerController@DealerReminderDetails','as' => 'dealer.reminder.details']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

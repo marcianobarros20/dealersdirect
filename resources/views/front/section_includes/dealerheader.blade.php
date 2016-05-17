@@ -9,7 +9,7 @@
 								<div class="social">
 									<ul class="social-share">
 										<li class="note-bell">
-											<a href="#">
+											<a href="" id="rembox">
 												<i class="fa fa fa-bell"></i> <span id="remindernot"> </span>
 											</a>
 										</li>
@@ -37,33 +37,8 @@
 											<span style="color:#fff">{{Session::get('dealer_name')}}</span>
 										</li>
 										<!--Notification box start-->
-										<div class="notification-box">
-											<div class="notification">
-												<a href="#"><i class="fa fa-flag" aria-hidden="true"></i>Pellentesque in ipsum id orci porta... </a>
-												<span class="note-date">May 16th, 2016</span>
-												<span class="note-time">7:07:04 PM</span>
-											</div>
-												<div class="clear"></div>
-											<div class="notification">
-												<a href="#"><i class="fa fa-flag" aria-hidden="true"></i>Mauris blandit aliquet elit eget felis eget felis eget felis...</a>
-												<span class="note-date">May 16th, 2016</span>
-												<span class="note-time">7:07:04 PM</span>
-											</div>
-												<div class="clear"></div>
-											<div class="notification">
-												<a href="#"><i class="fa fa-flag" aria-hidden="true"></i>Vivamus suscipit tortor eget felis port...</a>
-												<span class="note-date">May 16th, 2016</span>
-												<span class="note-time">7:07:04 PM</span>
-											</div>
-												<div class="clear"></div>
-											<div class="notification">
-												<a href="#"><i class="fa fa-flag" aria-hidden="true"></i>Vivamus suscipit tortor eget felis port ...</a>
-												<span class="note-date">May 16th, 2016</span>
-												<span class="note-time">7:07:04 PM</span>
-											</div>	
-												<div class="clear"></div>
-
-												<a class="viewall" href="">View all <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+										<div class="notification-box" style="display:none;">
+											
 
 										</div>
 										<!--Notification box end-->

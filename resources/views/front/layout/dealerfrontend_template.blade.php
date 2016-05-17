@@ -80,30 +80,49 @@ FetchData();
 	});
 	setInterval(function() { FetchData(); },10000);
 	function FetchData(){
-		console.log("hi");
-		//return true;
+		
 		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]; 
 		var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-		
 		var newDate = new Date();
 		newDate.setDate(newDate.getDate());
 		var max=newDate.getMonth()+1
-		console.log(newDate.getFullYear()+"/"+( max < 10 ? "0" : "" ) +max+"/"+( newDate.getDate() < 10 ? "0" : "" ) +newDate.getDate());
-		console.log(( newDate.getHours() < 10 ? "0" : "" ) +newDate.getHours()+"/"+( newDate.getMinutes() < 10 ? "0" : "" ) +newDate.getMinutes()+"/"+( newDate.getSeconds() < 10 ? "0" : "" ) +newDate.getSeconds());
 		var timeconst=( newDate.getHours() < 10 ? "0" : "" ) +newDate.getHours()+":"+( newDate.getMinutes() < 10 ? "0" : "" ) +newDate.getMinutes()+":"+( newDate.getSeconds() < 10 ? "0" : "" ) +newDate.getSeconds();
 		var dateconst=newDate.getFullYear()+"-"+( max < 10 ? "0" : "" ) +max+"-"+( newDate.getDate() < 10 ? "0" : "" ) +newDate.getDate();
 
-			$.ajax({
-				url: "<?php echo url('/');?>/ajax/getleadreminder",
-				data: {dateconst:dateconst,timeconst:timeconst,_token: '{!! csrf_token() !!}'},
-				type :"post",
-				success: function( data ) {
-					
-						$("#remindernot").html(data);
-					
-				}
-			});
-		}
+		$.ajax({
+			url: "<?php echo url('/');?>/ajax/getleadreminder",
+			data: {dateconst:dateconst,timeconst:timeconst,_token: '{!! csrf_token() !!}'},
+			type :"post",
+			success: function( data ) {
+				
+					$("#remindernot").html(data);
+				
+			}
+		});
+	}
+
+	$('#rembox').click(function(){
+		$(".notification-box").html('');
+		$(".notification-box").html('<a class="viewall" href="#">Loading.....</a>');
+		$(".notification-box").toggle();
+		var newDate = new Date();
+		newDate.setDate(newDate.getDate());
+		var max=newDate.getMonth()+1;
+		var timeconst=( newDate.getHours() < 10 ? "0" : "" ) +newDate.getHours()+":"+( newDate.getMinutes() < 10 ? "0" : "" ) +newDate.getMinutes()+":"+( newDate.getSeconds() < 10 ? "0" : "" ) +newDate.getSeconds();
+		var dateconst=newDate.getFullYear()+"-"+( max < 10 ? "0" : "" ) +max+"-"+( newDate.getDate() < 10 ? "0" : "" ) +newDate.getDate();
+		$.ajax({
+			url: "<?php echo url('/');?>/ajax/getunreadleadreminder",
+			data: {dateconst:dateconst,timeconst:timeconst,_token: '{!! csrf_token() !!}'},
+			type :"post",
+			success: function( data ) {
+				$(".notification-box").html('');
+				$(".notification-box").html(data);
+					//$("#remindernot").html(data);
+				
+			}
+		});
+		return false;
+	});
 });
 </script>
 
