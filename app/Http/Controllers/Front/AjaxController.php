@@ -1294,4 +1294,75 @@ class AjaxController extends Controller
          $LeadContact->lead_types=Request::input('type');
          $LeadContact->save(); 
     }
+    public function GetAnalyticGraphtest()
+    {
+        $interval=7;
+        $today=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $date = strtotime("-".$interval." day", strtotime($today));
+        $previousdate= date('Y-m-d H:i:s', $date);
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        // if($Dealers_check->parent_id==0){
+
+        // $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0);
+        // }
+        // else{
+        //     $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid);
+        // }
+
+        $request_queues=array();
+        
+        for($i=0;$i<=$interval;$i++){
+            echo $i;
+            $x=$i+1;
+            echo "<br>";
+            echo $daystart=date('Y-m-d H:i:s', strtotime("+".$i." day", strtotime($previousdate)));
+             echo "<br>";
+            echo $dayend=date('Y-m-d H:i:s', strtotime("+".$x." day", strtotime($previousdate)));
+             echo "<br>";
+                if($Dealers_check->parent_id==0){
+                    echo $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('created_at','>=',$daystart)->where('created_at','<=',$dayend)->count();
+                    echo "<br>";
+                    echo "=====";
+                }
+                else{
+                    $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('created_at','>=',$daystart)->where('created_at','<=',$dayend)->count();
+                    echo "<br>";
+                    echo "=====";
+                }
+                $request_queues[$i]['x']= date('Y-m-d',strtotime($dayend));
+                $request_queues[$i]['y']= $RequestDealerLog;
+        }
+        $request_queues=json_encode($request_queues);
+        dd($request_queues);
+    }
+    public function GetAnalyticGraph(){
+        $today=Request::input('dateconst');
+        $timeconst=Request::input('timeconst');
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+
+        $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+
+        $ContactList=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        else{
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        $request_queues[0]['y']=$RequestDealerLog;
+        $request_queues[0]['label']="REQUEST";
+        $request_queues[1]['y']=$ContactList;
+        $request_queues[1]['label']="Contacts";
+        $request_queues[2]['y']=$LeadContact;
+        $request_queues[2]['label']="Leads";
+        $request_queues=json_encode($request_queues);
+        //dd($request_queues);
+        return view('front.ajax.get_analytic_graph',compact('request_queues'));
+
+    }
 }

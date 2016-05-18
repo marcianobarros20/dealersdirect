@@ -86,6 +86,8 @@
                                 <li><a href="<?php echo url('/');?>/dealers/lead_list">Lead</a>
                                 
                                 </li>
+                                <li><a href="<?php echo url('/');?>/dealers/analytics">Analytics</a>
+                                </li>
                                 <li><a href="<?php echo url('/');?>/dealer_sign_out">Log-out</a>
 
                 </li>

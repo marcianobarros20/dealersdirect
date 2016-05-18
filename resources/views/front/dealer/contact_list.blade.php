@@ -75,6 +75,9 @@
               <p><strong>Model:</strong>{!! $Contact->request_details->models->name !!} </p>
               <p><strong>Year:</strong>{!! $Contact->request_details->year !!}</p>
               <p><strong>Conditions:</strong>{!! $Contact->request_details->condition !!}</p>
+              @if($Contact->payment_status==1)
+              <p><strong>Status:</strong>Purchased</p>
+              @endif
               <a href="{{ route('dealer.contact.details', ['contact_id' => $Contact->id]) }}" class="btn-group"  data-id="" >
                 <button id="" type="submit" class="btn btn-success">View</button>
                 <button type="submit" class="btn btn-warning">

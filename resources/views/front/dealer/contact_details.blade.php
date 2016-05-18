@@ -91,6 +91,7 @@
 								<button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
 								@endif
 							</div>
+                            @if($ContactDetail->payment_status!=1)
 							<div class="btn-group">
 								<a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn btn-success">Buy</button>
 								<button type="button" class="btn btn-warning">
@@ -98,6 +99,7 @@
 								</button>
                                 </a>
 							</div>
+                            @endif
 						</div>
 					</div>	<!-- /col-xs-12 col-md-4-->
 					
@@ -108,6 +110,9 @@
 					<div id="content">
 			        <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
 				        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
+                        @if($ContactDetail->payment_status==1)
+                        <li ><a href="#user" data-toggle="tab">User</a></li>
+                        @endif
                         @if(!empty($ContactDetail->request_details->trade_ins) && $ContactDetail->request_details->trade_ins->make_id!=0)
                         <li ><a href="#tradein" data-toggle="tab">Trade-In</a></li>
                         @endif
@@ -149,6 +154,31 @@
                                 </tbody> 
                             </table>
                         </div>
+                        @if($ContactDetail->payment_status==1)
+                        <div class="tab-pane  form-head" id="user">
+                            <table class="table client-table"> 
+                                <tbody class="post-text"> 
+                                    <tr> 
+                                        <td>NAME:</td> 
+                                        <td>{{$ContactDetail->client_details->first_name}} {{$ContactDetail->client_details->last_name}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>EMAIL:</td> 
+                                        <td>{{$ContactDetail->client_details->email}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>PHONE:</td> 
+                                        <td>{{$ContactDetail->client_details->phone}}</td> 
+                                    </tr> 
+                                    <tr> 
+                                        <td>ZIP:</td> 
+                                        <td>{{$ContactDetail->client_details->zip}}</td> 
+                                    </tr> 
+                                     
+                                </tbody> 
+                            </table>
+                        </div>
+                        @endif
 				        @if(!empty($ContactDetail->request_details->trade_ins)&& $ContactDetail->request_details->trade_ins->make_id!=0)
                             <div class="tab-pane form-head" id="tradein">
                                 <table class="table client-table"> 

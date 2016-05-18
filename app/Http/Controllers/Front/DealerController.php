@@ -864,9 +864,9 @@ class DealerController extends BaseController {
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
-            $ContactList=ContactList::where('dealer_id',$dealer_userid)->where('payment_status','!=',1)->where('status','!=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+            $ContactList=ContactList::where('dealer_id',$dealer_userid)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
         }else{
-            $ContactList=ContactList::where('admin_id',$dealer_userid)->where('payment_status','!=',1)->where('status','!=',1)->with('request_details','bid_details','client_details')->get();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->with('request_details','bid_details','client_details')->get();
         }
         
         foreach ($ContactList as $key => $value) {
@@ -964,5 +964,35 @@ class DealerController extends BaseController {
             $ContactDetail['imx']=""; 
             }
             return view('front.dealer.reminder_details',compact('Reminder','ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+    }
+    public function DealerAnalytics(){
+        $dealer_userid=Session::get('dealer_userid');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+
+        $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+
+        $ContactList=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        else{
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        }
+        $request_queues[0]['y']=$RequestDealerLog;
+        $request_queues[0]['label']="REQUEST";
+        $request_queues[1]['y']=$ContactList;
+        $request_queues[1]['label']="Contacts";
+        $request_queues[2]['y']=$LeadContact;
+        $request_queues[2]['label']="Leads";
+        $request_queues=json_encode($request_queues);
+        //dd($request_queues);
+        return view('front.dealer.analytics',compact('request_queues'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
+    }
+    public function DealerAnalyticsone(){
+
+        
+        return view('front.dealer.analyticsone',compact('request_queues'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
     }
 }
