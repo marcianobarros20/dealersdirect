@@ -972,23 +972,103 @@ class DealerController extends BaseController {
 
         $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
 
+        $RequestDealerLogids=RequestDealerLog::where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+        $ContactListid=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
         $ContactList=ContactList::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $LeadContactid=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
         $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+        $BidQueue=BidQueue::where('dealer_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->groupBy('requestqueue_id')->get();
+        $BidQueuecount=count($BidQueue);
         }
         else{
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $ContactListid=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
             $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $LeadContactid=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
+
             $LeadContact=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $BidQueue=BidQueue::where('dealer_admin',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->groupBy('requestqueue_id')->get();
+            $BidQueuecount=count($BidQueue);
         }
+        
+        $rq=array();
+        $bq=array();
+        $cq=array();
+        $ld=array();
+        foreach ($RequestDealerLogids as $key => $value) {
+            $rq[]=$value->request_id;
+        }
+        $RequestQueue=RequestQueue::whereIn('id',$rq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        //dd($rq);
+        $requ="";
+        $bidu="";
+        $conu="";
+        $ledu="";
+        foreach ($RequestQueue as $key => $Request) {
+            $RequestQueuecount=RequestQueue::whereIn('id',$rq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($requ==""){
+                $requ="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecount."]";
+            }else{
+                $requ=$requ.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecount."]";
+            }
+        }
+        foreach ($BidQueue as $key => $value) {
+            $bq[]=$value->requestqueue_id;
+        }
+
+        $RequestQueuebq=RequestQueue::whereIn('id',$bq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueuebq as $key => $Request) {
+            $RequestQueuecountbq=RequestQueue::whereIn('id',$bq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($bidu==""){
+                $bidu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountbq."]";
+            }else{
+                $bidu=$bidu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountbq."]";
+            }
+        }
+        foreach ($ContactListid as $key => $value) {
+            $cq[]=$value->request_id;
+        }
+
+        $RequestQueuecq=RequestQueue::whereIn('id',$cq)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueuecq as $key => $Request) {
+            $RequestQueuecountcq=RequestQueue::whereIn('id',$cq)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($conu==""){
+                $conu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountcq."]";
+            }else{
+                $conu=$conu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountcq."]";
+            }
+        }
+        
+        foreach ($LeadContactid as $key => $value) {
+            $ld[]=$value->request_id;
+        }
+
+        $RequestQueueld=RequestQueue::whereIn('id',$ld)->with('makes','models')->groupBy('make_id','carmodel_id','condition','year')->get();
+        foreach ($RequestQueueld as $key => $Request) {
+            $RequestQueuecountld=RequestQueue::whereIn('id',$ld)->where('make_id',$Request->make_id)->where('carmodel_id',$Request->carmodel_id)->where('condition',$Request->condition)->where('year',$Request->year)->count();
+            if($ledu==""){
+                $ledu="['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountld."]";
+            }else{
+                $ledu=$ledu.",['".$Request->makes->name." ".$Request->models->name." ".$Request->year." ".$Request->condition."',".$RequestQueuecountld."]";
+            }
+        }
+        
+        $request_queues[0]['name']="REQUESTs";
         $request_queues[0]['y']=$RequestDealerLog;
-        $request_queues[0]['label']="REQUEST";
-        $request_queues[1]['y']=$ContactList;
-        $request_queues[1]['label']="Contacts";
-        $request_queues[2]['y']=$LeadContact;
-        $request_queues[2]['label']="Leads";
+        $request_queues[0]['drilldown']="REQUESTs";
+        $request_queues[1]['name']="BIDs";
+        $request_queues[1]['y']=$BidQueuecount;
+        $request_queues[1]['drilldown']="BIDs";
+        $request_queues[2]['name']="CONTACTs";
+        $request_queues[2]['y']=$ContactList;
+        $request_queues[2]['drilldown']="CONTACTs";
+        $request_queues[3]['name']="LEADs";
+        $request_queues[3]['y']=$LeadContact;
+        $request_queues[3]['drilldown']="LEADs";
         $request_queues=json_encode($request_queues);
+        
         //dd($request_queues);
-        return view('front.dealer.analytics',compact('request_queues'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
+        return view('front.dealer.analytics',compact('request_queues','requ','bidu','conu','ledu'),array('title'=>'DEALERSDIRECT | Dealers Analytics'));
     }
     public function DealerAnalyticsone(){
 

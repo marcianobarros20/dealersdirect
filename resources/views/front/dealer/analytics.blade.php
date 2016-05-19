@@ -1,23 +1,85 @@
 @extends('front/layout/dealerfrontendanalytics_template')
 @section('content')
+
+
+	
 <script type="text/javascript">
-		window.onload = function () {
-			var chart = new CanvasJS.Chart("chartContainer", {
-				title: {
-					text: "This Month Analysis"
-				},
-				data: [{
-					type: "column",
-					dataPoints: <?php echo $request_queues;?>,
-				}]
-			});
-			chart.render();
-			console.log(chart);
-		}
-	</script>
+            $(function () {
+                // Create the chart
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Monthly Analysis'
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Quantity'
+                        }
 
-	<script src="<?php echo url('/');?>/public/front_end/caravan/canvasjs.min.js"></script>
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y:f}'
+                            }
+                        }
+                    },
 
+                    tooltip: {
+                        headerFormat: '',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:f}</b> <br/>'
+                    },
+
+                    series: [{
+                        name: 'Monthly Graphs',
+                        colorByPoint: true,
+                        data: <?php echo $request_queues;?>
+                    }],
+                    drilldown: {
+                        series: [
+                        {
+                            name: 'REQUESTs',
+                            id: 'REQUESTs',
+                            data: [ <?php echo $requ; ?>
+                            ]
+                        }, 
+                        {
+                            name: 'BIDs',
+                            id: 'BIDs',
+                            data: [<?php echo $bidu; ?>
+                            ]
+                        }, 
+                        {
+                            name: 'CONTACTs',
+                            id: 'CONTACTs',
+                            data: [<?php echo $conu; ?>
+                            ]
+                        }, {
+                            name: 'LEADs',
+                            id: 'LEADs',
+                            data: [<?php echo $ledu; ?>
+                            ]
+                        }]
+                    }
+
+                });
+				
+            });
+
+</script>
 	<section class="selection_area">
         <div class="container">
             <h2 class="profile_head center-block"><?php echo Session::get('dealer_name');?> Your Reminder List</h2>
@@ -48,7 +110,8 @@
 <section class="brand_section">
     <div class="container admin-cont">
 	    <div class="graphbox">
-			<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+			<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 		</div>
 	</div>
 </section>
