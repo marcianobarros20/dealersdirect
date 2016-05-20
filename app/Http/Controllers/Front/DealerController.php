@@ -181,6 +181,29 @@ class DealerController extends BaseController {
             
             return view('front.dealer.dealer_request_list',compact('Makes','Status'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
+    public function bidList(){
+        $obj = new helpers();
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            $id=Session::get('dealer_userid');
+            $DealerMake=DealerMakeMap::where('dealer_id', $id)->with('makes')->orderBy('make_id', 'asc')->get();
+            $Makes=array();
+            $Makes['0']="All MAKES";
+            foreach($DealerMake as $DealerM){
+                $Makes[$DealerM->makes->id]=$DealerM->makes->name;
+            }
+            $Status=array();
+            $Status['0']="All STATUS";
+            $Status['1']="Active";
+            $Status['2']="Rejected";
+            $Status['3']="Blocked";
+            $Status['4']="Accepted";
+            //dd($Makes);
+            
+            return view('front.dealer.dealer_bid_list',compact('Makes','Status'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
+    }
     public function maskcreate($maskval){
             $mm=strlen($maskval)-2;
             $mask = preg_replace ( "/\S/", "X", $maskval );
@@ -489,13 +512,13 @@ class DealerController extends BaseController {
             $dealer_ida=0;
 
             RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin','!=',0)->where('request_id',$inox)->delete();
-            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1));
+            RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
         else{
             $dealer_ida=$dealer_userid;
             $dealer_idp=$Dealers_check->parent_id;
             RequestDealerLog::where('dealer_id',$dealer_idp)->whereNotIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->delete();
-            RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1));
+            RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
 
 
@@ -555,6 +578,13 @@ class DealerController extends BaseController {
         $BidQueue['details']=Request::input('details');
         $BidQueue['trade_in']=Request::input('trade_in');
         $BidQueue_row=BidQueue::create($BidQueue);
+
+
+        
+
+
+
+
         $OtherImage=Request::file('images');
             if(Request::hasFile('images')){
                 $this->obj = $obj;
@@ -864,9 +894,9 @@ class DealerController extends BaseController {
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
-            $ContactList=ContactList::where('dealer_id',$dealer_userid)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+            $ContactList=ContactList::where('dealer_id',$dealer_userid)->where('payment_status','!=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
         }else{
-            $ContactList=ContactList::where('admin_id',$dealer_userid)->with('request_details','bid_details','client_details')->get();
+            $ContactList=ContactList::where('admin_id',$dealer_userid)->where('payment_status','!=',1)->with('request_details','bid_details','client_details')->get();
         }
         
         foreach ($ContactList as $key => $value) {
@@ -982,6 +1012,7 @@ class DealerController extends BaseController {
         }
         else{
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
+            $RequestDealerLogids=RequestDealerLog::where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
             $ContactListid=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();
             $ContactList=ContactList::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->count();
             $LeadContactid=LeadContact::where('admin_id',$dealer_userid)->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get();

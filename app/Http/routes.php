@@ -145,6 +145,7 @@ Route::post('/ajax/getupdatedbiddealer', 'Front\AjaxController@GetUpdatedBidDeal
 Route::post('ajax/bidhistory_dealers/', 'Front\AjaxController@BidHistoryDealers');
 Route::post('/ajax/ApiGetImageNotStyle/{make}/{mode}/{year}','Front\AjaxController@ApiGetImageNotStyle');
 Route::post('ajax/getallrequest/', 'Front\AjaxController@GetAllRequest');
+Route::post('ajax/getallbid/', 'Front\AjaxController@GetAllBid');
 Route::post('ajax/getallbidchunk/', 'Front\AjaxController@GetAllBidChunk');
 Route::post('ajax/getbidhistory/','Front\AjaxController@GetBidHistory');
 Route::post('ajax/getbidchunkclient/', 'Front\AjaxController@GetAllBidChunkClient');
@@ -178,6 +179,7 @@ Route:: post('/dealerregister','Front\RegisterController@dealerRegister');
 Route:: get('/dealer-dashboard', 'Front\DealerController@dashboard');
 Route:: get('/dealer_sign_out', 'Front\DealerController@signout');
 Route:: get('/dealers/request_list', 'Front\DealerController@requestList');
+Route:: get('/dealers/bid_list', 'Front\DealerController@bidList');
 Route:: get('dealers/request_detail/{id}', 'Front\DealerController@requestDetail');
 Route:: get('/dealer/dealer_make', 'Front\DealerController@DealerMakeList');
 Route:: get('dealers/dealer_add_make', 'Front\DealerController@DealerMakeAdd');

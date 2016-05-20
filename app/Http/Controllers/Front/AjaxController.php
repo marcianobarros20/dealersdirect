@@ -820,10 +820,121 @@ class AjaxController extends Controller
         $status_search=Request::input('status_search');
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
         if($Dealers_check->parent_id==0){
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->with('makes','requestqueue','requestqueue.models','bids');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('bid_flag','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
         }
         else{
-            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->with('makes','requestqueue','requestqueue.models','bids');
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('bid_flag','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
+        }
+        
+        if($make_search!=0){
+            $RequestDealerLog=$RequestDealerLog->where('make_id', $make_search);
+        }
+        
+        $RS=$RequestDealerLog->get();
+
+        if($onesearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount < $onesearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($onesearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->total_amount > $onesearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        if($monsearchmin!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount < $monsearchmin){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($monsearchmax!=""){
+            foreach ($RS as $key => $onm) {
+                if($onm->requestqueue->monthly_amount > $monsearchmax){
+                    unset($RS[$key]);
+                }
+            }
+        }
+
+        foreach($RS as $key => $rsq){
+            $accep=self::FindDealerBidAccepted($rsq->request_id,$dealer_userid);
+            $RS[$key]['accepted_state']=$accep;
+            $rejcet=self::FindDealerBidReject($rsq->request_id,$dealer_userid);
+            $RS[$key]['rejected_state']=$rejcet;
+        }
+        
+        foreach ($RS as $key => $value) {
+            $countimg=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->count();
+            if($countimg!=0){
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year_id',$value->requestqueue->year)->get();
+             $RS[$key]['imx']=$imx;
+            }else{
+               $RS[$key]['imx']=""; 
+            }
+
+        }
+        if($status_search==1){
+            foreach ($RS as $key => $act) {
+                if($act->blocked==1){
+                    unset($RS[$key]);
+                }
+                if($act->accepted_state!=0){
+                    unset($RS[$key]);
+                }
+                if($act->rejected_state!=0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==2){
+            foreach ($RS as $key => $act) {
+                
+                if($act->rejected_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==3){
+            foreach ($RS as $key => $act) {
+                
+                if($act->blocked==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        if($status_search==4){
+            foreach ($RS as $key => $act) {
+                
+                if($act->accepted_state==0){
+                    unset($RS[$key]);
+                }
+            }
+        }
+        //dd($RS);
+        //$RequestDealerLog=RequestDealerLog::where('dealer_id', $dealer_userid)->with('makes','requestqueue')->get();
+        return view('front.ajax.get_all_request',compact('RS'));
+    }
+    public function GetAllBid(){
+        $RequestDealerLog = new RequestDealerLog;
+         $dealer_userid=Session::get('dealer_userid');
+        $make_search=Request::input('make_search');
+        $onesearchmin=Request::input('onesearchmin');
+        $onesearchmax=Request::input('onesearchmax');
+        $monsearchmin=Request::input('monsearchmin');
+        $monsearchmax=Request::input('monsearchmax');
+        $status_search=Request::input('status_search');
+        $Dealers_check = Dealer::where('id', $dealer_userid)->first();
+        if($Dealers_check->parent_id==0){
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $dealer_userid)->where('dealer_admin', 0)->where('bid_flag', 1)->where('req_contact','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
+        }
+        else{
+            $RequestDealerLog=$RequestDealerLog->where('dealer_id', $Dealers_check->parent_id)->where('dealer_admin', $dealer_userid)->where('bid_flag', 1)->where('req_contact','!=', 1)->with('makes','requestqueue','requestqueue.models','bids');
         }
         
         if($make_search!=0){
@@ -1085,10 +1196,23 @@ class AjaxController extends Controller
         $BidQueue->dealer_id;
         $BidQueue->dealer_admin;
         
-        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        // $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        if($BidQueue->dealer_admin==0){
+        $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
         $RequestDealerLog->req_contact=1;
-        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
         $RequestDealerLog->save();
+        }
+        if($BidQueue->dealer_admin!=0){
+            $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
+        $RequestDealerLog->req_contact=1;
+        $RequestDealerLog->save();
+        $RequestDealerLogNew=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
+        $RequestDealerLogNew->req_contact=1;
+        $RequestDealerLogNew->save();
+        }
+        
+        $RequestQueue=RequestQueue::find($BidQueue->requestqueue_id);
+        
         $ContactList['request_id']=$BidQueue->requestqueue_id;
         $ContactList['bid_id']=$BidQueue->id;
         $ContactList['dealer_id']=$BidQueue->dealer_id;

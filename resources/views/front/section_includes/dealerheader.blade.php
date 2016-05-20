@@ -80,6 +80,9 @@
                                 <li><a href="<?php echo url('/');?>/dealers/request_list">Requests</a>
 
                                 </li>
+                                <li><a href="<?php echo url('/');?>/dealers/bid_list">Bids</a>
+
+                                </li>
                                 <li><a href="<?php echo url('/');?>/dealers/contact_list">Contacts</a>
                                 
                                 </li>
