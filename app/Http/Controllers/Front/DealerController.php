@@ -20,6 +20,7 @@ use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
 use App\Model\ReminderLead;                                 /* Model name*/
+use App\Model\SiteContactPrice;                                 /* Model name*/
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -915,18 +916,25 @@ class DealerController extends BaseController {
         
         return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Contacts'));
     }
+
     public function DealerContactDetails($id=null){
         $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
             $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
             if($countimg!=0){
             $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $additional_price=SiteContactPrice::all();
+            //dd($additional_price[0]->price);
+            //die();
             $ContactDetail['imx']=$imx;
+            $ContactDetail['additional_price']=$additional_price[0]->price;
             }else{
             $ContactDetail['imx']=""; 
             }
         //dd($ContactDetail);
         return view('front.dealer.contact_details',compact('ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
+
+
     public function DealerContactPay($contact_id=null){
         $contact_id=base64_decode($contact_id);
         $ContactDetail=ContactList::where('id',$contact_id)->first();

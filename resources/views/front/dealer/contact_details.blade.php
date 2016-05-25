@@ -1,115 +1,119 @@
 @extends('front/layout/dealerfrontend_request_template')
 @section('content')
-
 <section>
-	<div class="container request-client-cont">
-		<div class="row detail-text">
-			<div class="col-md-4">
-			    
-				<h2>Detail</h2>
-			</div>
-			
-	 	</div>
-	 
-		
-		<div class="post-bid">
-			<div class="col-xs-12 col-sm-8 col-md-8"> <!-- edited on 13-04-2016 -->
-			    <!-- Carousel ============ -->
-				<div id = "myCarousel" class = "carousel slide deal-caro">
-				   
-				   <!-- Carousel indicators -->
-					<ol class = "carousel-indicators">
-						@if(!empty($ContactDetail->imx))
-							@foreach($ContactDetail->imx as $vx=>$img)
-								<li data-target = "#myCarousel" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
-							@endforeach
-						@else
-							<li data-target = "#myCarousel" data-slide-to = "0" class = "active"></li>
-						@endif
-					</ol>  
-				   
-					<div class = "carousel-inner client-caro-img">
-						@if(!empty($ContactDetail->imx))
-							@foreach($ContactDetail->imx as $vx=>$img)
-								<div class = "item @if($vx==0) active @endif">
-									<img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
-								</div>
-							@endforeach 
-						@else
-							<div class = "item active">
-							<img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
-							</div>
-						@endif 
-					</div>
+    <div class="container request-client-cont">
+        <div class="row detail-text">
+            <div class="col-md-4">
+                
+                <h2>Detail</h2>
+            </div>
+            
+        </div>
+     
+        
+        <div class="post-bid">
+            <div class="col-xs-12 col-sm-8 col-md-8"> <!-- edited on 13-04-2016 -->
+                <!-- Carousel ============ -->
+                <div id = "myCarousel" class = "carousel slide deal-caro">
+                   
+                   <!-- Carousel indicators -->
+                    <ol class = "carousel-indicators">
+                        @if(!empty($ContactDetail->imx))
+                            @foreach($ContactDetail->imx as $vx=>$img)
+                                <li data-target = "#myCarousel" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
+                            @endforeach
+                        @else
+                            <li data-target = "#myCarousel" data-slide-to = "0" class = "active"></li>
+                        @endif
+                    </ol>  
+                   
+                    <div class = "carousel-inner client-caro-img">
+                        @if(!empty($ContactDetail->imx))
+                            @foreach($ContactDetail->imx as $vx=>$img)
+                                <div class = "item @if($vx==0) active @endif">
+                                    <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
+                                </div>
+                            @endforeach 
+                        @else
+                            <div class = "item active">
+                            <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+                            </div>
+                        @endif 
+                    </div>
 
 
               <a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>
               <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
               </div>
-					
-				<div class="brand-sec  bidlist">
-					<div class="col-xs-12 col-sm-12 col-md-12  carousel_area">
-						<div  class="brand_request">
-							<div id = "myCarousel1" class = "carousel slide deal-caro">
+                    
+                <div class="brand-sec  bidlist">
+                    <div class="col-xs-12 col-sm-12 col-md-12  carousel_area">
+                        <div  class="brand_request">
+                            <div id = "myCarousel1" class = "carousel slide deal-caro">
 
 
-							<ol class = "carousel-indicators">
-							@if(!empty($ContactDetail->bid_details->bid_image))
-							@foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
-							<li data-target = "#myCarousel1" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
-							@endforeach
-							@else
-							<li data-target = "#myCarousel1" data-slide-to = "0" class = "active"></li>
-							@endif
-							</ol>   
-
-
-							<div class = "carousel-inner client-caro-img">
-							@if(!empty($ContactDetail->bid_details->bid_image))
-							@foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
-							<div class = "item @if($vx==0) active @endif">
-							<img src = "{{ url('/')}}/public/uploads/project/{{$img->image}}" alt = "x">
-							</div>
-							@endforeach 
-							@else
-							<div class = "item active">
-							<img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
-							</div>
-							@endif 
-							</div>
-
-
-							<a class = "carousel-control left" href = "#myCarousel1" data-slide = "prev">&lsaquo;</a>
-							<a class = "carousel-control right" href = "#myCarousel1" data-slide = "next">&rsaquo;</a>
-							</div>
-							<h2>Your Responces</h2>
-							<div class="btns">
-								<button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
-								<button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
-								<button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details}}</button>
-								@if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
-								<button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
-								@endif
-							</div>
-                            @if($ContactDetail->payment_status!=1)
-							<div class="btn-group">
-								<a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn btn-success">Buy</button>
-								<button type="button" class="btn btn-warning">
-									<i class="fa fa-long-arrow-right"></i>
-								</button>
-                                </a>
-							</div>
+                            <ol class = "carousel-indicators">
+                            @if(!empty($ContactDetail->bid_details->bid_image))
+                            @foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
+                            <li data-target = "#myCarousel1" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
+                            @endforeach
+                            @else
+                            <li data-target = "#myCarousel1" data-slide-to = "0" class = "active"></li>
                             @endif
-						</div>
-					</div>	<!-- /col-xs-12 col-md-4-->
-					
-				</div>
-			</div>	<!-- /col-xs-8 -->
-			<div class="col-xs-12 col-sm-4 col-md-4"> <!-- edited on 13-04-2016 -->
-				
-					<div id="content">
-			        <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
-				        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
+                            </ol>   
+
+
+                            <div class = "carousel-inner client-caro-img">
+                            @if(!empty($ContactDetail->bid_details->bid_image))
+                            @foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
+                            <div class = "item @if($vx==0) active @endif">
+                            <img src = "{{ url('/')}}/public/uploads/project/{{$img->image}}" alt = "x">
+                            </div>
+                            @endforeach 
+                            @else
+                            <div class = "item active">
+                            <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+                            </div>
+                            @endif 
+                            </div>
+
+
+                            <a class = "carousel-control left" href = "#myCarousel1" data-slide = "prev">&lsaquo;</a>
+                            <a class = "carousel-control right" href = "#myCarousel1" data-slide = "next">&rsaquo;</a>
+                            </div>
+                            <h2>Your Responces</h2>
+                            <div class="btns">
+                                <button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
+                                <button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
+                                <button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details}}</button>
+                                @if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
+                                <button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
+                                @endif
+                            </div>
+                            @if($ContactDetail->payment_status!=1)
+                            <div class="btn-group">
+                                <!--<a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn btn-success">Buy</button>
+                                <button type="button" class="btn btn-warning">
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </button>
+                                </a>-->
+                                <a href="#" data-toggle="modal" data-target="#PriceModal"><button type="button" class="btn btn-success">Buy</button>
+                                <button type="button" class="btn btn-warning">
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </button>
+                                </a>
+                            </div>
+                            @endif
+                        </div>
+                    </div>  <!-- /col-xs-12 col-md-4-->
+                    
+                </div>
+            </div>  <!-- /col-xs-8 -->
+            <div class="col-xs-12 col-sm-4 col-md-4"> <!-- edited on 13-04-2016 -->
+                
+                    <div id="content">
+                    <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
+                        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
                         @if($ContactDetail->payment_status==1)
                         <li ><a href="#user" data-toggle="tab">User</a></li>
                         @endif
@@ -122,9 +126,9 @@
                                 <li><a href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
                             @endforeach
                         @endif
-			        </ul>
-			        <div id="my-tab-content" class="tab-content">
-				        <div class="tab-pane active form-head" id="requestdetail">
+                    </ul>
+                    <div id="my-tab-content" class="tab-content">
+                        <div class="tab-pane active form-head" id="requestdetail">
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 
                                     <tr> 
@@ -179,7 +183,7 @@
                             </table>
                         </div>
                         @endif
-				        @if(!empty($ContactDetail->request_details->trade_ins)&& $ContactDetail->request_details->trade_ins->make_id!=0)
+                        @if(!empty($ContactDetail->request_details->trade_ins)&& $ContactDetail->request_details->trade_ins->make_id!=0)
                             <div class="tab-pane form-head" id="tradein">
                                 <table class="table client-table"> 
                                     <tbody class="post-text"> 
@@ -315,10 +319,37 @@
                                 </div>
                             @endforeach
                         @endif
-			        </div>
-		        </div>
-			</div>	<!-- /col-xs-4 -->
-		</div>
-	</div>
+                    </div>
+                </div>
+            </div>  <!-- /col-xs-4 -->
+        </div>
+    </div>
 </section>
+
+
+
+<!--Price Modal -->
+
+  <div class="modal fade" id="PriceModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Additional Price</h4>
+        </div>
+        <div class="modal-body">
+          <p>Additional Price You need to pay for Contact Details @if(!empty($ContactDetail['additional_price'])) {{ '$'.$ContactDetail['additional_price']}} @endif</p>
+          <a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn-xs btn-success">Proceed</button></a>
+          <button type="button" class="btn-xs btn-danger" data-dismiss="modal">Close</button>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 @stop

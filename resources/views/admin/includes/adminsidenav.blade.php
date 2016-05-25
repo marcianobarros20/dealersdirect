@@ -26,6 +26,9 @@
                         <li>
                             <a href="{{ url('/')}}/admin/request"><i class="fa fa-th-list fa-fw"></i> Requests</a>
                         </li>
+                        <li>
+                            <a href="{{ url('/')}}/admin/price"><i class="fa fa-group fa-fw"></i> Set Price</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

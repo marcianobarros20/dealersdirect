@@ -51,6 +51,8 @@ Route:: get('/client/add-color-exterior/{id}', 'Front\ClientController@AddColorE
 Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorInterior');
 Route:: get('/signin-client', 'Front\ClientController@SigninClient');
 Route:: post('/signin-client', 'Front\ClientController@SigninClient');
+
+Route:: get('/client/contact_list', 'Front\ClientController@contactList');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -91,6 +93,12 @@ $router->group([
     Route::resource('/admin/year', 'CarYearController@getYear');
     Route::resource('/admin/dealers', 'DealerController@getDealer');
     Route::resource('/admin/request', 'RequestController@getRequest');
+
+    Route::resource('/admin/price', 'PriceController@getIndex');
+    Route::post('/admin/price', 'PriceController@AddPrice');
+    Route::get('/admin/edit-price/{id}','PriceController@EditPrice');
+    Route::post('/admin/edit-price',['as'=>'edit_price','uses'=>'PriceController@EditPricePost']);
+    Route::get('/admin/delete-price/{id}','PriceController@DeletePrice');
 
     Route::post('/admin/ajax/getoptiondetails', 'AjaxController@getOptionDetails');
     Route::post('/admin/ajax/getclientdetails', 'AjaxController@getClientDetails');
