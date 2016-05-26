@@ -21,5 +21,6 @@
 <link rel="stylesheet" href="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.css">
 
 
+
 	<link rel="shortcut icon" href="<?php echo url('/');?>/public/front_end/images/ico/favicon.ico">
 </head> 
