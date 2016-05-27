@@ -237,7 +237,7 @@
     .deal-make-lis{padding-bottom: 0}
 
     .requs-make-list{padding-bottom: 0}
-    .list_request{border: none; margin-left: 0; padding-bottom: 0; padding-right: auto}
+    .list_request{border: none;  padding-bottom: 0; padding-right: auto}
 
     .head{font-size: 25px;}
 
@@ -250,6 +250,9 @@
     .request-client-cont{padding-bottom: 0}
     .pro-file-bla{padding-bottom: 0}
     blockquote{margin: 1em 0px;}
+
+    .top-overview-box img{width: 100%; }
+    .list_request{margin-left: auto}
 
 
 }
@@ -264,4 +267,3 @@
 .detail-text h4{margin-bottom: 15px; display: block; margin-top:0 !important;}
      .detail-text h4 i.fa{padding: 0 8px 0 0}
 
-      #myCarousel .carousel-inner > .item > img{height: auto;}
