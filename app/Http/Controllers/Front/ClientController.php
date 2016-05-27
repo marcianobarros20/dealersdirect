@@ -19,6 +19,8 @@ use App\Model\BidQueue;                                     /* Model name*/
 use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
+use App\Model\LeadContact;                               /* Model name*/
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -177,8 +179,6 @@ class ClientController extends BaseController
 				return redirect('client-signin');
 			}
             $client_userid=Session::get('client_userid');
-
-
             $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->get();
             foreach ($RequestQueue as $kei => $RQ) {
                 
@@ -226,19 +226,32 @@ class ClientController extends BaseController
                 return redirect('client-signin');
             }
             $client_userid=Session::get('client_userid');
-            
-            $get_dealer_info=DB::table('lead_contacts')
-            ->join('dealers','dealers.id','=','lead_contacts.dealer_id')   
-            ->select('dealers.dealership_name','dealers.first_name','dealers.last_name','dealers.email')
+            $get_dealer_info=LeadContact::
+            join('dealers','dealers.id','=','lead_contacts.dealer_id')   
+            ->select('dealers.id','dealers.dealership_name','dealers.first_name','dealers.last_name','dealers.email')
             ->where('client_id','=',$client_userid)
             ->groupby('lead_contacts.dealer_id')->get();
-            //print_r($get_dealer_info);
-            //die();
+            
+            $dealers_request_info=array();
+            $p=0;
+            foreach ($get_dealer_info as $data) {
 
-            //$RequestQueue=RequestQueue::where('id', $id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
-            //$EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
-            //$EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
-            return view('front.client.client_contact_list',compact('get_dealer_info'),array('title'=>'DEALERSDIRECT | Client Contacts'));
+            $get_request_ids=LeadContact::select('request_id')->where('dealer_id','=',$data->id)->where('client_id','=',$client_userid)->get();
+
+            foreach($get_request_ids as $KEI=>$request_data){
+            
+            $RequestQueue=RequestQueue::where('id', $request_data->request_id)->with('models')->select('id','make_id','carmodel_id','year','condition','total_amount','monthly_amount')->first();
+
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('year_id')->get();
+
+            $dealers_request_info[$p]['img']=$EdmundsMakeModelYearImage;
+            $dealers_request_info[$p]['request_queue_info']=$RequestQueue;
+                $p++;
+                }
+
+            }
+            
+            return view('front.client.client_contact_list',compact('get_dealer_info','dealers_request_info'),array('title'=>'DEALERSDIRECT | Client Contacts'));
             }
             
     public function testmailnew(){

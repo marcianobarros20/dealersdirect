@@ -2481,3 +2481,49 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     }*/
    
 }
+
+/*  for client contact page */ 
+
+.panel-row{padding-bottom: 20px; padding-top: 20px; border-bottom: 1px dashed #ccc}
+.car-contact-page{padding: 20px 0}
+
+.car-logo{margin-bottom: 10px; border-bottom: 1px solid #ccc;}
+.car-info{padding-bottom: 10px;}
+
+.car-info-details{background: #EEEEEE; border: 1px solid #C0C0C0;  }
+.car-info-details .banner{ margin-bottom: 15px;}
+.car-info-details .banner img{width: 100%; border: 4px solid #F46924}
+.car-info ul{margin: 0; padding: 15px 0 0 0}
+.car-info ul li{margin: 0 4px 0 0; padding: 3px 5px; display: inline-block; background: #F46924; 
+color: #fff;
+}
+.car-info-details-main{position: relative; min-height: 391px; padding-top: 20px;} 
+.car-view{width: 64px; height: 75px; position: absolute; right: -20px; bottom: 0; z-index: 99999;}
+
+.slick-prev{display: none !important;}
+.slick-next{display: none !important;}
+
+ * {
+      box-sizing: border-box;
+    }
+
+    .slider {
+        width: 100%;
+        
+    }
+
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: black;
+    }
+
+
+/*  for client contact page */ 
