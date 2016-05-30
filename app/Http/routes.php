@@ -53,6 +53,9 @@ Route:: get('/signin-client', 'Front\ClientController@SigninClient');
 Route:: post('/signin-client', 'Front\ClientController@SigninClient');
 
 Route:: get('/client/contact_list', 'Front\ClientController@contactList');
+//new routes
+Route:: get('/client/contact_details/{id}', 'Front\ClientController@contactDetails');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

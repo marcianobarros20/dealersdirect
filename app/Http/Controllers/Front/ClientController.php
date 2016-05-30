@@ -238,7 +238,11 @@ class ClientController extends BaseController
                 ->with('request_details','request_details.makes','request_details.models','dealer_info')
                 ->get();
 
+                
+
                 foreach ($secfun as $key => $value) {
+                   
+                   $newarray[$lead->dealer_id][$key]['request_id']=$value->request_id;
                    $newarray[$lead->dealer_id][$key]['make']= $value->request_details->makes->name;
                    $newarray[$lead->dealer_id][$key]['model']= $value->request_details->models->name;
                    $newarray[$lead->dealer_id][$key]['year']= $value->request_details->year;
@@ -251,11 +255,37 @@ class ClientController extends BaseController
                 }
                  
             }
-
+            
             return view('front.client.client_contact_list',compact('newarray','leadssec'),array('title'=>'DEALERSDIRECT | Client Contacts'));
             }
             
-    public function testmailnew(){
+            public function contactDetails($id=null){
+                $obj = new helpers();
+            if(!$obj->checkClientLogin())
+                {
+                return redirect('client-signin');
+                }
+                $client_userid=Session::get('client_userid');
+            $id=base64_decode($id);
+            if(Session::get('filter_sec')){
+                $fill=Session::get('filter_sec');
+            }
+            else{
+                $fill=1;
+            }
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
+            $EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
+
+            //die('this');
+            $client=Session::get('client_userid');
+            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
+
+            }
+            
+            
+
+            public function testmailnew(){
 			$user_name = "PRODIPTO";
 			$user_email = "hello@tier5.us";
 			$admin_users_email="hello@tier5.us";
