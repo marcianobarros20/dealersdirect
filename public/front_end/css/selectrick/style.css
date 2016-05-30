@@ -775,7 +775,7 @@ label p {
 .fl { float: left; }
 .fr { float: right; }
 
-.row { width: 100%; display: table; table-layout: fixed; }
+/*.row { width: 100%; display: table; table-layout: fixed; }*/
 .col { display: table-cell; vertical-align: bottom; }
 
 /*.selectric-wrapper {

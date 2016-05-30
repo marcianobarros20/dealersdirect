@@ -134,11 +134,21 @@
     .blog .blog-item .entry-meta>span a {
         font-size: 10px;
     }
+    .navbar-inverse .navbar-nav > li > a{padding: 5px 10px}
+    
+
+
+
 }
+
+
+
+
 @media (max-width: 767px) {
     .container>.navbar-header,
     .container>.navbar-collapse {
         margin-left: 0;
+        margin-right: 0;
     }
     .top-number {
         font-size: 14px;
@@ -217,5 +227,43 @@
     .post_reply_comments {
         padding-left: 20px;
     }
+
+    .navbar-fixed-bottom, .navbar-fixed-top{position: relative;}
+    .deal-dash-cont .client_profile{padding-bottom: 0px}
+    .thumbnail img{width: 20% !important;}
+
+    .navbar-inverse .navbar-nav > li > a{display: block; border-bottom: 5px solid #fff;}
+    .navbar-nav > li{margin-left: 0}
+    .deal-make-lis{padding-bottom: 0}
+
+    .requs-make-list{padding-bottom: 0}
+    .list_request{border: none;  padding-bottom: 0; padding-right: auto}
+
+    .head{font-size: 25px;}
+
+    .client_profile{padding-top: 0; padding-bottom: 0}
+    .add-client-container{padding-bottom: 0}
+    .pro-container{padding-bottom: 0}
+    .dealer_request_area{padding-bottom: 0}
+    .brand-section{padding-bottom: 0}
+    .cli-req{margin-top: 0}
+    .request-client-cont{padding-bottom: 0}
+    .pro-file-bla{padding-bottom: 0}
+    blockquote{margin: 1em 0px;}
+
+    .top-overview-box img{width: 100%; }
+    .list_request{margin-left: auto}
+
+
 }
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
+
+    .head{font-size: 21px;}
+
+
+
+
+}
+.detail-text h4{margin-bottom: 15px; display: block; margin-top:0 !important;}
+     .detail-text h4 i.fa{padding: 0 8px 0 0}
+
