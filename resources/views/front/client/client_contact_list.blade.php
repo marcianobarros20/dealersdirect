@@ -5,93 +5,111 @@
 
     <!--new style --> 
         <div class="container  deal-make-lis">
-        @if(empty($get_dealer_info))
+        @if(empty($newarray))
             <div class="col-xs-6">
             <h3>No Contacts Found...</h3>
             </div>
             @else
-        @foreach($get_dealer_info as $data)
+            
+        @foreach($leadssec as $data)
+
+
          <div class="row panel-row">
             <div class="col-lg-6 col-md-6 col-md-6">
                 <div class="car-details">   
-                    <div class="car-logo"><img src="<?php echo url('/');?>/public/front_end/images/car-logo.jpg" alt="img"></div>
+                    <div class="car-logo"><img height="54" width="112" src="<?php echo url('/');?>/public/dealers/{{$data->dealer_info->logo}}" alt="img"></div>
                     <div class="row car-info">
                         <div class="col-md-3"><strong>Website:</strong></div>
-                        <div class="col-md-9">{{$data->dealership_name}}</div>
+                        <div class="col-md-9">{{$data->dealer_info->website_url}}</div>
                     </div>
                     <div class="row car-info">
                         <div class="col-md-3"><strong>Name:</strong></div>
-                        <div class="col-md-9">{{$data->first_name}} {{$data->last_name}}</div>
+                        <div class="col-md-9">{{$data->dealer->first_name}} {{$data->dealer->last_name}}</div>
                     </div>
                     <div class="row car-info">
-                        <div class="col-md-3"><strong>Contact:</strong></div>
-                        <div class="col-md-9">{{$data->email}}
+                        <div class="col-md-3"><strong>Email ID:</strong></div>
+                        <div class="col-md-9">{{$data->dealer_info->email_id}}
+                        </div>
+                    </div>
+                    <div class="row car-info">
+                        <div class="col-md-3"><strong>Phone No :</strong></div>
+                        <div class="col-md-9">{{$data->dealer_info->phone_no}}
+                        </div>
+                    </div>
+                    <div class="row car-info">
+                        <div class="col-md-3"><strong>Address :</strong></div>
+                        <div class="col-md-9">{{$data->dealer_info->contact_address}}
                         </div>
                     </div>
                     <div class="row car-info">
                         <div class="col-md-3"><strong>Details:</strong></div>
-                        <div class="col-md-9">Here goes the address. here goes the address. Here goes the address. here goes the address. Here goes the address. here goes the address
+                        <div class="col-md-9">{{$data->dealer_info->details}}
                         </div>
                     </div>
 
                 </div>  
             </div>
-
+            
             <div class="col-lg-6 col-md-6 col-md-6">
                 
                 <div class="car-info-details">  
                 <section class="autoplay slider">
 
-                @foreach($dealers_request_info as $value)
+              
+              
+              @foreach($newarray as $car_datas)
+
+              
+              @foreach($car_datas as $car_data) 
+              
+              @if($data->dealer_info->dealer_id ==$car_data['dealer_id'])
                 
-                
-                @foreach($value['img'] as $img_data)
                 <div>
                   <div class="car-info-details-main">
-                                <div class="banner">
-                                    <img src="{{ url('/')}}/public/edmunds/make/big/{{$img_data->local_path_big}}" alt="img">
+                                   <div class="banner">
+                                    <img src="{{ url('/')}}/public/edmunds/make/big/{{$car_data['carImages']->local_path_big}}" alt="img">
                                     
                                 </div>
                                 <div class="row car-info">      
                                     <div class="col-md-4"><strong>Car Name:</strong></div>
-                                    <div class="col-md-8">{{$img_data->title}}</div>
+                                    <div class="col-md-8">{{$car_data['make']}}</div>
                                 </div>  
                                 <div class="row car-info">      
                                     <div class="col-md-4"><strong>Model:</strong></div>
-                                    <div class="col-md-8">{{$value['request_queue_info']->models->name}}</div>
+                                    <div class="col-md-8">{{$car_data['model']}}</div>
                                 </div>
                                 <div class="row car-info">      
                                     <div class="col-md-4"><strong>Year:</strong></div>
-                                    <div class="col-md-8">{{$img_data->year_id}}</div>
+                                    <div class="col-md-8">{{$car_data['year']}}</div>
                                 </div>
                                 <div class="row car-info">
                                     <div class="col-md-12">
                                         
                                         <ul>
-                                            <li>{{$value['request_queue_info']->condition}}</li>
-                                            <li>{{$value['request_queue_info']->total_amount}}</li>
-                                            <li>{{$value['request_queue_info']->monthly_amount}}</li>
+                                            <li>{{$car_data['condition']}}</li>
+                                            <li>{{$car_data['monthlyvalue']}}</li>
+                                            <li>{{$car_data['totalvalue']}}</li>
 
                                         </ul>  
                                         
                                         
                                     </div>
                                 </div>
-                                <div class="car-view"><a href="#"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
-                        </div> 
+                                <div class="car-view"><a href="<?php echo URL::to('client/contact_details')?>/{{base64_encode($car_data['request_id'])}}"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
+                        </div>  
                 </div>
-                @endforeach  
-
+                @endif
                 @endforeach
-                
-                
+                @endforeach
                 </section>
-
-
                 </div>  <!-- car-info-details -->
 
                 </div>
+                
             </div>   
+          
+
+
             @endforeach
             @endif
 

@@ -217,7 +217,6 @@ class ClientController extends BaseController
             $client=Session::get('client_userid');
             return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
-    //new function 
 
     public function contactList(){
         $obj = new helpers();
@@ -225,36 +224,68 @@ class ClientController extends BaseController
             {
                 return redirect('client-signin');
             }
-            $client_userid=Session::get('client_userid');
-            $get_dealer_info=LeadContact::
-            join('dealers','dealers.id','=','lead_contacts.dealer_id')   
-            ->select('dealers.id','dealers.dealership_name','dealers.first_name','dealers.last_name','dealers.email')
-            ->where('client_id','=',$client_userid)
-            ->groupby('lead_contacts.dealer_id')->get();
+             $client_userid=Session::get('client_userid');
             
-            $dealers_request_info=array();
-            $p=0;
-            foreach ($get_dealer_info as $data) {
-
-            $get_request_ids=LeadContact::select('request_id')->where('dealer_id','=',$data->id)->where('client_id','=',$client_userid)->get();
-
-            foreach($get_request_ids as $KEI=>$request_data){
+            $get_request_ids = array();
             
-            $RequestQueue=RequestQueue::where('id', $request_data->request_id)->with('models')->select('id','make_id','carmodel_id','year','condition','total_amount','monthly_amount')->first();
+            $get_request_ids=RequestQueue::where('client_id','=',$client_userid)->lists('id');
+            $leadssec=LeadContact::whereIn('request_id',$get_request_ids)->with('dealer_info','dealer')->groupBy('dealer_id')->get();
+            
+            $newarray=array();
+            foreach ($leadssec as $keyx => $lead) {
 
-            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('year_id')->get();
+                $secfun=LeadContact::whereIn('request_id',$get_request_ids)->where('dealer_id',$lead->dealer_id)
+                ->with('request_details','request_details.makes','request_details.models','dealer_info')
+                ->get();
 
-            $dealers_request_info[$p]['img']=$EdmundsMakeModelYearImage;
-            $dealers_request_info[$p]['request_queue_info']=$RequestQueue;
-                $p++;
+                
+
+                foreach ($secfun as $key => $value) {
+                   
+                   $newarray[$lead->dealer_id][$key]['request_id']=$value->request_id;
+                   $newarray[$lead->dealer_id][$key]['make']= $value->request_details->makes->name;
+                   $newarray[$lead->dealer_id][$key]['model']= $value->request_details->models->name;
+                   $newarray[$lead->dealer_id][$key]['year']= $value->request_details->year;
+                   $newarray[$lead->dealer_id][$key]['condition']= $value->request_details->condition;
+                   $newarray[$lead->dealer_id][$key]['totalvalue']= $value->request_details->total_amount;
+                   $newarray[$lead->dealer_id][$key]['monthlyvalue']= $value->request_details->monthly_amount;
+                   $newarray[$lead->dealer_id][$key]['tradein']= $value->request_details->trade_in;
+                   $newarray[$lead->dealer_id][$key]['carImages']=EdmundsMakeModelYearImage::where('make_id',$value->request_details->models->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('model_id')->first();
+                   $newarray[$lead->dealer_id][$key]['dealer_id']=$value->dealer_info->dealer_id;
                 }
+                 
+            }
+            
+            return view('front.client.client_contact_list',compact('newarray','leadssec'),array('title'=>'DEALERSDIRECT | Client Contacts'));
+            }
+            
+            public function contactDetails($id=null){
+                $obj = new helpers();
+            if(!$obj->checkClientLogin())
+                {
+                return redirect('client-signin');
+                }
+                $client_userid=Session::get('client_userid');
+            $id=base64_decode($id);
+            if(Session::get('filter_sec')){
+                $fill=Session::get('filter_sec');
+            }
+            else{
+                $fill=1;
+            }
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->get();
+            $EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
+
+            //die('this');
+            $client=Session::get('client_userid');
+            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
 
             }
             
-            return view('front.client.client_contact_list',compact('get_dealer_info','dealers_request_info'),array('title'=>'DEALERSDIRECT | Client Contacts'));
-            }
             
-    public function testmailnew(){
+
+            public function testmailnew(){
 			$user_name = "PRODIPTO";
 			$user_email = "hello@tier5.us";
 			$admin_users_email="hello@tier5.us";

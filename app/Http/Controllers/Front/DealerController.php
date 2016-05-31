@@ -21,6 +21,8 @@ use App\Model\ContactList;                                  /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
 use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\SiteContactPrice;                                 /* Model name*/
+use App\Model\DealersInfo;                                 /* Model name*/
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -30,6 +32,7 @@ use Session;
 use Illuminate\Support\Facades\Request;
 use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
+
 use DB;
 use Imagine\Image\Box;
 
@@ -346,6 +349,8 @@ class DealerController extends BaseController {
             $State=[''=>'Select State']+State::lists('state', 'id')->all();
        $dealer_userid=Session::get('dealer_userid');
        $Dealer = Dealer::where('id', $dealer_userid)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       $dealer_info=DealersInfo::where('dealer_id','=',$dealer_userid)->first();
+     //  dd($dealer_info);
        if(isset($Dealer->dealer_details->dealer_city)){
         $cityarr=1;
         $City=[''=>'Select City']+City::where('state_id',$Dealer->dealer_details->dealer_state->id)->lists('city', 'id')->all();
@@ -354,7 +359,7 @@ class DealerController extends BaseController {
         $City="";
        }
        //dd($Dealer);
-       return view('front.dealer.dealer_profile',compact('Dealer','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
+       return view('front.dealer.dealer_profile',compact('Dealer','State','cityarr','City','dealer_info'),array('title'=>'DEALERSDIRECT | Dealers Add Make'));
        //print_r($Dealer);
 
     }
@@ -435,6 +440,56 @@ class DealerController extends BaseController {
        
         return redirect('/dealer/profile');
     }
+
+
+    
+
+    public function ProfileMoreDetails(Request $request){
+        
+        $dealer_userid=Session::get('dealer_userid');
+
+        $web_url=Request::input('web_url');
+        $phone_no=Request::input('phone_no');
+        $email_id=Request::input('email_id');
+        $contact_address=Request::input('contact_address');
+        $details=Request::input('details');
+        if (Request::file('dealer_logo')){
+                    $logo = Request::file('dealer_logo');
+                    $extension =$logo->getClientOriginalExtension();
+                    $destinationPath = 'public/dealers/';
+                    $fileName = rand(111111111,999999999).'.'.$extension;
+                    $logo->move($destinationPath, $fileName);
+        }else{
+            $fileName=Request::input('old_image');
+        }
+        if(Request::input('info_id')){
+            $id=Request::input('info_id');
+            $DealersInfo=DealersInfo::find($id);
+            $DealersInfo->dealer_id=$dealer_userid;
+            $DealersInfo->website_url=$web_url;
+            $DealersInfo->phone_no=$phone_no;
+            $DealersInfo->email_id=$email_id;
+            $DealersInfo->contact_address=$contact_address;
+            $DealersInfo->details=$details;
+            $DealersInfo->logo=$fileName;
+            $DealersInfo->update();
+        }else{
+        $DealersInfo = new DealersInfo;
+        $DealersInfo->dealer_id=$dealer_userid;
+        $DealersInfo->website_url=$web_url;
+        $DealersInfo->phone_no=$phone_no;
+        $DealersInfo->email_id=$email_id;
+        $DealersInfo->contact_address=$contact_address;
+        $DealersInfo->details=$details;
+        $DealersInfo->logo=$fileName;
+        $DealersInfo->save();
+        }
+        
+
+        return \Redirect::back()->with('success','Information Updated');
+    }
+
+
     public function postBid($id=null){
         $obj = new helpers();
             if(!$obj->checkDealerLogin())

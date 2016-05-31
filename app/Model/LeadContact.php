@@ -22,4 +22,16 @@ class LeadContact extends Model
     public function contact_details() {
         return $this->hasOne('App\Model\ContactList', 'id', 'contact_id');
     }
+    public function dealer_details(){
+        return $this->hasOne('App\Model\DealerDetail','dealer_id','id');
+  
+    }
+    public function dealer_info(){
+        return $this->hasOne('App\Model\DealersInfo','dealer_id','dealer_id');
+  
+    }
+    public function dealer(){
+        return $this->hasOne('App\Model\Dealer','id','dealer_id');
+  
+    }
 }
