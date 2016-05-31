@@ -33,6 +33,7 @@ body {
 
 .navbar-top-links li {
     display: inline-block;
+    float: right;
 }
 
 .navbar-top-links li:last-child {
