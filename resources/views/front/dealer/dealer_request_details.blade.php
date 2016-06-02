@@ -59,6 +59,7 @@
                         <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
                         <option value="2" @if($fill==2)selected="selected"@endif>Best Monthly</option>
                         <option value="3" @if($fill==3)selected="selected"@endif>Best Onetime</option>
+                        <option value="4" @if($fill==4)selected="selected"@endif>Best Location</option>
                 </select>
                 </div>
                 @endif

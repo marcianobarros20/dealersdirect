@@ -22,6 +22,8 @@ use App\Model\City;                                         /* Model name*/
 use App\Model\ContactList;                                  /* Model name*/
 use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
+use App\Model\DealerDetail;                                 /* Model name*/
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -1049,6 +1051,7 @@ class AjaxController extends Controller
         Session::put('filter_sec_deal',$sortby);
         $RequestDealerLog_row=RequestDealerLog::where('request_id',$id)->lists('dealer_id');
         
+       // dd($sortby);
         if($sortby==1){
             
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('acc_curve_poin', 'asc')->get();
@@ -1061,7 +1064,30 @@ class AjaxController extends Controller
             
             $BidQueue=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->whereIn('dealer_id', $RequestDealerLog_row)->with('dealers','dealers.dealer_parent','bid_image')->orderBy('tp_curve_poin', 'asc')->get();
         }
-        
+
+        if($sortby==4){
+            $get_client_id=RequestQueue::where('id', $id)->select('client_id')->first();
+            $get_client_zip_code=Client::where('id',$get_client_id->client_id)->select('zip')->first();
+            $get_dealers_zip_codes=DealerDetail::whereIn('dealer_id', $RequestDealerLog_row)->select('dealer_id','zip')->get();   
+            $index = 0; 
+            $distance_id_Array = array();
+            foreach($get_dealers_zip_codes as $zip_code){
+            $postcode1=$get_client_zip_code->zip;
+            $postcode2=$zip_code->zip;
+            $url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=$postcode2&destinations=$postcode1&mode=driving&language=en-EN&sensor=false";
+            $data = @file_get_contents($url);
+            $result = json_decode($data, true);                       
+            foreach($result['rows'] as $distance) {    
+            $distance_id_Array[$index]['dealer_id'] = $zip_code->dealer_id;
+            $distance_id_Array[$index]['distance'] = $distance['elements'][0]['distance']['text'];
+            $distance_id_Array[$index]['BidQueue']=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('dealer_id',$zip_code->dealer_id)->with('dealers','dealers.dealer_parent','bid_image')->get();
+            $index++;
+                }    
+            }    
+        asort($distance_id_Array);
+        return view('front.ajax.get_all_bid_chunk',compact('distance_id_Array'),array('title'=>'DEALERSDIRECT | Client Request Details'));       
+        }
+
         foreach ($BidQueue as $key => $Bid) {
             if($Bid->status!=0){
                 if($Bid->dealer_id!=$dealer_userid){
@@ -1069,9 +1095,11 @@ class AjaxController extends Controller
                 }
             }
         }
-        //dd($BidQueue);
+        
         return view('front.ajax.get_all_bid_chunk',compact('BidQueue'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+
+    
     public function GetBidHistory(){
         $dealer_userid=Session::get('dealer_userid');
         $dealer=Request::input('dealer');
