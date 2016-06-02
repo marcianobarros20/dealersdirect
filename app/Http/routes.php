@@ -175,6 +175,7 @@ Route::post('ajax/getunreadleadreminder','Front\AjaxController@GetunreadLeadRemi
 Route::get('ajax/sendreminderleadmail','Front\AjaxController@sendreminderleadmail');
 Route::post('ajax/setleadtype','Front\AjaxController@setleadtype');
 Route::post('ajax/getanalyticgraph','Front\AjaxController@GetAnalyticGraph');
+Route::post('ajax/getclientinfo','Front\AjaxController@GetClientInfo');
 /*
 |--------------------------------------------------------------------------
 | Dealer Routes

@@ -195,6 +195,23 @@ FetchData();
 	});
 	
 
+	$('.client_contact').click(function(){
+		var inox=$(this).data('inox');
+		console.log(inox);
+		$.ajax({
+					url: "<?php echo url('/');?>/ajax/getclientinfo",
+					data: {lead_id:inox,_token: '{!! csrf_token() !!}'},
+					type :"post",
+					success: function( data ) {
+						$(".modal-body").html('');
+						$(".modal-body").html(data);
+						
+						
+					}
+				});
+	});
+	
+
 });
 </script>
 

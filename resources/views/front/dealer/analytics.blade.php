@@ -1,8 +1,5 @@
 @extends('front/layout/dealerfrontendanalytics_template')
-@section('content')
-
-
-	
+@section('content')	
 <script type="text/javascript">
             $(function () {
                 // Create the chart

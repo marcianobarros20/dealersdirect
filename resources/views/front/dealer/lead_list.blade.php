@@ -90,7 +90,7 @@
                       NO STATUS
                       @endif
                       </p>
-                      
+                        <button id=""  data-toggle="modal" data-target="#ContactModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary client_contact lead-btns"><i class="fa fa fa-phone"></i> Contact Information</button> 
                         <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox lead-btns"><i class="fa fa fa-bell"></i> Reminder</button>
                         @if($Lead->lead_types!=0)
                         <button id="" type="submit" class="btn btn-success lead_cold lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
@@ -148,4 +148,28 @@
     </div>
 </div>
 <!-- ./modal fade -->
+
+
+<!-- Client Contact modal -->
+<div class="modal fade" id="ContactModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Client Contact Information</h4>
+        </div>
+        <div class="modal-body">
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close</button>
+          
+        </div>
+      </div>
+    </div>
+</div>
+<!-- ./Client Contact modal -->
+
+
 @stop

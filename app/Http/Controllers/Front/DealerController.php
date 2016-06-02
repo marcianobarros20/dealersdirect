@@ -1028,6 +1028,7 @@ class DealerController extends BaseController {
             }
 
         }
+        
         return view('front.dealer.lead_list',compact('LeadContact'),array('title'=>'DEALERSDIRECT | Dealers Leads'));
     }
     public function DealerReminderList(){

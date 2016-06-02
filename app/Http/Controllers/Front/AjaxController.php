@@ -1517,4 +1517,9 @@ class AjaxController extends Controller
         return view('front.ajax.get_analytic_graph',compact('request_queues'));
 
     }
+    public function GetClientInfo(){
+        $id=base64_decode(Request::input('lead_id'));
+        $LeadContact=LeadContact::where('id',$id)->with('client_details')->first();
+    return view('front.ajax.get_client_info',compact('LeadContact'));        
+    }
 }
