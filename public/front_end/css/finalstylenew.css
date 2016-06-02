@@ -1487,6 +1487,17 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     margin-top: 30px;
 }
 
+/********************CSS FOR Contact Details *******************/
+
+p.details-text{
+    border: 1px solid #0c0505;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 9px;
+    line-height: 20px;
+    margin: 0 0 10px;
+}
+
 /**********CSS OF modal fade in client_request_detail_view PAGE************/
 
 .information{

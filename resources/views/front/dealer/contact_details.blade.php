@@ -85,7 +85,7 @@
                             <div class="btns">
                                 <button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
                                 <button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
-                                <button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details}}</button>
+                                <p class="details-text c-p-b"><b>Details : </b>{{$ContactDetail->bid_details->details}}</p>
                                 @if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
                                 <button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
                                 @endif
