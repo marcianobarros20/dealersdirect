@@ -439,6 +439,13 @@ input.search-form:hover {
     background: rgba(233, 30, 99, 0.5);
 }
 
+.client_contact.lead-btns i{
+    border: 1px solid rgba(68, 6, 6, 0.57);
+    border-radius: 50%;
+    padding: 3px 1px;
+    background: rgba(162, 5, 5, 0.68);  
+}
+
 .lead_note.lead-btns i{
     border: 1px solid #6C1EE9;
     border-radius: 50%;
