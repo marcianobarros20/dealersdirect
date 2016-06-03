@@ -1079,12 +1079,14 @@ class AjaxController extends Controller
             $result = json_decode($data, true);                       
             foreach($result['rows'] as $distance) {    
             $distance_id_Array[$index]['dealer_id'] = $zip_code->dealer_id;
-            $distance_id_Array[$index]['distance'] = $distance['elements'][0]['distance']['text'];
+            $distance_id_Array[$index]['distance'] = $distance['elements'][0]['distance']['value'];
             $distance_id_Array[$index]['BidQueue']=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->where('dealer_id',$zip_code->dealer_id)->with('dealers','dealers.dealer_parent','bid_image')->get();
             $index++;
                 }    
             }    
-        asort($distance_id_Array);
+            $distance_id_Array = array_values(array_sort($distance_id_Array, function ($value) {
+                    return $value['distance'];
+                }));
         return view('front.ajax.get_all_bid_chunk',compact('distance_id_Array'),array('title'=>'DEALERSDIRECT | Client Request Details'));       
         }
 

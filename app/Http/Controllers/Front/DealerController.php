@@ -556,11 +556,6 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
-
-            
-            //dd(Request::input());
-            //dd(Request::file('images'));
-        // exit;
         $dealer_userid=Session::get('dealer_userid');
         $id=base64_encode(Request::input('request_id'));
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
@@ -573,21 +568,15 @@ class DealerController extends BaseController {
             RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
         else{
-            //die('fuck');
-            
             $dealer_ida=$dealer_userid;
             $dealer_idp=$Dealers_check->parent_id;
             $get_dealer_admin_bid_info=DealersAdminBidManagement::where('dealer_id',$dealer_ida)->first();
-            //dd($get_dealer_admin_bid_info);
-            //check for the bid limit 
             if(!empty($get_dealer_admin_bid_info)){
                 $total_amount=Request::input('total_amount');
                 $monthly_amount=Request::input('monthly_amount');
-
-               // dd($get_dealer_admin_bid_info->monthly_amount_per_bid);
                 if($total_amount > $get_dealer_admin_bid_info->total_amount_per_bid){
                     return \Redirect::back()->with('error','Maximum bid amount exceed');
-                }//return back to last page 
+                }
                 if($monthly_amount > $get_dealer_admin_bid_info->monthly_amount_per_bid){
                    return \Redirect::back()->with('error','Maximum bid amount exceed'); 
                 }
@@ -975,7 +964,7 @@ class DealerController extends BaseController {
                 }
             }
     }
-    //new function 
+    
     public function UpdateAdminBid($id){
 
         $update_arr=array(
