@@ -1,11 +1,21 @@
 @extends('front/layout/dealerfrontend_request_template')
 @section('content')
+            
 <section> 
+
     <div class="container post-container">
+
         <div class="intro-text">
             <h4><i class="fa fa-calendar"></i>{{$RequestQueue->created_at}}<h4>
+            
             <h2>{{$RequestQueue->makes->name}}</h2>
-            <P>POST A BID</P>
+            
+            <P>POST A BID </P>
+            @if(Session::get('error'))
+            <div class="alert alert-danger col-xs-4" align="center" style="text-align: center; font-weight: bold;"> {{ Session::get('error') }} 
+                <a href="#" class="close" data-dismiss="alert">×</a>
+            </div>
+            @endif  
         </div>
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">

@@ -56,15 +56,37 @@
                     <div class="img-set">
                         <img src="{{ url('/')}}/public/front/images/car-1.jpg" title="car" alt="car" />
                     </div>
-                @endif
-                    
-                    
-                        <p><strong>Name:</strong>{!! $Dealer->first_name !!} {!! $Dealer->last_name !!}</p>
-                        <p><strong>Email:</strong>{!! $Dealer->email !!} </p>
+                        @endif
+                        <div class="row align-left">
+                        <div class="col-md-6"><b>Name</b></div>
+                        <div class="col-md-6">{!! $Dealer->first_name !!} {!! $Dealer->last_name !!}</div>  
+                        </div>
+                        
+                        <div class="row align-left">
+                        <div class="col-md-6"><b>Email</b></div>
+                        <div class="col-md-6">{!! $Dealer->email !!}</div>  
+                        </div>
+
                         @if(!empty($Dealer->dealer_details))
-                        <p><strong>Zip:</strong>{!! $Dealer->dealer_details->zip !!}</p>
-                        <p><strong>Phone:</strong>{!! $Dealer->dealer_details->phone !!}</p>
-                    
+                        <div class="row align-left">
+                        <div class="col-md-6"><b>Zip</b></div>
+                        <div class="col-md-6">{!! $Dealer->dealer_details->zip !!}</div>  
+                        </div>
+                        <div class="row align-left">
+                        <div class="col-md-6"><b>Phone</b></div>
+                        <div class="col-md-6">{!! $Dealer->dealer_details->phone !!}</div>  
+                        </div>          
+                        @endif
+                        
+                    @if(!empty($Dealer->dealer_bid_info))
+                    <div class="row align-left">
+                        <div class="col-md-6"><b>Total Amount Per Bid</b></div>
+                        <div class="col-md-6">{!! $Dealer->dealer_bid_info->total_amount_per_bid !!}</div>  
+                        </div>
+                        <div class="row align-left">
+                        <div class="col-md-6"><b>Monthly Amount Per Bid</b></div>
+                        <div class="col-md-6">{!! $Dealer->dealer_bid_info->monthly_amount_per_bid !!}</div>  
+                        </div>                     
                     @endif
                       <a href="{{ route('dealer.admins.edit', ['admin_id' => $Dealer->id]) }}" class="btn-group"  data-id="" >
                        <button id="" type="submit" class="btn btn-success">Edit</button>

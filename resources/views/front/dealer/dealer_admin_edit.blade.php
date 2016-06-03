@@ -9,6 +9,7 @@
 			        <ul id="tabs" class="nav nav-tabs profile-browse" data-tabs="tabs">
 				        <li class="active"><a href="#red" data-toggle="tab">Details</a></li>
 				        <li><a href="#orange" data-toggle="tab">Change Password</a></li>
+				        <li><a href="#bid_amount" data-toggle="tab">Bid Amount Information</a></li>
 			        </ul>
 			        <div id="my-tab-content" class="tab-content">
 				        <div class="tab-pane active form-head" id="red">
@@ -63,7 +64,7 @@
 								    <button type="submit" name="btn_submit" class ="btn btn-default btn-lg btn-block">Update</button>
 		        					<input type="hidden" name="_token" value="{{ Session::token() }}">
 								</div> <!-- /form_back -->
-							
+							{!! Form::close() !!}
 				        </div>
 				        <div class="tab-pane form-head" id="orange">
 				            <!-- {{ Form::open(array('url' => 'dealereditpassword')) }}
@@ -82,6 +83,23 @@
 								        {{ Form::submit('EDIT',array('class' => 'btn btn-default btn-lg btn-block')) }}
 								</div> 
 							{!! Form::close() !!} -->
+				        </div>
+				        <div class="tab-pane form-head" id="bid_amount">
+				        	<form action="{{ route('dealer.admins.updateBid', ['update_id' =>$dealer_admin_details->id ]) }}" method="POST" enctype="multipart/form-data">
+				            	<h3>Change Bid Details</h3>
+								<div class="form_back">
+									
+								  	<div class="form-group">
+									    <label for="total_amount">Total Amount Per Bid</label>
+									    {{Form::text('total_amount',isset($dealer_admin_bid_info->total_amount_per_bid)?$dealer_admin_bid_info->total_amount_per_bid:null,['class' => 'form-control profile_control', 'required' => 'required']) }}
+								  	</div>
+								  	<div class="form-group">
+									    <label for="monthly_amount">Monthly Amount Per Bid</label>
+									    {{Form::text('monthly_amount',isset($dealer_admin_bid_info->monthly_amount_per_bid)?$dealer_admin_bid_info->monthly_amount_per_bid:null,['class' => 'form-control profile_control', 'required' => 'required']) }}
+								  	</div>
+								  	{{ Form::submit('UPDATE',array('class' => 'btn btn-default btn-lg btn-block','id' => 'save_bid')) }}
+								</div>
+							</form>	
 				        </div>
 			        </div>
 		        </div>

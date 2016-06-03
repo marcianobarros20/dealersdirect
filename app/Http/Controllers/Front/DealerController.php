@@ -22,6 +22,7 @@ use App\Model\LeadContact;                                  /* Model name*/
 use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\SiteContactPrice;                                 /* Model name*/
 use App\Model\DealersInfo;                                 /* Model name*/
+use App\Model\DealersAdminBidManagement;                                 /* Model name*/
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -230,6 +231,7 @@ class DealerController extends BaseController {
             }
             $dealer_userid=Session::get('dealer_userid');
             $par=Session::get('dealer_parent');
+
             $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
             $requestqueue_id=$RequestDealerLog->request_id;
             $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
@@ -562,7 +564,7 @@ class DealerController extends BaseController {
         $dealer_userid=Session::get('dealer_userid');
         $id=base64_encode(Request::input('request_id'));
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
-            $inox=Request::input('id');
+        $inox=Request::input('id');
         if($Dealers_check->parent_id==0){
             $dealer_idp=$dealer_userid;
             $dealer_ida=0;
@@ -571,8 +573,25 @@ class DealerController extends BaseController {
             RequestDealerLog::where('dealer_id',$dealer_idp)->where('dealer_admin',0)->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
         else{
+            //die('fuck');
+            
             $dealer_ida=$dealer_userid;
             $dealer_idp=$Dealers_check->parent_id;
+            $get_dealer_admin_bid_info=DealersAdminBidManagement::where('dealer_id',$dealer_ida)->first();
+            //dd($get_dealer_admin_bid_info);
+            //check for the bid limit 
+            if(!empty($get_dealer_admin_bid_info)){
+                $total_amount=Request::input('total_amount');
+                $monthly_amount=Request::input('monthly_amount');
+
+               // dd($get_dealer_admin_bid_info->monthly_amount_per_bid);
+                if($total_amount > $get_dealer_admin_bid_info->total_amount_per_bid){
+                    return \Redirect::back()->with('error','Maximum bid amount exceed');
+                }//return back to last page 
+                if($monthly_amount > $get_dealer_admin_bid_info->monthly_amount_per_bid){
+                   return \Redirect::back()->with('error','Maximum bid amount exceed'); 
+                }
+            }
             RequestDealerLog::where('dealer_id',$dealer_idp)->whereNotIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->delete();
             RequestDealerLog::where('dealer_id',$dealer_idp)->whereIn('dealer_admin',array(0,$dealer_ida))->where('request_id',$inox)->update(array('reserved' => 1,'bid_flag' => 1));
         }
@@ -785,8 +804,8 @@ class DealerController extends BaseController {
             return redirect('dealer-signin');
             }
             $dealer_userid=Session::get('dealer_userid');
-            $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details')->get();
-            //dd('dealer_userid');
+            $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details','dealer_bid_info')->get();
+            
         return view('front.dealer.dealer_admins',compact('Dealers'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function DealerAdminAdd(){
@@ -810,6 +829,7 @@ class DealerController extends BaseController {
                     $Dealer['password'] =$hashpassword;
                     $Dealer['code_number'] =$tamo;
                     $Dealer['parent_id'] =$dealer_userid;
+                    $Dealer['zip']=Request::input('zip');
                     $Dealers_row=Dealer::create($Dealer);
                     $lastinsertedId = $Dealers_row->id;
                     if(Request::hasFile('images')){
@@ -833,7 +853,14 @@ class DealerController extends BaseController {
                     $DealerDetail['city_id']=Request::input('city_id');
                     $DealerDetail['image']=$fileName;
                     DealerDetail::create($DealerDetail);
-
+                  
+                    
+                    $DealersAdminBidManagement['dealer_id']=$lastinsertedId;
+                    $DealersAdminBidManagement['parent_id']=$dealer_userid;
+                    $DealersAdminBidManagement['total_amount_per_bid']=Request::input('total_amount');
+                    $DealersAdminBidManagement['monthly_amount_per_bid']=Request::input('monthly_amount');
+                    DealersAdminBidManagement::create($DealersAdminBidManagement);
+                    
                     $make=DealerMakeMap::where('dealer_id',$dealer_userid)->get();
                     foreach ($make as $key => $value) {
                         $DealerMakeMap['dealer_id']=$lastinsertedId;
@@ -872,6 +899,7 @@ class DealerController extends BaseController {
         $State=[''=>'Select State']+State::lists('state', 'id')->all();
        $dealer_userid=Session::get('dealer_userid');
        $dealer_admin_details = Dealer::where('id',$Dealer_id)->with('dealer_parent','dealer_details','dealer_details.dealer_state','dealer_details.dealer_city')->first();
+       $dealer_admin_bid_info=DealersAdminBidManagement::where('dealer_id',$Dealer_id)->first();
        if(isset($dealer_admin_details->dealer_details->dealer_city)){
         $cityarr=1;
         $City=[''=>'Select City']+City::where('state_id',$dealer_admin_details->dealer_details->dealer_state->id)->lists('city', 'id')->all();
@@ -881,8 +909,9 @@ class DealerController extends BaseController {
        }
         
 
-        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details','State','cityarr','City'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
+        return view('front.dealer.dealer_admin_edit',compact('dealer_admin_details','State','cityarr','City','dealer_admin_bid_info'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
+
     public function UpdateAdminDetails($id)
     {
           $rules = array(
@@ -946,6 +975,21 @@ class DealerController extends BaseController {
                 }
             }
     }
+    //new function 
+    public function UpdateAdminBid($id){
+
+        $update_arr=array(
+            'total_amount_per_bid'=>Request::input('total_amount'),
+            'monthly_amount_per_bid'=>Request::input('monthly_amount')
+            );
+        $update_bid_info=DealersAdminBidManagement::where('dealer_id',$id)->update($update_arr);
+        
+        Session::flash('success', 'Bid Information Successfully Updated'); 
+        return redirect('dealer/admins');
+       
+    }
+
+
     public function DealerContactList(){
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();

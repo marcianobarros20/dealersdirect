@@ -214,6 +214,7 @@ Route:: get('/dealer/admins', 'Front\DealerController@DealerAdminList');
 //edit and update route
 Route::get('dealer/admins/edit/{admin_id}', ['uses' => 'Front\DealerController@EditAdminDetails','as' => 'dealer.admins.edit']);
 Route::post('dealer/admins/update/{update_id}', ['uses' => 'Front\DealerController@UpdateAdminDetails','as' =>'dealer.admins.update']);
+Route::post('dealer/admins/update_bid/{update_id}', ['uses' => 'Front\DealerController@UpdateAdminBid','as' =>'dealer.admins.updateBid']);
 //edit and update
 Route:: get('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');
 Route:: post('dealers/dealer_add_admin', 'Front\DealerController@DealerAdminAdd');

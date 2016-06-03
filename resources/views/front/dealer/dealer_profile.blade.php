@@ -71,7 +71,10 @@
 									</div>
 									<div class="form-group">
 									    <label for="exampleInputName1">Zip</label>
+										
 									    {{ Form::number('zip',$Dealer->zip,['class' => 'form-control profile_control','required'=>'required']) }}
+							
+	
 									</div>
 
 									<div class="form-group">
