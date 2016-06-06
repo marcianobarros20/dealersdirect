@@ -632,6 +632,7 @@ class AjaxController extends Controller
         $RequestQueue['fname'] =$Client->first_name;
         $RequestQueue['lname'] =$Client->last_name;
         $RequestQueue['phone'] =$Client->phone;
+        $RequestQueue['zip'] =$Client->zip;
         $RequestQueue['type'] =1;
         $RequestQueue['email'] =$Client->email;
         $RequestQueue['client_id']=$Client->id;
