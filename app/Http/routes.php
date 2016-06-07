@@ -199,6 +199,9 @@ Route:: post('/dealeraddmake', 'Front\DealerController@DealerAddMake');
 Route:: post('/ajax/delete_dealer_make', 'Front\AjaxController@deletedealermake');
 Route:: get('/dealer/profile', 'Front\DealerController@profile');
 Route:: post('/dealereditdetails', 'Front\DealerController@ProfileEditDetails');
+//dealers membership routes 
+Route::get('/dealers/membership','Front\DealerController@DealerMembership');
+Route::post('/dealers/membership',['as'=>'membership','uses'=>'Front\DealerController@DealerMembershipPost']);
 
 Route:: post('/dealeremoreditdetails', 'Front\DealerController@ProfileMoreDetails');
 

@@ -23,6 +23,7 @@ use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\SiteContactPrice;                                 /* Model name*/
 use App\Model\DealersInfo;                                 /* Model name*/
 use App\Model\DealersAdminBidManagement;                                 /* Model name*/
+use App\Model\DealerMembership;                                 /* Model name*/
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -1043,6 +1044,52 @@ class DealerController extends BaseController {
         $LeadContact->save(); 
         return redirect('dealers/lead_list');
     }
+    //Dealers Membership 
+
+    public function DealerMembership(){
+        $dealer_userid=Session::get('dealer_userid');
+        $get_dealer_membership_info=DealerMembership::where('dealer_id',$dealer_userid)->where('is_active',1)->first();
+        
+        return view('front.dealer.membership',array('title'=>'DEALERSDIRECT | Dealers Membership'),compact('get_dealer_membership_info'));
+    }
+
+    public function DealerMembershipPost(){
+        $dealer_userid=Session::get('dealer_userid');
+        $get_dealer_membership_info=DealerMembership::where('dealer_id',$dealer_userid)->first();
+        if($get_dealer_membership_info){
+            $id=$get_dealer_membership_info->id;
+            $membership=DealerMembership::find($id);
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=Request::input('member_type');
+            $membership->update();
+            $get_dealer_membertype=DealerMembership::where('dealer_id',$dealer_userid)->first();
+            $member_type=$get_dealer_membertype->membership_type;
+            return \Redirect::back()->with('massage','You are now upgraded to Level '.$member_type.' Membership');
+        }
+        if(Request::input('member_type')==1){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=1;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 1 Membership');
+        }
+        if(Request::input('member_type')==2){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=2;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 2 Membership');
+        }
+        if(Request::input('member_type')==3){
+            $membership=new DealerMembership;
+            $membership->dealer_id=$dealer_userid;
+            $membership->membership_type=3;
+            $membership->save();
+            return \Redirect::back()->with('massage','You are now upgraded to Level 3 Membership');
+        }
+        
+    }
+
     public function DealerLeadList(){
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
