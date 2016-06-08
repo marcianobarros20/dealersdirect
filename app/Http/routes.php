@@ -51,11 +51,10 @@ Route:: get('/client/add-color-exterior/{id}', 'Front\ClientController@AddColorE
 Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorInterior');
 Route:: get('/signin-client', 'Front\ClientController@SigninClient');
 Route:: post('/signin-client', 'Front\ClientController@SigninClient');
-
 Route:: get('/client/contact_list', 'Front\ClientController@contactList');
-//new routes
 Route:: get('/client/contact_details/{id}', 'Front\ClientController@contactDetails');
-
+Route:: get('/client/update-budget/{id}', 'Front\ClientController@UpdateBudget');
+Route:: post('/client/update-budget', 'Front\ClientController@UpdateBudgetPost');
 /*
 |--------------------------------------------------------------------------
 | API Routes

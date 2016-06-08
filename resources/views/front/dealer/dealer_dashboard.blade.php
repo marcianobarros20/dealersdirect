@@ -29,7 +29,7 @@
                         <div @if(Session::get('dealer_parent')==0)class="col-xs-12 col-sm-3 col-md-3 client_profile"@else class="col-xs-12 col-sm-6 col-md-6 client_profile"@endif>
                             <div class="thumbnail">
                                 <a href="<?php echo url('/');?>/dealer/profile"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
-                                <h1>PROFILES</h1> 
+                                <h1>PROFILE</h1> 
                             </div>     
                         </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
                         <div @if(Session::get('dealer_parent')==0)class="col-xs-12 col-sm-3 col-md-3 client_profile"@else class="col-xs-12 col-sm-6 col-md-6 client_profile"@endif>

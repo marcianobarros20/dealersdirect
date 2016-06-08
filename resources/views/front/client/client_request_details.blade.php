@@ -20,7 +20,7 @@
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
-                <div id = "myCarousel" class = "carousel slide">
+                <div id = "myCarousel" class = "carousel slide ctborder ctheight">
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
@@ -34,15 +34,15 @@
                     </ol>   
                    
                    <!-- Carousel items -->
-                   <div class = "carousel-inner client-carousel-img">
+                   <div class = "carousel-inner client-carousel-img ct-inner">
                    @if($EMMYIcount!=0)
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
-                            <div class = "item @if($vx==0) active @endif">
+                            <div class = "item ct-item @if($vx==0) active @endif">
                                 <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
                             </div>
                         @endforeach 
                     @else
-                            <div class = "item active">
+                            <div class = "item ct-item active">
                                 <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
                             </div>
                     @endif 
@@ -69,7 +69,8 @@
             </div>  <!-- /col-xs-8 -->
             <div class="col-xs-12 col-sm-4 col-md-4">
                 
-                <a href="{{url('/')}}/client/add-style/{{base64_encode($RequestQueue->id)}}" class="btn btn-default c-v">Add More Details</a>
+                <a href="{{url('/')}}/client/add-style/{{base64_encode($RequestQueue->id)}}" class="btn btn-default c-v">Add More Details</a> 
+                <a data-action="<?php echo URL::to('/client/update-budget');?>/{{$RequestQueue->id}}" data-whatever="@mdo" data-target="#edit_budget_modal" data-toggle="modal" href="#" class="btn btn-default c-v update-budget">Update Budget</a>
                 
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
@@ -88,28 +89,28 @@
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 
                                     <tr> 
-                                        <td>MAKE:</td> 
+                                        <td>MAKE :</td> 
                                         <td>{{$RequestQueue->makes->name}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>MODEL:</td> 
+                                        <td>MODEL :</td> 
                                         <td>{{$RequestQueue->models->name}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>YEAR:</td> 
+                                        <td>YEAR :</td> 
                                         <td>{{$RequestQueue->year}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>CONDITION:</td> 
+                                        <td>CONDITION :</td> 
                                         <td>{{$RequestQueue->condition}}</td> 
                                     </tr> 
                                     <tr> 
-                                        <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                        <td>TOTAL AMOUNT :</td> 
+                                        <td>${{$RequestQueue->total_amount}}</td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                        <td>${{$RequestQueue->monthly_amount}}</td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -161,57 +162,57 @@
                                                 @endforeach
                                             @endif
                                             <tr> 
-                                                <td>Style Name:</td> 
+                                                <td>Style Name :</td> 
                                                 <td>{{$option->styles->name}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Body:</td> 
+                                                <td>Body :</td> 
                                                 <td>{{$option->styles->body}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Compression Ratio:</td> 
+                                                <td>Compression Ratio :</td> 
                                                 <td>{{$option->engines['compressionRatio']}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Cylinder:</td> 
+                                                <td>Cylinder :</td> 
                                                 <td>{{$option->engines['cylinder']}}</td> 
                                             </tr> 
                                             <tr> 
-                                                <td>Displacement:</td> 
+                                                <td>Displacement :</td> 
                                                 <td>{{$option->engines['displacement']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Configuration:</td> 
+                                                <td>Configuration :</td> 
                                                 <td>{{$option->engines['configuration']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Fuel Type:</td> 
+                                                <td>Fuel Type :</td> 
                                                 <td>{{$option->engines['fuelType']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Torque:</td> 
+                                                <td>Torque :</td> 
                                                 <td>{{$option->engines['torque']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Total Valves:</td> 
+                                                <td>Total Valves :</td> 
                                                 <td>{{$option->engines['totalValves']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Code:</td> 
+                                                <td>Code :</td> 
                                                 <td>{{$option->engines['code']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Compressor Type:</td> 
+                                                <td>Compressor Type :</td> 
                                                 <td>{{$option->engines['compressorType']}}</td> 
                                             </tr>
                                             <tr> 
-                                                <td>Compressor Type:</td> 
+                                                <td>Compressor Type :</td> 
                                                 <td>{{$option->engines['compressorType']}}</td> 
                                             </tr>
                                             @if(!empty($option->engines['rpm']))
                                                 @foreach (json_decode($option->engines['rpm'],true) as $key => $rpm)
                                                 <tr> 
-                                                    <td>RPM ({{ $key }}):</td> 
+                                                    <td>RPM ({{ $key }}) :</td> 
                                                     <td>{{  $rpm }}</td> 
                                                 </tr>
                                                 @endforeach
@@ -219,14 +220,14 @@
                                             @if(!empty($option->engines['valve']))
                                                 @foreach (json_decode($option->engines['valve'],true) as $keyv => $valve)
                                                 <tr> 
-                                                    <td>Valve ({{ $keyv }}):</td> 
+                                                    <td>Valve ({{ $keyv }}) :</td> 
                                                     <td>{{  $valve }}</td> 
                                                 </tr>
                                                 @endforeach
                                             @endif
                                             @if(!empty($option->excolor))
                                                 <tr> 
-                                                    <td>Exterior Color:</td> 
+                                                    <td>Exterior Color :</td> 
                                                     <td>
                                                         {{$option->excolor['name']}}
                                                         @if($option->excolor['hex']!="")
@@ -237,7 +238,7 @@
                                             @endif
                                             @if(!empty($option->incolor))
                                                 <tr> 
-                                                    <td>Interior Color:</td> 
+                                                    <td>Interior Color :</td> 
                                                     <td>
                                                         {{$option->incolor['name']}}
                                                         @if($option->incolor['hex']!="")
@@ -259,6 +260,39 @@
     </div>
 </section>
 
+
+<div class="modal fade" id="edit_budget_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Edit Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Budget</h4>
+        </div>
+        <div class="modal-body modal-body-data">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<script type="text/javascript">
+    $(".update-budget").click(function(){
+    $.ajax({
+        url: $(this).attr('data-action'),
+        type:'GET',
+        success: function(msg){
+        $(".modal-body-data").html(msg);    
+        }
+    });
+});
+
+</script>
 
 
 @stop

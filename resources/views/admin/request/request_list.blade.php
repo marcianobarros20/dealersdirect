@@ -1,11 +1,6 @@
 @extends('admin/layout/admin_inner_template')
-
 @section('content')
-
- 
-  <!-- /navbar -->
- 
-                  
+<!-- /navbar -->
 <div id="page-wrapper">
 <div class="row">
                 <div class="col-lg-12">

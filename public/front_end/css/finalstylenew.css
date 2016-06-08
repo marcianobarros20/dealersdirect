@@ -1044,10 +1044,20 @@ small{
     margin: 1px;
 }
 
-#myCarousel .carousel-inner>.item>img{
-    height: 175px;
+.ctborder{
+    border: 3px solid #F26722;border-radius: 6px;
+
 }
 
+
+#myCarousel .carousel-inner>.item>img{
+    height: 176px;
+}
+
+.ctheight .carousel-inner>.item>img{
+    height:317px !important;
+
+}
 
 
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){

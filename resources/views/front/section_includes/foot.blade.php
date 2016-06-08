@@ -110,12 +110,12 @@
               
               
               if(data!=0){
-                $("#minauto").html("Minimum Price<br>"+"Total :"+data.min.base+"<br>"+"Monthly :"+data.min.monthly);
-                $("#maxauto").html("Maximum Price<br>"+"Total :"+data.max.base+"<br>"+"Monthly :"+data.max.monthly);
-                $("#minmsrp").html(data.min.base);
-                $("#maxmsrp").html(data.max.base);
-                $("#minmp").html(data.min.monthly);
-                $("#maxmp").html(data.max.monthly);
+                $("#minauto").html("Minimum Price<br>"+"Total : $"+data.min.base+"<br>"+"Monthly : $"+data.min.monthly);
+                $("#maxauto").html("Maximum Price<br>"+"Total : $"+data.max.base+"<br>"+"Monthly : $"+data.max.monthly);
+                $("#minmsrp").html("$"+data.min.base);
+                $("#maxmsrp").html("$"+data.max.base);
+                $("#minmp").html("$"+data.min.monthly);
+                $("#maxmp").html("$"+data.max.monthly);
                 $("#fmp").show();
                 $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
@@ -199,23 +199,23 @@
             }
             if(minmsrp!="" && maxmsrp!="" && minmp!="" && maxmp!="" && tamo!="" && mtamo!="" ){
                 if(tamo<minmsrp){
-                  $("#tb").html(tamo.toFixed( 2 ));
+                  $("#tb").html("$"+tamo.toFixed( 2 ));
                   $("#tb").removeClass("value-green");
                   $("#tb").addClass("value-red");
                   $("#tttb").html("Total budget Is Less than MSRP Range");
                 }else{
-                  $("#tb").html(tamo.toFixed( 2 ));
+                  $("#tb").html("$"+tamo.toFixed( 2 ));
                   $("#tb").removeClass("value-red");
                   $("#tb").addClass("value-green");
                   $("#tttb").html("Total budget Is With In The MSRP Range");
                 }
                 if(mtamo<minmp){
-                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").html("$"+mtamo.toFixed( 2 ));
                   $("#mb").removeClass("value-green");
                   $("#mb").addClass("value-red");
                   $("#ttmb").html("Monthly budget Is Less than Monthly Range");
                 }else{
-                  $("#mb").html(mtamo.toFixed( 2 ));
+                  $("#mb").html("$"+mtamo.toFixed( 2 ));
                   $("#mb").removeClass("value-red");
                   $("#mb").addClass("value-green");
                   $("#ttmb").html("Monthly budget Is With In The Monthly Range");

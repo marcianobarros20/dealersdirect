@@ -6,16 +6,18 @@
                     <div class="">
                         <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
                             <div class="thumbnail">
-                                <a href="<?php echo url('/');?>/client/profile"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
-                                <h1>PROFILES</h1> 
-                            </div>     
-                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
-                        <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
-                            <div class="thumbnail">
                                 <a href="<?php echo url('/');?>/client/request_list"><img src="<?php echo url('/');?>/public/front_end/images/pic2.png" alt="image"></a>
                                 <h1>REQUEST</h1>
                             </div>
                         </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->   
+
+                        <div class="col-xs-12 col-sm-6 col-md-6 client_profile">
+                            <div class="thumbnail">
+                                <a href="<?php echo url('/');?>/client/contact_list"><img src="<?php echo url('/');?>/public/front_end/images/pic1.png" alt="image"></a>
+                                <h1>CONTACTS</h1> 
+                            </div>     
+                        </div> <!-- /col-xs-12 col-sm-6 col-md-6 -->
+                        
                     </div>
                 </div>
             </section>

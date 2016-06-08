@@ -217,6 +217,20 @@ class ClientController extends BaseController
             $client=Session::get('client_userid');
             return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
+    public function UpdateBudget($id=Null){
+        $RequestQueue=RequestQueue::where('id', $id)->first();
+    return \View::make("front.client.client_update_budget",compact('RequestQueue'));
+    }
+    public function UpdateBudgetPost(){
+        $id=Request::input('req_id');
+        $totalvalue=Request::input('totalvalue');
+        $monthlyvalue=Request::input('monthlyvalue');
+        $update_client_budget=RequestQueue::find($id);
+        $update_client_budget->monthly_amount=$monthlyvalue;
+        $update_client_budget->total_amount=$totalvalue;
+        $update_client_budget->update();
+        return \Redirect::back();
+    }
 
     public function contactList(){
         $obj = new helpers();

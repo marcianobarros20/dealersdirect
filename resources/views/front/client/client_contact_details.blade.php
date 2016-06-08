@@ -18,7 +18,7 @@
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
             <!-- Carousel ============ -->
-                <div id = "myCarousel" class = "carousel slide">
+                <div id = "myCarousel" class = "carousel slide ctborder">
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">

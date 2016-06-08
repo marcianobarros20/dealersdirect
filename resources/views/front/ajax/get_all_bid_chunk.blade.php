@@ -1,16 +1,6 @@
 @if(!empty($distance_id_Array))
-
-@foreach($distance_id_Array as $key=>$bid_data)
-    
-    
-    @foreach($bid_data['BidQueue'] as $key=>$Bid)
-    
-
-    
-    
-
-    
-    
+@foreach($distance_id_Array as $key=>$bid_data)  
+@foreach($bid_data['BidQueue'] as $key=>$Bid)    
 <div class="col-xs-12 col-sm-4 col-md-4 carousel_area">
         <div class="brand_request">
             
@@ -58,10 +48,10 @@
             <div class="btns eit-botons">
                 
                 @if($Bid->trade_in!=0)  
-                <button type="button" class="btn btn-default c-p-b">Trade In:{!! $Bid->trade_in !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Trade In :{!! $Bid->trade_in !!}</button>
                 @endif              
-                <button type="button" class="btn btn-default c-p-b">OneTime:{!! $Bid->total_amount !!}</button>
-                <button type="button" class="btn btn-default c-p-b">Monthly:{!! $Bid->monthly_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime : ${!! $Bid->total_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Monthly: ${!! $Bid->monthly_amount !!}</button>
                 
             </div>
             <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-inox={!! $Bid->dealer_admin!!} data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
@@ -127,10 +117,10 @@
             <div class="btns eit-botons">
                 
                 @if($Bid->trade_in!=0)  
-                <button type="button" class="btn btn-default c-p-b">Trade In:{!! $Bid->trade_in !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Trade In :{!! $Bid->trade_in !!}</button>
                 @endif              
-                <button type="button" class="btn btn-default c-p-b">OneTime:{!! $Bid->total_amount !!}</button>
-                <button type="button" class="btn btn-default c-p-b">Monthly:{!! $Bid->monthly_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime : ${!! $Bid->total_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Monthly : ${!! $Bid->monthly_amount !!}</button>
                 
             </div>
             <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-inox={!! $Bid->dealer_admin!!} data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
