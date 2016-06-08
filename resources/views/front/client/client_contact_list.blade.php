@@ -19,15 +19,15 @@
                 <div class="car-details">   
                     <div class="car-logo"><img height="54" width="112" src="<?php echo url('/');?>/public/dealers/{{$data->dealer_info->logo}}" alt="img"></div>
                     <div class="row car-info">
-                        <div class="col-md-3"><strong>Website:</strong></div>
+                        <div class="col-md-3"><strong>Website :</strong></div>
                         <div class="col-md-9">{{$data->dealer_info->website_url}}</div>
                     </div>
                     <div class="row car-info">
-                        <div class="col-md-3"><strong>Name:</strong></div>
+                        <div class="col-md-3"><strong>Name :</strong></div>
                         <div class="col-md-9">{{$data->dealer->first_name}} {{$data->dealer->last_name}}</div>
                     </div>
                     <div class="row car-info">
-                        <div class="col-md-3"><strong>Email ID:</strong></div>
+                        <div class="col-md-3"><strong>Email ID :</strong></div>
                         <div class="col-md-9">{{$data->dealer_info->email_id}}
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="row car-info">
-                        <div class="col-md-3"><strong>Details:</strong></div>
+                        <div class="col-md-3"><strong>Details :</strong></div>
                         <div class="col-md-9">{{$data->dealer_info->details}}
                         </div>
                     </div>
@@ -71,15 +71,15 @@
                                     
                                 </div>
                                 <div class="row car-info">      
-                                    <div class="col-md-4"><strong>Car Name:</strong></div>
+                                    <div class="col-md-4"><strong>Car Name :</strong></div>
                                     <div class="col-md-8">{{$car_data['make']}}</div>
                                 </div>  
                                 <div class="row car-info">      
-                                    <div class="col-md-4"><strong>Model:</strong></div>
+                                    <div class="col-md-4"><strong>Model :</strong></div>
                                     <div class="col-md-8">{{$car_data['model']}}</div>
                                 </div>
                                 <div class="row car-info">      
-                                    <div class="col-md-4"><strong>Year:</strong></div>
+                                    <div class="col-md-4"><strong>Year :</strong></div>
                                     <div class="col-md-8">{{$car_data['year']}}</div>
                                 </div>
                                 <div class="row car-info">
@@ -87,8 +87,8 @@
                                         
                                         <ul>
                                             <li>{{$car_data['condition']}}</li>
-                                            <li>{{$car_data['monthlyvalue']}}</li>
-                                            <li>{{$car_data['totalvalue']}}</li>
+                                            <li>${{$car_data['monthlyvalue']}}</li>
+                                            <li>${{$car_data['totalvalue']}}</li>
 
                                         </ul>  
                                         

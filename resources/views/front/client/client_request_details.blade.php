@@ -34,15 +34,15 @@
                     </ol>   
                    
                    <!-- Carousel items -->
-                   <div class = "carousel-inner client-carousel-img ct-inner">
+                   <div class = "carousel-inner client-carousel-img">
                    @if($EMMYIcount!=0)
                         @foreach($EdmundsMakeModelYearImage as $vx=>$img)
-                            <div class = "item ct-item @if($vx==0) active @endif">
+                            <div class = "item @if($vx==0) active @endif">
                                 <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
                             </div>
                         @endforeach 
                     @else
-                            <div class = "item ct-item active">
+                            <div class = "item active">
                                 <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
                             </div>
                     @endif 

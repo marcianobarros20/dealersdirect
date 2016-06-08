@@ -1049,7 +1049,6 @@ small{
 
 }
 
-
 #myCarousel .carousel-inner>.item>img{
     height: 176px;
 }
@@ -1058,7 +1057,6 @@ small{
     height:317px !important;
 
 }
-
 
 @media screen and (min-width: 640px) and (max-width: 766px) and (orientation: landscape){
     .overview-box .home_next_btn {
