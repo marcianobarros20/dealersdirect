@@ -1,7 +1,8 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
 <section>
-    <div class="container">
+    <div class="container client-engine">
+    <div class="col-md-2 col-md-offset-5"><h2> Transmission </h2></div>
         @foreach ($Transmission as $key => $value)
         <div class="row col-xs-12 col-sm-12 col-md-12">
             <div class="client-add">
@@ -22,6 +23,7 @@
         </div>
         @endforeach
     </div>
+
 </section> 
- 
+
 @stop
