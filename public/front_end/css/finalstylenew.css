@@ -1049,6 +1049,10 @@ small{
 
 }
 
+.color-border{
+ border: 2px solid #F26722;border-radius: 6px;   
+}
+
 #myCarousel .carousel-inner>.item>img{
  height: 176px;
 }
