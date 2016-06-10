@@ -1317,10 +1317,10 @@ class AjaxController extends Controller
                     EdmundsMakeModelYearImage::create($makephoto);
 
                 }
-                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('edmunds_path_small')->get();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
         }else{
             //check for fix
-            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('edmunds_path_small')->get();
+            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
         }
         //dd($EdmundsMakeModelYearImage);
        return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
