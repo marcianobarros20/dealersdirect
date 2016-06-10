@@ -185,7 +185,7 @@ class ClientController extends BaseController
 
                 $countimg=EdmundsMakeModelYearImage::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year_id',$RQ->year)->groupBy('title')->count();
                 if($countimg!=0){
-                  $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year_id',$RQ->year)->groupBy('title')->get();
+                  $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year_id',$RQ->year)->groupBy('local_path_smalll')->get();
                   $RequestQueue[$kei]['imx']=$EdmundsMakeModelYearImage;  
                 }else{
                     $RequestQueue[$kei]['imx']="";
