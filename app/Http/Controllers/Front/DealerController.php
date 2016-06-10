@@ -255,7 +255,7 @@ class DealerController extends BaseController {
                 }
                 //dd($RequestQueue);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
-                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->get();
+                $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
                 if($par!=0){
                     $BidQueuecount=BidQueue::where('dealer_admin', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
                 }else{
@@ -992,7 +992,7 @@ class DealerController extends BaseController {
         foreach ($ContactList as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
             if($countimg!=0){
-                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->get();
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('local_path_smalll')->get();
              $ContactList[$key]['imx']=$imx;
             }else{
                $ContactList[$key]['imx']=""; 
@@ -1010,7 +1010,7 @@ class DealerController extends BaseController {
         $ContactDetail=ContactList::where('id',$id)->with('request_details','request_details.makes','request_details.models','request_details.options','request_details.trade_ins','bid_details','bid_details.bid_image','client_details')->first();
             $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
             if($countimg!=0){
-            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->groupBy('local_path_big')->get();
             $additional_price=SiteContactPrice::all();
             //dd($additional_price[0]->price);
             //die();
@@ -1101,7 +1101,7 @@ class DealerController extends BaseController {
         foreach ($LeadContact as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();
             if($countimg!=0){
-                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->get();
+                $imx=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('local_path_big')->get();
              $LeadContact[$key]['imx']=$imx;
             }else{
                $LeadContact[$key]['imx']=""; 

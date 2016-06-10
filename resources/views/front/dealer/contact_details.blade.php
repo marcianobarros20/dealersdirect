@@ -31,7 +31,7 @@
                         @if(!empty($ContactDetail->imx))
                             @foreach($ContactDetail->imx as $vx=>$img)
                                 <div class = "item @if($vx==0) active @endif">
-                                    <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
+                                    <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
                                 </div>
                             @endforeach 
                         @else
