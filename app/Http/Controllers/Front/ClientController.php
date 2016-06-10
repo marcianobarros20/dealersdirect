@@ -510,7 +510,8 @@ class ClientController extends BaseController
         $id=base64_decode($id);
         $RequestStyleEngineTransmissionColor=RequestStyleEngineTransmissionColor::where("id",$id)->first();
         $RequestQueue=RequestQueue::where('id', $RequestStyleEngineTransmissionColor->requestqueue_id)->with('makes','models')->first();
-        $Color=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->where('category','Interior')->get();
+        
+        $Color=Color::where('style_id',$RequestStyleEngineTransmissionColor->style_id)->where('category','Interior')->groupBy('color_id')->get();
 
         $newrequest_id=base64_encode($RequestStyleEngineTransmissionColor->requestqueue_id);
         $countnum=$RequestStyleEngineTransmissionColor->count;
