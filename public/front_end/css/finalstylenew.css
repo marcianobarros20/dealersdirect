@@ -2560,3 +2560,34 @@ color: #fff;
 
 
 /*  for client contact page */ 
+
+
+
+.text_new_area{position: relative;}
+
+
+.text_new_area .msg {
+  background: #000 none repeat scroll 0 0;
+  border: 1px solid #f26722;
+  border-radius: 50%;
+  bottom: 0;
+  color: #fff;
+  height: 25px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: -19px;
+  width: 25px;
+}
+.amortization-calculator {
+  background: #f26722 none repeat scroll 0 0;
+  border-radius: 4px;
+  color: #fff;
+  display: inline-block;
+  margin-top: 11px;
+}
+.amortization-calculator a{display: inline-block;
+  padding: 8px; color: #fff;}
+
+.amortization-calculator a:hover{text-decoration: none;}  

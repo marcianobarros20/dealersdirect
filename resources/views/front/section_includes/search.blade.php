@@ -32,11 +32,15 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 select_option">
+			
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}
 			</div>
 			<div class="text_new_area" >
 				{{ Form::text('mtamo','', array('id' => 'mtamo','class'=>'form-control form_in_control','placeholder'=>'Monthly Amount')) }}
+			</div><br>
+			<div class="amortization-calculator">
+				<a data-toggle="modal" data-target="#amortization-cal" href="#"><i class="fa fa-calculator" aria-hidden="true" data-toggle="tooltip" title="Amortization Calculator"></i> Amortization Calculator</a>
 			</div>
 		</div> <!-- /row col-xs-12 select_option -->
 		<div class="home_next_btn">
@@ -174,3 +178,82 @@
 	</div><!--  /container -->
 	
 </section>
+
+
+<!-- Modal -->
+<div id="amortization-cal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Amortization Calculator</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method='post'>
+         <!-- Text input-->
+	   <div class="control-group">
+  	     <label class="control-label" for="loan_amount">Loan Amount ($) : </label>
+  	    <div class="controls">
+    	  <input id="loan_amount" name="loan_amount" type="text" placeholder="$" class="input-medium">
+	    </div>
+		</div>
+		<!-- Text input-->
+	   <div class="control-group">
+  	     <label class="control-label" for="loan_term">Loan Term (Years) : </label>
+  	    <div class="controls">
+    	  <input id="loan_term" name="loan_term" type="text" placeholder="Years" class="input-medium">
+	    </div>
+		</div>
+			<!-- Text input-->
+	   <div class="control-group">
+  	     <label class="control-label" for="interest_rate">Interest Rate (%) : </label>
+  	    <div class="controls">
+    	  <input id="interest_rate" name="interest_rate" type="text" placeholder="%" class="input-medium">
+	    </div>
+		</div>
+
+		<div class="control-group hide" id="monthly_value"> 
+  	     <label class="control-label" for="monthly_val">Monthly Value:</label>
+  	    <div class="controls">
+    	  <input id="monthly_val" name="monthly_val" type="text" class="input-medium" readonly>
+	    </div>
+		</div>
+		
+		
+		</br>
+		<!-- Button -->
+		<div class="control-group">
+  		<div class="controls">
+    		<button type='button' id="calculate" name="calculate" class="btn btn-success">Calculate</button>
+  		</div>
+		</div>
+		
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--jquery for the calculator -->
+<script type="text/javascript">
+	$('#calculate').click(function (){
+	var loan_amount=$('#loan_amount').val();
+	var interest_rate=$('#interest_rate').val();
+	var loan_term=$('#loan_term').val();
+		$.ajax({
+            url: "<?php echo url('/');?>/ajax/amortization_cal",
+            data: {loan_amount:loan_amount,interest_rate:interest_rate,loan_term:loan_term,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+            $('#monthly_value').removeClass('hide');
+            $('#monthly_val').val(data);
+           }
+        });
+	});	
+</script>

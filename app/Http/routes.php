@@ -164,6 +164,8 @@ Route::post('ajax/get_condition/', 'Front\AjaxController@getcondition');
 Route::post('ajax/get_all_city/', 'Front\AjaxController@getAllCity');
 Route::post('ajax/get_all_edit_city/', 'Front\AjaxController@getAllEditCity');
 Route::post('ajax/getmsrp_range/', 'Front\AjaxController@getMsrpRange');
+Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculator');
+
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');

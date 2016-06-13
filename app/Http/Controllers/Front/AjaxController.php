@@ -1174,7 +1174,9 @@ class AjaxController extends Controller
         $model_search=Request::input('model_search');
         $condition_search=Request::input('condition_search');
         $Caryear=Caryear::where('make_id',$make_search)->where('carmodel_id',$model_search)->where('year',$year_search)->with('makes','models')->first();
+        
         $url = "https://api.edmunds.com/api/vehicle/v2/".$Caryear->makes->nice_name."/".$Caryear->models->nice_name."/".$Caryear->year."/styles?state=".strtolower($condition_search)."&view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        //dd($url);
         $price=array();
                     $ch = curl_init();
                     curl_setopt($ch,CURLOPT_URL, $url);
@@ -1195,12 +1197,11 @@ class AjaxController extends Controller
                     if(!empty($price)){
                        $amortaization=array();
                     $i=0;
-                     $max=max(array_keys($price));
-                     $min=min(array_keys($price));
-                    
+                        $max=max(array_keys($price));
+                        $min=min(array_keys($price));
                         $up=0.00708333333*pow((1.00708333333),60);
                         $down=(pow((1.00708333333),60))-1;
-                        $balmax=$max*($up/$down);
+                        $balmax=$max*($up/$down);              
                         $balmin=$min*($up/$down);
                         $amortaization['max']['base']=sprintf('%0.2f', $max);
                         $amortaization['max']['monthly']=round($balmax,2);
@@ -1213,9 +1214,21 @@ class AjaxController extends Controller
                 }else{
                     return 0; 
                 }
-        
+       
 
     }
+    public function amortization_calculator(){
+        $loan_amount=Request::input('loan_amount');
+        $interest_rate=Request::input('interest_rate');
+        $loan_term=Request::input('loan_term');
+        $months=$loan_term*12;
+        $rate_of_interest=($interest_rate/100)/12;
+        $up=$rate_of_interest*pow(($rate_of_interest+1),$months);
+        $down=(pow(($rate_of_interest+1),$months))-1;
+        $monthly_rate=$loan_amount*($up/$down);              
+        return sprintf('%0.2f',$monthly_rate);
+    }
+
     public function ContactDealerBid(){
         
         $Bidid=Request::input('requestid');

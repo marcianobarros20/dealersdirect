@@ -20,6 +20,7 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
+<script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
 
 <script>
 
@@ -110,12 +111,18 @@
               
               
               if(data!=0){
-                $("#minauto").html("Minimum Price<br>"+"Total : $"+data.min.base+"<br>"+"Monthly : $"+data.min.monthly);
-                $("#maxauto").html("Maximum Price<br>"+"Total : $"+data.max.base+"<br>"+"Monthly : $"+data.max.monthly);
+                $("#minauto").html("Minimum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : $"+data.min.base+"<br>"+"Monthly : $"+data.min.monthly);
+                $("#maxauto").html("Maximum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : $"+data.max.base+"<br>"+"Monthly : $"+data.max.monthly);
+                
+
                 $("#minmsrp").html("$"+data.min.base);
                 $("#maxmsrp").html("$"+data.max.base);
+                $("#minmsrp").priceFormat();
+                $("#maxmsrp").priceFormat();
                 $("#minmp").html("$"+data.min.monthly);
                 $("#maxmp").html("$"+data.max.monthly);
+                $("#minmp").priceFormat();
+                $("#maxmp").priceFormat();
                 $("#fmp").show();
                 $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
@@ -200,6 +207,7 @@
             if(minmsrp!="" && maxmsrp!="" && minmp!="" && maxmp!="" && tamo!="" && mtamo!="" ){
                 if(tamo<minmsrp){
                   $("#tb").html("$"+tamo.toFixed( 2 ));
+                  $("#tb").priceFormat();
                   $("#tb").removeClass("value-green");
                   $("#tb").addClass("value-red");
                   $("#tttb").html("Total budget Is Less than MSRP Range");
@@ -211,6 +219,7 @@
                 }
                 if(mtamo<minmp){
                   $("#mb").html("$"+mtamo.toFixed( 2 ));
+                  $("#mb").priceFormat();
                   $("#mb").removeClass("value-green");
                   $("#mb").addClass("value-red");
                   $("#ttmb").html("Monthly budget Is Less than Monthly Range");
