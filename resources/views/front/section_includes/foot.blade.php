@@ -21,7 +21,7 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 <script>
 
     $(function() {
@@ -110,11 +110,9 @@
             success: function( data ) {
               
               
-              if(data!=0){
-                $("#minauto").html("Minimum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : $"+data.min.base+"<br>"+"Monthly : $"+data.min.monthly);
-                $("#maxauto").html("Maximum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : $"+data.max.base+"<br>"+"Monthly : $"+data.max.monthly);
-                
-
+              if(data!=0){          
+                $("#minauto").html("Minimum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
+                $("#maxauto").html("Maximum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
                 $("#minmsrp").html("$"+data.min.base);
                 $("#maxmsrp").html("$"+data.max.base);
                 $("#minmsrp").priceFormat();
