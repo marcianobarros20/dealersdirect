@@ -20,8 +20,9 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
-<script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
+<!--Price format js-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+<!--Price format js-->
 <script>
 
     $(function() {
@@ -113,14 +114,10 @@
               if(data!=0){          
                 $("#minauto").html("Minimum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
                 $("#maxauto").html("Maximum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
-                $("#minmsrp").html("$"+data.min.base);
-                $("#maxmsrp").html("$"+data.max.base);
-                $("#minmsrp").priceFormat();
-                $("#maxmsrp").priceFormat();
-                $("#minmp").html("$"+data.min.monthly);
-                $("#maxmp").html("$"+data.max.monthly);
-                $("#minmp").priceFormat();
-                $("#maxmp").priceFormat();
+                $("#minmsrp").html(numeral(data.min.base).format('$0,0.00'));
+                $("#maxmsrp").html(numeral(data.max.base).format('$0,0.00'));
+                $("#minmp").html(numeral(data.min.monthly).format('$0,0.00'));
+                $("#maxmp").html(numeral(data.max.monthly).format('$0,0.00')); 
                 $("#fmp").show();
                 $("#fmsrfp").show();
                 getimageedmunds(make_search,model_search,condition_search,year_search,1);
@@ -204,25 +201,25 @@
             }
             if(minmsrp!="" && maxmsrp!="" && minmp!="" && maxmp!="" && tamo!="" && mtamo!="" ){
                 if(tamo<minmsrp){
-                  $("#tb").html("$"+tamo.toFixed( 2 ));
-                  $("#tb").priceFormat();
+
+                  $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
+                  
                   $("#tb").removeClass("value-green");
                   $("#tb").addClass("value-red");
                   $("#tttb").html("Total budget Is Less than MSRP Range");
                 }else{
-                  $("#tb").html("$"+tamo.toFixed( 2 ));
+                  $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
                   $("#tb").removeClass("value-red");
                   $("#tb").addClass("value-green");
                   $("#tttb").html("Total budget Is With In The MSRP Range");
                 }
                 if(mtamo<minmp){
-                  $("#mb").html("$"+mtamo.toFixed( 2 ));
-                  $("#mb").priceFormat();
+                  $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));  
                   $("#mb").removeClass("value-green");
                   $("#mb").addClass("value-red");
                   $("#ttmb").html("Monthly budget Is Less than Monthly Range");
                 }else{
-                  $("#mb").html("$"+mtamo.toFixed( 2 ));
+                  $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));
                   $("#mb").removeClass("value-red");
                   $("#mb").addClass("value-green");
                   $("#ttmb").html("Monthly budget Is With In The Monthly Range");
@@ -231,8 +228,8 @@
             else{
               
               
-              $("#tb").html(tamo.toFixed( 2 ));
-              $("#mb").html(mtamo.toFixed( 2 ));
+              $("#tb").html(numeral(tamo.toFixed( 2 )).format('$0,0.00'));
+              $("#mb").html(numeral(mtamo.toFixed( 2 )).format('$0,0.00'));
             }
             
           $("#searchseconed").hide();
@@ -494,3 +491,5 @@
 
 
 </script>
+
+

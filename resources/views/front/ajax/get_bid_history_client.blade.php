@@ -24,8 +24,8 @@
             Anyonymus
             @endif
     <div class="information">
-        <p>Monthly: {!! $Bid->monthly_amount !!}</p>
-        <p>Total: {!! $Bid->total_amount !!}</p>
+        <p>Monthly: ${!! $Bid->monthly_amount !!} </p>
+        <p>Total: ${!! $Bid->total_amount !!} </p>
         @if($Bid->trade_in!=0)
         <p><i class="fa fa-suitcase"></i> Trade In: {!! $Bid->trade_in !!}</p>
         @endif
@@ -138,3 +138,4 @@
   });
 
 </script>
+

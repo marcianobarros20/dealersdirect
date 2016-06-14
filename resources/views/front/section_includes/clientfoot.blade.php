@@ -21,7 +21,11 @@
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
 			<script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/js/ajaxcaravanclient.js"></script>
-			<script>
+			<!--Price format js-->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
+      <!--Price format js-->
+      <script>
 			$(function() {
 				$('select, .select').selectric();
 
@@ -413,3 +417,18 @@ $(document).ready(function(){
 });
 
 			</script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){     
+        var number = $(".tot_amt").text();
+        var newnumber=("$"+ number + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        $(".tot_amt").text(newnumber);
+        var mon_number = $(".mon_amt").text();
+        var new_mon_number=("$"+ mon_number + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        $(".mon_amt").text(new_mon_number);
+});
+
+
+</script>

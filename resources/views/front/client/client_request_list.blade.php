@@ -53,8 +53,8 @@
                                     <div class="btns">
                                         <button type="button" class="btn btn-default c-p">{{$Request->models->name}}</button>
                                         <button type="button" class="btn btn-default c-p">{{$Request->year}}</button>
-                                        <button type="button" class="btn btn-default c-p">OneTime : ${{$Request->total_amount}}</button>
-                                        <button type="button" class="btn btn-default c-p">Monthly : ${{$Request->monthly_amount}}</button>
+                                        <button type="button" class="btn btn-default c-p">OneTime : ${{ $Request->total_amount }}</button>
+                                        <button type="button" class="btn btn-default c-p">Monthly : ${{ $Request->monthly_amount }} </button>
                                     </div>
                                     <a href="{{url('/')}}/client/request_detail/{{base64_encode($Request->id)}}" class="btn-group">
                                         <button type="button" class="btn btn-success">OPEN</button>
@@ -78,3 +78,4 @@
 
 
 @stop
+

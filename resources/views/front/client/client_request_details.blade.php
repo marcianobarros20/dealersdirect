@@ -106,11 +106,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT :</td> 
-                                        <td>${{$RequestQueue->total_amount}}</td> 
+                                        <td><span class='tot_amt'>{{$RequestQueue->total_amount}}</span></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>${{$RequestQueue->monthly_amount}}</td> 
+                                        <td><span class='mon_amt'>{{$RequestQueue->monthly_amount}}</span></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
