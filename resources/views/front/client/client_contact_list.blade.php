@@ -87,8 +87,8 @@
                                         
                                         <ul>
                                             <li>{{$car_data['condition']}}</li>
-                                            <li>${{$car_data['monthlyvalue']}}</li>
-                                            <li>${{$car_data['totalvalue']}}</li>
+                                            <li><?php $DoubleMonthly=floatval($car_data['monthlyvalue']);echo "$".number_format($DoubleMonthly,2);?></li>
+                                            <li><?php $DoubleTotal=floatval($car_data['totalvalue']);echo "$".number_format($DoubleTotal,2);?></li>
 
                                         </ul>  
                                         

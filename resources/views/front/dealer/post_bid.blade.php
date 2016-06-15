@@ -96,11 +96,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>

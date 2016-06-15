@@ -417,18 +417,3 @@ $(document).ready(function(){
 });
 
 			</script>
-
-
-<script type="text/javascript">
-
-$(document).ready(function(){     
-        var number = $(".tot_amt").text();
-        var newnumber=("$"+ number + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        $(".tot_amt").text(newnumber);
-        var mon_number = $(".mon_amt").text();
-        var new_mon_number=("$"+ mon_number + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        $(".mon_amt").text(new_mon_number);
-});
-
-
-</script>

@@ -543,11 +543,13 @@ class DealerController extends BaseController {
                         $RequestQueue->clients->email=self::maskcreate($RequestQueue->clients->email);
                         $RequestQueue->clients->zip=self::maskcreate($RequestQueue->clients->zip);
                         $RequestQueue->request_dealer_log=$RequestDealerLog;
+                        
                         if($par!=0){
                         $BidQueue=BidQueue::where("dealer_admin",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
                         }else{
                             $BidQueue=BidQueue::where("dealer_id",$dealid)->where("requestqueue_id",$RequestDealerLog->request_id)->with('dealers','bid_image')->where('visable','=','1')->first();
                         }
+
                         return view('front.dealer.edit_bid',compact('RequestQueue','BidQueue'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
             }
     }

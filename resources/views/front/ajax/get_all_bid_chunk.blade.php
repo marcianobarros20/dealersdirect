@@ -50,8 +50,8 @@
                 @if($Bid->trade_in!=0)  
                 <button type="button" class="btn btn-default c-p-b">Trade In :{!! $Bid->trade_in !!}</button>
                 @endif              
-                <button type="button" class="btn btn-default c-p-b">OneTime : ${!! $Bid->total_amount !!}</button>
-                <button type="button" class="btn btn-default c-p-b">Monthly: ${!! $Bid->monthly_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime : <?php $DoubleTotal=floatval($Bid->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
+                <button type="button" class="btn btn-default c-p-b">Monthly: <?php $DoubleMonthly=floatval($Bid->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                 
             </div>
             <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-inox={!! $Bid->dealer_admin!!} data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>
@@ -117,10 +117,10 @@
             <div class="btns eit-botons">
                 
                 @if($Bid->trade_in!=0)  
-                <button type="button" class="btn btn-default c-p-b">Trade In :{!! $Bid->trade_in !!}</button>
+                <button type="button" class="btn btn-default c-p-b">Trade In :<?php $DoubleTrade_in=floatval($Bid->trade_in);echo "$".number_format($DoubleTrade_in,2);?></button>
                 @endif              
-                <button type="button" class="btn btn-default c-p-b">OneTime : ${!! $Bid->total_amount !!}</button>
-                <button type="button" class="btn btn-default c-p-b">Monthly : ${!! $Bid->monthly_amount !!}</button>
+                <button type="button" class="btn btn-default c-p-b">OneTime : <?php $DoubleTotal=floatval($Bid->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
+                <button type="button" class="btn btn-default c-p-b">Monthly : <?php $DoubleMonthly=floatval($Bid->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                 
             </div>
             <div class="btn-group oppomod"  data-toggle="modal" data-target="#myModal" data-inox={!! $Bid->dealer_admin!!} data-id={!! $Bid->dealer_id !!} data-idx={!! $Bid->requestqueue_id !!}>

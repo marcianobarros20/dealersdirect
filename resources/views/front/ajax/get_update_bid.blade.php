@@ -40,13 +40,13 @@
                             <!-- .title -->
                             <div class="car-tags">
                                 <ul class="clearfix">
-                                    <li><strong>Monthly:</strong>{!! $Bidqueue->monthly_amount !!}</li>
-                                    <li><strong>Total{!! $Bidqueue->id !!}:</strong>{!! $Bidqueue->total_amount !!}</li>
+                                    <li><strong>Monthly:</strong><?php $DoubleMonthly=floatval($Bidqueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></li>
+                                    <li><strong>Total{!! $Bidqueue->id !!}:</strong><?php $DoubleTotal=floatval($Bidqueue->total_amount);echo "$".number_format($DoubleTotal,2);?></li>
                                     <?php if($Bidqueue->status==3){?>
                                     <li class="label success"><strong> Accepted  </li>
                                     <?php }?>
                                     @if($Bidqueue->trade_in!=0)
-                                    <li><strong>Trade In:</strong>{!! $Bidqueue->trade_in !!}</li>
+                                    <li><strong>Trade In:</strong><?php $DoubleTrade_in=floatval($Bidqueue->trade_in);echo "$".number_format($DoubleTrade_in,2);?></li>
                                     @endif
                                 </ul>
                             </div>

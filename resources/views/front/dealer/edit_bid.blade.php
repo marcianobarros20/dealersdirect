@@ -109,11 +109,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$RequestQueue->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$RequestQueue->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -145,26 +145,27 @@
                         <div class="tab-pane form-head" id="tradein">
                             <table class="table client-table"> 
                                 <tbody class="post-text"> 
+                                    
                                     <tr> 
                                         <td>Trade-IN MAKE:</td> 
-                                        <td>{{$RequestQueue->trade_ins->makes->name}}</td> 
+                                        <td>{{$RequestQueue->trade_ins->makes['name']}}</td> 
                                     </tr> 
                                     <tr> 
                                         <td>Trade-IN MODEL:</td> 
-                                        <td>{{$RequestQueue->trade_ins->models->name}}</td> 
+                                        <td>{{$RequestQueue->trade_ins->models['name']}}</td> 
                                     </tr> 
                                     <tr> 
                                         <td>Trade-IN CONDITIONS:</td> 
                                         <td>{{$RequestQueue->trade_ins->condition}}</td> 
                                     </tr> 
-                                    <tr> 
+                                    <tr>
                                         <td>Trade-IN YEAR:</td> 
                                         <td>{{$RequestQueue->trade_ins->year}}</td> 
                                     </tr> 
                                     @if($RequestQueue->trade_ins->owe==1)
                                     <tr> 
                                         <td>Trade-IN OWE Amount:</td> 
-                                        <td>{{$RequestQueue->trade_ins->owe_amount}}</td> 
+                                        <td><?php $DoubleTrade_ins=floatval($RequestQueue->trade_ins->owe_amount);echo "$".number_format($DoubleTrade_ins,2);?></td> 
                                     </tr> 
                                     @endif
                                 </tbody> 

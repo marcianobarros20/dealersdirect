@@ -68,10 +68,10 @@
                 </div>
             </div>  <!-- /col-xs-8 -->
             <div class="col-xs-12 col-sm-4 col-md-4">
-                
+                @if(empty($CheckForLeadContact))
                 <a href="{{url('/')}}/client/add-style/{{base64_encode($RequestQueue->id)}}" class="btn btn-default c-v">Add More Details</a> 
                 <a data-action="<?php echo URL::to('/client/update-budget');?>/{{$RequestQueue->id}}" data-whatever="@mdo" data-target="#edit_budget_modal" data-toggle="modal" href="#" class="btn btn-default c-v update-budget">Update Budget</a>
-                
+                @endif
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
                         <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
@@ -106,11 +106,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT :</td> 
-                                        <td><span class='tot_amt'>{{$RequestQueue->total_amount}}</span></td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td><span class='mon_amt'>{{$RequestQueue->monthly_amount}}</span></td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -138,7 +138,7 @@
                                         @if($RequestQueue->trade_ins->owe==1)
                                             <tr> 
                                                 <td>Trade-IN OWE Amount:</td> 
-                                                <td>{{$RequestQueue->trade_ins->owe_amount}}</td> 
+                                                <td><?php $DoubleTrade_ins=floatval($RequestQueue->trade_ins->owe_amount);echo "$".number_format($DoubleTrade_ins,2);?></td> 
                                             </tr> 
                                         @endif
                                         

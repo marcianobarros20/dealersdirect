@@ -117,11 +117,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT :</td> 
-                                        <td>${{$RequestQueue->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($RequestQueue->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT :</td> 
-                                        <td>${{$RequestQueue->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($RequestQueue->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -194,7 +194,7 @@
                                         @if($RequestQueue->trade_ins->owe==1)
                                         <tr> 
                                             <td>Trade-IN OWE Amount :</td> 
-                                            <td>{{$RequestQueue->trade_ins->owe_amount}}</td> 
+                                            <td><?php $DoubleTrade_ins=floatval($RequestQueue->trade_ins->owe_amount);echo "$".number_format($DoubleTrade_ins,2);?></td> 
                                         </tr> 
                                         @endif
                                     </tbody> 
@@ -321,7 +321,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Bid</h4>
+          <h4 class="modal-title">Bid Information</h4>
         </div>
         <div class="modal-body">
                         

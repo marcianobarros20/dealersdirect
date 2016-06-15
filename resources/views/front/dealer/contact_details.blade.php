@@ -83,8 +83,8 @@
                             </div>
                             <h2>Your Responces</h2>
                             <div class="btns">
-                                <button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
-                                <button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
+                                <button type="button" class="btn btn-default c-p-b">Total : <?php $DoubleTotal=floatval($ContactDetail->bid_details->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
+                                <button type="button" class="btn btn-default c-p-b">Monthly :<?php $DoubleMonthly=floatval($ContactDetail->bid_details->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                                 <p class="details-text c-p-b"><b>Details : </b>{{$ContactDetail->bid_details->details}}</p>
                                 @if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
                                 <button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
@@ -149,11 +149,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$ContactDetail->request_details->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($ContactDetail->request_details->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$ContactDetail->request_details->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($ContactDetail->request_details->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
