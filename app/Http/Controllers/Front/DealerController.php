@@ -1134,7 +1134,7 @@ class DealerController extends BaseController {
          $Reminder->save(); 
             $countimg=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->count();
             if($countimg!=0){
-            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->get();
+            $imx=EdmundsMakeModelYearImage::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year_id',$ContactDetail->request_details->year)->groupBy('local_path_big')->get();
             $ContactDetail['imx']=$imx;
             }else{
             $ContactDetail['imx']=""; 

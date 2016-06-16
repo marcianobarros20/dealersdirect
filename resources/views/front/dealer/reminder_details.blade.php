@@ -15,7 +15,7 @@
 		<div class="post-bid">
 			<div class="col-xs-12 col-sm-8 col-md-8"> <!-- edited on 13-04-2016 -->
 			    <!-- Carousel ============ -->
-				<div id = "myCarousel" class = "carousel slide deal-caro">
+				<div id = "myCarousel" class = "carousel slide deal-caro ctborder">
 				   
 				   <!-- Carousel indicators -->
 					<ol class = "carousel-indicators">
@@ -53,7 +53,7 @@
 							
 							<h2>Your Reminder</h2>
 							<div class="btns">
-								<button type="button" class="btn btn-default c-p-b">Reminder Note : {{$Reminder->note}}</button>
+								<p class="details-text c-p-b">Reminder Note : {{$Reminder->note}}</p>
 								<button type="button" class="btn btn-default c-p-b">Reminder Date : {!! date("dS M Y", strtotime($Reminder->rdate)) !!}</button>
 								<button type="button" class="btn btn-default c-p-b">Reminder Time : {!! date("h:i A", strtotime($Reminder->rtime))!!}</button>
 								
@@ -102,7 +102,7 @@
                             <div class="btns">
                                 <button type="button" class="btn btn-default c-p-b">Total : <?php $DoubleTotal=floatval($ContactDetail->bid_details->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
                                 <button type="button" class="btn btn-default c-p-b">Monthly : <?php $DoubleMonthly=floatval($ContactDetail->bid_details->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
-                                <button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details_of_actions}}</button>
+                                <p class="details-text c-p-b">Details : {{$ContactDetail->bid_details->details_of_actions}}</p>
                                 @if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
                                 <button type="button" class="btn btn-default c-p-b">Trade In : <?php $DoubleTrade_in=floatval($ContactDetail->bid_details->trade_in);echo "$".number_format($DoubleTrade_in,2);?></button>
                                 @endif
