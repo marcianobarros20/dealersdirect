@@ -100,11 +100,11 @@
                             </div>
                             <h2>Your Responces</h2>
                             <div class="btns">
-                                <button type="button" class="btn btn-default c-p-b">Total : {{$ContactDetail->bid_details->total_amount}}</button>
-                                <button type="button" class="btn btn-default c-p-b">Monthly : {{$ContactDetail->bid_details->monthly_amount}}</button>
+                                <button type="button" class="btn btn-default c-p-b">Total : <?php $DoubleTotal=floatval($ContactDetail->bid_details->total_amount);echo "$".number_format($DoubleTotal,2);?></button>
+                                <button type="button" class="btn btn-default c-p-b">Monthly : <?php $DoubleMonthly=floatval($ContactDetail->bid_details->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></button>
                                 <button type="button" class="btn btn-default c-p-b">Details : {{$ContactDetail->bid_details->details_of_actions}}</button>
                                 @if($ContactDetail->bid_details->trade_in!="" &&$ContactDetail->bid_details->trade_in!="0.00")
-                                <button type="button" class="btn btn-default c-p-b">Trade In : {{$ContactDetail->bid_details->trade_in}}</button>
+                                <button type="button" class="btn btn-default c-p-b">Trade In : <?php $DoubleTrade_in=floatval($ContactDetail->bid_details->trade_in);echo "$".number_format($DoubleTrade_in,2);?></button>
                                 @endif
                             </div>
                             
@@ -150,11 +150,11 @@
                                     </tr> 
                                     <tr> 
                                         <td>TOTAL AMOUNT:</td> 
-                                        <td>{{$ContactDetail->request_details->total_amount}}</td> 
+                                        <td><?php $DoubleTotal=floatval($ContactDetail->request_details->total_amount);echo "$".number_format($DoubleTotal,2);?></td> 
                                     </tr> 
                                     <tr> 
                                         <td>MONTHLY AMOUNT:</td> 
-                                        <td>{{$ContactDetail->request_details->monthly_amount}}</td> 
+                                        <td><?php $DoubleMonthly=floatval($ContactDetail->request_details->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></td> 
                                     </tr> 
                                 </tbody> 
                             </table>
@@ -182,7 +182,7 @@
                                         @if($ContactDetail->request_details->trade_ins->owe==1)
                                         <tr> 
                                             <td>Trade-IN OWE Amount:</td> 
-                                            <td>{{$ContactDetail->request_details->trade_ins->owe_amount}}</td> 
+                                            <td><?php $DoubleTrade_in=floatval($ContactDetail->request_details->trade_ins->owe_amount);echo "$".number_format($DoubleTrade_in,2);?></td> 
                                         </tr> 
                                         @endif
                                     </tbody> 
