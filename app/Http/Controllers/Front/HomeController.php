@@ -14,6 +14,7 @@ use App\Model\Make;          /* Model name*/
 use App\Model\Carmodel;          /* Model name*/
 use App\Model\RequestQueue;          /* Model name*/
 use App\Model\Client;          /* Model name*/
+use App\Model\Loan;            /* Model name*/
 use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
@@ -50,11 +51,19 @@ class HomeController extends BaseController
         $client=self::CheckLogin();
         if($client!=0){
              $client;
+            
+
+
+
         }else{
             
         }
+
+         $loan_details = Loan::all();
+
+           
         
-        return view('front.home.index',compact('client'),array('title'=>'DEALERSDIRECT','typex'=>'home'));
+        return view('front.home.index',compact('client', 'loan_details'),array('title'=>'DEALERSDIRECT','typex'=>'home'));
 
     }
     public function services(){

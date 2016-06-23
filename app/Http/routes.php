@@ -102,6 +102,12 @@ $router->group([
     Route::post('/admin/edit-price',['as'=>'edit_price','uses'=>'PriceController@EditPricePost']);
     Route::get('/admin/delete-price/{id}','PriceController@DeletePrice');
 
+
+    Route::resource('/admin/loan', 'LoanDetails@index');
+    Route::get('/admin/edit-loan/{id}', 'LoanDetails@edit');
+    Route::post('/admin/edit-loan', ['as'=>'edit_loan','uses'=>'LoanDetails@update']);
+
+
     Route::post('/admin/ajax/getoptiondetails', 'AjaxController@getOptionDetails');
     Route::post('/admin/ajax/getclientdetails', 'AjaxController@getClientDetails');
     Route::post('/admin/ajax/getguestclientdetails', 'AjaxController@getGuestClientDetails');
@@ -168,6 +174,8 @@ Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculato
 
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
+Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
 Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
 Route::post('ajax/setleadremindersubmit', 'Front\AjaxController@SetLeadReminderSubmit');

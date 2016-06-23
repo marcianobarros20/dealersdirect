@@ -1020,18 +1020,20 @@ small{
     box-shadow: 1px 1px 3px 1px #bababa;
     padding: 3px;
     border-radius: 4px;
-    -webkit-transition-duration: 0.5s;
+   /*  -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
+    */
 }
 
 #minauto:hover, #maxauto:hover{
     color: #000;
     background-color: #e6e6e6;
     border-color: #adadad;
-    -moz-transform: scale(1.2);
+  /*  -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    */
 }
 
 .carousel-indicators.carousel-indicatoredit{

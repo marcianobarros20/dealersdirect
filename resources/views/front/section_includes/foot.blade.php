@@ -102,6 +102,10 @@
           console.log(condition_search);
           var year_search=$('#year_search').val();
           console.log(year_search);
+          var interest_rate = $('#rateofinterest').val();
+          console.log(interest_rate);
+          var loan_term = $('#terms').val();
+          console.log(loan_term);
           $("#dvLoading").show();
           $.ajax({
             dataType: 'json',
@@ -111,9 +115,42 @@
             success: function( data ) {
               
               
-              if(data!=0){          
-                $("#minauto").html("Minimum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
-                $("#maxauto").html("Maximum Price<br>"+"<span class='msg'><i class='fa fa-exclamation-triangle' aria-hidden='true'></i> </span>Amount shown as 8.5% interest per year for 5 years"+"<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
+              if(data!=0){
+
+
+
+                //Calculate Value on base of Minimum Amount Custom Interest Rate Begin
+    var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var top_min_monthly_rate=parseFloat(numeral(data.min.base).format('00.00')*(up/down)).toFixed(2);
+
+    //END
+
+
+    //Calculate Value on base of Maximum Amount Custom Interest Rate Begin
+    var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var top_max_monthly_rate=parseFloat(numeral(data.max.base).format('00.00')*(up/down)).toFixed(2);
+
+    //END
+
+
+
+
+
+                /* $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
+                $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
+                */
+
+                $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_min_monthly_rate);
+                $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_max_monthly_rate);
+
+                $("#disclaimer_data").html("*Amount shown as "+interest_rate+"% interest per year for " +loan_term +" years.");
+                $('#toto').html('<input type="hidden" id="min_amt" name="min_amt" value="'+numeral(data.min.base).format('00.00')+'"><input type="hidden" id="max_amt" name="max_amt" value="'+numeral(data.max.base).format('00.00')+'">');
                 $("#minmsrp").html(numeral(data.min.base).format('$0,0.00'));
                 $("#maxmsrp").html(numeral(data.max.base).format('$0,0.00'));
                 $("#minmp").html(numeral(data.min.monthly).format('$0,0.00'));
@@ -177,6 +214,32 @@
               }
             }
           });
+
+          //New Fuel Api Begin 
+
+          $.ajax({
+            
+            url: "<?php echo url('/');?>/ajax/getimagesviewsnew",
+            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+              if(e==1){
+                $("#dvLoading").hide();
+                $("#amortaization").show();
+                $("#searchfirst").hide();
+                $("#searchseconed").show();
+                $(".setslider").html(data);
+              }else{
+                $("#dvLoading").hide();
+                $("#amortaization").hide();
+                $("#searchfirst").hide();
+                $("#searchseconed").show();
+                $(".setslider").html(data);
+              }
+            }
+          });
+
+          // Fuel Api End
         }
         $('#backfirst').click(function(){
           $("#searchfirst").show();
@@ -489,6 +552,8 @@
     return false;
     });
 
+
+  
 
 </script>
 

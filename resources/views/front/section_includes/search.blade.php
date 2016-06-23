@@ -25,13 +25,41 @@
 			<div class="text_new_area" id="minauto">
 
 			</div>
-			<div class="text_new_area" id="toto">
-			TO
+			 <div class="text_new_area" id="toto">
+			<!--TO --> &nbsp;
 			</div>
 			<div class="text_new_area" id="maxauto">
 			</div>
 		</div>
+
+
+		<!-- Disclaimer Data @R on 21 June 2016 -->
+
+
+		<div class="col-xs-12 col-sm-12">
+
+			<div class="disclaimer_data" id="disclaimer_data" style="color:#F26722; font-weight: bold;">
+
+			
+
+			
+
+			</div>
+
+
+			@foreach($loan_details as $loan)
+
+			<input type="hidden" id="rateofinterest" name="rate" value="{{$loan->rateofinterest}}">
+			<input type="hidden" id="terms" name="terms" value="{{$loan->terms}}">
+
+			@endforeach
+
+		</div>
+
+		<!-- END -->
 		<div class="col-xs-12 col-sm-12 select_option">
+
+		<div id="form_response"> </div>
 			
 			<div class="text_new_area" >
 				{{ Form::text('tamo','', array('id' => 'tamo','class'=>'form-control form_in_control','placeholder'=>'Total Amount')) }}
@@ -182,16 +210,27 @@
 
 <!-- Modal -->
 <div id="amortization-cal" class="modal fade" role="dialog">
+  
+
+  
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Amortization Calculator</h4>
       </div>
+
       <div class="modal-body">
+
+
+
         <form class="form-horizontal" method='post'>
+         
+
+         <div class="row"><div class="col-md-6 col-sm-6">
+
          <!-- Text input-->
 	   <div class="control-group">
   	     <label class="control-label" for="loan_amount">Loan Amount ($) : </label>
@@ -230,14 +269,35 @@
   		</div>
 		</div>
 		
+
+		</div>
+
+
+
+		<div class="col-md-6 col-lg-6">
+			
+			<div id="minauto_value"></div><br/><br/>
+			<div id="maxauto_value"></div>
+  
+
+		</div>
+
+
+		</div>
+
+
+
+
 		</form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="close_btn" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
   </div>
+  
+
 </div>
 
 <!--jquery for the calculator -->
@@ -246,6 +306,29 @@
 	var loan_amount=$('#loan_amount').val();
 	var interest_rate=$('#interest_rate').val();
 	var loan_term=$('#loan_term').val();
+	var min_amt = $('#min_amt').val();
+	var max_amt = $('#max_amt').val();
+
+		//Calculate Value on base of Minimum Amount Custom Interest Rate Begin
+		var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var min_monthly_rate=parseFloat(min_amt*(up/down)).toFixed(2);
+
+		//END
+
+
+		//Calculate Value on base of Maximum Amount Custom Interest Rate Begin
+		var months= loan_term*12;
+        var rate_of_interest=(interest_rate/100)/12;
+        var up=rate_of_interest*Math.pow((rate_of_interest+1),months);
+        var down=(Math.pow((rate_of_interest+1),months))-1;
+        var max_monthly_rate=parseFloat(max_amt*(up/down)).toFixed(2);
+
+		//END
+
+
 		$.ajax({
             url: "<?php echo url('/');?>/ajax/amortization_cal",
             data: {loan_amount:loan_amount,interest_rate:interest_rate,loan_term:loan_term,_token: '{!! csrf_token() !!}'},
@@ -253,7 +336,34 @@
             success: function( data ) {
             $('#monthly_value').removeClass('hide');
             $('#monthly_val').val(data);
+            var monthly_val = $('#monthly_val').val();
+            var loan_term = $('#loan_term').val();
+			var interest_rate = $('#interest_rate').val();
+            $('#mtamo').val(monthly_val);
+            $("#disclaimer_data").html("*Amount shown as " + interest_rate+"% interest per year for "+loan_term+" years.");
+            $('#minauto_value').html("<b>Minimum Price</b><br/><b>Total :</b> $"+min_amt+"<br/><b>Monthly:</b> $"+ min_monthly_rate);
+            $('#maxauto_value').html("<b>Maximum Price</b><br/><b>Total :</b> $"+max_amt+"<br/><b>Monthly:</b> $"+ max_monthly_rate);
+
+
+            $('#minauto').html("<b>Minimum Price</b><br/><b>Total :</b> $"+min_amt+"<br/><b>Monthly:</b> $"+ min_monthly_rate);
+            $('#maxauto').html("<b>Maximum Price</b><br/><b>Total :</b> $"+max_amt+"<br/><b>Monthly:</b> $"+ max_monthly_rate);
+
+
            }
         });
 	});	
+
+
+	  // Mortgage Calculator script for taking value 
+
+   $(document).ready(function(){
+		 $('.amortization-calculator').click(function(){ 
+			var custom_amount = $('#tamo').val();
+			
+			//alert (custom_amount);
+		    $('#loan_amount').val(custom_amount);
+	       });
+
+   });
+
 </script>
