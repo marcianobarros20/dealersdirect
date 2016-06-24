@@ -5,6 +5,6 @@
            <label> Terms</label>
            <input type='text' name='terms' class='input-md' value="{{$loanData->terms}}" required>
           <input type='hidden' name='lid' value="{{$loanData->id}}">
-          <button class='btn btn-success' type='submit' name='edt_loan'> Save</button>
+          <button class='btn btn-success' type='submit' name='edt_loan'> Save </button>
           </form>
         

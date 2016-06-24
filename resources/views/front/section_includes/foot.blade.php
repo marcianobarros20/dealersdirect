@@ -190,6 +190,8 @@
             type :"post",
             success: function( data ) {
               $("#carselect").html(condition_search+" "+data.Makes+" "+data.Models+" "+year_search);
+
+              
             }
 
           });
@@ -217,27 +219,29 @@
 
           //New Fuel Api Begin 
 
-          $.ajax({
+         //   var make_searchNew=$('#make_search').val();
+            //console.log(make_searchNew);
+        //  var model_searchNew=$('#model_search').val();
+        //console.log(model_searchNew);
+        
+
+     /*     $.ajax({
             
-            url: "<?php echo url('/');?>/ajax/getimagesviewsnew",
-            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
+            url: "<?php //echo url('/');?>/ajax/getimagesviewsnew",
+            data: {make_search:make_searchNew,model_search:model_searchNew,year_search:year_search},
             type :"post",
             success: function( data ) {
               if(e==1){
                 $("#dvLoading").hide();
-                $("#amortaization").show();
-                $("#searchfirst").hide();
-                $("#searchseconed").show();
-                $(".setslider").html(data);
+                $(".setsliderNew").html(data);
               }else{
                 $("#dvLoading").hide();
-                $("#amortaization").hide();
-                $("#searchfirst").hide();
-                $("#searchseconed").show();
-                $(".setslider").html(data);
+                $(".setsliderNew").html(data);
               }
             }
           });
+
+          */
 
           // Fuel Api End
         }

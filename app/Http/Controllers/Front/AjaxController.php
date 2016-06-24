@@ -1274,6 +1274,15 @@ class AjaxController extends Controller
         $Year=Request::input('year_search');
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
+
+
+
+
+
+ 
+
+
+
         
         $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
 
@@ -1342,18 +1351,21 @@ class AjaxController extends Controller
     // Fuel API Begin 
 
 
-
-   /* public function GetImageViewNew(){
+/*
+  public function GetImageViewNew(){
         $Makes=Request::input('make_search');
         $Models=Request::input('model_search');
         $Year=Request::input('year_search');
+
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
+        $viewdet['Makes']=$Make->name;
+        $viewdet['Models']=$Model->name;
         
-        $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
-
-        if($EdmundsMakeModelYearImagecount==0){
-            $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+        //echo "Manufacturer".$Make->name."<br/>".$Model->name."<br/>".$Year;
+     
+       
+            $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
             $ch = curl_init();
             curl_setopt($ch,CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -1361,15 +1373,73 @@ class AjaxController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $result = curl_exec($ch);
             curl_close($ch);
-            $resuls=json_decode($result, true);
-            //dd($resuls);
+            $results=json_decode($result, true);
+            //print_r($results);
 
-            foreach ($resuls['id'] as $vehiclesId => $Vid)
+            if($results)
             {
-                $image_url = "
-https://api.fuelapi.com/v1/json/vehicle/25322/?api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1&productID=1"
+                
+                $FuelProduct_Id=array();
+                foreach($results as $rowData=>$FuelPid)
+                {
+                    
+
+                     array_push($FuelProduct_Id, $FuelPid['id']);
+
+                }
+
+                //echo "<pre>";
+                //print_r($FuelProduct_Id);
+                //echo "</pre>";
+
+               
+                $loopValue=count($FuelProduct_Id, COUNT_RECURSIVE);
+
+                //echo $FuelProduct_Id[0];
+
+                /*for($k=0; $k<$loopValue; $k++)
+                    {
+
+                    }
+                    */
+                 /*   $VID = $FuelProduct_Id[0]; 
+
+
+                     $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$VID."/?api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+            //echo $Imgurl;
+            $chImg = curl_init();
+            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
+            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($chImg, CURLOPT_HEADER, 0);
+            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
+            $resultImg = curl_exec($chImg);
+            curl_close($chImg);
+            $resultsImg=json_decode($resultImg, true);
+
+            
+
+                foreach($resultsImg as $ImagePath=>$IValue)
+
+                    {
+                        //echo "<pre>";
+                        //print_r($ImagePath);
+
+                        echo $IValue['url']."<br/>";
+
+                        //echo "</pre>";
+                    }
+
+
+
+
             }
 
+            else
+            {
+              echo "No Image Found!";
+            }
+
+           
 
                 
                 /*
@@ -1423,8 +1493,9 @@ https://api.fuelapi.com/v1/json/vehicle/25322/?api_key=daefd14b-9f2b-4968-9e4d-9
         }
         //dd($EdmundsMakeModelYearImage);
        return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));*/
-     /*   }
-    } 
+     
+ /*   } 
+
 */
 
     // Fuel API END

@@ -174,7 +174,8 @@ Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculato
 
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
-Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+/* Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+*/
 
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');
 Route::post('ajax/setleadreminder', 'Front\AjaxController@SetLeadReminder');
