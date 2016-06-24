@@ -7,6 +7,6 @@ use Eloquent;
 
 class Loan extends Eloquent
 {
-    ///
+    //
     
 }

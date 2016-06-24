@@ -150,7 +150,7 @@
 			</div>
 			
 		<!-- </div> -->
-	</div><!--  /container --> 
+	</div><!--  //container --> 
 	<div class="container" id="searchfifth" style="display:none;">
 		<div class="col-xs-12 col-sm-12 col-md-12 top-overview-box">
 			<!-- <h2>Overview</h2> -->

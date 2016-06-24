@@ -1351,7 +1351,7 @@ class AjaxController extends Controller
     // Fuel API Begin 
 
 
-/*
+/* **
   public function GetImageViewNew(){
         $Makes=Request::input('make_search');
         $Models=Request::input('model_search');

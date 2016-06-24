@@ -7,4 +7,5 @@
           <input type='hidden' name='lid' value="{{$loanData->id}}">
           <button class='btn btn-success' type='submit' name='edt_loan'> Save </button>
           </form>
+          <!-- edit loan form -->
         

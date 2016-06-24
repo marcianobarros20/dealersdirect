@@ -22,7 +22,7 @@
 <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
 <!--Price format js-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
-<!--Price format js-->
+<!--Price format js *-->
 <script>
 
     $(function() {
@@ -142,7 +142,7 @@
 
 
 
-                /* $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
+                /*  $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.min.monthly).format('$0,0.00'));
                 $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
                 */
 
