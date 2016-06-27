@@ -155,12 +155,15 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 top-overview-box">
 			<!-- <h2>Overview</h2> -->
 			<div class="overview-box-section">
-				<div class="overview-box setslider">
+				
+				<!-- <div class="overview-box setslider">
 					
-				</div>
+				</div> -->
 				
 
-				<!-- <div class="setsliderNew"> </div>-->
+				<div class="overview-box setsliderNew">
+					
+				</div>
 
 				<div class="overview-box">
 					<p id="carselect">New 2015 audi</p>
@@ -304,6 +307,16 @@
 
 </div>
 
+
+<!-- Slider -->
+
+
+
+
+ 
+
+
+
 <!--jquery for the calculator -->
 <script type="text/javascript">
 	$('#calculate').click(function (){
@@ -368,6 +381,20 @@
 		    $('#loan_amount').val(custom_amount);
 	       });
 
+
+
+	
+
    });
 
+
+
+
+
 </script>
+
+
+
+
+
+

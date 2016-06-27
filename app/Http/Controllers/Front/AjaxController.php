@@ -34,6 +34,7 @@ use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
 use App\Helper\helpers;
+use Cache;
 
 class AjaxController extends Controller
 {
@@ -1345,13 +1346,13 @@ class AjaxController extends Controller
             $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
         }
         //dd($EdmundsMakeModelYearImage);
-       return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
+       //return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));
     }
 
     // Fuel API Begin 
 
 
-/* **
+
   public function GetImageViewNew(){
         $Makes=Request::input('make_search');
         $Models=Request::input('model_search');
@@ -1364,6 +1365,8 @@ class AjaxController extends Controller
         
         //echo "Manufacturer".$Make->name."<br/>".$Model->name."<br/>".$Year;
      
+       //$FuelApiImagePath = array();
+       $ImageAPIPath = array();
        
             $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
             $ch = curl_init();
@@ -1384,29 +1387,12 @@ class AjaxController extends Controller
                 {
                     
 
-                     array_push($FuelProduct_Id, $FuelPid['id']);
+                array_push($FuelProduct_Id, $FuelPid['id']);
 
                 }
 
-                //echo "<pre>";
-                //print_r($FuelProduct_Id);
-                //echo "</pre>";
-
-               
-                $loopValue=count($FuelProduct_Id, COUNT_RECURSIVE);
-
-                //echo $FuelProduct_Id[0];
-
-                /*for($k=0; $k<$loopValue; $k++)
-                    {
-
-                    }
-                    */
-                 /*   $VID = $FuelProduct_Id[0]; 
-
-
-                     $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$VID."/?api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
-            //echo $Imgurl;
+                
+                 $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
             $chImg = curl_init();
             curl_setopt($chImg,CURLOPT_URL, $Imgurl);
             curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
@@ -1416,22 +1402,56 @@ class AjaxController extends Controller
             curl_close($chImg);
             $resultsImg=json_decode($resultImg, true);
 
-            
+            //echo "<pre>";
+            //print_r($resultsImg['products']);
+            //echo "</pre>";
 
-                foreach($resultsImg as $ImagePath=>$IValue)
+
+        $productsArray = $resultsImg['products'];
+
+
+
+        while (list($key, $value) = each($productsArray)) {
+            $productFormatsArray = $value["productFormats"];
+
+            while (list($key1, $value1) = each($productFormatsArray)) {
+
+                //echo "<pre>";
+
+               // print_r($value1["assets"]);
+
+                //echo "</pre>";
+
+                $ImgPathArray = $value1["assets"];
+
+              
+
+                 }
+
+
+            }
+
+            //echo "<pre>";
+            //print_r($ImgPathArray);
+            //echo "</pre>";
+            //Cache::flush();
+
+             return view('front.ajax.slider_new', compact('ImgPathArray'));
+
+        
+
+            /*foreach($resultsImg['products'] as $FuelImg=>$FuelImgValue)
 
                     {
-                        //echo "<pre>";
-                        //print_r($ImagePath);
+                        foreach($FuelImgValue as $ApiImg)
+                        {
+                            echo $ApiImg['url'];
+                        }
+                    }*/
 
-                        echo $IValue['url']."<br/>";
+            
 
-                        //echo "</pre>";
-                    }
-
-
-
-
+            
             }
 
             else
@@ -1439,64 +1459,14 @@ class AjaxController extends Controller
               echo "No Image Found!";
             }
 
-           
 
-                
-                /*
-                foreach ($resuls['photos'] as $photoskey => $photos) {
-                    $makephoto['make_id']=$Make->id;
-                    $makephoto['model_id']=$Model->id;
-                    $makephoto['year_id']=$Year;
-                    $makephoto['title']=$photos['title'];
-                    $makephoto['category']=($photos['category'] ?: '');
-                    foreach ($photos['sources'] as $sources) {
-                        if($sources['size']['width']=="500"){
-                            $makephoto['edmunds_path_big']=$sources['link']['href'];
-                        }
-                        if($sources['size']['width']=="1600"){
-                            $makephoto['edmunds_path_big']=$sources['link']['href'];
-                        }
-                        if($sources['size']['width']=="276"){
-                            $makephoto['edmunds_path_small']=$sources['link']['href'];
-                        }
-                    }
-                    if(!isset($makephoto['edmunds_path_big'])){
-                        foreach ($photos['sources'] as $sourcesx) {
-                            if($sourcesx['size']['width']==$photos['originalSize']['width']){
-                                $makephoto['edmunds_path_big']=$sourcesx['link']['href'];
-                            }
-                        }
-                    }
-                    $bcontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_big']);
-                    $bnpath=time().".jpg";
-                    $bigpathe="public/edmunds/make/big/".$bnpath;
-                    $fbp = fopen($bigpathe, "w");
-                    fwrite($fbp, $bcontent);
-                    fclose($fbp);
+            //print_r($FuelApiImagePath);
 
-                    $scontent = file_get_contents("https://media.ed.edmunds-media.com".$makephoto['edmunds_path_small']);
-                    $smpath=time().".jpg";
-                    $smallpathe="public/edmunds/make/small/".$smpath;
-                    $fsp = fopen($smallpathe, "w");
-                    fwrite($fsp, $scontent);
-                    fclose($fsp);
-                    $makephoto['local_path_big']=$bnpath;
-                    $makephoto['local_path_smalll']=$smpath;
-                    EdmundsMakeModelYearImage::create($makephoto);
-
-                }
-
-            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
-        }else{
-            //check for fix
-            $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->groupBy('local_path_smalll')->get();
-        }
-        //dd($EdmundsMakeModelYearImage);
-       return view('front.ajax.slider',compact('EdmundsMakeModelYearImage'));*/
+            
      
- /*   } 
+    } 
 
-*/
+
 
     // Fuel API END
     public function GetMakeModel(){
