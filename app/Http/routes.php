@@ -43,6 +43,10 @@ Route:: post('/clienteditdetails', 'Front\ClientController@ProfileEditDetails');
 Route:: post('/clienteditpassword', 'Front\ClientController@ProfileEditPassword');
 Route:: get('/client/request_list', 'Front\ClientController@requestList');
 Route:: get('/client/request_detail/{id}', 'Front\ClientController@requestDetail');
+
+/* New Route for Client FuelAPI Gallery Details */
+Route:: get('/client/request_detail_options/{id}', 'Front\ClientController@requestDetailOptions');
+
 Route:: get('/testmailnew', 'Front\ClientController@testmailnew');
 Route:: get('/client/add-style/{id}', 'Front\ClientController@AddStyle');
 Route:: get('/client/add-engine/{id}', 'Front\ClientController@AddEngine');
@@ -175,7 +179,22 @@ Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculato
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 
+
 Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+
+
+/*
+|-----------------------------------------------------------------------------
+| FUEL API IMAGES ROUTES
+|-----------------------------------------------------------------------------
+|
+|
+*/
+
+Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+Route::post('ajax/addFuelImagesproducts', 'Front\AjaxController@addfuelimages');
+
+/* END */
 
 
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');

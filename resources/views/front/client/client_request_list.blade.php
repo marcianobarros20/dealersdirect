@@ -5,7 +5,14 @@
     <div class="container">
         <div class="row">
             
-           <?php //dd($RequestQueue);?> 
+           <?php //dd($RequestQueue); ?> 
+            
+            <?php
+            //foreach($RequestQueue as $rkeyfuel=>$RequestFuel)
+            //{
+            //dd($RequestFuel->fuelimx);
+            //}
+            ?>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="brand-section">
                     <div class="container cli-req">
@@ -18,8 +25,8 @@
                                    
                                    <!-- Carousel indicators -->
                                     <ol class = "carousel-indicators">
-                                    @if($Request->imx!="")
-                                        @foreach($Request->imx as $vx=>$img)
+                                    @if($Request->fuelimx!="")
+                                        @foreach($Request->fuelimx as $vx=>$img)
                                         <li data-target = "#myCarousel{{$rkey}}" data-slide-to = "{{$vx}}" @if($vx==0)class = "active" @endif></li>
                                         @endforeach
                                     @else
@@ -30,10 +37,11 @@
                                    
                                    <!-- Carousel items -->
                                    <div class = "carousel-inner request-carousel-img">
-                                    @if($Request->imx!="")
-                                        @foreach($Request->imx as $vx=>$img)
+                                    @if($Request->fuelimx!="")
+                                        @foreach($Request->fuelimx as $vx=>$img)
                                             <div class = "item @if($vx==0) active @endif">
-                                            <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">
+                                            <!-- <img src = "{{ url('/')}}/public/edmunds/make/small/{{$img->local_path_smalll}}" alt = "x">-->
+                                            <img src = "{{ url('/')}}/public/fuelgallery/small/{{$img->fuelImg_small_jpgformatlocal}}" alt = "x">
                                             </div>
                                         @endforeach 
                                     @else

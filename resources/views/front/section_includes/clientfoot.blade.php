@@ -115,6 +115,7 @@ $(document).ready(function(){
           // var year_search=$('#year_search').val();
 
 
+
           return false;
         });
         $('#backfirst').click(function(){
@@ -413,6 +414,48 @@ $(document).ready(function(){
                 }
             });
           return false;
+      });
+
+
+      
+});
+
+//..Ajax Fuel API Gallery Loading 
+$(document).ready(function(){
+  $('.vechilesOptions').click(function(){
+            //e.preventDefault();
+            var SelectedOption = $(this).text();
+            if(SelectedOption=="Details")
+            {
+              $(".DefaultGallery").show();
+              $("#OptionsGallery").hide();
+            }
+            else{
+            var OptionKey= SelectedOption.replace( /[^\d\.]*/g, '');
+                var trimNameValue = $("#trim_name"+OptionKey).val();
+                var bodyNameValue = $("#body_name"+OptionKey).val();
+                var requestid = $('#requestid').val();
+              $.ajax({
+                  url: "<?php echo url('/');?>/client/request_detail_options/"+requestid,
+                  data: {'requestid':requestid,'trim_name':trimNameValue, 'body_name': bodyNameValue,'OptionNumber':OptionKey},
+                  //dataType: 'json',
+                 
+                  type :"get",
+                  success: function(data){
+                  //console.log(data);
+                  $("#OptionsGallery").show();
+                  $("#OptionsGallery").html(data);
+                  $(".DefaultGallery").hide();
+                },
+
+                 error: function() {
+                        //alert('Not OKay');
+                        $(".DefaultGallery").show();
+                        $("#OptionsGallery").hide();
+                   }
+              
+              });
+            }
       });
 });
 

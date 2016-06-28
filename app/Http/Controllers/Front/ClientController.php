@@ -21,6 +21,10 @@ use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\LeadContact;                               /* Model name*/
 
+use App\Model\fuelapiproductsdata; /* Model Name */
+use App\Model\fuelapiproductsimagesdata; /* Model Name */
+
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -52,13 +56,13 @@ class ClientController extends BaseController
         view()->share('obj',$obj);
     }
     public function Dashboard(){
-			$obj = new helpers();
-			if(!$obj->checkClientLogin())
-			{
-			return redirect('client-signin');
-			}
+            $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+            return redirect('client-signin');
+            }
             $client=Session::get('client_userid');
-			return view('front.client.client_dashboard',compact('client'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
+            return view('front.client.client_dashboard',compact('client'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
     }
     public function signout(){
             Session::forget('client_userid');
@@ -122,22 +126,22 @@ class ClientController extends BaseController
         return view('front.client.client_signin',compact('client'),array('title'=>'DEALERSDIRECT | Clients Signin'));
     }
     public function profile(){
-    	$obj = new helpers();
-			if(!$obj->checkClientLogin())
-			{
-			return redirect('client-signin');
-			}
-       	$client_userid=Session::get('client_userid');
-       	$Client = Client::where('id', $client_userid)->first();
+        $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+            return redirect('client-signin');
+            }
+        $client_userid=Session::get('client_userid');
+        $Client = Client::where('id', $client_userid)->first();
         $client=Session::get('client_userid');
-       	return view('front.client.client_profile',compact('Client','client'),array('title'=>'DEALERSDIRECT | Clients Profile'));
+        return view('front.client.client_profile',compact('Client','client'),array('title'=>'DEALERSDIRECT | Clients Profile'));
     }
     public function ProfileEditDetails(){
-    	$obj = new helpers();
-			if(!$obj->checkClientLogin())
-			{
-			return redirect('client-signin');
-			}
+        $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+            return redirect('client-signin');
+            }
         $client_userid=Session::get('client_userid');
         $fname=Request::input('fname');
         $lname=Request::input('lname');
@@ -156,11 +160,11 @@ class ClientController extends BaseController
         return redirect('/client/profile');
     }
     public function ProfileEditPassword(){
-    	$obj = new helpers();
-			if(!$obj->checkClientLogin())
-			{
-			return redirect('client-signin');
-			}
+        $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+            return redirect('client-signin');
+            }
         $client_userid=Session::get('client_userid');
         
         $hashpassword = Hash::make(Request::input('password'));
@@ -173,11 +177,11 @@ class ClientController extends BaseController
         return redirect('/client/profile');
     }
     public function requestList(){
-		$obj = new helpers();
-			if(!$obj->checkClientLogin())
-			{
-				return redirect('client-signin');
-			}
+        $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+                return redirect('client-signin');
+            }
             $client_userid=Session::get('client_userid');
             $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->get();
             foreach ($RequestQueue as $kei => $RQ) {
@@ -190,6 +194,19 @@ class ClientController extends BaseController
                 }else{
                     $RequestQueue[$kei]['imx']="";
                 }
+
+
+                // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year',$RQ->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year',$RQ->year)->take(10)->get();
+                  $RequestQueue[$kei]['fuelimx']=$FuelMakeModelYearImage;  
+                }else{
+                    $RequestQueue[$kei]['fuelimx']="";
+                }
+                // Fuel Api End
+               
                 
             }
             $client=Session::get('client_userid');
@@ -213,14 +230,172 @@ class ClientController extends BaseController
             $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
             $EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
             $CheckForLeadContact=LeadContact::where('request_id', $id)->first();
+
+            
+           //FuelAPI Begin
+
+            $fuelapiOptionsTrim =  array(); // An array for Trim Options
+            $fuelapiOptionsBody = array();  // An array for Body Options
+            $fuelapiOptionProductId =  array(); // An array for Products Keys
+            $fuelapiOptionProductIdValue =  array(); // An array for Products Value
+            $fuelapiOptionProductImageArray =  array(); // An array for Images in each Products Id along with Style wise
+            $fuelapiOptionProductImageCountArray = array(); // An array for Images in count Product Images in Each product Id.
+               
+            /******************************************************************
+            Options wise Gallery show begin (THIS CODE STOP IN AFTER AJAX CALL)
+            ***************************************************************/
+
+            //Check Options selected by User 
+            if(!empty($RequestQueue->options)){
+                            foreach($RequestQueue->options as $optionkey=>$option){
+
+                                 array_push($fuelapiOptionsTrim, $option->styles->trim); // pushing in array all of the trim value selected by the user
+                                 array_push($fuelapiOptionsBody, $option->styles->body); // pushing in array all of the body value selected by the user
+
+                               }
+
+                                $counterLoop = count($fuelapiOptionsTrim);
+                                //count the number of array keys in Index Array
+                                if(!empty($fuelapiOptionsTrim) && !empty($fuelapiOptionsBody))
+                                    {
+                                        
+                                        for($i=0; $i<$counterLoop; $i++){
+
+                                        // Getting the number of Product Id in each array keys of styles
+
+                                        $fuelPidStylewise = fuelapiproductsdata::where('trim', '=', $fuelapiOptionsTrim[$i])->where('body', '=', $fuelapiOptionsBody[$i])->where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->select('product_id')->get(); 
+                                         array_push ($fuelapiOptionProductId, $fuelPidStylewise);
+                                         // pushing all product Id in a single bundle array
+                                        }
+                                    }
+                            }
+
+                            //count the number of array keys in Index Array ProductID
+                            $counterloop02 = count($fuelapiOptionProductId);
+                                if(!empty($fuelapiOptionProductId))
+                                    {
+                                        for($j=0; $j<$counterloop02; $j++){
+
+                                            foreach($fuelapiOptionProductId[$j] as $fuelapiOptionProductsKey => $fuelapiOptionProductValue)
+                                                {
+                                                   array_push($fuelapiOptionProductIdValue, $fuelapiOptionProductValue->product_id); 
+                                                   //pushing all Product Id value in a one bundle
+                                                }
+                                        }
+                                    }
+
+                               //count the number of Index Array ProductID Values      
+                            $counterloop03 = count($fuelapiOptionProductIdValue);
+                                if(!empty($fuelapiOptionProductIdValue))
+                                    {
+                                        for($k=0; $k<$counterloop03; $k++)
+                                            {
+                                         //Getting all images data according to Product Id from DB       
+                                        $FuelMakeModelYearImageDetailsOptions=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->where('img_pid', $fuelapiOptionProductIdValue[$k])->take(10)->get();
+
+                                        array_push($fuelapiOptionProductImageArray, $FuelMakeModelYearImageDetailsOptions);
+                                        //Pushing all bundle of images in one array with Product ID wise and Style wise
+                                     
+                                     //Counting all images data according to Product Id from DB 
+                                     $CountFuelMakeModelYearImageDetailsOptions=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->where('img_pid', $fuelapiOptionProductIdValue[$k])->count();
+
+                                        array_push($fuelapiOptionProductImageCountArray, $CountFuelMakeModelYearImageDetailsOptions);
+                                            }
+                                        //Pushing all bundle of images count in one array with Product ID wise and Style wise
+                                    }
+
+            /**************************************************************
+            Options wise Gallery show End (THIS CODE STOP IN AFTER AJAX CALL)
+            ***************************************************************/
+
+                      //dd($fuelapiOptionProductId);
+                      //Checking any array through dd functions
+                    // Checking code 
+
+             /************************************************************
+             * DEFAULT GALLERY SHOW -- Code Begin 
+             ***********************************************************/         
+
+             $FuelMakeModelYearImageDetails=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->take(10)->get();
+             $countimgFuelData=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->count();
+
+              /************************************************************
+             * DEFAULT GALLERY SHOW -- Code End
+             ***********************************************************/  
+             
+            
+
+           
+
+            //FuelAPI End
+
             
             $client=Session::get('client_userid');
-            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact','FuelMakeModelYearImageDetails','countimgFuelData', 'fuelapiOptionProductImageArray', 'fuelapiOptionProductImageCountArray'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+           
     }
+
+/********************************************************************
+OPTIONS GALLERY AJAX CALL BEGIN
+********************************************************************/
+
+    public function requestDetailOptions($id=Null)
+    {
+
+        $obj = new helpers();
+            if(!$obj->checkClientLogin())
+            {
+                return redirect('client-signin');
+            }
+            $client_userid=Session::get('client_userid');
+            $id=base64_decode($id);
+            if(Session::get('filter_sec')){
+                $fill=Session::get('filter_sec');
+            }
+            else{
+                $fill=1;
+            }
+
+            //dd($id);
+            $RequestQueue=RequestQueue::where('id', $id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
+            
+
+
+        $optionNumber = Request::Input('OptionNumber');
+            $trimName = Request::Input('trim_name');
+            $bodyName = Request::Input('body_name');
+
+             
+            if($trimName!="" && $bodyName!=""){
+             $fuelApiPidStylewise = fuelapiproductsdata::where('trim', '=', $trimName)->where('body', '=', $bodyName)->where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->select('product_id')->get();
+
+                foreach($fuelApiPidStylewise as $fuelApiPidStyleKey => $fuelApiPidStyleValue)
+                    {
+                        $FuelMakeModelYearImageDetailsOptionsGallery=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->where('img_pid', $fuelApiPidStyleValue['product_id'])->take(10)->get();
+
+                        $FuelMakeModelYearImageDetailsOptionsGalleryCount=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->where('img_pid', $fuelApiPidStyleValue['product_id'])->count();
+                    }
+
+                   
+                    return view('front.client.client_request_details_options',compact('FuelMakeModelYearImageDetailsOptionsGallery', 'FuelMakeModelYearImageDetailsOptionsGalleryCount'));
+
+                    
+            }
+
+    }
+
+
+/********************************************************************
+OPTIONS GALLERY AJAX CALL END
+********************************************************************/
+
+
     public function UpdateBudget($id=Null){
         $RequestQueue=RequestQueue::where('id', $id)->first();
     return \View::make("front.client.client_update_budget",compact('RequestQueue'));
     }
+
+
     public function UpdateBudgetPost(){
         $id=Request::input('req_id');
         $totalvalue=Request::input('totalvalue');
@@ -300,28 +475,28 @@ class ClientController extends BaseController
             
 
             public function testmailnew(){
-			$user_name = "PRODIPTO";
-			$user_email = "hello@tier5.us";
-			$admin_users_email="hello@tier5.us";
-			//$activateLink = url().'/activateLink/'.base64_encode($register['email']).'/member';
-			$activateLink ="Activatelink";
-			$sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'admin_users_email'=>$admin_users_email), 
-			function($message) use ($admin_users_email, $user_email,$user_name)
-			{
-			$message->from($admin_users_email);
-			$message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
-			});
+            $user_name = "PRODIPTO";
+            $user_email = "hello@tier5.us";
+            $admin_users_email="hello@tier5.us";
+            //$activateLink = url().'/activateLink/'.base64_encode($register['email']).'/member';
+            $activateLink ="Activatelink";
+            $sent = Mail::send('front.email.activateLink', array('name'=>$user_name,'email'=>$user_email,'activate_link'=>$activateLink, 'admin_users_email'=>$admin_users_email), 
+            function($message) use ($admin_users_email, $user_email,$user_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($user_email, $user_name)->subject('Welcome to Dealers Direct');
+            });
 
-			if( ! $sent) 
-			{
-			echo 'something went wrong!! Mail not sent.'; 
-			
-			}
-			else
-			{
-			echo 'Registration completed successfully.Please login with your details to your account.'; 
-			
-			}
+            if( ! $sent) 
+            {
+            echo 'something went wrong!! Mail not sent.'; 
+            
+            }
+            else
+            {
+            echo 'Registration completed successfully.Please login with your details to your account.'; 
+            
+            }
     }
     public function AddStyle($id=null){
         $id=base64_decode($id);
@@ -350,7 +525,8 @@ class ClientController extends BaseController
                     $Style['body'] =$styles['submodel']['body'];
                     $Style['trim'] =$styles['trim'];
                     $Style['submodel'] =json_encode($styles['submodel'],true);
-                    $Style['price'] =json_encode($styles['price'],true);
+                    if(isset($Style['price']))
+                    {$Style['price'] =json_encode($styles['price'],true);}
                     Style::create($Style);
                 }
             }

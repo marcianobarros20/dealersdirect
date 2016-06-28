@@ -1038,7 +1038,13 @@ small{
     */
 }
 
-.carousel-indicators.carousel-indicatoredit{
+
+/* New Slider Begin */
+
+
+/* New Slider End */
+
+.carousel-indicators.caroucarouselsel-indicatoredit{
    bottom: 0;
 }
 
@@ -2594,4 +2600,8 @@ color: #fff;
 .amortization-calculator a{display: inline-block;
   padding: 8px; color: #fff;}
 
+
 .amortization-calculator a:hover{text-decoration: none;}  
+
+.amortization-calculator a:hover{text-decoration: none;} 
+

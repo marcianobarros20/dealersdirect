@@ -204,7 +204,27 @@
             }
           });
 
-          
+
+
+       // Insert Record from FUEl to DB Begin
+
+
+         $.ajax({
+            //dataType: 'json',
+            url: "<?php echo url('/');?>/ajax/addFuelImagesproducts",
+            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
+            type :"post",
+            success: function( data ) {
+            
+            $("#dvLoading").hide();
+            //$(".fueldb").html(data);
+
+            console.log(data);
+              }
+            });
+
+      
+
 
           // Fuel Api End
           

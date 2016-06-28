@@ -19,13 +19,16 @@
         
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
-            <!-- Carousel ============ -->
+
+            <div id="OptionsGallery"> </div>
+                <!-- Default Carousel Begin ============ -->
+                <div class="DefaultGallery">
                 <div id = "myCarousel" class = "carousel slide ctborder ctheight">
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
-                    @if($EMMYIcount!=0)
-                        @foreach($EdmundsMakeModelYearImage as $vx=>$img)
+                    @if($countimgFuelData!=0)
+                        @foreach($FuelMakeModelYearImageDetails as $vx=>$img)
                         <li data-target = "#myCarousel" data-slide-to = "{{$vx}}"  @if($vx==0)class = "active"@endif ></li>
                         @endforeach
                     @else
@@ -35,10 +38,10 @@
                    
                    <!-- Carousel items -->
                    <div class = "carousel-inner client-carousel-img">
-                   @if($EMMYIcount!=0)
-                        @foreach($EdmundsMakeModelYearImage as $vx=>$img)
+                   @if($countimgFuelData!=0)
+                        @foreach($FuelMakeModelYearImageDetails as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
-                                <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
+                                <img src = "{{ url('/')}}/public/fuelgallery/small/{{$img->fuelImg_small_jpgformatlocal}}" alt = "x">
                             </div>
                         @endforeach 
                     @else
@@ -52,7 +55,12 @@
                    <a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>
                    <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
                    
-                </div> <!-- /.carousel -->
+                </div> 
+                </div>
+                <!-- /.Default carousel End -->
+
+
+
                 @if(count($RequestQueue->bids)!=0)
                 <div class="col-md-12 d-v">
                     <select id="shortoptions">
@@ -74,13 +82,14 @@
                 @endif
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
-                        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
+                        <li class="active"><a class="vechilesOptions"href="#requestdetail" data-toggle="tab">Details</a></li>
                         @if(!empty($RequestQueue->trade_ins) && $RequestQueue->trade_ins->make_id!=0)
                             <li><a href="#trad" data-toggle="tab">Trade In</a></li>
                         @endif
                         @if(!empty($RequestQueue->options))
                             @foreach($RequestQueue->options as $optionkey=>$option)
-                                <li><a href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
+
+                                <li><a class="vechilesOptions" href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
                             @endforeach
                         @endif
                     </ul>
@@ -165,9 +174,18 @@
                                                 <td>Style Name :</td> 
                                                 <td>{{$option->styles->name}}</td> 
                                             </tr> 
+
+                                             <tr> 
+                                                <td>Trim Name :</td> 
+                                                <td>{{$option->styles->trim}}
+                                                <input type="hidden" name="trim_name{{$optionkey+1}}" id="trim_name{{$optionkey+1}}" value="{{$option->styles->trim}}"/>
+                                                </td> 
+                                            </tr> 
                                             <tr> 
                                                 <td>Body :</td> 
-                                                <td>{{$option->styles->body}}</td> 
+                                                <td>{{$option->styles->body}}
+                                                <input type="hidden" name="body_name{{$optionkey+1}}" id="body_name{{$optionkey+1}}" value="{{$option->styles->body}}"/>
+                                                </td> 
                                             </tr> 
                                             <tr> 
                                                 <td>Compression Ratio :</td> 
@@ -280,7 +298,7 @@
       
     </div>
   </div>
-  
+
 <script type="text/javascript">
     $(".update-budget").click(function(){
     $.ajax({
@@ -291,6 +309,7 @@
         }
     });
 });
+
 
 </script>
 
