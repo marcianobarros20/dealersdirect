@@ -25,6 +25,11 @@ use App\Model\DealersInfo;                                 /* Model name*/
 use App\Model\DealersAdminBidManagement;                                 /* Model name*/
 use App\Model\DealerMembership;                                 /* Model name*/
 
+
+use App\Model\fuelapiproductsdata; /* Model Name */
+use App\Model\fuelapiproductsimagesdata; /* Model Name */
+
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Hash;
@@ -256,6 +261,17 @@ class DealerController extends BaseController {
                 //dd($RequestQueue);
                 $RequestQueue->request_dealer_log=$RequestDealerLog;
                 $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
+
+
+
+                //FuelAPI Begin
+
+             $FuelMakeModelYearImageDetails=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->take(10)->get();
+             
+            //FuelAPI End
+
+
+
                 if($par!=0){
                     $BidQueuecount=BidQueue::where('dealer_admin', $dealer_userid)->where('requestqueue_id', $RequestQueue->id)->where('visable','=','1')->count();
                 }else{
@@ -264,7 +280,7 @@ class DealerController extends BaseController {
                 
             
 
-            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage','BidQueuecount','fill','clx'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
+            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage', 'FuelMakeModelYearImageDetails', 'BidQueuecount','fill','clx'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
     }
     public function DealerMakeList(){
         $obj = new helpers();

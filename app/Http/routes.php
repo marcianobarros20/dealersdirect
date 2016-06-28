@@ -175,7 +175,22 @@ Route::post('ajax/amortization_cal','Front\AjaxController@amortization_calculato
 Route::post('ajax/bidcontact', 'Front\AjaxController@ContactDealerBid');
 Route::post('ajax/getimagesviews', 'Front\AjaxController@GetImageView');
 
+
 Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+
+
+/*
+|-----------------------------------------------------------------------------
+| FUEL API IMAGES ROUTES
+|-----------------------------------------------------------------------------
+|
+|
+*/
+
+Route::post('ajax/getimagesviewsnew', 'Front\AjaxController@GetImageViewNew');
+Route::post('ajax/addFuelImagesproducts', 'Front\AjaxController@addfuelimages');
+
+/* END */
 
 
 Route::post('ajax/getmakemodel', 'Front\AjaxController@GetMakeModel');

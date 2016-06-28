@@ -24,6 +24,13 @@ use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
 use App\Model\DealerDetail;                                 /* Model name*/
 
+
+
+
+use App\Model\fuelapiproductsdata; /* Model Name */
+use App\Model\fuelapiproductsimagesdata; /* Model Name */
+
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -882,6 +889,19 @@ class AjaxController extends Controller
                $RS[$key]['imx']=""; 
             }
 
+
+             // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year',$value->requestqueue->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year',$value->requestqueue->year)->take(6)->get();
+                  $RS[$key]['fuelimx']=$FuelMakeModelYearImage;  
+                }else{
+                    $RS[$key]['fuelimx']="";
+                }
+                // Fuel Api End
+
+
         }
         if($status_search==1){
             foreach ($RS as $key => $act) {
@@ -1244,6 +1264,7 @@ class AjaxController extends Controller
         // $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
         if($BidQueue->dealer_admin==0){
         $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
+
         $RequestDealerLog->req_contact=1;
         $RequestDealerLog->save();
         }
@@ -1251,6 +1272,15 @@ class AjaxController extends Controller
             $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
         $RequestDealerLog->req_contact=1;
         $RequestDealerLog->save();
+
+        $RequestDealerLog->req_contact=1;
+        $RequestDealerLog->save();
+        }
+        if($BidQueue->dealer_admin!=0){
+            $RequestDealerLog=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',0)->first();
+        $RequestDealerLog->req_contact=1;
+        $RequestDealerLog->save();
+
         $RequestDealerLogNew=RequestDealerLog::where('request_id',$BidQueue->requestqueue_id)->where('dealer_id',$BidQueue->dealer_id)->where('dealer_admin',$BidQueue->dealer_admin)->first();
         $RequestDealerLogNew->req_contact=1;
         $RequestDealerLogNew->save();
@@ -1362,10 +1392,12 @@ class AjaxController extends Controller
         $Model=Carmodel::find($Models);
         $viewdet['Makes']=$Make->name;
         $viewdet['Models']=$Model->name;
+
         
         //echo "Manufacturer".$Make->name."<br/>".$Model->name."<br/>".$Year;
      
        //$FuelApiImagePath = array();
+
        $ImageAPIPath = array();
        
             $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
@@ -1385,90 +1417,160 @@ class AjaxController extends Controller
                 $FuelProduct_Id=array();
                 foreach($results as $rowData=>$FuelPid)
                 {
-                    
-
                 array_push($FuelProduct_Id, $FuelPid['id']);
+                }
+                $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                            $chImg = curl_init();
+                            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
+                            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
+                            curl_setopt($chImg, CURLOPT_HEADER, 0);
+                            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
+                            $resultImg = curl_exec($chImg);
+                            curl_close($chImg);
+                            $resultsImg=json_decode($resultImg, true);
 
+                            //echo "<pre>";
+                            //print_r($resultsImg['products']);
+                            //echo "</pre>";
+
+
+                $productsArray = $resultsImg['products'];
+
+
+
+                while (list($key, $value) = each($productsArray)) {
+                        $productFormatsArray = $value["productFormats"];
+
+                        while (list($key1, $value1) = each($productFormatsArray)) {
+
+                                 //echo "<pre>";
+                                // print_r($value1["assets"]);
+                                //echo "</pre>";
+
+                                $ImgPathArray = $value1["assets"];
+                        }
                 }
 
-                
-                 $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
-            $chImg = curl_init();
-            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
-            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($chImg, CURLOPT_HEADER, 0);
-            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
-            $resultImg = curl_exec($chImg);
-            curl_close($chImg);
-            $resultsImg=json_decode($resultImg, true);
+                                //echo "<pre>";
+                                //print_r($ImgPathArray);
+                                //echo "</pre>";
+                                //Cache::flush();
 
-            //echo "<pre>";
-            //print_r($resultsImg['products']);
-            //echo "</pre>";
-
-
-        $productsArray = $resultsImg['products'];
-
-
-
-        while (list($key, $value) = each($productsArray)) {
-            $productFormatsArray = $value["productFormats"];
-
-            while (list($key1, $value1) = each($productFormatsArray)) {
-
-                //echo "<pre>";
-
-               // print_r($value1["assets"]);
-
-                //echo "</pre>";
-
-                $ImgPathArray = $value1["assets"];
-
-              
-
-                 }
-
-
-            }
-
-            //echo "<pre>";
-            //print_r($ImgPathArray);
-            //echo "</pre>";
-            //Cache::flush();
-
-             return view('front.ajax.slider_new', compact('ImgPathArray'));
-
-        
-
-            /*foreach($resultsImg['products'] as $FuelImg=>$FuelImgValue)
-
-                    {
-                        foreach($FuelImgValue as $ApiImg)
-                        {
-                            echo $ApiImg['url'];
-                        }
-                    }*/
-
-            
-
-            
+                               return view('front.ajax.slider_new', compact('ImgPathArray'));
             }
 
             else
             {
               echo "No Image Found!";
             }
-
-
-            //print_r($FuelApiImagePath);
-
-            
-     
+        
     } 
 
 
+//FUEL API IMAGES LOADED IN DB
 
-    // Fuel API END
+public function addfuelimages(Request $request)
+    {
+        $Makes=Request::input('make_search');
+        $Models=Request::input('model_search');
+        $Year=Request::input('year_search');
+        $Make=Make::find($Makes);
+        $Model=Carmodel::find($Models);
+        $Vechiles = new fuelapiproductsdata;
+        $FuelVechilesData =  array();
+        
+
+        $urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+            $chopt = curl_init();
+            curl_setopt($chopt,CURLOPT_URL, $urlPath);
+            curl_setopt($chopt, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($chopt, CURLOPT_HEADER, 0);
+            curl_setopt($chopt, CURLOPT_RETURNTRANSFER, 1);
+            $resultOpt = curl_exec($chopt);
+            curl_close($chopt);
+            $resultsPath=json_decode($resultOpt, true);
+
+
+            //print_r ($resultsPath);
+            
+            //dd($resultsPath);
+
+        if($resultsPath)
+            {
+                foreach($resultsPath as $rowProductData=>$FuelProductPid)
+    
+                    {
+                        
+                        //dd($FuelProductPid);
+                        //array_push($FuelVechilesData, $FuelProductPid['id']);
+                        $FuelProducts = fuelapiproductsdata::firstOrNew(array('make_id' => $Makes, 'model_id' => $Models, 'year' => $Year, 'product_id' => $FuelProductPid['id'], 'trim'=> $FuelProductPid['trim'], 'body' => $FuelProductPid['bodytype'] ));
+       
+                              $FuelProducts->save();
+
+                    }
+                $fuelProductID = fuelapiproductsdata::where('make_id', '=', $Makes)->where( 'model_id', '=', $Models )->where( 'year', '=', $Year )->get();
+                //dd($fuelProductID);
+                foreach($fuelProductID as $fuelProductKei => $fuelProductValue){
+                $FuelPID = $fuelProductValue->product_id;
+                $FuelTrim = $fuelProductValue->trim;
+                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                $chFuelImg = curl_init();
+                curl_setopt($chFuelImg,CURLOPT_URL, $FuelImgurl);
+                curl_setopt($chFuelImg, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($chFuelImg, CURLOPT_HEADER, 0);
+                curl_setopt($chFuelImg, CURLOPT_RETURNTRANSFER, 1);
+                $resultFuelImg = curl_exec($chFuelImg);
+                curl_close($chFuelImg);
+                $resultsFuelImg=json_decode($resultFuelImg, true);
+
+                //echo "<pre>";
+                //print_r($resultsImg['products']);
+                //echo "</pre>";
+
+
+                $productsFuelArray = $resultsFuelImg['products'];
+
+                while (list($key0, $value0) = each($productsFuelArray)) {
+                        $productFormatsFuelArray = $value0["productFormats"];
+
+                        while (list($key01, $value01) = each($productFormatsFuelArray)) {
+
+                                //echo "<pre>";
+                                // print_r($value1["assets"]);
+                                //echo "</pre>";
+
+                                $ImgFuelPathArray = $value01["assets"];
+                                while (list($key02, $value02) = each($ImgFuelPathArray))
+                                {
+                           
+                                $smallImg = file_get_contents($value02['url']);
+                                $smImgpath=time().".jpg";
+                                $smalllocalPath="public/fuelgallery/small/".$smImgpath;
+                                $localPath = fopen($smalllocalPath, "w");
+                                fwrite($localPath, $smallImg);
+                                fclose($localPath);
+
+                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID, 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath,
+                                    'make_id'=>$Makes, 'model_id'=>$Models, 'year'=>$Year, 'trim'=>$FuelTrim));
+                                $FuelProductsImages->save();
+                                //echo $value02['url'];
+                                }
+                        }
+                    }
+                }
+
+                echo "Successfully Inserted!";
+            }
+
+            else
+            {
+                echo "No Vechiles Found!";
+            }
+    }
+// IMAGES LOADED IN DB END
+
+
+
     public function GetMakeModel(){
         $Makes=Request::input('make_search');
         $Models=Request::input('model_search');
