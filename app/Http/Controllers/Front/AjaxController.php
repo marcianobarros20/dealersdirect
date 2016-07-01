@@ -1366,11 +1366,6 @@ class AjaxController extends Controller
         $viewdet['Makes']=$Make->name;
         $viewdet['Models']=$Model->name;
 
-       
-        
-        //echo "Manufacturer".$Make->name."<br/>".$Model->name."<br/>".$Year;
-     
-       //$FuelApiImagePath = array();
        $ImageAPIPath = array();
        
             $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->name."&make=".$Make->name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
@@ -1383,80 +1378,52 @@ class AjaxController extends Controller
             curl_close($ch);
             $results=json_decode($result, true);
             //print_r($results);
-
             if($results)
             {
                 
                 $FuelProduct_Id=array();
                 foreach($results as $rowData=>$FuelPid)
                 {
-                    
-
                 array_push($FuelProduct_Id, $FuelPid['id']);
+                }
+                $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                            $chImg = curl_init();
+                            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
+                            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
+                            curl_setopt($chImg, CURLOPT_HEADER, 0);
+                            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
+                            $resultImg = curl_exec($chImg);
+                            curl_close($chImg);
+                            $resultsImg=json_decode($resultImg, true);
 
+                            //echo "<pre>";
+                            //print_r($resultsImg['products']);
+                            //echo "</pre>";
+
+
+                $productsArray = $resultsImg['products'];
+
+
+
+                while (list($key, $value) = each($productsArray)) {
+                        $productFormatsArray = $value["productFormats"];
+
+                        while (list($key1, $value1) = each($productFormatsArray)) {
+
+                                 //echo "<pre>";
+                                // print_r($value1["assets"]);
+                                //echo "</pre>";
+
+                                $ImgPathArray = $value1["assets"];
+                        }
                 }
 
-                
-                 $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
-            $chImg = curl_init();
-            curl_setopt($chImg,CURLOPT_URL, $Imgurl);
-            curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($chImg, CURLOPT_HEADER, 0);
-            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, 1);
-            $resultImg = curl_exec($chImg);
-            curl_close($chImg);
-            $resultsImg=json_decode($resultImg, true);
+                                //echo "<pre>";
+                                //print_r($ImgPathArray);
+                                //echo "</pre>";
+                                //Cache::flush();
 
-            //echo "<pre>";
-            //print_r($resultsImg['products']);
-            //echo "</pre>";
-
-
-        $productsArray = $resultsImg['products'];
-
-
-
-        while (list($key, $value) = each($productsArray)) {
-            $productFormatsArray = $value["productFormats"];
-
-            while (list($key1, $value1) = each($productFormatsArray)) {
-
-                //echo "<pre>";
-
-               // print_r($value1["assets"]);
-
-                //echo "</pre>";
-
-                $ImgPathArray = $value1["assets"];
-
-              
-
-                 }
-
-
-            }
-
-            //echo "<pre>";
-            //print_r($ImgPathArray);
-            //echo "</pre>";
-            //Cache::flush();
-
-             return view('front.ajax.slider_new', compact('ImgPathArray'));
-
-        
-
-            /*foreach($resultsImg['products'] as $FuelImg=>$FuelImgValue)
-
-                    {
-                        foreach($FuelImgValue as $ApiImg)
-                        {
-                            echo $ApiImg['url'];
-                        }
-                    }*/
-
-            
-
-            
+                               return view('front.ajax.slider_new', compact('ImgPathArray'));
             }
 
             else
@@ -1464,39 +1431,19 @@ class AjaxController extends Controller
               echo "No Image Found!";
             }
 
-
-            //print_r($FuelApiImagePath);
-
-            
-     
     } 
 
 
-
-
-   // Fuel API END
-
-
-
-
 //FUEL API IMAGES LOADED IN DB
-
 
 public function addfuelimages(Request $request)
     {
         $Makes=Request::input('make_search');
         $Models=Request::input('model_search');
         $Year=Request::input('year_search');
-
         $Make=Make::find($Makes);
         $Model=Carmodel::find($Models);
-
-       
-
         $Vechiles = new fuelapiproductsdata;
-
-       
-
         $FuelVechilesData =  array();
         
 
@@ -1515,69 +1462,49 @@ public function addfuelimages(Request $request)
             
 
 
-if($resultsPath)
-    {
-                
-           
-    foreach($resultsPath as $rowProductData=>$FuelProductPid)
+        if($resultsPath)
+            {
+                foreach($resultsPath as $rowProductData=>$FuelProductPid)
     
-        {
-                    
-
-
-        array_push($FuelVechilesData, $FuelProductPid['id']);
-                
-         
-         }
-
-    
-
-        $FuelProducts = fuelapiproductsdata::firstOrNew(array('make_id' => $Makes, 'model_id' => $Models, 'year' => $Year));
+                    {
+                        array_push($FuelVechilesData, $FuelProductPid['id']);
+                    }
+                $FuelProducts = fuelapiproductsdata::firstOrNew(array('make_id' => $Makes, 'model_id' => $Models, 'year' => $Year));
        
-        $FuelProducts->product_id = serialize($FuelVechilesData); 
-        $FuelProducts->save();
+                $FuelProducts->product_id = serialize($FuelVechilesData); 
+                $FuelProducts->save();
 
-       $FuelPID = unserialize($FuelProducts->product_id);
+                $FuelPID = unserialize($FuelProducts->product_id);
 
-      
-
-            
-
-       $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
-            $chFuelImg = curl_init();
-            curl_setopt($chFuelImg,CURLOPT_URL, $FuelImgurl);
-            curl_setopt($chFuelImg, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($chFuelImg, CURLOPT_HEADER, 0);
-            curl_setopt($chFuelImg, CURLOPT_RETURNTRANSFER, 1);
-            $resultFuelImg = curl_exec($chFuelImg);
-            curl_close($chFuelImg);
-            $resultsFuelImg=json_decode($resultFuelImg, true);
-
-            //echo "<pre>";
-            //print_r($resultsImg['products']);
-            //echo "</pre>";
-
-
-        $productsFuelArray = $resultsFuelImg['products'];
-
-
-
-        while (list($key0, $value0) = each($productsFuelArray)) {
-            $productFormatsFuelArray = $value0["productFormats"];
-
-            while (list($key01, $value01) = each($productFormatsFuelArray)) {
+                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                $chFuelImg = curl_init();
+                curl_setopt($chFuelImg,CURLOPT_URL, $FuelImgurl);
+                curl_setopt($chFuelImg, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($chFuelImg, CURLOPT_HEADER, 0);
+                curl_setopt($chFuelImg, CURLOPT_RETURNTRANSFER, 1);
+                $resultFuelImg = curl_exec($chFuelImg);
+                curl_close($chFuelImg);
+                $resultsFuelImg=json_decode($resultFuelImg, true);
 
                 //echo "<pre>";
-
-               // print_r($value1["assets"]);
-
+                //print_r($resultsImg['products']);
                 //echo "</pre>";
 
-                $ImgFuelPathArray = $value01["assets"];
 
+                $productsFuelArray = $resultsFuelImg['products'];
 
-                    while (list($key02, $value02) = each($ImgFuelPathArray))
-                        {
+                while (list($key0, $value0) = each($productsFuelArray)) {
+                        $productFormatsFuelArray = $value0["productFormats"];
+
+                        while (list($key01, $value01) = each($productFormatsFuelArray)) {
+
+                                //echo "<pre>";
+                                // print_r($value1["assets"]);
+                                //echo "</pre>";
+
+                                $ImgFuelPathArray = $value01["assets"];
+                                while (list($key02, $value02) = each($ImgFuelPathArray))
+                                {
                            
                                 $smallImg = file_get_contents($value02['url']);
                                 $smImgpath=time().".jpg";
@@ -1586,46 +1513,20 @@ if($resultsPath)
                                 fwrite($localPath, $smallImg);
                                 fclose($localPath);
 
-
-
-
-$FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID['0'], 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath));
-
-$FuelProductsImages->save();
-
-
-                            echo $value02['url'];
-
-
+                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID['0'], 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath));
+                                $FuelProductsImages->save();
+                                //echo $value02['url'];
+                                }
                         }
-
-              
-
-                 }
-
-
-            }
-
-
-
-        
-        
-
-        echo "Successfully Inserted!";
-        //print_r($FuelVechilesData);
-
+                    }
+                                echo "Successfully Inserted!";
             }
 
             else
             {
                 echo "No Vechiles Found!";
             }
-        
     }
-
-
-
-
 // IMAGES LOADED IN DB END
 
 

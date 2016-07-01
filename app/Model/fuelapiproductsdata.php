@@ -15,4 +15,5 @@ class fuelapiproductsdata extends Model
             'year',
             'product_id'
        ];
+     //
 }

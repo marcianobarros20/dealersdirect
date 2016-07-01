@@ -165,7 +165,7 @@
 					
 				</div>
 
-				<div class="fueldb"> </div>
+				<!--<div class="fueldb"> </div>-->
 
 				<div class="overview-box">
 					<p id="carselect">New 2015 audi</p>

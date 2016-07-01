@@ -219,13 +219,10 @@
             //$(".fueldb").html(data);
 
             console.log(data);
-
-
               }
             });
 
-
-          
+      
 
           // Fuel Api End
           
