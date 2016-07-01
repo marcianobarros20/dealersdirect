@@ -11,6 +11,10 @@ class fuelapiproductsimagesdata extends Model
 	protected $table = 'fuelapiproductsimagesdata';
 	protected $fillable=[
 			'img_pid',
+            'make_id',
+            'model_id',
+            'year',
+            'trim',
             'fuelImg_big_jpgformat',
             'fuelImg_small_jpgformat',
             'fuelImg_big_jpgformatlocal',

@@ -1460,23 +1460,27 @@ public function addfuelimages(Request $request)
 
             //print_r ($resultsPath);
             
-
+            //dd($resultsPath);
 
         if($resultsPath)
             {
                 foreach($resultsPath as $rowProductData=>$FuelProductPid)
     
                     {
-                        array_push($FuelVechilesData, $FuelProductPid['id']);
-                    }
-                $FuelProducts = fuelapiproductsdata::firstOrNew(array('make_id' => $Makes, 'model_id' => $Models, 'year' => $Year));
+                        
+                        //dd($FuelProductPid);
+                        //array_push($FuelVechilesData, $FuelProductPid['id']);
+                        $FuelProducts = fuelapiproductsdata::firstOrNew(array('make_id' => $Makes, 'model_id' => $Models, 'year' => $Year, 'product_id' => $FuelProductPid['id'], 'trim'=> $FuelProductPid['trim'], 'body' => $FuelProductPid['bodytype'] ));
        
-                $FuelProducts->product_id = serialize($FuelVechilesData); 
-                $FuelProducts->save();
+                              $FuelProducts->save();
 
-                $FuelPID = unserialize($FuelProducts->product_id);
-
-                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                    }
+                $fuelProductID = fuelapiproductsdata::where('make_id', '=', $Makes)->where( 'model_id', '=', $Models )->where( 'year', '=', $Year )->get();
+                //dd($fuelProductID);
+                foreach($fuelProductID as $fuelProductKei => $fuelProductValue){
+                $FuelPID = $fuelProductValue->product_id;
+                $FuelTrim = $fuelProductValue->trim;
+                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
                 $chFuelImg = curl_init();
                 curl_setopt($chFuelImg,CURLOPT_URL, $FuelImgurl);
                 curl_setopt($chFuelImg, CURLOPT_FOLLOWLOCATION, 1);
@@ -1513,13 +1517,16 @@ public function addfuelimages(Request $request)
                                 fwrite($localPath, $smallImg);
                                 fclose($localPath);
 
-                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID['0'], 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath));
+                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID['0'], 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath,
+                                    'make_id'=>$Makes, 'model_id'=>$Models, 'year'=>$Year, 'trim'=>$FuelTrim));
                                 $FuelProductsImages->save();
                                 //echo $value02['url'];
                                 }
                         }
                     }
-                                echo "Successfully Inserted!";
+                }
+
+                echo "Successfully Inserted!";
             }
 
             else

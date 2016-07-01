@@ -20,6 +20,8 @@ use App\Model\EdmundsMakeModelYearImage;                    /* Model name*/
 use App\Model\EdmundsStyleImage;                            /* Model name*/
 use App\Model\TradeinRequest;                               /* Model name*/
 use App\Model\LeadContact;                               /* Model name*/
+use App\Model\fuelapiproductsdata; /* Model Name */
+use App\Model\fuelapiproductsimagesdata; /* Model Name */
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -190,6 +192,19 @@ class ClientController extends BaseController
                 }else{
                     $RequestQueue[$kei]['imx']="";
                 }
+
+
+                // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year',$RQ->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$RQ->make_id)->where('model_id',$RQ->carmodel_id)->where('year',$RQ->year)->take(10)->get();
+                  $RequestQueue[$kei]['fuelimx']=$FuelMakeModelYearImage;  
+                }else{
+                    $RequestQueue[$kei]['fuelimx']="";
+                }
+                // Fuel Api End
+               
                 
             }
             $client=Session::get('client_userid');
@@ -213,9 +228,16 @@ class ClientController extends BaseController
             $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
             $EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
             $CheckForLeadContact=LeadContact::where('request_id', $id)->first();
+
+            //FuelAPI Begin
+
+             $FuelMakeModelYearImageDetails=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->take(10)->get();
+             $countimgFuelData=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->count();
+
+            //FuelAPI End
             
             $client=Session::get('client_userid');
-            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact','FuelMakeModelYearImageDetails','countimgFuelData'),array('title'=>'DEALERSDIRECT | Client Request Details'));
     }
     public function UpdateBudget($id=Null){
         $RequestQueue=RequestQueue::where('id', $id)->first();

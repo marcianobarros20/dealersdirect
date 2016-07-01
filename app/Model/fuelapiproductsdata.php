@@ -13,7 +13,9 @@ class fuelapiproductsdata extends Model
 			'make_id',
             'model_id',
             'year',
-            'product_id'
+            'product_id',
+            'trim',
+            'body'
        ];
      //
 }
