@@ -24,6 +24,8 @@ use App\Model\ReminderLead;                                 /* Model name*/
 use App\Model\LeadContact;                                  /* Model name*/
 use App\Model\DealerDetail;                                 /* Model name*/
 
+
+
 use App\Model\fuelapiproductsdata; /* Model Name */
 use App\Model\fuelapiproductsimagesdata; /* Model Name */
 
@@ -884,6 +886,18 @@ class AjaxController extends Controller
             }else{
                $RS[$key]['imx']=""; 
             }
+
+
+             // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year',$value->requestqueue->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$value->requestqueue->make_id)->where('model_id',$value->requestqueue->carmodel_id)->where('year',$value->requestqueue->year)->take(6)->get();
+                  $RS[$key]['fuelimx']=$FuelMakeModelYearImage;  
+                }else{
+                    $RS[$key]['fuelimx']="";
+                }
+                // Fuel Api End
 
         }
         if($status_search==1){
