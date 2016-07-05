@@ -1531,7 +1531,7 @@ public function addfuelimages(Request $request)
                                 fwrite($localPath, $smallImg);
                                 fclose($localPath);
 
-                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID['0'], 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath,
+                                $FuelProductsImages = fuelapiproductsimagesdata::firstOrNew(array('img_pid' => $FuelPID, 'fuelImg_small_jpgformat' => $value02['url'], 'fuelImg_small_jpgformatlocal'=>$smImgpath,
                                     'make_id'=>$Makes, 'model_id'=>$Models, 'year'=>$Year, 'trim'=>$FuelTrim));
                                 $FuelProductsImages->save();
                                 //echo $value02['url'];
