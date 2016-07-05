@@ -19,7 +19,65 @@
         
         <div class="post-bid">
             <div class="col-xs-12 col-sm-8 col-md-8">
-            <!-- Carousel ============ -->
+                
+        <!-- ================================================ -->
+        <!-- OPTIONS TYPE FUEL GALLERY VIEW BEGIN  -->
+        <!-- ================================================ -->
+        <?php 
+        $OptionsImageloop = count($fuelapiOptionProductImageArray); 
+        $NumberofOptionsSelected = count($fuelapiOptionProductImageCountArray);
+        //echo $NumberofOptionsSelected;
+        ?>
+               
+        @for($mainloop=0; $mainloop<$NumberofOptionsSelected; $mainloop++)       
+            <div class="OptionsGallery{{$mainloop}}">
+                <div id = "carousel-demo{{$NumberofOptionsSelected}}" class = "carousel slide ctborder ctheight" data-interval="2000">
+                 <!-- Carousel indicators -->
+                    <ol class = "carousel-indicators">
+                     @if($OptionsImageloop!=0)
+                       @for($m=0; $m<$OptionsImageloop; $m++)
+                        @foreach($fuelapiOptionProductImageArray[$m] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)
+                           <li data-target = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide-to = "{{$fuelOptionsImagesKey}}"  @if($fuelOptionsImagesKey==0)class = "active"@endif ></li>
+                         @endforeach
+                        @endfor
+                       
+                     @else
+                           <li data-target = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide-to = "0" class = "active"></li>
+                     @endif
+                    </ol>
+
+                        <!-- Carousel items -->
+                   <div class = "carousel-inner client-carousel-img">
+                  
+                    @if($OptionsImageloop!=0)
+                        @for($g=0; $g<$OptionsImageloop; $g++)
+                        @foreach($fuelapiOptionProductImageArray[$g] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)  
+                            <div class = "item @if($fuelOptionsImagesKey==0) active @endif">
+                                 <img src = "{{ url('/')}}/public/fuelgallery/small/{{$fuelOptionsImagesValue->fuelImg_small_jpgformatlocal}}" alt = "x">
+                            </div>
+                            @endforeach
+                            @endfor
+                            @else
+                            <div class = "item active">
+                                <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+                            </div>
+                    @endif 
+                      
+                  </div>
+
+                    <!-- OPTIONS TYPE FUEL GALLERY VIEW BEGIN -->
+                   <a class = "carousel-control left" href = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide = "prev">&lsaquo;</a>
+                   <a class = "carousel-control right" href = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide = "next">&rsaquo;</a>
+                </div>
+            </div>
+        
+        @endfor
+        <!-- ================================================ -->
+        <!-- Options Images End -->
+        <!-- ================================================ -->
+
+                 <!-- Default Carousel Begin ============ -->
+                <div class="DefaultGallery">
                 <div id = "myCarousel" class = "carousel slide ctborder ctheight">
                    
                    <!-- Carousel indicators -->
@@ -52,7 +110,12 @@
                    <a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>
                    <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
                    
-                </div> <!-- /.carousel -->
+                </div> 
+                </div>
+                <!-- /.Default carousel End -->
+
+
+
                 @if(count($RequestQueue->bids)!=0)
                 <div class="col-md-12 d-v">
                     <select id="shortoptions">
@@ -74,13 +137,13 @@
                 @endif
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs profile-browse postbid-browse" data-tabs="tabs">
-                        <li class="active"><a href="#requestdetail" data-toggle="tab">Details</a></li>
+                        <li class="active"><a class="vechilesOptions"href="#requestdetail" data-toggle="tab">Details</a></li>
                         @if(!empty($RequestQueue->trade_ins) && $RequestQueue->trade_ins->make_id!=0)
                             <li><a href="#trad" data-toggle="tab">Trade In</a></li>
                         @endif
                         @if(!empty($RequestQueue->options))
                             @foreach($RequestQueue->options as $optionkey=>$option)
-                                <li><a href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
+                                <li><a class="vechilesOptions" href="#options{{$optionkey+1}}" data-toggle="tab">Option{{$optionkey+1}}</a></li>
                             @endforeach
                         @endif
                     </ul>
@@ -164,6 +227,11 @@
                                             <tr> 
                                                 <td>Style Name :</td> 
                                                 <td>{{$option->styles->name}}</td> 
+                                            </tr> 
+
+                                             <tr> 
+                                                <td>Trim Name :</td> 
+                                                <td>{{$option->styles->trim}}</td> 
                                             </tr> 
                                             <tr> 
                                                 <td>Body :</td> 
@@ -280,7 +348,7 @@
       
     </div>
   </div>
-  
+  <script type="text/javascript" src="http://malsup.github.com/jquery.cycle.all.js"></script>
 <script type="text/javascript">
     $(".update-budget").click(function(){
     $.ajax({
@@ -291,6 +359,45 @@
         }
     });
 });
+
+
+    $(document).ready(function(){
+        $('.OptionsGallery0').hide();
+        $('.OptionsGallery1').hide();
+
+        $('.vechilesOptions').click(function(){
+        //alert($(this).attr('href').replace('#',''));
+        // or alert($(this).hash();
+        var Options = $(this).attr('href').replace('#','');
+        //alert(Options);
+
+        switch(Options)
+        {
+            case 'options1':
+            $('.OptionsGallery0').show();
+            $('.DefaultGallery').hide();
+            break;
+
+            case 'options2':
+            $('.OptionsGallery1').show();
+            $('.DefaultGallery').hide();
+            break;
+
+            case 'requestdetail' :
+            $('.OptionsGallery0').hide();
+            $('.DefaultGallery').show();
+            break;
+
+            default:
+            $('.OptionsGallery0').hide();
+            $('.DefaultGallery').show();
+
+        }
+        
+            });
+    });
+
+
 
 </script>
 
