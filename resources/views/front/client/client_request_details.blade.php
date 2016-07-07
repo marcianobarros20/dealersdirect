@@ -372,8 +372,8 @@
         var Options = $(this).attr('href').replace('#','');
         //alert(Options);
 
-        switch(Options)
-        {
+            switch(Options)
+            {
             case 'options1':
             $('.OptionsGallery0').show();
             $('.OptionsGallery1').hide();
@@ -397,9 +397,19 @@
             $('.OptionsGallery1').hide();
             $('.DefaultGallery').show();
 
-        }
+            }
+
+            $('#carousel-demo0').carousel({
+            interval: 2000,
+            cycle: true
+            }); 
+
+            $('#carousel-demo1').carousel({
+            interval: 2000,
+            cycle: true
+            }); 
         
-            });
+        });
     });
 
 
