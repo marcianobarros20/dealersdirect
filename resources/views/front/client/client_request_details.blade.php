@@ -31,18 +31,18 @@
                
         @for($mainloop=0; $mainloop<$NumberofOptionsSelected; $mainloop++)       
             <div class="OptionsGallery{{$mainloop}}">
-                <div id = "carousel-demo{{$NumberofOptionsSelected}}" class = "carousel slide ctborder ctheight" data-interval="2000">
+                <div id = "carousel-demo{{$mainloop}}" class = "carousel slide ctborder ctheight" data-interval="2000">
                  <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
                      @if($OptionsImageloop!=0)
-                       @for($m=0; $m<$OptionsImageloop; $m++)
-                        @foreach($fuelapiOptionProductImageArray[$m] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)
-                           <li data-target = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide-to = "{{$fuelOptionsImagesKey}}"  @if($fuelOptionsImagesKey==0)class = "active"@endif ></li>
+                       <!--@for($m=0; $m<$OptionsImageloop; $m++)-->
+                        @foreach($fuelapiOptionProductImageArray[$mainloop] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)
+                           <li data-target = "#carousel-demo{{$mainloop}}" data-slide-to = "{{$fuelOptionsImagesKey}}"  @if($fuelOptionsImagesKey==0)class = "active"@endif ></li>
                          @endforeach
-                        @endfor
+                        <!--@endfor-->
                        
                      @else
-                           <li data-target = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide-to = "0" class = "active"></li>
+                           <li data-target = "#carousel-demo{{$mainloop}}" data-slide-to = "0" class = "active"></li>
                      @endif
                     </ol>
 
@@ -50,13 +50,13 @@
                    <div class = "carousel-inner client-carousel-img">
                   
                     @if($OptionsImageloop!=0)
-                        @for($g=0; $g<$OptionsImageloop; $g++)
-                        @foreach($fuelapiOptionProductImageArray[$g] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)  
+                        <!--@for($g=0; $g<$OptionsImageloop; $g++)-->
+                        @foreach($fuelapiOptionProductImageArray[$mainloop] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)  
                             <div class = "item @if($fuelOptionsImagesKey==0) active @endif">
                                  <img src = "{{ url('/')}}/public/fuelgallery/small/{{$fuelOptionsImagesValue->fuelImg_small_jpgformatlocal}}" alt = "x">
                             </div>
                             @endforeach
-                            @endfor
+                            <!--@endfor-->
                             @else
                             <div class = "item active">
                                 <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
@@ -66,8 +66,8 @@
                   </div>
 
                     <!-- OPTIONS TYPE FUEL GALLERY VIEW BEGIN -->
-                   <a class = "carousel-control left" href = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide = "prev">&lsaquo;</a>
-                   <a class = "carousel-control right" href = "#carousel-demo{{$NumberofOptionsSelected}}" data-slide = "next">&rsaquo;</a>
+                   <a class = "carousel-control left" href = "#carousel-demo{{$mainloop}}" data-slide = "prev">&lsaquo;</a>
+                   <a class = "carousel-control right" href = "#carousel-demo{{$mainloop}}" data-slide = "next">&rsaquo;</a>
                 </div>
             </div>
         
@@ -375,21 +375,25 @@
         {
             case 'options1':
             $('.OptionsGallery0').show();
+            $('.OptionsGallery1').hide();
             $('.DefaultGallery').hide();
             break;
 
             case 'options2':
             $('.OptionsGallery1').show();
+            $('.OptionsGallery0').hide();
             $('.DefaultGallery').hide();
             break;
 
             case 'requestdetail' :
             $('.OptionsGallery0').hide();
+            $('.OptionsGallery1').hide();
             $('.DefaultGallery').show();
             break;
 
             default:
             $('.OptionsGallery0').hide();
+            $('.OptionsGallery1').hide();
             $('.DefaultGallery').show();
 
         }
