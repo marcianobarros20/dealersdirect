@@ -51,6 +51,7 @@
                   
                     @if($OptionsImageloop!=0)
                         <!--@for($g=0; $g<$OptionsImageloop; $g++)-->
+                        <!-- Image Loop Begin -->
                         @foreach($fuelapiOptionProductImageArray[$mainloop] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)  
                             <div class = "item @if($fuelOptionsImagesKey==0) active @endif">
                                  <img src = "{{ url('/')}}/public/fuelgallery/small/{{$fuelOptionsImagesValue->fuelImg_small_jpgformatlocal}}" alt = "x">
