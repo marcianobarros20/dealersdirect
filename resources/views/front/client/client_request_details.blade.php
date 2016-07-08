@@ -35,7 +35,7 @@
                  <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
                      @if($OptionsImageloop!=0)
-                       <!--@for($m=0; $m<$OptionsImageloop; $m++)-->
+                        <!--@for($m=0; $m<$OptionsImageloop; $m++)-->
                         @foreach($fuelapiOptionProductImageArray[$mainloop] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)
                            <li data-target = "#carousel-demo{{$mainloop}}" data-slide-to = "{{$fuelOptionsImagesKey}}"  @if($fuelOptionsImagesKey==0)class = "active"@endif ></li>
                          @endforeach
@@ -51,7 +51,6 @@
                   
                     @if($OptionsImageloop!=0)
                         <!--@for($g=0; $g<$OptionsImageloop; $g++)-->
-                        <!-- Image Loop Begin -->
                         @foreach($fuelapiOptionProductImageArray[$mainloop] as $fuelOptionsImagesKey => $fuelOptionsImagesValue)  
                             <div class = "item @if($fuelOptionsImagesKey==0) active @endif">
                                  <img src = "{{ url('/')}}/public/fuelgallery/small/{{$fuelOptionsImagesValue->fuelImg_small_jpgformatlocal}}" alt = "x">
