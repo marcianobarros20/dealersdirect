@@ -310,7 +310,6 @@ class ClientController extends BaseController
 
                       //dd($fuelapiOptionProductId);
                       //Checking any array through dd functions
-                    // Checking code 
 
              /************************************************************
              * DEFAULT GALLERY SHOW -- Code Begin 
