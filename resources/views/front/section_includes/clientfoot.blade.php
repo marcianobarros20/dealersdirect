@@ -17,34 +17,34 @@
 
 <script src="<?php echo url('/');?>/public/front_end/js/bootstrap.min.js"></script>
 
-			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
-			<script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
-			<script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/jquery.min.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/selectrick/lib/prism.js"></script>
+      <script src="<?php echo url('/');?>/public/front_end/selectrick/jquery.selectric.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/js/ajaxcaravanclient.js"></script>
-			<!--Price format js-->
+      <!--Price format js-->
       <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
       <script src="<?php echo url('/');?>/public/front_end/js/jquery.price_format.2.0.min.js"></script>
       <!--Price format js-->
       <script>
-			$(function() {
-				$('select, .select').selectric();
+      $(function() {
+        $('select, .select').selectric();
 
-				$('.customOptions').selectric({
-				optionsItemBuilder: function(itemData, element, index) {
-									return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
-									}
-			});
+        $('.customOptions').selectric({
+        optionsItemBuilder: function(itemData, element, index) {
+                  return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
+                  }
+      });
 
-			$('.customLabel').selectric({
-				labelBuilder: function(currItem) {
-								return '<strong><em>' + currItem.text + '</em></strong>';
-								}
-				});
-			});
+      $('.customLabel').selectric({
+        labelBuilder: function(currItem) {
+                return '<strong><em>' + currItem.text + '</em></strong>';
+                }
+        });
+      });
 
-			$(function() {
-  					$('select, .select').selectric();
-			});
+      $(function() {
+            $('select, .select').selectric();
+      });
 
 $(document).ready(function(){
         $('#make_search').change(function(){
@@ -230,48 +230,6 @@ NEW JQUERY CODE ADDED IN CLIENT SIDE END
 
           return false;
         });
-
-
-        function getimageedmunds(make_search,model_search,condition_search,year_search,e){
-          
-          $.ajax({
-            dataType: 'json',
-            url: "<?php echo url('/');?>/ajax/getmakemodel",
-            data: {make_search:make_search,model_search:model_search,_token: '{!! csrf_token() !!}'},
-            type :"post",
-            success: function( data ) {
-              $("#carselect").html(condition_search+" "+data.Makes+" "+data.Models+" "+year_search);
-
-              
-            }
-
-          });
-          $.ajax({
-            
-            url: "<?php echo url('/');?>/ajax/getimagesviews",
-            data: {make_search:make_search,model_search:model_search,condition_search:condition_search,year_search:year_search,_token: '{!! csrf_token() !!}'},
-            type :"post",
-            success: function( data ) {
-              if(e==1){
-                $("#dvLoading").hide();
-                $("#amortaization").show();
-                $("#searchfirst").hide();
-                $("#searchseconed").show();
-                $(".setslider").html(data);
-              }else{
-                $("#dvLoading").hide();
-                $("#amortaization").hide();
-                $("#searchfirst").hide();
-                $("#searchseconed").show();
-                $(".setslider").html(data);
-              }
-            }
-          });
-
-       
-        }
-
-        
         $('#backfirst').click(function(){
           $("#searchfirst").show();
           $("#searchseconed").hide();
@@ -660,4 +618,4 @@ $(document).ready(function(){
       });
 });
 
-			</script>
+      </script>

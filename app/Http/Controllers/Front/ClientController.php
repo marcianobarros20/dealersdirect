@@ -63,8 +63,9 @@ class ClientController extends BaseController
             return redirect('client-signin');
             }
             $client=Session::get('client_userid');
+            $loan_details = Loan::all();
 
-            return view('front.client.client_dashboard',compact('client'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
+            return view('front.client.client_dashboard',compact('client','loan_details'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
     }
     public function signout(){
             Session::forget('client_userid');
@@ -215,6 +216,8 @@ class ClientController extends BaseController
             $client=Session::get('client_userid');
             return view('front.client.client_request_list',compact('client','RequestQueue', 'loan_details'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
+    
+
     public function requestDetail($id=null){
             $obj = new helpers();
             if(!$obj->checkClientLogin())
@@ -236,6 +239,7 @@ class ClientController extends BaseController
 
             
            //FuelAPI Begin
+            $loan_details = Loan::all();
 
             $fuelapiOptionsTrim =  array(); // An array for Trim Options
             $fuelapiOptionsBody = array();  // An array for Body Options
@@ -333,7 +337,7 @@ class ClientController extends BaseController
 
             
             $client=Session::get('client_userid');
-            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact','FuelMakeModelYearImageDetails','countimgFuelData', 'fuelapiOptionProductImageArray', 'fuelapiOptionProductImageCountArray'),array('title'=>'DEALERSDIRECT | Client Request Details'));
+            return view('front.client.client_request_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','CheckForLeadContact','FuelMakeModelYearImageDetails','countimgFuelData', 'fuelapiOptionProductImageArray', 'fuelapiOptionProductImageCountArray','loan_details'),array('title'=>'DEALERSDIRECT | Client Request Details'));
            
     }
 

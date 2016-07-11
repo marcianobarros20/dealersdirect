@@ -320,7 +320,8 @@
 	});	
 
 
-	  // Mortgage Calculator script for taking value 
+	  // Mortgage Calculator script for taking value
+	  //Begin 
 
    $(document).ready(function(){
 		 $('.amortization-calculator').click(function(){ 
@@ -331,7 +332,7 @@
 	       });
 
 
-
+//END
 	
 
    });
