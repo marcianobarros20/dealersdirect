@@ -23,6 +23,7 @@ use App\Model\LeadContact;                               /* Model name*/
 
 use App\Model\fuelapiproductsdata; /* Model Name */
 use App\Model\fuelapiproductsimagesdata; /* Model Name */
+use App\Model\Loan;            /* Model name*/
 
 
 use App\Http\Requests;
@@ -62,6 +63,7 @@ class ClientController extends BaseController
             return redirect('client-signin');
             }
             $client=Session::get('client_userid');
+
             return view('front.client.client_dashboard',compact('client'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
     }
     public function signout(){
@@ -182,6 +184,7 @@ class ClientController extends BaseController
             {
                 return redirect('client-signin');
             }
+            $loan_details = Loan::all();
             $client_userid=Session::get('client_userid');
             $RequestQueue=RequestQueue::where('client_id', $client_userid)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->get();
             foreach ($RequestQueue as $kei => $RQ) {
@@ -210,7 +213,7 @@ class ClientController extends BaseController
                 
             }
             $client=Session::get('client_userid');
-            return view('front.client.client_request_list',compact('client','RequestQueue'),array('title'=>'DEALERSDIRECT | Client Request'));
+            return view('front.client.client_request_list',compact('client','RequestQueue', 'loan_details'),array('title'=>'DEALERSDIRECT | Client Request'));
     }
     public function requestDetail($id=null){
             $obj = new helpers();
@@ -310,7 +313,6 @@ class ClientController extends BaseController
 
                       //dd($fuelapiOptionProductId);
                       //Checking any array through dd functions
-                    // Checking code 
 
              /************************************************************
              * DEFAULT GALLERY SHOW -- Code Begin 
