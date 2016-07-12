@@ -433,7 +433,7 @@ OPTIONS GALLERY AJAX CALL END
                 ->with('request_details','request_details.makes','request_details.models','dealer_info')
                 ->get();
 
-                
+                //dd($secfun);
 
                 foreach ($secfun as $key => $value) {
                    
@@ -446,6 +446,9 @@ OPTIONS GALLERY AJAX CALL END
                    $newarray[$lead->dealer_id][$key]['monthlyvalue']= $value->request_details->monthly_amount;
                    $newarray[$lead->dealer_id][$key]['tradein']= $value->request_details->trade_in;
                    $newarray[$lead->dealer_id][$key]['carImages']=EdmundsMakeModelYearImage::where('make_id',$value->request_details->models->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->groupBy('model_id')->first();
+                   /*Fuel API Images Call*/
+                    $newarray[$lead->dealer_id][$key]['carImagesFuel']=fuelapiproductsimagesdata::where('make_id',$value->request_details->models->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->first();
+                   /*Fuel API Images Call End */
                    $newarray[$lead->dealer_id][$key]['dealer_id']=$value->dealer_info->dealer_id;
                 }
                  
@@ -472,9 +475,16 @@ OPTIONS GALLERY AJAX CALL END
             $EdmundsMakeModelYearImage=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('local_path_big')->get();
             $EMMYIcount=EdmundsMakeModelYearImage::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year_id',$RequestQueue->year)->groupBy('title')->count();
 
+            // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->count();
+                 $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->take(6)->get();
+                 
+                // Fuel Api End
+
             //die('this');
             $client=Session::get('client_userid');
-            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
+            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','countimgFuel','FuelMakeModelYearImage'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
 
             }
             

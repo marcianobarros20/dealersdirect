@@ -18,8 +18,8 @@
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
-                        @if(!empty($ContactDetail->imx))
-                            @foreach($ContactDetail->imx as $vx=>$img)
+                        @if(!empty($ContactDetail->fuelimx))
+                            @foreach($ContactDetail->fuelimx as $vx=>$img)
                                 <li data-target = "#myCarousel" data-slide-to = "{{$vx}}" @if($vx==0)class = "active"@endif></li>
                             @endforeach
                         @else
@@ -28,10 +28,10 @@
                     </ol>  
                    
                     <div class = "carousel-inner client-caro-img">
-                        @if(!empty($ContactDetail->imx))
-                            @foreach($ContactDetail->imx as $vx=>$img)
+                        @if(!empty($ContactDetail->fuelimx))
+                            @foreach($ContactDetail->fuelimx as $vx=>$img)
                                 <div class = "item @if($vx==0) active @endif">
-                                    <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
+                                    <img src = "{{ url('/')}}/public/fuelgallery/small/{{$img->fuelImg_small_jpgformatlocal}}" alt = "x">
                                 </div>
                             @endforeach 
                         @else
@@ -340,7 +340,7 @@
           <h4 class="modal-title">Additional Price</h4>
         </div>
         <div class="modal-body">
-          <p>Additional Price You need to pay for Contact Details @if(!empty($ContactDetail['additional_price'])) {{ '$'.$ContactDetail['additional_price']}} @endif</p>
+          <p>Additional Price You need to pay for Contact Details @if(!empty($ContactDetail['additional_price_new'])) {{ '$'.$ContactDetail['additional_price_new']}} @endif</p>
           <a href="{{ route('dealer.contact.pay', ['contact_id' => base64_encode($ContactDetail->id)]) }}"><button type="button" class="btn-xs btn-success">Proceed</button></a>
           <button type="button" class="btn-xs btn-danger" data-dismiss="modal">Close</button>  
         </div>

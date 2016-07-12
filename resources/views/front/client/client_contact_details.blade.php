@@ -22,8 +22,8 @@
                    
                    <!-- Carousel indicators -->
                     <ol class = "carousel-indicators">
-                    @if($EMMYIcount!=0)
-                        @foreach($EdmundsMakeModelYearImage as $vx=>$img)
+                    @if($countimgFuel!=0)
+                        @foreach($FuelMakeModelYearImage as $vx=>$img)
                         <li data-target = "#myCarousel" data-slide-to = "{{$vx}}"  @if($vx==0)class = "active"@endif ></li>
                         @endforeach
                     @else
@@ -33,10 +33,10 @@
                    
                    <!-- Carousel items -->
                    <div class = "carousel-inner client-carousel-img">
-                   @if($EMMYIcount!=0)
-                        @foreach($EdmundsMakeModelYearImage as $vx=>$img)
+                   @if($countimgFuel!=0)
+                        @foreach($FuelMakeModelYearImage as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
-                                <img src = "{{ url('/')}}/public/edmunds/make/big/{{$img->local_path_big}}" alt = "x">
+                                <img src = "{{ url('/')}}/public/fuelgallery/small/{{$img->fuelImg_small_jpgformatlocal}}" alt = "x">
                             </div>
                         @endforeach 
                     @else

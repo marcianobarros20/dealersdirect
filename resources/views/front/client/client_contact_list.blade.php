@@ -67,7 +67,11 @@
                 <div>
                   <div class="car-info-details-main">
                                    <div class="banner">
-                                    <img src="{{ url('/')}}/public/edmunds/make/big/{{$car_data['carImages']->local_path_big}}" alt="img">
+                                    @if(isset($car_data['carImagesFuel']->fuelImg_small_jpgformatlocal))
+                                    <img src="{{ url('/')}}/public/fuelgallery/small/{{$car_data['carImagesFuel']->fuelImg_small_jpgformatlocal}}" alt="img">
+                                    @else
+                                    <img src = "{{url('/')}}/public/front_end/images/dealers_direct_pic_logo.png" alt = "x">
+                                    @endif
                                     
                                 </div>
                                 <div class="row car-info">      

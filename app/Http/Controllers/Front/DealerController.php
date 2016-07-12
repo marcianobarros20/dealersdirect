@@ -1016,6 +1016,18 @@ class DealerController extends BaseController {
                $ContactList[$key]['imx']=""; 
             }
 
+
+             // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->take(6)->get();
+                  $ContactList[$key]['fuelimxdealer']=$FuelMakeModelYearImage;  
+                }else{
+                    $ContactList[$key]['fuelimxdealer']="";
+                }
+                // Fuel Api End
+
         }
         // foreach ($ContactList as $key => $Contact) {
         //      dd($Contact->imx->local_path_smalll);
@@ -1037,6 +1049,24 @@ class DealerController extends BaseController {
             }else{
             $ContactDetail['imx']=""; 
             }
+
+             // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year',$ContactDetail->request_details->year)->count();
+                 if($countimgFuel!=0){
+                  $MakeModelYearImageFuel=fuelapiproductsimagesdata::where('make_id',$ContactDetail->request_details->make_id)->where('model_id',$ContactDetail->request_details->carmodel_id)->where('year',$ContactDetail->request_details->year)->take(6)->get();
+                   $additional_price_new=SiteContactPrice::all();
+                   //dd($additional_price_new);
+                    //dd($additional_price[0]->price);
+                    //die()
+                   //dd($MakeModelYearImageFuel);
+                  $ContactDetail['fuelimx']=$MakeModelYearImageFuel;
+                  $ContactDetail['additional_price_new']=$additional_price_new[0]->price; 
+                }else{
+                    $ContactDetail['fuelimx']="";
+                }
+                // Fuel Api End
+
         //dd($ContactDetail);
         return view('front.dealer.contact_details',compact('ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
@@ -1124,6 +1154,18 @@ class DealerController extends BaseController {
             }else{
                $LeadContact[$key]['imx']=""; 
             }
+
+
+             // Fuel API Begin
+
+                 $countimgFuel=fuelapiproductsimagesdata::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->count();
+                 if($countimgFuel!=0){
+                  $FuelMakeModelYearImage=fuelapiproductsimagesdata::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->take(6)->get();
+                  $LeadContact[$key]['fuelimxdealer']=$FuelMakeModelYearImage;  
+                }else{
+                    $LeadContact[$key]['fuelimxdealer']="";
+                }
+                // Fuel Api End
 
         }
         
