@@ -21,7 +21,7 @@
             {!! $Bid->dealers->dealer_parent->dealership_name !!} 
             @endif <small>{!! $Bid->dealers->created_at!!}</small></h2>
             @else
-            Anyonymus
+            Anonymous
             @endif
     <div class="information">
         <p>Monthly:<?php $DoubleMonthly=floatval($Bid->monthly_amount);echo "$".number_format($DoubleMonthly,2);?></p>

@@ -44,9 +44,10 @@
             {!! $Bid->dealers->dealer_parent->dealership_name !!} 
             @endif
             @else
-            Anyonymus
+            Anonymous
             @endif
             </h2>
+
             <div class="btns">
                 
                 @if($Bid->trade_in!=0)  

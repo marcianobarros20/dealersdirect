@@ -1395,9 +1395,47 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
         $ContactList['admin_id']=$BidQueue->dealer_admin;
         $ContactList['client_id']=$RequestQueue->client_id;
         $ContactList['contact_details']=Request::input('acceptdetails');
+        
+        
+
+        /***************************************************************
+        BEGIN
+        This Extra Features Added to disable the Payment Features. If Launch
+        the Payment Flow that dealer can pay for contact details. Then put this 
+        unhiglighted code in place of below highlighted code.
         $ContactList['payment_status']=0;
         $ContactList['status']=0;
         ContactList::create($ContactList);
+
+        ****************************************************************/
+
+        $ContactList['payment_status']=1;
+        $ContactList['status']=1;
+        ContactList::create($ContactList);
+        $ContactId = ContactList::where('request_id', $BidQueue->requestqueue_id)->where('bid_id', $BidQueue->id)->where('dealer_id', $BidQueue->dealer_id)->where('admin_id', $BidQueue->dealer_admin)->where('client_id', $RequestQueue->client_id)->where('payment_status', 1)->where('status', 1)->select('id')->get();
+
+        foreach($ContactId as $ContactIdKey=>$ContactIdVal){
+            $contactId =$ContactIdVal['id'];
+        }
+
+        if(isset($ContactId)){
+        $LeadContact = new LeadContact;
+        $LeadContact->request_id=$BidQueue->requestqueue_id;
+        $LeadContact->bid_id=$BidQueue->id;
+        $LeadContact->dealer_id=$BidQueue->dealer_id;
+        $LeadContact->admin_id=$BidQueue->dealer_admin;
+        $LeadContact->client_id=$RequestQueue->client_id;
+        $LeadContact->contact_id=$contactId;
+        $LeadContact->payment_status=1;
+        $LeadContact->lead_status=1;
+        $LeadContact->save();
+        }
+        //
+
+         /***************************************************************
+        END
+
+        ****************************************************************/
         
     }
     public function GetImageView(){
