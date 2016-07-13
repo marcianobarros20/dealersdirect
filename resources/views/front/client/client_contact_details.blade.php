@@ -1,10 +1,11 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
-<?php  $bcount=count($RequestQueue->bids); ?>
+<?php  $bcount=count($RequestQueue->bids); //print_r ($ClientUid); ?>
 <input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
 <input type="hidden" id="requestid" value="{{base64_encode($RequestQueue->id)}}">
+<input type="hidden" id="dealerid" value="{{base64_encode($Dealer_id)}}">
 
 <section>
     <div class="container request-client-cont">
@@ -61,9 +62,29 @@
                     </select>
                 </div>-->
                 @endif
+
                 <div class="brand-sec bidlist">
                     
                 </div>
+                 <div class="bidstatusresults"></div>
+                <div class="bidStatus">
+                <!--
+                <div id="bidAccept"> </div>
+                        <div id="bidFinalize"> </div>
+                        <div id="bidReject"> </div>
+               -->
+
+                @if($RequestQueue->status!=1)
+
+
+                    <button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-success acceptBid">Accept </button> &nbsp;<button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-danger rejectBid">Reject</button>
+                @else    
+                    <button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-success finalizeBid">Finalize </button>
+                     &nbsp;<button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-danger rejectBidfinal">Reject</button>
+                @endif
+
+                </div>
+                
             </div>  <!-- /col-xs-8 -->
             <div class="col-xs-12 col-sm-4 col-md-4">
                 

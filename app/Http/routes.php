@@ -56,7 +56,7 @@ Route:: get('/client/add-color-interior/{id}', 'Front\ClientController@AddColorI
 Route:: get('/signin-client', 'Front\ClientController@SigninClient');
 Route:: post('/signin-client', 'Front\ClientController@SigninClient');
 Route:: get('/client/contact_list', 'Front\ClientController@contactList');
-Route:: get('/client/contact_details/{id}', 'Front\ClientController@contactDetails');
+Route:: get('/client/contact_details/{id}/{did}', 'Front\ClientController@contactDetails');
 Route:: get('/client/update-budget/{id}', 'Front\ClientController@UpdateBudget');
 Route:: post('/client/update-budget', 'Front\ClientController@UpdateBudgetPost');
 /*
@@ -84,7 +84,7 @@ $router->group([
   'namespace' => 'Admin',
   'middleware' => 'auth',
 ], function () {
-	
+    
     Route::resource('admin/post', 'PostController');
 
     Route::resource('admin/home', 'HomeController');
@@ -155,6 +155,12 @@ Route::post('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorC
 Route::post('/ajax/bidreject', 'Front\AjaxController@RejectDealerBid');
 Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
 Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
+
+Route::post('/ajax/bidacceptnew/{id}/{did}', 'Front\AjaxController@AcceptDealerBidNew');
+Route::post('/ajax/bidrejectafteraccept/{id}/{did}', 'Front\AjaxController@RejectDealerBidAfterAccepted');
+Route::post('/ajax/bidfinalize/{id}/{did}', 'Front\AjaxController@DealerBidFinalize');
+Route::post('/ajax/bidrejectfinal/{id}/{did}', 'Front\AjaxController@FinalizeDealerBidReject');
+
 Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
 Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
 Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
