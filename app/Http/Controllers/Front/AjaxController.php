@@ -478,6 +478,8 @@ class AjaxController extends Controller
     }
     public function AcceptDealerBid(){
         $id=Request::input('requestid');
+
+
         $BidQueue=BidQueue::where('id',$id)->with('dealers','request_queues')->first();
         $BidAcceptanceQueue['dealer_id'] =$BidQueue->dealer_id;
         $BidAcceptanceQueue['client_id'] =$BidQueue->request_queues->client_id;
@@ -496,9 +498,11 @@ class AjaxController extends Controller
         return 1;
         
     }
+
     public function SendAcceptancemail($id=null){
             
             $BidQueue_row=BidQueue::where('id',$id)->with('dealers','request_queues')->first();
+
             $RequestDealerLog=RequestDealerLog::where('dealer_id', $BidQueue_row->dealer_id)->where('request_id', $BidQueue_row->requestqueue_id)->first();
             $RequestQueue_row=RequestQueue::where('id',$BidQueue_row->requestqueue_id)->with('clients','makes','models')->first();
             
@@ -531,6 +535,284 @@ class AjaxController extends Controller
 
             return 1;
     }
+
+    public function AcceptDealerBidNew($id=null, $did=null){
+        //$reqid=Request::input('requestid');
+        $requestid= base64_decode($id);
+        $dealerid = base64_decode($did);
+        $acceptdetails = Request::input('acceptdetails');
+
+        $RequestQueue=RequestQueue::where('id', $requestid)->with('clients','bids')->first();
+
+        $BidQueue=BidQueue::where('requestqueue_id', $requestid)->with('dealers','request_queues')->first();
+        //dd($BidQueue);
+
+         $BidQueueUpdate=BidQueue::where('requestqueue_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $dealerid)->where('bid_id', '=', $BidQueue->id)->update(array('details_of_actions'=> $acceptdetails, 'status'=>3));
+        self::SendAcceptancemailNew($requestid, $dealerid);
+
+        
+              
+
+        $BidAcceptanceQueue['dealer_id'] =$BidQueue->dealer_id;
+        $BidAcceptanceQueue['client_id'] =$BidQueue->request_queues->client_id;
+        $BidAcceptanceQueue['bid_id'] =$BidQueue->id;
+        $BidAcceptanceQueue['request_id'] =$BidQueue->requestqueue_id;
+        $BidAcceptanceQueue['details'] =Request::input('acceptdetails');
+
+        $BidAcceptanceQueue_row=BidAcceptanceQueue::create($BidAcceptanceQueue);
+      
+
+        $RequestQueue_row=RequestQueue::where('id', '=', $BidQueue->requestqueue_id)->update(array('status'=>1));
+           
+       
+
+
+        $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+              if($Dealer->parent_id==0){
+                 $LeadContactAccept=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
+
+                           //dd($LeadContactAccept);
+
+              }
+              else{
+
+                $LeadContactAccept=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
+                   }
+
+              $ContactListAccept = ContactList::where('request_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $dealerid)->update(array('payment_status'=>1));
+             
+
+        $details_of_actions_value=1;
+        return view('front.ajax.show_bidstatus', compact('details_of_actions_value'));
+        
+    }
+
+    public function SendAcceptancemailNew($id=null, $dealerid=null){
+            
+            
+          
+            $BidQueue_row=BidQueue::where('requestqueue_id',$id)->with('dealers','request_queues')->first();
+
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealerid)->where('request_id', $BidQueue_row->requestqueue_id)->first();
+            $RequestQueue_row=RequestQueue::where('id',$BidQueue_row->requestqueue_id)->with('clients','makes','models')->first();
+            
+            $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
+            $dealer_email=$BidQueue_row->dealers->email;
+            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
+            $admin_users_email="hello@tier5.us";
+            $project_make=$RequestQueue_row->makes->name;
+            $project_model=$RequestQueue_row->models->name;
+            $project_year=$RequestQueue_row->year;
+            $project_conditions=$RequestQueue_row->condition;
+            $project_bidcount=$BidQueuecount;
+            $client_email=$RequestQueue_row->clients->email;
+            $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
+            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $admin_users_email="hello@tier5.us";
+            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($dealer_email, $dealer_name)->subject('Bid Request Accepted');
+            });
+            $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            function($message) use ($admin_users_email, $client_email,$client_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($client_email, $client_name)->subject('Bid Request Accepted');
+            });
+
+            return 1;
+    }
+public function RejectDealerBidAfterAccepted($id=null, $did=null){
+
+        $requestid = base64_decode($id);
+        $dealerid = base64_decode($did);
+        $rejectdetails = Request::input('rejectdetails');
+        
+        $BidQueue=BidQueue::where('requestqueue_id', $requestid)->where('dealer_id',  $dealerid)->with('dealers','request_queues')->first();
+
+        $BidQueueStatus=BidQueue::where('requestqueue_id', '=', $requestid)->where('dealer_id', '=', $dealerid)->where('bid_id', '=', $BidQueue->bid_id)->update(array('status'=>2, 'details_of_actions'=> $rejectdetails));
+
+        self::SendRejectemailNew($requestid, $dealerid, $rejectdetails);
+      
+        $id=$BidQueue->requestqueue_id;
+
+        $BidQueuex=BidQueue::where('requestqueue_id','=',$requestid)->where('status','!=','2')->get();
+            
+            $AverageTp=0;
+            $AverageMp=0;
+            $tbid=0;
+            $curveArray=array();
+            foreach ($BidQueuex as $key => $value) {
+                $AverageTp=$AverageTp+$value->total_amount;
+                $AverageMp=$AverageMp+$value->monthly_amount;
+                $tbid=$tbid+1;
+            }
+            if($tbid==0){
+                $AverageTp=$AverageTp;
+                $AverageMp=$AverageMp;
+            }else{
+            $AverageTp=$AverageTp/$tbid;
+            $AverageMp=$AverageMp/$tbid;
+            }
+            foreach ($BidQueuex as $key => $bid) {
+                
+               
+                $BidQueuenew = BidQueue::find($bid->id);
+                $BidQueuenew->tp_curve_poin = (($bid->total_amount-$AverageTp)/$AverageTp)*100;
+                $BidQueuenew->mp_curve_poin = (($bid->monthly_amount-$AverageMp)/$AverageMp)*100;
+                $BidQueuenew->acc_curve_poin = ((((($bid->total_amount-$AverageTp)/$AverageTp)*100)*.5)+(((($bid->monthly_amount-$AverageMp)/$AverageMp)*100)*.5))/2;
+                $BidQueuenew->save();
+
+            }
+            //$bid=Request::input('requestid');
+            $details_of_actions=Request::input('rejectdetails');
+            $details_of_actions_value=0;
+
+            $RequestRejectQueue_row=RequestQueue::where('id', '=', $BidQueue->requestqueue_id)->update(array('status'=>0));
+           
+           
+
+            $BidRejectQueue_row=BidAcceptanceQueue::where('dealer_id', '=', $dealerid)->where('client_id', '=', $BidQueue->request_queues->client_id)->where('bid_id', '=', $BidQueue->id)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('details'=>$details_of_actions));
+
+           
+             $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+              if($Dealer->parent_id==0){
+                 $LeadContactRejected=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>2, 'lead_status'=>0));
+                
+
+              }
+              else{
+
+                 $LeadContactRejected=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>2, 'lead_status'=>0));
+                
+
+              }
+
+              $ContactListRejected = ContactList::where('request_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $dealerid)->update(array('payment_status'=>2));
+                         
+            //self::SendRejectemail($bid,$details_of_actions);
+            //return 1;
+            return view('front.ajax.show_bidstatus', compact('details_of_actions_value'));
+
+
+    }
+
+
+     public function SendRejectemailNew($id=null,$dealerid=null, $details=null){
+            
+            $BidQueue_row=BidQueue::where('requestqueue_id',$id)->with('dealers','request_queues')->first();
+            $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealerid)->where('request_id', $BidQueue_row->requestqueue_id)->first();
+            $RequestQueue_row=RequestQueue::where('id',$BidQueue_row->requestqueue_id)->with('clients','makes','models')->first();
+            
+            $BidQueuecount=BidQueue::where('requestqueue_id' ,$BidQueue_row->requestqueue_id)->where('visable','=','1')->count();
+            $dealer_email=$BidQueue_row->dealers->email;
+            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
+            $admin_users_email="hello@tier5.us";
+            $project_make=$RequestQueue_row->makes->name;
+            $project_model=$RequestQueue_row->models->name;
+            $project_year=$RequestQueue_row->year;
+            $project_conditions=$RequestQueue_row->condition;
+            $project_bidcount=$BidQueuecount;
+            $client_email=$RequestQueue_row->clients->email;
+            $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
+            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $admin_users_email="hello@tier5.us";
+            $sent = Mail::send('front.email.rejectbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
+            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($dealer_email, $dealer_name)->subject('Bid Request Rejected By Client');
+            });
+            $senttoclient = Mail::send('front.email.rejectbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'dealer_name'=>$dealer_name,'details'=>$details), 
+            function($message) use ($admin_users_email, $client_email,$client_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($client_email, $client_name)->subject('Bid Request Rejected');
+            });
+
+            return 1;
+    }
+
+    public function DealerBidFinalize($id=null, $did=null)
+    {
+
+        $requestid = base64_decode($id);
+        $dealerid = base64_decode($did);
+        
+        $BidQueue=BidQueue::where('requestqueue_id', $requestid)->with('dealers','request_queues')->first();
+        
+        //$BidQueue_Finalize=BidQueue::where('requestqueue_id',$requestid)->where('dealer_id', $BidQueue->dealer_id)->where('bid_id', $BidQueue->bid_id)->get();
+        $BidQueue->payment_status=1;
+        $BidQueue->status=4;
+        $BidQueue->details_of_actions=Request::Input('finalizedetails');
+        $BidQueue->save();
+
+
+        
+        $RequestQueue_Finalize=RequestQueue::where('id',$BidQueue->requestqueue_id)->update(array('status'=>4));
+
+              
+
+        $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+              if($Dealer->parent_id==0){
+                 $LeadContact_Finalize = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>4));
+       
+              }
+              else{
+
+                  $LeadContact_Finalize = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>4));
+                  }
+
+
+
+
+        $ContactList_Finalize = ContactList::where('request_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $dealerid)->update(array('payment_status'=>1, 'status'=>0));
+     
+        $details_of_actions_value=4;
+
+        return view('front.ajax.show_bidstatus', compact('details_of_actions_value'));
+
+           
+    }
+
+    public function FinalizeDealerBidReject($id=null, $did=null)
+    {
+
+         $requestid = base64_decode($id);
+         $dealerid = base64_decode($did);
+        
+        $BidQueue=BidQueue::where('requestqueue_id', $requestid)->with('dealers','request_queues')->first();
+
+         $BidQueue_Reject=BidQueue::where('requestqueue_id', '=', $requestid)->where('dealer_id', '=', $dealerid)->where('bid_id', '=', $BidQueue->bid_id)->update(array('status'=>1, 'details_of_actions'=> 'Lost Sale'));
+               
+        $RequestQueue_Reject=RequestQueue::where('id',$BidQueue->requestqueue_id)->update(array('status'=>2));
+
+      
+
+         $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+              if($Dealer->parent_id==0){
+                 $LeadContact_Reject = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>3));
+       
+              }
+              else{
+
+                  $LeadContact_Reject = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>3));
+                  }
+
+
+        $ContactList_Reject = ContactList::where('request_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $BidQueue->dealer_id)->update(array('payment_status'=>0, 'status'=>0));
+        
+
+        $details_of_actions_value=3;
+
+        return view('front.ajax.show_bidstatus', compact('details_of_actions_value'));
+
+    }
+
     public function BidHistory(){
 
         $bid=Request::input('bid');

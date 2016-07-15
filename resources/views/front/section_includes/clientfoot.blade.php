@@ -618,4 +618,112 @@ $(document).ready(function(){
       });
 });
 
+
+//Bid Accept and Reject Feature
+
+
+
+  
+      $(".acceptBid").click(function(e){
+
+        //alert($(this).data("id"));
+        e.preventDefault();
+        var requestid =  $(this).data("id");
+        var dealerid = $("#dealerid").val();
+        var acceptdetails = "Accept";
+        $.ajax({
+          url:"<?php echo url('/');?>/ajax/bidacceptnew/"+requestid+"/"+dealerid,
+          data:{'requestid':requestid, 'dealerid':dealerid, 'acceptdetails': acceptdetails},
+          type:"post",
+          success: function(data){
+            console.log(data);
+            $('.bidstatusresults').html(data);
+           location.reload(true);
+           
+          },
+          error:function(){
+            console.log("error in accept action");
+          }
+
+        });
+        
+
+      });
+
+      $(".rejectBid").click(function(e){
+
+        //alert($(this).data("id"));
+        e.preventDefault();
+        var requestid =  $(this).data("id");
+        var dealerid = $("#dealerid").val();
+        var rejectdetails = "Reject";
+
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidrejectafteraccept/"+requestid+"/"+dealerid,
+            data:{'requestid':requestid, 'dealerid':dealerid, 'rejectdetails':rejectdetails},
+            type:"post",
+            success:function(data){
+              console.log("Reject");
+              $('.bidstatusresults').html(data);
+              location.reload(true);
+            },
+            error:function(){
+              console.log("error in reject action");
+              
+            }
+
+          });
+
+      });
+
+      $(".finalizeBid").click(function(e){
+        e.preventDefault();
+        //alert($(this).data("id"));
+        var requestid = $(this).data("id");
+        var dealerid = $("#dealerid").val();
+        var finalizedetails="Sale";
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidfinalize/"+requestid+"/"+dealerid,
+            data:{'requestid' : requestid, 'dealerid':dealerid, 'finalizedetails' : finalizedetails},
+            type:"post",
+            success:function(data){
+              console.log("Sale");
+              $('.bidstatusresults').html(data);
+              //location.reload(true);
+              $(".finalizeBid").hide();
+              $('.rejectBidfinal').hide();
+             window.location.href = "<?php echo url('/'); ?>/client/contact_list";
+            },
+            error:function(){
+              console.log("error in finalize action");
+            }
+
+          });
+      });
+
+      $(".rejectBidfinal").click(function(e){
+        e.preventDefault();
+        //alert($(this).data("id"));
+        var requestid = $(this).data("id");
+        var dealerid = $("#dealerid").val();
+        var failuredetails="Loss Sale";
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidrejectfinal/"+requestid+"/"+dealerid,
+            data:{'requestid' : requestid, 'dealerid':dealerid, 'failuredetails' : failuredetails},
+            type:"post",
+            success:function(data){
+              console.log("Loss Sale");
+              //location.reload(true);
+              $(".finalizeBid").hide();
+              $('.rejectBidfinal').hide();
+              window.location.href = "<?php echo url('/'); ?>/client/contact_list";
+                          },
+            error:function(){
+              console.log("error in finalize action");
+            }
+
+          });
+      });
+
+
       </script>

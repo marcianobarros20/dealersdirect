@@ -13,7 +13,19 @@
             
         @foreach($leadssec as $data)
 
+        <?php 
+       //print_r($data);
+       
 
+       // foreach($secfun as $leadtypeskey => $leadTypesValue){
+
+           // echo $leadTypesValue->lead_types."<br/>";
+
+       // }
+        //echo $data->lead_types;
+        ?>
+
+       
          <div class="row panel-row">
             <div class="col-lg-6 col-md-6 col-md-6">
                 <div class="car-details">   
@@ -50,19 +62,28 @@
                 </div>  
             </div>
             
+            
             <div class="col-lg-6 col-md-6 col-md-6">
                 
                 <div class="car-info-details">  
                 <section class="autoplay slider">
 
-              
+            
               
               @foreach($newarray as $car_datas)
 
               
-              @foreach($car_datas as $car_data) 
+              @foreach($car_datas as $car_data)
+
+             
               
               @if($data->dealer_info->dealer_id ==$car_data['dealer_id'])
+
+
+
+               @if($car_data['lead_types']!=3)
+
+              
                 
                 <div>
                   <div class="car-info-details-main">
@@ -99,9 +120,17 @@
                                         
                                     </div>
                                 </div>
-                                <div class="car-view"><a href="<?php echo URL::to('client/contact_details')?>/{{base64_encode($car_data['request_id'])}}"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
+                                <div class="car-view"><a href="<?php echo URL::to('client/contact_details')?>/{{base64_encode($car_data['request_id'])}}/{{base64_encode($car_data['dealer_id'])}}"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
                         </div>  
                 </div>
+               
+
+                @else
+
+                <div><h2>Oops! Now this bid of the Dealer has been rejected!</h2></div>
+
+                
+                @endif
                 @endif
                 @endforeach
                 @endforeach

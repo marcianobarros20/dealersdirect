@@ -450,14 +450,16 @@ OPTIONS GALLERY AJAX CALL END
                     $newarray[$lead->dealer_id][$key]['carImagesFuel']=fuelapiproductsimagesdata::where('make_id',$value->request_details->models->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year',$value->request_details->year)->first();
                    /*Fuel API Images Call End */
                    $newarray[$lead->dealer_id][$key]['dealer_id']=$value->dealer_info->dealer_id;
+
+                    $newarray[$lead->dealer_id][$key]['lead_types']=$value->lead_types;
                 }
                  
             }
             
-            return view('front.client.client_contact_list',compact('newarray','leadssec'),array('title'=>'DEALERSDIRECT | Client Contacts'));
+            return view('front.client.client_contact_list',compact('newarray','leadssec','secfun'),array('title'=>'DEALERSDIRECT | Client Contacts'));
             }
             
-            public function contactDetails($id=null){
+            public function contactDetails($id=null, $did=null){
                 $obj = new helpers();
             if(!$obj->checkClientLogin())
                 {
@@ -484,7 +486,9 @@ OPTIONS GALLERY AJAX CALL END
 
             //die('this');
             $client=Session::get('client_userid');
-            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','countimgFuel','FuelMakeModelYearImage'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
+
+            $Dealer_id = base64_decode($did);
+            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','countimgFuel','FuelMakeModelYearImage','Dealer_id'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
 
             }
             
