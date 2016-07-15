@@ -618,4 +618,104 @@ $(document).ready(function(){
       });
 });
 
+
+//Bid Accept and Reject Feature
+$(document).ready(function(){
+
+
+  
+      $(".acceptBid").click(function(e){
+
+        //alert($(this).data("id"));
+        e.preventDefault();
+        var requestid =  $(this).data("id");
+        var acceptdetails = "Accept";
+        $.ajax({
+          url:"<?php echo url('/');?>/ajax/bidacceptnew/"+requestid,
+          data:{'requestid':requestid,'acceptdetails': acceptdetails},
+          type:"post",
+          success: function(data){
+            console.log("Accept");
+            $('.bidstatusresults').html(data);
+           location.reload(true);
+           
+          },
+          error:function(){
+            console.log("error in accept action");
+          }
+
+        });
+        
+
+      });
+
+      $(".rejectBid").click(function(e){
+
+        //alert($(this).data("id"));
+        e.preventDefault();
+        var requestid =  $(this).data("id");
+        var rejectdetails = "Reject";
+
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidrejectafteraccept/"+requestid,
+            data:{'requestid':requestid, 'rejectdetails':rejectdetails},
+            type:"post",
+            success:function(data){
+              console.log("Reject");
+              $('.bidstatusresults').html(data);
+              location.reload(true);
+            },
+            error:function(){
+              console.log("error in reject action");
+              
+            }
+
+          });
+
+      });
+
+      $(".finalizeBid").click(function(e){
+        e.preventDefault();
+        //alert($(this).data("id"));
+        var requestid = $(this).data("id");
+        var finalizedetails="Sale";
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidfinalize/"+requestid,
+            data:{'requestid' : requestid, 'finalizedetails' : finalizedetails},
+            type:"post",
+            success:function(data){
+              console.log("Sale");
+              $('.bidstatusresults').html(data);
+              //location.reload(true);
+              $('.rejectBidfinal').hide();
+            },
+            error:function(){
+              console.log("error in finalize action");
+            }
+
+          });
+      });
+
+      $(".rejectBidfinal").click(function(e){
+        e.preventDefault();
+        //alert($(this).data("id"));
+        var requestid = $(this).data("id");
+        var failuredetails="Loss Sale";
+          $.ajax({
+            url:"<?php echo url('/'); ?>/ajax/bidrejectfinal/"+requestid,
+            data:{'requestid' : requestid, 'failuredetails' : failuredetails},
+            type:"post",
+            success:function(data){
+              console.log("Loss Sale");
+              //location.reload(true);
+              $(".finalizeBid").hide();
+            },
+            error:function(){
+              console.log("error in finalize action");
+            }
+
+          });
+      });
+});
+
       </script>

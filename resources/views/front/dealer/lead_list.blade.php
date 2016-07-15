@@ -92,6 +92,7 @@
                       </p>
                         <button id=""  data-toggle="modal" data-target="#ContactModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary client_contact lead-btns"><i class="fa fa fa-phone"></i> Contact Information</button> 
                         <button id=""  data-toggle="modal" data-target="#myModal" type="submit" data-inox="{{base64_encode($Lead->id)}}" class="btn btn-primary remindbox lead-btns"><i class="fa fa fa-bell"></i> Reminder</button>
+                        <!--
                         @if($Lead->lead_types!=0)
                         <button id="" type="submit" class="btn btn-success lead_cold lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa fa-cubes"></i> Cold Lead</button>
                         @endif
@@ -107,6 +108,7 @@
                         @if($Lead->lead_types!=4)
                         <button id="" type="submit" class="btn btn-secondary lead_success_sale lead-btns" data-inox="{{base64_encode($Lead->id)}}"><i class="fa fa-check-square "></i> Success SALE</button>
                         @endif
+                        -->
                         
                       
                 </div>

@@ -13,6 +13,7 @@
             
         @foreach($leadssec as $data)
 
+        <?php //print_r($data); ?>
 
          <div class="row panel-row">
             <div class="col-lg-6 col-md-6 col-md-6">
@@ -63,6 +64,8 @@
               @foreach($car_datas as $car_data) 
               
               @if($data->dealer_info->dealer_id ==$car_data['dealer_id'])
+
+              
                 
                 <div>
                   <div class="car-info-details-main">
@@ -102,6 +105,7 @@
                                 <div class="car-view"><a href="<?php echo URL::to('client/contact_details')?>/{{base64_encode($car_data['request_id'])}}"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
                         </div>  
                 </div>
+                
                 @endif
                 @endforeach
                 @endforeach

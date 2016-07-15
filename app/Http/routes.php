@@ -155,6 +155,12 @@ Route::post('/ajax/addincolortorequestqueue', 'Front\AjaxController@AddInteriorC
 Route::post('/ajax/bidreject', 'Front\AjaxController@RejectDealerBid');
 Route::post('/ajax/getupdatedbid', 'Front\AjaxController@GetUpdatedBid');
 Route::post('/ajax/bidaccept/', 'Front\AjaxController@AcceptDealerBid');
+
+Route::post('/ajax/bidacceptnew/{id}', 'Front\AjaxController@AcceptDealerBidNew');
+Route::post('/ajax/bidrejectafteraccept/{id}', 'Front\AjaxController@RejectDealerBidAfterAccepted');
+Route::post('/ajax/bidfinalize/{id}', 'Front\AjaxController@DealerBidFinalize');
+Route::post('/ajax/bidrejectfinal/{id}', 'Front\AjaxController@FinalizeDealerBidReject');
+
 Route::post('/ajax/bidhistory/', 'Front\AjaxController@BidHistory');
 Route::post('/ajax/bidblock/', 'Front\AjaxController@BlockDealerBid');
 Route::post('/ajax/client-request', 'Front\AjaxController@ClientRequest');
