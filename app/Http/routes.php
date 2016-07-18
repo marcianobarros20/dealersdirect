@@ -84,7 +84,7 @@ $router->group([
   'namespace' => 'Admin',
   'middleware' => 'auth',
 ], function () {
-	
+    
     Route::resource('admin/post', 'PostController');
 
     Route::resource('admin/home', 'HomeController');
