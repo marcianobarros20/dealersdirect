@@ -1,6 +1,8 @@
 @extends('front/layout/clientfrontend_template')
 @section('content')
-<?php  $bcount=count($RequestQueue->bids); //print_r ($ClientUid); ?>
+<?php  $bcount=count($RequestQueue->bids); //print_r ($ClientUid);
+//echo $leadStatus;
+ ?>
 <input type="hidden" id="sortby" value="{{$fill}}">
 <input type="hidden" id="pagestart" value="0">
 <input type="hidden" id="pageend" value="2">
@@ -74,12 +76,12 @@
                         <div id="bidReject"> </div>
                -->
 
-                @if($RequestQueue->status!=1)
+                @if($leadStatus->lead_status!=1)
 
 
                     <button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-success acceptBid">Accept </button> &nbsp;<button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-danger rejectBid">Reject</button>
-                @else    
-                    <button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-success finalizeBid">Finalize </button>
+                @else
+                     <button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-success finalizeBid">Finalize </button>
                      &nbsp;<button type="button" data-id="{{base64_encode($RequestQueue->id)}}" class="btn btn-danger rejectBidfinal">Reject</button>
                 @endif
 

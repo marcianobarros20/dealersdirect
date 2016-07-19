@@ -665,7 +665,8 @@ $(document).ready(function(){
             success:function(data){
               console.log("Reject");
               $('.bidstatusresults').html(data);
-              location.reload(true);
+              //location.reload(true);
+              window.location.href = "<?php echo url('/'); ?>/client/contact_list";
             },
             error:function(){
               console.log("error in reject action");

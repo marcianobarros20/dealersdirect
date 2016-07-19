@@ -123,6 +123,10 @@
                                 @if($car_data['lead_types']==0 || $car_data['lead_types']==1)
                                 <div class="car-view"><a href="<?php echo URL::to('client/contact_details')?>/{{base64_encode($car_data['request_id'])}}/{{base64_encode($car_data['dealer_id'])}}"><img src="<?php echo url('/');?>/public/front_end/images/view.png" alt="img"></a></div>
                                 @endif
+
+                                @if($car_data['lead_types']==2)
+                                <div><h2>Lost Lead</h2></div>
+                                @endif
                                 
                                 @if($car_data['lead_types']==3)
                                 <div><h2>Lost Sale</h2></div>

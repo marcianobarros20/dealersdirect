@@ -486,9 +486,12 @@ OPTIONS GALLERY AJAX CALL END
 
             //die('this');
             $client=Session::get('client_userid');
-
             $Dealer_id = base64_decode($did);
-            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','countimgFuel','FuelMakeModelYearImage','Dealer_id'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
+
+            $leadStatus = LeadContact::where('request_id', '=', $id)->where('dealer_id', '=', $Dealer_id)->first();
+
+            
+            return view('front.client.client_contact_details',compact('client','EdmundsMakeModelYearImage','RequestQueue','fill','EMMYIcount','countimgFuel','FuelMakeModelYearImage','Dealer_id', 'leadStatus'),array('title'=>'DEALERSDIRECT | Client Contact Details'));
 
             }
             
