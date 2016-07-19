@@ -1140,11 +1140,11 @@ class DealerController extends BaseController {
 
     public function DealerLeadList(){
         $dealer_userid=Session::get('dealer_userid');
-        $Dealer=Dealer::where('id',$dealer_userid)->first();
+        $Dealer=Dealer::where('id', '=', $dealer_userid)->first();
         if($Dealer->parent_id==0){
-            $LeadContact=LeadContact::where('dealer_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
+            $LeadContact=LeadContact::where('dealer_id', '=', $dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
         }else{
-            $LeadContact=LeadContact::where('admin_id',$dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','bid_details','client_details')->get();
+            $LeadContact=LeadContact::where('admin_id', '=', $dealer_userid)->where('payment_status','=',1)->where('lead_status','=',1)->with('request_details','bid_details','client_details')->get();
         }
         foreach ($LeadContact as $key => $value) {
             $countimg=EdmundsMakeModelYearImage::where('make_id',$value->request_details->make_id)->where('model_id',$value->request_details->carmodel_id)->where('year_id',$value->request_details->year)->count();

@@ -567,16 +567,16 @@ class AjaxController extends Controller
        
 
 
-        $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+        $Dealer=Dealer::where('id', '=', $dealerid)->first();
               if($Dealer->parent_id==0){
-                 $LeadContactAccept=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
+                 $LeadContactAccept=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
 
                            //dd($LeadContactAccept);
 
               }
               else{
 
-                $LeadContactAccept=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
+                $LeadContactAccept=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>1));
                    }
 
               $ContactListAccept = ContactList::where('request_id', '=', $BidQueue->requestqueue_id)->where('dealer_id', '=', $dealerid)->update(array('payment_status'=>1));
@@ -677,16 +677,16 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
 
             $BidRejectQueue_row=BidAcceptanceQueue::where('dealer_id', '=', $dealerid)->where('client_id', '=', $BidQueue->request_queues->client_id)->where('bid_id', '=', $BidQueue->id)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('details'=>$details_of_actions));
 
-           
-             $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+          
+             $Dealer=Dealer::where('id',$dealerid)->first();
               if($Dealer->parent_id==0){
-                 $LeadContactRejected=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>2, 'lead_status'=>0));
+                 $LeadContactRejected=LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>2, 'lead_status'=>0, 'lead_types'=>2));
                 
 
               }
               else{
 
-                 $LeadContactRejected=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->where('bid_id', '=', $BidQueue->id)->update(array('payment_status'=>2, 'lead_status'=>0));
+                 $LeadContactRejected=LeadContact::where('admin_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>2, 'lead_status'=>0, 'lead_types'=>2));
                 
 
               }
@@ -755,16 +755,16 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
         
         $RequestQueue_Finalize=RequestQueue::where('id',$BidQueue->requestqueue_id)->update(array('status'=>4));
 
-              
+             
 
-        $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+        $Dealer=Dealer::where('id',$dealerid)->first();
               if($Dealer->parent_id==0){
-                 $LeadContact_Finalize = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>4));
+                 $LeadContact_Finalize = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1,'lead_status'=>1, 'lead_types'=>4));
        
               }
               else{
 
-                  $LeadContact_Finalize = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>4));
+                  $LeadContact_Finalize = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>4));
                   }
 
 
@@ -791,16 +791,15 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
                
         $RequestQueue_Reject=RequestQueue::where('id',$BidQueue->requestqueue_id)->update(array('status'=>2));
 
-      
-
-         $Dealer=Dealer::where('id',$BidQueue->dealer_id)->first();
+       
+         $Dealer=Dealer::where('id',$dealerid)->first();
               if($Dealer->parent_id==0){
-                 $LeadContact_Reject = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>3));
+                 $LeadContact_Reject = LeadContact::where('dealer_id', '=', $dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>3));
        
               }
               else{
 
-                  $LeadContact_Reject = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $BidQueue->requestqueue_id)->update(array('lead_status'=>1, 'lead_types'=>3));
+                  $LeadContact_Reject = LeadContact::where('admin_id', '=',$dealerid)->where('request_id', '=', $requestid)->update(array('payment_status'=>1, 'lead_status'=>1, 'lead_types'=>3));
                   }
 
 
