@@ -1078,69 +1078,13 @@ class DealerController extends BaseController {
         // foreach ($ContactList as $key => $Contact) {
         //      dd($Contact->imx->local_path_smalll);
         // }
-         $ContactListRequestId=ContactList::where('dealer_id',$dealer_userid)->where('payment_status','=',1)->where('status', '=', 1)->with('request_details','bid_details','client_details')->first();
-       $request_id = $ContactListRequestId->request_id;
-
-        self::SendContactEmail($request_id, $dealer_userid);
+         
         
         return view('front.dealer.contact_list',compact('ContactList'),array('title'=>'DEALERSDIRECT | Dealers Contacts'));
     }
 
 
-    public function SendContactEmail($id=null, $dealerid=null){
-
-        
-         $RequestQueue_row=RequestQueue::where('id',$id)->with('clients','makes','models')->first();
-         $Dealer=Dealer::where('id', $dealerid)->first();
-         
-         if($Dealer->parent_id==0){
-            $ContactList=ContactList::where('dealer_id',$dealerid)->where('payment_status','=',1)->where('status', '=', 1)->with('request_details','request_details.makes','request_details.models','request_details.options','bid_details','client_details')->get();
-        }else{
-            $ContactList=ContactList::where('admin_id',$dealerid)->where('payment_status','=',1)->where('status', '=', 1)->with('request_details','bid_details','client_details')->get();
-        }
-
-        $RequestDealerLog=RequestDealerLog::where('dealer_id', $dealerid)->where('request_id', $id)->first();
-
-         $BidQueue_row=BidQueue::where('requestqueue_id',$id)->where('dealer_id', $dealerid)->with('dealers','request_queues')->first();
-
-         $BidQueuecount=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->count();
-
-           
-            $dealer_email=$Dealer->email;
-            $dealer_name=$Dealer->first_name." ".$Dealer->last_name; 
-            
-            $admin_users_email="work@tier5.us";
-            
-            $client_email = $RequestQueue_row->clients->email;
-            $client_name = $RequestQueue_row->clients->first_name. " ".$RequestQueue_row->clients->last_name;
-
-            $project_make=$RequestQueue_row->makes->name;
-            $project_model=$RequestQueue_row->models->name;
-            $project_year=$RequestQueue_row->year;
-            $project_conditions=$RequestQueue_row->condition;
-            $project_bidcount=$BidQueuecount;
-            $client_email=$RequestQueue_row->clients->email;
-            $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
-            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
-            $admin_users_email="work@tier5.us";
-            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
-            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
-            {
-            $message->from($admin_users_email);
-            $message->to($dealer_email, $dealer_name)->subject('Contact Request Sent');
-            });
-            $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
-            function($message) use ($admin_users_email, $client_email,$client_name)
-            {
-            $message->from($admin_users_email);
-            $message->to($client_email, $client_name)->subject('Contact Request Sent');
-            });
-
-            return 1;
-
-
-    }
+    
 
 
 
