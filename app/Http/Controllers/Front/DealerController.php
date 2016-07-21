@@ -662,7 +662,11 @@ class DealerController extends BaseController {
 
            
             $dealer_email=$BidQueue_row->dealers->email;
-            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name; 
+            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
+
+            $dealer_bid_totalamount = $BidQueue_row->total_amount; 
+            $dealer_bid_monthlyamont = $BidQueue_row->monthly_amount; 
+
             $admin_users_email="work@tier5.us";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
@@ -680,7 +684,7 @@ class DealerController extends BaseController {
             $message->from($admin_users_email);
             $message->to($dealer_email, $dealer_name)->subject('Bid Request Sent');
             });
-            $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            $senttoclient = Mail::send('front.email.acceptEditbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'total_amt'=>$dealer_bid_totalamount, 'monthly_amt'=>$dealer_bid_monthlyamont), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
@@ -696,7 +700,7 @@ class DealerController extends BaseController {
         
 
         $BidQueueprevious=BidQueue::where("id",Request::input('id'))->first();
-        print_r($BidQueueprevious);
+        //print_r($BidQueueprevious);
         $id=base64_encode(Request::input('request_id'));
         $BidQueue['requestqueue_id']=$BidQueueprevious->requestqueue_id;
         $BidQueue['dealer_id']=$BidQueueprevious->dealer_id;
@@ -759,9 +763,58 @@ class DealerController extends BaseController {
         $curve=self::CalculateBidCurve($BidQueueprevious->requestqueue_id);
         $RequestDealerLogx=RequestDealerLog::where('dealer_id', $BidQueueprevious->dealer_id)->where('request_id', $BidQueueprevious->requestqueue_id)->first();
 
+        $dealer_userid=Session::get('dealer_userid');
+        $request_id = Request::input('request_id');
+
+        self::SendEditBidEmail($request_id, $dealer_userid);
+
         $RequestDealerLogx_id=base64_encode($RequestDealerLogx->id);
         return redirect('dealers/request_detail/'.$RequestDealerLogx_id);
     }
+
+    public function SendEditBidEmail($id=null, $dealerid=null){
+
+         $BidQueue_row=BidQueue::where('requestqueue_id',$id)->where('dealer_id', $dealerid)->with('dealers','request_queues')->first();
+         $RequestQueue_row=RequestQueue::where('id',$id)->with('clients','makes','models')->first();
+            
+            $BidQueuecount=BidQueue::where('requestqueue_id', $id)->where('visable','=','1')->count();
+
+            $RequestDealerLog = RequestDealerLog::where('request_id', $id)->where('dealer_id', $dealerid)->first();
+
+           
+            $dealer_email=$BidQueue_row->dealers->email;
+            $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
+            $dealer_bid_totalamount = $BidQueue_row->total_amount; 
+            $dealer_bid_monthlyamont = $BidQueue_row->monthly_amount; 
+            $admin_users_email="work@tier5.us";
+            $project_make=$RequestQueue_row->makes->name;
+            $project_model=$RequestQueue_row->models->name;
+            $project_year=$RequestQueue_row->year;
+            $project_conditions=$RequestQueue_row->condition;
+            $project_bidcount=$BidQueuecount;
+            $client_email=$RequestQueue_row->clients->email;
+            $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
+            $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
+            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $admin_users_email="work@tier5.us";
+            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            function($message) use ($admin_users_email, $dealer_email,$dealer_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($dealer_email, $dealer_name)->subject('Updated Bid Request Sent');
+            });
+            $senttoclient = Mail::send('front.email.acceptEditbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount, 'total_amt'=>$dealer_bid_totalamount, 'monthly_amt'=>$dealer_bid_monthlyamont), 
+            function($message) use ($admin_users_email, $client_email,$client_name)
+            {
+            $message->from($admin_users_email);
+            $message->to($client_email, $client_name)->subject('Updated Bid Request Sent');
+            });
+
+            return 1;
+
+
+    }
+
     public function CalculateBidCurve($id=null){
             
             $BidQueuex=BidQueue::where('requestqueue_id','=',$id)->where('status','=','0')->where('visable','=','1')->get();

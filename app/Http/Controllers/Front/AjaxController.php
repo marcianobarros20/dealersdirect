@@ -1761,13 +1761,13 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
             $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
             $admin_users_email="work@tier5.us";
-            $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            $sent = Mail::send('front.email.contactbidLink', array('client_name'=>$client_name,'email'=>$client_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
             {
             $message->from($admin_users_email);
             $message->to($dealer_email, $dealer_name)->subject('Contact Request Sent');
             });
-            $senttoclient = Mail::send('front.email.acceptbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
+            $senttoclient = Mail::send('front.email.contactbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
