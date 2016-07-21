@@ -305,6 +305,7 @@
             var monthly_val = $('#monthly_val').val();
             var loan_term = $('#loan_term').val();
 			var interest_rate = $('#interest_rate').val();
+			$('#tamo').val(loan_amount);
             $('#mtamo').val(monthly_val);
             $("#disclaimer_data").html("*Amount shown as " + interest_rate+"% interest per year for "+loan_term+" years.");
             $('#minauto_value').html("<b>Minimum Price</b><br/><b>Total :</b> $"+min_amt+"<br/><b>Monthly:</b> $"+ min_monthly_rate);

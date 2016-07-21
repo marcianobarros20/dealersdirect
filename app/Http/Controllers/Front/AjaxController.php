@@ -416,7 +416,7 @@ class AjaxController extends Controller
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.rejectbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -518,7 +518,7 @@ class AjaxController extends Controller
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -608,7 +608,7 @@ class AjaxController extends Controller
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -719,7 +719,7 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.rejectbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -876,7 +876,7 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.blockbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount,'client_name'=>$client_name,'details'=>$details), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -1759,7 +1759,7 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.contactbidLink', array('client_name'=>$client_name,'email'=>$client_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)

@@ -676,7 +676,7 @@ class DealerController extends BaseController {
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -765,14 +765,16 @@ class DealerController extends BaseController {
 
         $dealer_userid=Session::get('dealer_userid');
         $request_id = Request::input('request_id');
+        $tot_amt=Request::input('total_amount');
+        $monthly_amt=Request::input('monthly_amount');
 
-        self::SendEditBidEmail($request_id, $dealer_userid);
+        self::SendEditBidEmail($request_id, $dealer_userid, $tot_amt, $monthly_amt);
 
         $RequestDealerLogx_id=base64_encode($RequestDealerLogx->id);
         return redirect('dealers/request_detail/'.$RequestDealerLogx_id);
     }
 
-    public function SendEditBidEmail($id=null, $dealerid=null){
+    public function SendEditBidEmail($id=null, $dealerid=null, $totalamt=null, $monthlyamt=null){
 
          $BidQueue_row=BidQueue::where('requestqueue_id',$id)->where('dealer_id', $dealerid)->with('dealers','request_queues')->first();
          $RequestQueue_row=RequestQueue::where('id',$id)->with('clients','makes','models')->first();
@@ -784,8 +786,7 @@ class DealerController extends BaseController {
            
             $dealer_email=$BidQueue_row->dealers->email;
             $dealer_name=$BidQueue_row->dealers->first_name." ".$BidQueue_row->dealers->last_name;
-            $dealer_bid_totalamount = $BidQueue_row->total_amount; 
-            $dealer_bid_monthlyamont = $BidQueue_row->monthly_amount; 
+           
             $admin_users_email="work@tier5.us";
             $project_make=$RequestQueue_row->makes->name;
             $project_model=$RequestQueue_row->models->name;
@@ -795,7 +796,7 @@ class DealerController extends BaseController {
             $client_email=$RequestQueue_row->clients->email;
             $client_name=$RequestQueue_row->clients->first_name." ".$RequestQueue_row->clients->last_name;
             $activateLink = url('/').'/dealers/request_detail/'.base64_encode($RequestDealerLog->id);
-            $activateLinkclient = url('/').'/client/request_detail/'.$BidQueue_row->requestqueue_id;
+            $activateLinkclient = url('/').'/client/request_detail/'.base64_encode($BidQueue_row->requestqueue_id);
             $admin_users_email="work@tier5.us";
             $sent = Mail::send('front.email.acceptbidLink', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLink, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount), 
             function($message) use ($admin_users_email, $dealer_email,$dealer_name)
@@ -803,7 +804,7 @@ class DealerController extends BaseController {
             $message->from($admin_users_email);
             $message->to($dealer_email, $dealer_name)->subject('Updated Bid Request Sent');
             });
-            $senttoclient = Mail::send('front.email.acceptEditbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount, 'total_amt'=>$dealer_bid_totalamount, 'monthly_amt'=>$dealer_bid_monthlyamont), 
+            $senttoclient = Mail::send('front.email.acceptEditbidLinkclient', array('dealer_name'=>$dealer_name,'email'=>$dealer_email,'activateLink'=>$activateLinkclient, 'project_make'=>$project_make,'model'=>$project_model,'year'=>$project_year,'conditions'=>$project_conditions,'project_bidcount'=>$project_bidcount, 'total_amt'=>$totalamt, 'monthly_amt'=>$monthlyamt), 
             function($message) use ($admin_users_email, $client_email,$client_name)
             {
             $message->from($admin_users_email);
