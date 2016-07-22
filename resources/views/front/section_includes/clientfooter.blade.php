@@ -10,6 +10,7 @@
 								<li><a href="<?php echo url('/');?>/client/profile">Profile</a></li>
 								<li><a href="<?php echo url('/');?>/client/request_list">Request</a></li>
 								<li><a href="<?php echo url('/');?>/client/contact_list">Contacts</a>
+								<li><a href="<?php echo url('/');?>/start-a-report">Report Bug</a></li>
 							</ul>
 						</div>
 						<p class="pull-right dealers-right">&copy; 2016- <a target="_blank" href="https://www.tier5.us/">DealersDirect</a>. All Rights</p>

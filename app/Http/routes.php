@@ -23,6 +23,8 @@ Route::get('/pan', 'Front\HomeController@index');
 Route::get('/services', 'Front\HomeController@services');
 Route::get('/contact-us', 'Front\HomeController@ContactUs');
 Route::post('/contactus', 'Front\HomeController@Contact');
+Route::get('/start-a-report', 'Front\HomeController@ReportBug');
+Route::post('/sendreport', 'Front\HomeController@SendBugReport');
 Route::get('/request_success/{id}', 'Front\HomeController@RequestSuccess');
 Route::get('/refresh-token', function(){
     return csrf_token();

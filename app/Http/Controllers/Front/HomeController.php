@@ -106,6 +106,53 @@ class HomeController extends BaseController
             
     }
 
+    public function ReportBug()
+    {
+        $client=self::CheckLogin();
+        if($client!=0)
+            {
+                $client;
+            }
+        else
+            {
+
+            }
+        return view('front.home.start_a_report', compact('client'), array('title'=>'DEALERSDIRECT Start-A-Report', 'typex'=>'start-a-report'));
+    }
+
+    public function SendBugReport()
+    {
+        $type = Request::Input('type');
+        $severity = Request::Input('severity');
+        $priority = Request::Input('priority');
+        $name = Request::Input('name');
+        $email = Request::Input('email');
+        $phone = Request::Input('phone');
+        $subject = Request::Input('subject');
+        $details = Request::Input('details');
+        
+        $admin_users_email="work@tier5.us";
+
+        
+       
+        $sent = Mail::send('front.email.sendreport', array('name'=>$name,'email'=>$email,'phone'=>$phone, 'subject'=>$subject, 'type'=>$type, 'severity'=>$severity, 'priority'=>$priority, 'details'=>$details), 
+            function($message) use ($admin_users_email,$email,$name)
+            {
+            
+            $message->attach(Request::file('attachimage')->getRealPath(), array(
+        'as' => 'attachimage.' . Request::file('attachimage')->getClientOriginalExtension(), 
+        'mime' => Request::file('attachimage')->getMimeType()));
+
+            $message->from($admin_users_email);
+            $message->to($admin_users_email, "DealersDirect")->subject('Report From DEALERSDIRECT');
+
+            });
+        Session::flash('message', 'Your '. $type. ' Report Has Been Sent To The Dealers Direct Admin We Will Get Back To You Soon'); 
+                    return redirect('/start-a-report');
+       
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

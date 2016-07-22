@@ -29,6 +29,13 @@
 							@endif
 						@endif
 					><a href="<?php echo url('/');?>/contact-us">Contact-Us</a></li>
+					<li 
+						@if(isset($typex))
+							@if($typex=="start-a-report")
+								class="active"
+							@endif
+						@endif
+					><a href="<?php echo url('/');?>/start-a-report">Report Bug</a></li>
 				</ul>
 			</div>
 			<p class="pull-right dealers-right">&copy; 2016- <a target="_blank" href="https://www.tier5.us/">DealersDirect</a>. All Rights</p>

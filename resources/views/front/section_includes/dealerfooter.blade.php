@@ -12,7 +12,8 @@
                   <li><a href="<?php echo url('/');?>/dealer/dealer_make">Makes</a>
                   </li>
                   <li><a href="<?php echo url('/');?>/dealers/request_list">Request</a>
-                  <li><a href="<?php echo url('/');?>/dealers/contact_list">Contacts</a>
+                  <li><a href="<?php echo url('/');?>/dealers/contact_list">Contacts</a></li>
+                  <li><a href="<?php echo url('/');?>/start-a-report">Report Bug</a></li>
 							</ul>
 						</div>
 						<p class="pull-right dealers-right">&copy; 2016- <a target="_blank" href="https://www.tier5.us/">DealersDirect</a>. All Rights</p>
