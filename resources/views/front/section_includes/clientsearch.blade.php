@@ -300,6 +300,7 @@
             data: {loan_amount:loan_amount,interest_rate:interest_rate,loan_term:loan_term,_token: '{!! csrf_token() !!}'},
             type :"post",
             success: function( data ) {
+            if(min_amt!=undefined && max_amt!=undefined){	
             $('#monthly_value').removeClass('hide');
             $('#monthly_val').val(data);
             var monthly_val = $('#monthly_val').val();
@@ -314,6 +315,23 @@
 
             $('#minauto').html("<b>Minimum Price</b><br/><b>Total :</b> $"+min_amt+"<br/><b>Monthly:</b> $"+ min_monthly_rate);
             $('#maxauto').html("<b>Maximum Price</b><br/><b>Total :</b> $"+max_amt+"<br/><b>Monthly:</b> $"+ max_monthly_rate);
+            }
+
+        	else{
+        			
+        			$('#monthly_value').removeClass('hide');
+            $('#monthly_val').val(data);
+            var monthly_val = $('#monthly_val').val();
+            var loan_term = $('#loan_term').val();
+			var interest_rate = $('#interest_rate').val();
+			$('#tamo').val(loan_amount);
+            $('#mtamo').val(monthly_val);
+            $("#disclaimer_data").html("*Amount shown as " + interest_rate+"% interest per year for "+loan_term+" years.");
+          
+
+        			$("#minauto").html(' ');
+                	$("#maxauto").html(' ');
+        		}
 
 
            }

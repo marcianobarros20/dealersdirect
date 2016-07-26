@@ -125,7 +125,7 @@
             type :"post",
             success: function( data ) {
               
-              
+               
               if(data!=0){
 
 
@@ -157,8 +157,12 @@
                 $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : "+numeral(data.max.monthly).format('$0,0.00'));
                 */
 
+
+               
                 $("#minauto").html("Minimum Price<br>"+"Total : "+numeral(data.min.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_min_monthly_rate);
                 $("#maxauto").html("Maximum Price<br>"+"Total : "+numeral(data.max.base).format('$0,0.00')+"<br>"+"Monthly : $"+top_max_monthly_rate);
+               
+                
 
                 $("#disclaimer_data").html("*Amount shown as "+interest_rate+"% interest per year for " +loan_term +" years.");
                 $('#toto').html('<input type="hidden" id="min_amt" name="min_amt" value="'+numeral(data.min.base).format('00.00')+'"><input type="hidden" id="max_amt" name="max_amt" value="'+numeral(data.max.base).format('00.00')+'">');
@@ -179,6 +183,8 @@
                 $("#minmp").html('');
                 $("#maxmp").html('');
                 getimageedmunds(make_search,model_search,condition_search,year_search,0);
+                $("#minauto").html(' ');
+                $("#maxauto").html(' ');
                 
               }
             }

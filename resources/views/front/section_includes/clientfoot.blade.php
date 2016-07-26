@@ -105,6 +105,8 @@ $(document).ready(function(){
         $('#nextfirst').click(function(){
           $("#searchfirst").hide();
           $("#searchseconed").show();
+          $("#minauto").hide();
+          $("#maxauto").hide();
 
           var make_search=$('#make_search').val();
           console.log(make_search);
@@ -145,6 +147,8 @@ NEW JQUERY CODE ADDED IN CLIENT SIDE BEGIN
                $("#dvLoading").hide();
               if(data!=0){
 
+                $("#minauto").show();
+                $("#maxauto").show();
 
 
                 //Calculate Value on base of Minimum Amount Custom Interest Rate Begin
@@ -196,6 +200,8 @@ NEW JQUERY CODE ADDED IN CLIENT SIDE BEGIN
                 $("#minmp").html('');
                 $("#maxmp").html('');
                 getimageedmunds(make_search,model_search,condition_search,year_search,0);
+                 $("#minauto").hide();
+                $("#maxauto").hide();
                 
               }
             }

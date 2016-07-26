@@ -1891,15 +1891,19 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
             $results=json_decode($result, true);
             //print_r($results);
 
-            if($results)
+            if(isset($results))
             {
                 
                 $FuelProduct_Id=array();
                 foreach($results as $rowData=>$FuelPid)
                 {
-                array_push($FuelProduct_Id, $FuelPid['id']);
+                    if(isset($FuelPid['id'])){
+                        array_push($FuelProduct_Id, $FuelPid['id']);
+                    }
+
                 }
-                $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                if(!empty($FuelProduct_Id)){
+                    $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
                             $chImg = curl_init();
                             curl_setopt($chImg,CURLOPT_URL, $Imgurl);
                             curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
@@ -1912,37 +1916,24 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
                             //echo "<pre>";
                             //print_r($resultsImg['products']);
                             //echo "</pre>";
-
-
-                $productsArray = $resultsImg['products'];
-
-
-
-                while (list($key, $value) = each($productsArray)) {
-                        $productFormatsArray = $value["productFormats"];
-
-                        while (list($key1, $value1) = each($productFormatsArray)) {
-
-                                 //echo "<pre>";
-                                // print_r($value1["assets"]);
-                                //echo "</pre>";
-
+                            $productsArray = $resultsImg['products'];
+                            while (list($key, $value) = each($productsArray)) {
+                                    $productFormatsArray = $value["productFormats"];
+                                while (list($key1, $value1) = each($productFormatsArray)) {
                                 $ImgPathArray = $value1["assets"];
-                        }
-                }
-
-                                //echo "<pre>";
-                                //print_r($ImgPathArray);
-                                //echo "</pre>";
-                                //Cache::flush();
-
+                                }
+                            }
                                return view('front.ajax.slider_new', compact('ImgPathArray'));
+                    }
+                    else
+                        {
+
+                            $NoImgPath=0;
+                            return view('front.ajax.slider_new', compact('NoImgPath', 'ImgPathArray'));
+                        }
             }
 
-            else
-            {
-              echo "No Image Found!";
-            }
+            
         
     } 
 
