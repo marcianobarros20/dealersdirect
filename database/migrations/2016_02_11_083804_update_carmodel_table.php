@@ -27,5 +27,6 @@ class UpdateCarmodelTable extends Migration
     public function down()
     {
         //
+        $table->dropColumn('make_id');
     }
 }
