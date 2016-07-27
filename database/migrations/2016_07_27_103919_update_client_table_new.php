@@ -14,7 +14,7 @@ class UpdateClientTableNew extends Migration
     {
         //
         Schema::table('clients', function ($table) {
-        $table->string('zip',50)->change();
+        $table->string('zip')->after('email');
         });
     }
 
@@ -26,5 +26,6 @@ class UpdateClientTableNew extends Migration
     public function down()
     {
         //
+        $table->dropColumn('zip');
     }
 }
