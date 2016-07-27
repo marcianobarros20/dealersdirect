@@ -1913,9 +1913,7 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
                             curl_close($chImg);
                             $resultsImg=json_decode($resultImg, true);
 
-                            //echo "<pre>";
-                            //print_r($resultsImg['products']);
-                            //echo "</pre>";
+                           
                             $productsArray = $resultsImg['products'];
                             while (list($key, $value) = each($productsArray)) {
                                     $productFormatsArray = $value["productFormats"];
