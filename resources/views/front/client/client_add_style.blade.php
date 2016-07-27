@@ -21,6 +21,11 @@
             </div>
         </div>
         @endforeach
+
+        <div class="col-xs-12 col-sm-12 col-md-12 client-row skip-btn">
+        <?php $reqid =  base64_encode($RequestQueue->id); ?>
+        <a href="<?php echo url('/'); ?>/client/request_detail/{{$reqid}}">Skip</a>
+        </div>
     </div>
 </section> 
 @stop

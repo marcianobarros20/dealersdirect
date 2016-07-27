@@ -2603,5 +2603,8 @@ color: #fff;
 
 .amortization-calculator a:hover{text-decoration: none;}  
 
-.amortization-calculator a:hover{text-decoration: none;} 
+.amortization-calculator a:hover{text-decoration: none;}
+
+.skip-btn a { background: #F26722; color:#fff; padding:10px; font-weight:bold; color:#fff; text-decoration: none; }
+.skip-btn a:hover { background: #999; font-weight:bold; color:#fff; text-decoration: none;}
 
