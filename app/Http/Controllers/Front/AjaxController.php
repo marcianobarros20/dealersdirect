@@ -1897,7 +1897,7 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
                 $FuelProduct_Id=array();
                 foreach($results as $rowData=>$FuelPid)
                 {
-                    if(isset($FuelPid['id'])){
+                    if(!empty($FuelPid['id'])){
                         array_push($FuelProduct_Id, $FuelPid['id']);
                     }
 
@@ -1923,7 +1923,9 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
                                 $ImgPathArray = $value1["assets"];
                                 }
                             }
-                               return view('front.ajax.slider_new', compact('ImgPathArray'));
+
+                            $NoImgPath=1;
+                               return view('front.ajax.slider_new', compact('NoImgPath','ImgPathArray'));
                     }
                     else
                         {

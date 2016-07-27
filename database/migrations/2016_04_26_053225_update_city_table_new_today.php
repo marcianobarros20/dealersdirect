@@ -28,5 +28,6 @@ class UpdateCityTableNewToday extends Migration
     public function down()
     {
         //
+        $table->dropColumn('state_id');
     }
 }
