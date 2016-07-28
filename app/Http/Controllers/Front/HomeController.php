@@ -227,6 +227,38 @@ class HomeController extends BaseController
         return view('front.home.request_success',compact('client','RequestQueue'),array('title'=>'DEALERSDIRECT | Request Success'));
 
     }
+    public function ClientSignUp(){
+        $client=0;
+        return view('front.home.client_signup', compact('client'),array('title'=>'DEALERSDIRECT | Client Sign Up'));
+    }
+    public function ClientRegisterWRequest(){
+        
+        
+
+        $tamo=time()."CLIENT";
+        $hashpassword = Hash::make(Request::input('password'));
+        $Client['first_name'] =Request::input('fname');
+        $Client['last_name'] =Request::input('lname');
+        $Client['phone'] =Request::input('phone');
+        $Client['email'] =Request::input('email');
+        $Client['zip'] =Request::input('zip');
+        $Client['password'] =$hashpassword;
+        $Client['code_number'] =$tamo;
+        
+        $Client_row=Client::create($Client);
+        $lastinsertedId = $Client_row->id;
+
+        
+        $namx=ucfirst(Request::input('fname'))." ".ucfirst(Request::input('lname'));
+        $emailx=Request::input('email');
+        Session::put('client_userid', $lastinsertedId);
+        Session::put('client_email', $emailx);
+        Session::put('client_name', $namx);
+        Session::save();
+        return redirect('client-dashboard');
+
+
+    }
     public function ClientRegister(){
         $guest_user=Request::input('id');
         

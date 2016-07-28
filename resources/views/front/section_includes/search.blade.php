@@ -284,7 +284,7 @@
 
 
 
-		<div class="col-md-6 col-lg-6">
+		<div class="col-md-6 col-sm-6">
 			
 			<div id="minauto_value"></div><br/><br/>
 			<div id="maxauto_value"></div>

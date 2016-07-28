@@ -26,6 +26,7 @@ Route::post('/contactus', 'Front\HomeController@Contact');
 Route::get('/start-a-report', 'Front\HomeController@ReportBug');
 Route::post('/sendreport', 'Front\HomeController@SendBugReport');
 Route::get('/request_success/{id}', 'Front\HomeController@RequestSuccess');
+Route::get('/client-signup', 'Front\HomeController@ClientSignUp');
 Route::get('/refresh-token', function(){
     return csrf_token();
 });
@@ -36,6 +37,7 @@ Route::get('/refresh-token', function(){
 |
 */
 Route::post('/clientregister', 'Front\HomeController@ClientRegister');
+Route::post('/clientregisterwithoutrequest','Front\HomeController@ClientRegisterWRequest');
 Route::get('/client-dashboard', 'Front\ClientController@Dashboard');
 Route::get('/client_sign_out', 'Front\ClientController@signout');
 Route:: get('/client-signin', 'Front\ClientController@signin');

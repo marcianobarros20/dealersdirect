@@ -4,7 +4,7 @@
    <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 home_second_buttons">
 	  <a href="{{url('/')}}/client-signin" type="button" class="btn btn-default btn-lg home_default">SIGN IN</a>
-	  <button type="button" class="btn btn-default btn-lg home_default sec_btn">SIGN UP</button>
+	  	  <a href="{{url('/')}}/client-signup" type="button" class="btn btn-default btn-lg home_default">SIGN UP</a>
 	  <p class="term_condition">By logging in above, you agree to our Terms of Service<br>
 	  and Privacy Policy.</p>	
 	</div>
