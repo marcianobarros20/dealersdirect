@@ -524,8 +524,8 @@ class DealerController extends BaseController {
                     return redirect('/dealers/blocked');
                 }else{
         
-                        $id=base64_decode($id);
-                        $RequestDealerLog=RequestDealerLog::where('id', $id)->first();
+                        $requestid=base64_decode($id);
+                        $RequestDealerLog=RequestDealerLog::where('id', $requestid)->first();
                         $requestqueue_id=$RequestDealerLog->request_id;
                         $RequestQueue=RequestQueue::where('id', $requestqueue_id)->with('makes','models','clients','bids','options','options.styles','options.engines','options.transmission','options.excolor','options.incolor','options.edmundsimage','trade_ins','trade_ins.makes','trade_ins.models')->first();
                         $RequestQueue->clients->first_name=self::maskcreate($RequestQueue->clients->first_name);
