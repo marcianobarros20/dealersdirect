@@ -63,7 +63,7 @@
                 </select>
                 </div>
                 @endif
-                <div class="brand-sec bidlist">
+                <div class="brand-sec bidlist squareimgboxbid">
                     
                 </div>
             </div>  <!-- /col-xs-8 -->
