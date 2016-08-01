@@ -269,6 +269,7 @@ class DealerController extends BaseController {
                 //FuelAPI Begin
 
              $FuelMakeModelYearImageDetails=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->take(10)->get();
+             $FMMYIDCount=fuelapiproductsimagesdata::where('make_id',$RequestQueue->make_id)->where('model_id',$RequestQueue->carmodel_id)->where('year',$RequestQueue->year)->count();
              
             //FuelAPI End
 
@@ -282,7 +283,7 @@ class DealerController extends BaseController {
                 
             
 
-            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage', 'FuelMakeModelYearImageDetails', 'BidQueuecount','fill','clx'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
+            return view('front.dealer.dealer_request_details',compact('RequestQueue','EdmundsMakeModelYearImage', 'FuelMakeModelYearImageDetails', 'FMMYIDCount', 'BidQueuecount','fill','clx'),array('title'=>'DEALERSDIRECT | Dealers Request Details'));
     }
     public function DealerMakeList(){
         $obj = new helpers();
