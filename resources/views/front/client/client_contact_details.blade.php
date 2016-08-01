@@ -19,7 +19,7 @@
             
         </div>   
         <div class="post-bid">
-            <div class="col-xs-12 col-sm-8 col-md-8">
+            <div class="col-xs-12 col-sm-8 col-md-8 squareimgbox">
             <!-- Carousel ============ -->
                 <div id = "myCarousel" class = "carousel slide ctborder ctheight">
                    

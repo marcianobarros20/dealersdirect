@@ -12,7 +12,7 @@
      
         
         <div class="post-bid">
-            <div class="col-xs-12 col-sm-8 col-md-8"> <!-- edited on 13-04-2016 -->
+            <div class="col-xs-12 col-sm-8 col-md-8 squareimgbox"> <!-- edited on 13-04-2016 -->
                 <!-- Carousel ============ -->
                 <div id = "myCarousel" class = "carousel slide deal-caro ctborder">
                    
@@ -47,8 +47,8 @@
               </div>
                     
                 <div class="brand-sec  bidlist">
-                    <div class="col-xs-12 col-sm-12 col-md-12  carousel_area">
-                        <div  class="brand_request">
+                    <div class="col-xs-4 col-sm-4 col-md-4  carousel_area">
+                        <div  class="brand_request squareimgboxbid">
                             <div id = "myCarousel1" class = "carousel slide deal-caro">
 
 
@@ -63,11 +63,11 @@
                             </ol>   
 
 
-                            <div class = "carousel-inner client-caro-img">
+                            <div class = "carousel-inner client-caro-img squareimgboxbidimg">
                             @if(!empty($ContactDetail->bid_details->bid_image))
                             @foreach($ContactDetail->bid_details->bid_image as $vx=>$img)
                             <div class = "item @if($vx==0) active @endif">
-                            <img src = "{{ url('/')}}/public/uploads/project/{{$img->image}}" alt = "x">
+                            <img src = "{{ url('/')}}/public/uploads/project/{{$img->image}}" alt = "x" height=100>
                             </div>
                             @endforeach 
                             @else

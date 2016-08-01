@@ -22,7 +22,7 @@
 
             <div id="OptionsGallery"> </div>
                 <!-- Default Carousel Begin ============ -->
-                <div class="DefaultGallery">
+                <div class="DefaultGallery squareimgbox">
                 <div id = "myCarousel" class = "carousel slide ctborder ctheight">
                    
                    <!-- Carousel indicators -->
@@ -62,7 +62,7 @@
 
 
                 @if(count($RequestQueue->bids)!=0)
-                <div class="col-md-12 d-v">
+                <div class="col-md-12 d-v selectivebox">
                     <select id="shortoptions">
                         <option value="" >Sort By</option>
                         <option value="1" @if($fill==1)selected="selected"@endif>Best Pick</option>
@@ -71,6 +71,7 @@
                     </select>
                 </div>
                 @endif
+                <br/><br/>
                 <div class="brand-sec bidlist">
                     
                 </div>
