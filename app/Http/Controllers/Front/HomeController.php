@@ -138,11 +138,11 @@ class HomeController extends BaseController
         $sent = Mail::send('front.email.sendreport', array('name'=>$name,'email'=>$email,'phone'=>$phone, 'subject'=>$subject, 'type'=>$type, 'severity'=>$severity, 'priority'=>$priority, 'details'=>$details), 
             function($message) use ($admin_users_email,$email,$name)
             {
-            
+            if(Request::hasFile('attachimage')) { 
             $message->attach(Request::file('attachimage')->getRealPath(), array(
-        'as' => 'attachimage.' . Request::file('attachimage')->getClientOriginalExtension(), 
-        'mime' => Request::file('attachimage')->getMimeType()));
-
+            'as' => 'attachimage.' . Request::file('attachimage')->getClientOriginalExtension(), 
+            'mime' => Request::file('attachimage')->getMimeType()));
+            }
             $message->from($admin_users_email);
             $message->to($admin_users_email, "DealersDirect")->subject('Report From DEALERSDIRECT');
 
