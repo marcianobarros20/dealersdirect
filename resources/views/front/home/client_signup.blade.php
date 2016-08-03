@@ -6,6 +6,16 @@
 		<div class="container">
 			<h2 class="head center-block">SIGN-UP AS A CLIENT</h2>
 			<div class="">
+			<div class="col-xs-12">
+				@if(Session::has('error'))
+				<div class="alert alert-danger alert-dismissible fade in" role="alert">
+  					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    				<span aria-hidden="true">&times;</span>
+  					</button>
+  					<strong>Error</strong> <b>{!! Session::get('error') !!}</b>
+				</div>
+				@endif
+			</div>
 				<div class="col-xs-12 sign_form">
 					{{ Form::open(array('url' => 'clientregisterwithoutrequest','class'=>'form-horizontal')) }}
 					

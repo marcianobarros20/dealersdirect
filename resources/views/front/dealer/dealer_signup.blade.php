@@ -17,7 +17,20 @@
 				<div class="alert alert-danger"> {{Session::get('error1')}} </div>
 			@endif -->
 			<div class="container deal-sign-up">
+
+			<div class="col-xs-12">
+				@if(Session::has('errormsg'))
+				<div class="alert alert-danger alert-dismissible fade in" role="alert">
+  					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    				<span aria-hidden="true">&times;</span>
+  					</button>
+  					<strong>Error</strong> <b>{!! Session::get('errormsg') !!}</b>
+				</div>
+				@endif
+			</div>
+			
 			<h2 class="profile_head center-block">Sign Up As A Dealer</h2>
+				
 				<div class="profile_details">
 					<div class="col-xs-12 profile_form">
 						{{ Form::open(array('url' => 'dealerregister')) }}

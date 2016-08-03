@@ -2,7 +2,7 @@
 namespace App\Helper;
 use Session;
 use DB;
-
+use App\Model\DealersInfo;                                 /* Model name*/
 ini_set('memory_limit', '-1');
 
 class helpers {
@@ -81,6 +81,15 @@ class helpers {
             return true;
         }
         return false;
+    }
+
+    function checkDealersofficedetails(){
+     $dealer_id=Session::get('dealer_userid');
+     $check_dealers_info=DealersInfo::where('dealer_id',$dealer_id)->count();   
+     if($check_dealers_info <= 0){
+        return false;
+     }   
+     return true;
     }
 
     

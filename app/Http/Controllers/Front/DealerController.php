@@ -46,7 +46,7 @@ use DB;
 use Imagine\Image\Box;
 
 use App\Helper\helpers;
-use Validator;
+use Validator,Auth,Redirect;
 
 class DealerController extends BaseController {
     /**
@@ -147,6 +147,9 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
             return view('front.dealer.dealer_dashboard',array('title'=>'DEALERSDIRECT | Dealers Signin'));
     }
     public function signup(){
@@ -177,6 +180,9 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
             $id=Session::get('dealer_userid');
             $DealerMake=DealerMakeMap::where('dealer_id', $id)->with('makes')->orderBy('make_id', 'asc')->get();
             $Makes=array();
@@ -199,6 +205,9 @@ class DealerController extends BaseController {
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
+            }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
             }
             $id=Session::get('dealer_userid');
             $DealerMake=DealerMakeMap::where('dealer_id', $id)->with('makes')->orderBy('make_id', 'asc')->get();
@@ -290,6 +299,9 @@ class DealerController extends BaseController {
         if(!$obj->checkDealerLogin())
             {
             return redirect('dealer-signin');
+            }
+        if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
             }
         $dealer_userid=Session::get('dealer_userid');
         $DealerMakeMap=DealerMakeMap::where('dealer_id', $dealer_userid)->with('makes')->get();
@@ -912,6 +924,9 @@ class DealerController extends BaseController {
             {
             return redirect('dealer-signin');
             }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
             $dealer_userid=Session::get('dealer_userid');
             $Dealers = Dealer::where('parent_id', $dealer_userid)->with('dealer_details','dealer_bid_info')->get();
             
@@ -1100,6 +1115,14 @@ class DealerController extends BaseController {
 
 
     public function DealerContactList(){
+        $obj = new helpers();
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+        if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id',$dealer_userid)->first();
         if($Dealer->parent_id==0){
@@ -1246,6 +1269,14 @@ class DealerController extends BaseController {
     }
 
     public function DealerLeadList(){
+        $obj = new helpers();
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $Dealer=Dealer::where('id', '=', $dealer_userid)->first();
         if($Dealer->parent_id==0){
@@ -1307,6 +1338,14 @@ class DealerController extends BaseController {
             return view('front.dealer.reminder_details',compact('Reminder','ContactDetail'),array('title'=>'DEALERSDIRECT | Dealers Admins'));
     }
     public function DealerAnalytics(){
+        $obj = new helpers();
+        if(!$obj->checkDealerLogin())
+            {
+            return redirect('dealer-signin');
+            }
+            if(!$obj->checkDealersofficedetails()){
+            return Redirect::to('dealer/profile')->with('dealers_massage','Fillup office details !');
+            }
         $dealer_userid=Session::get('dealer_userid');
         $Dealers_check = Dealer::where('id', $dealer_userid)->first();
         if($Dealers_check->parent_id==0){

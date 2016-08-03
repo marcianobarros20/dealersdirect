@@ -21,12 +21,22 @@ use Session;
 use Hash;
 use Mail;
 use App\Helper\helpers;
-use Validator;
+use Validator,Redirect;
 class RegisterController extends Controller
 {
     //
 
      public function dealerRegister() {
+
+        $validator = Validator::make(Request::all(), [
+        'email' => 'required|unique:dealers|max:255',
+        'password' => 'required',
+        ]);
+        if($validator->fails()){
+            //Request::session()->flush();
+            return Redirect::back()->with('errormsg','Email Id already exist.')->withInput();
+            
+        }else{
         	//$password = Request::input('password');
         	//$conf_password = Request::input('conf_password');
             // dd(Request::input());
@@ -65,7 +75,7 @@ class RegisterController extends Controller
                     Session::put('dealer_parent', $Dealerx->parent_id);
                     Session::save();
                     return redirect('dealer-dashboard');
-            
+            }
 	   }
 
      

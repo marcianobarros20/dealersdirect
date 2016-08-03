@@ -48,8 +48,11 @@
     #floatDiv a:hover{color:#000;}
 </style>
 		<div class="divMain">
-        <div id="floatDiv"><a href="<?php echo url('/');?>/start-a-report">Report Bug</a>
+        <a href="<?php echo url('/');?>/start-a-report">
+        <div id="floatDiv">
+        Report Bug
         </div>
+        </a>
     	</div>
 
     <script language="javascript">

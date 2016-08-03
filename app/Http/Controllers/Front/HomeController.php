@@ -19,7 +19,7 @@ use Image\Image\ImageInterface;
 use Illuminate\Pagination\Paginator;
 use DB;
 use Hash;
-use Mail;
+use Mail,Redirect;
 use App\Helper\helpers;
 
 
@@ -234,7 +234,15 @@ class HomeController extends BaseController
     public function ClientRegisterWRequest(){
         
         
-
+        $validator = Validator::make(Request::all(), [
+            'email' => 'required|unique:clients|max:255',
+            'password' => 'required',
+        ]);
+        if($validator->fails()) {
+            return Redirect::back()
+                        ->with('error','Email ID already exist')
+                        ->withInput();
+        }else{
         $tamo=time()."CLIENT";
         $hashpassword = Hash::make(Request::input('password'));
         $Client['first_name'] =Request::input('fname');
@@ -257,12 +265,20 @@ class HomeController extends BaseController
         Session::save();
         return redirect('client-dashboard');
 
-
+        }
     }
     public function ClientRegister(){
         $guest_user=Request::input('id');
-        
-
+            
+        $validator = Validator::make(Request::all(), [
+            'email' => 'required|unique:clients|max:255',
+            'password' => 'required',
+        ]);
+        if($validator->fails()) {
+            return Redirect::back()
+                        ->with('error','Email ID already exist')
+                        ->withInput();
+        }else{
         $tamo=time()."CLIENT";
         $hashpassword = Hash::make(Request::input('password'));
         $Client['first_name'] =Request::input('fname');
@@ -293,7 +309,7 @@ class HomeController extends BaseController
         Session::save();
         return redirect('client-dashboard');
 
-
+        }
     }
 
 

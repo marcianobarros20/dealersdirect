@@ -3,6 +3,16 @@
 
  <section>
 	<div class="container pro-file-bla">
+				@if(Session::has('dealers_massage'))
+                <div class="col-md-12 center-block">
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong> Massage from Dealersdirect : </strong> <b>{{  Session::get('dealers_massage') }} </b>
+                    </div>
+                </div>
+                @endif
 				@if(Session::get('message'))
 				<div class = "alert alert-success">dealer_info
 					<a href = "#" class = "close" data-dismiss = "alert">
@@ -96,19 +106,19 @@
 								<div class="form_back">
 								<div class="form-group">
 								    <label for="d_name1">Web URL</label>
-								    {{ Form::text('web_url',isset($dealer_info->website_url)?$dealer_info->website_url:null,['class' => 'form-control profile_control']) }}
+								    {{ Form::text('web_url',isset($dealer_info->website_url)?$dealer_info->website_url:null,['class' => 'form-control profile_control','required'=>'required']) }}
 								</div>
 				              		<div class="form-group">
 									    <label for="exampleInputphone">Phone No.</label>
-									    {{ Form::number('phone_no',isset($dealer_info->phone_no)?$dealer_info->phone_no:null,['class' => 'form-control profile_control']) }}
+									    {{ Form::number('phone_no',isset($dealer_info->phone_no)?$dealer_info->phone_no:null,['class' => 'form-control profile_control','required'=>'required']) }}
 								  	</div>
 									<div class="form-group">
 										<label for="exampleInputemail">Email ID</label>
-										{{ Form::email('email_id',isset($dealer_info->email_id)?$dealer_info->email_id:null,['class' => 'form-control profile_control']) }}
+										{{ Form::email('email_id',isset($dealer_info->email_id)?$dealer_info->email_id:null,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
 									<div class="form-group">
 										<label for="exampleInputcontact_address">Contact Address</label>
-										{{ Form::textarea('contact_address',isset($dealer_info->contact_address)?$dealer_info->contact_address:null,['class' => 'form-control profile_control']) }}
+										{{ Form::textarea('contact_address',isset($dealer_info->contact_address)?$dealer_info->contact_address:null,['class' => 'form-control profile_control','required'=>'required']) }}
 									</div>
 									<div class="form-group">
 										<label for="exampleInputdetails">Details</label>
