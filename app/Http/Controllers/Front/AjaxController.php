@@ -1039,8 +1039,8 @@ public function RejectDealerBidAfterAccepted($id=null, $did=null){
         $Model=Carmodel::find($Models);
         $EdmundsMakeModelYearImagecount=EdmundsMakeModelYearImage::where('make_id',$Make->id)->where('model_id',$Model->id)->where('year_id',$Year)->count();
         if($EdmundsMakeModelYearImagecount==0){
-        //for the images
-         $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
+        //for the images 
+        $url = "https://api.edmunds.com/api/media/v2/".$Make->nice_name."/".$Model->nice_name."/".$Year."/photos?view=full&fmt=json&api_key=meth499r2aepx8h7c7hcm9qz";
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -1117,8 +1117,9 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
         
         //for the images
         
-        //$urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
-        $urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+        $urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+        //old key
+        //$urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
             $chopt = curl_init();
             curl_setopt($chopt,CURLOPT_URL, $urlPath);
             curl_setopt($chopt, CURLOPT_FOLLOWLOCATION, 1);
@@ -1149,8 +1150,11 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
                 foreach($fuelProductID as $fuelProductKei => $fuelProductValue){
                 $FuelPID = $fuelProductValue->product_id;
                 $FuelTrim = $fuelProductValue->trim;
-                //for the images
-                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID."/?productID=1&productFormatIDs=11&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+                //for the images  
+                //old images KEY = daefd14b-9f2b-4968-9e4d-9d4bb4af01d1
+
+                //$FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID."/?productID=1&productFormatIDs=11&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+                $FuelImgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelPID."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
                 $chFuelImg = curl_init();
                 curl_setopt($chFuelImg,CURLOPT_URL, $FuelImgurl);
                 curl_setopt($chFuelImg, CURLOPT_FOLLOWLOCATION, 1);
@@ -1885,7 +1889,10 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
        $ImageAPIPath = array();
             
             //for the images
-            $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+            
+            //old key = daefd14b-9f2b-4968-9e4d-9d4bb4af01d1
+            $url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+            //$url = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
             $ch = curl_init();
             curl_setopt($ch,CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -1908,8 +1915,9 @@ public function FuelApiGetImageNotStyle($Makes=null,$Models=null,$Year=null){
 
                 }
                 if(!empty($FuelProduct_Id)){
-                    //for the images
-                    $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+                    //for the images old key = daefd14b-9f2b-4968-9e4d-9d4bb4af01d1
+                    $Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
+                    //$Imgurl = "https://api.fuelapi.com/v1/json/vehicle/".$FuelProduct_Id['0']."/?productID=1&productFormatIDs=11&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
                             $chImg = curl_init();
                             curl_setopt($chImg,CURLOPT_URL, $Imgurl);
                             curl_setopt($chImg, CURLOPT_FOLLOWLOCATION, 1);
@@ -1956,8 +1964,9 @@ public function addfuelimages(Request $request)
         $Vechiles = new fuelapiproductsdata;
         $FuelVechilesData =  array();
         
-        //for the images
-        $urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+        //for the images old key = daefd14b-9f2b-4968-9e4d-9d4bb4af01d1
+        //$urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=0139ba01-15de-45cb-9e8a-cab7c1beaed7";
+        $urlPath = "https://api.fuelapi.com/v1/json/vehicles/?year=".$Year."&model=".$Model->nice_name."&make=".$Make->nice_name."&api_key=daefd14b-9f2b-4968-9e4d-9d4bb4af01d1";
             $chopt = curl_init();
             curl_setopt($chopt,CURLOPT_URL, $urlPath);
             curl_setopt($chopt, CURLOPT_FOLLOWLOCATION, 1);
