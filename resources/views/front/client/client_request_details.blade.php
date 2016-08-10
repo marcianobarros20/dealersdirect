@@ -157,19 +157,18 @@
                             </div>
                         @endif
                         @if(!empty($RequestQueue->options))
+
                             @foreach($RequestQueue->options as $optionkey=>$option)
                                 <div class="tab-pane form-head" id="options{{$optionkey+1}}">
                                     <table class="table client-table"> 
                                         <tbody class="post-text">
                                             @if(!empty($option->styles->price))
-                                                @foreach (json_decode($option->styles->price,true) as $key => $price)
-                                                    @if($key=="baseMSRP")
                                                         <tr> 
-                                                            <td>{{$key}}:</td> 
-                                                            <td>{{$price}}</td> 
+                                                            <td>{{"Base MSRP"}}:</td> 
+                                                            <td>{{$option->styles->price}}</td> 
                                                         </tr>
-                                                    @endif
-                                                @endforeach
+                                                    
+                                                
                                             @endif
                                             <tr> 
                                                 <td>Style Name :</td> 

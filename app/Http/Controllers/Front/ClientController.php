@@ -538,7 +538,6 @@ OPTIONS GALLERY AJAX CALL END
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $resuls=json_decode($result, true);
-               
                 foreach ($resuls['styles'] as $styles) {
                     $Style['year_id'] =$Caryear->year_id;
                     $Style['make_id'] =$Caryear->make_id;
@@ -548,8 +547,10 @@ OPTIONS GALLERY AJAX CALL END
                     $Style['body'] =$styles['submodel']['body'];
                     $Style['trim'] =$styles['trim'];
                     $Style['submodel'] =json_encode($styles['submodel'],true);
-                    if(isset($Style['price']))
-                    {$Style['price'] =json_encode($styles['price'],true);}
+                    if(isset($styles['price']))
+                    {
+                    $Style['price'] =json_encode($styles['price']['baseMSRP'],true);    
+                    }
                     Style::create($Style);
                 }
             }
