@@ -1,7 +1,8 @@
 @extends('front/layout/frontend_inner_template')
 @section('content')
 <!-- ================================================== TESTIMONIALS ================================================== -->
-    
+    <?php $login_usr_type=2;
+			Session::put('login_type',$login_usr_type); ?>
 	<section>
 		<div class="container">
 			<div class="intro_text">
@@ -9,6 +10,7 @@
 				<p>Thanks {{ $RequestQueue->fname }} {{ $RequestQueue->lname }}</p>
                 <p>Your Request have been sent to the irrespective Dealers, you will be contacted as soon as possible for better options please SIGN-UP with us Or SKIP the Form Below</p>
 			</div>
+
 			<h2 class="head center-block">SIGN-UP AS A CLIENT</h2>
 			<div class="">
 			<div class="col-xs-12">
@@ -70,6 +72,11 @@
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
 								{{ Form::submit('SIGN-UP',array('class' => 'btn btn-default btn-lg btn-block sign_btn', 'id' => 'signup_client')) }}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-9">
+								<a class='btn btn-default btn-lg btn-block sign_btn' href="{{url('/')}}/redirect">FB Login</a>
 							</div>
 						</div>
 						<div class="form-group">

@@ -68,6 +68,17 @@ class ClientController extends BaseController
             return view('front.client.client_dashboard',compact('client','loan_details'),array('title'=>'DEALERSDIRECT | Client Dashboard'));
     }
     public function signout(){
+            $token=Session::get('fb_user_token');
+            $site_url=url('/');
+            //$url ="http://www.facebook.com/logout.php?next=".$site_url."&access_token=".$token."";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL,"http://www.facebook.com/logout.php?next=".$site_url."&access_token=".$token."");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_exec($ch);
+            curl_close($ch);
+            session::forget('fb_user_token');
             Session::forget('client_userid');
             Session::forget('client_email');
             Session::forget('client_name');

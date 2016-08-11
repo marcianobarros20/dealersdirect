@@ -270,6 +270,13 @@ Route::get('dealers/reminder_list', ['uses' => 'Front\DealerController@DealerRem
 Route::get('/dealers/reminder/{reminder_id}', ['uses' => 'Front\DealerController@DealerReminderDetails','as' => 'dealer.reminder.details']);
 Route::get('dealers/analytics', ['uses' => 'Front\DealerController@DealerAnalytics','as' => 'dealer.analytics']);
 Route::get('dealers/analyticsone', ['uses' => 'Front\DealerController@DealerAnalyticsone','as' => 'dealer.analyticsone']);
+/* Socal Login */
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');
+//Route::get('/redirect-with-Request/{req_id}', 'SocialAuthController@redirect_with_Request');
+//Route::get('/FbloginWithRequest', 'SocialAuthController@redirect_with_Request_callback');
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

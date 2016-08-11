@@ -1,5 +1,7 @@
 @extends('front/layout/clientfrontend_signup_template')
 @section('content')
+<?php $login_usr_type=2;
+			Session::put('login_type',$login_usr_type); ?>
 		<section>
 			<div class="container">
 			@if(Session::get('error'))
@@ -31,6 +33,12 @@
 										{{ Form::submit('SIGN IN',array('class' => 'btn btn-default btn-lg btn-block sign_btn')) }}
 										</div>
 									</div>
+									<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-9">
+									<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign In With Facebook</a>
+									</div>
+									</div>
+
 								{!! Form::close() !!}
 							
 							</div>	<!-- /col-xs-12 col-sm-6 col-md-6 -->	

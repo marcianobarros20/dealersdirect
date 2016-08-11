@@ -222,6 +222,7 @@ class HomeController extends BaseController
         $guest_user=base64_decode($id);
         
         $RequestQueue = RequestQueue::find($guest_user);
+        Session::put('guest_user_id',$guest_user);
         //Session::forget('guest_user');
         $client=0;
         return view('front.home.request_success',compact('client','RequestQueue'),array('title'=>'DEALERSDIRECT | Request Success'));
@@ -311,6 +312,7 @@ class HomeController extends BaseController
 
         }
     }
+
 
 
 

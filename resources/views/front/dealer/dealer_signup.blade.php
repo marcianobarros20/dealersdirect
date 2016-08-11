@@ -16,6 +16,8 @@
 			@if(Session::get('error1'))
 				<div class="alert alert-danger"> {{Session::get('error1')}} </div>
 			@endif -->
+			<?php $login_usr_type=1;
+			Session::put('login_type',$login_usr_type); ?>
 			<div class="container deal-sign-up">
 
 			<div class="col-xs-12">
@@ -85,6 +87,8 @@
 								</div>
 							<button type="submit" class="btn btn-warning btn-lg btn-block" id="sign_up">SIGN UP</button>
 							<!-- <p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p> -->
+							<a href="redirect" class="btn btn-warning btn-lg btn-block">Sign Up With Facebook</a>
+							
 							</div>
 						{!! Form::close() !!}
 					</div>

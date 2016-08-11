@@ -15,7 +15,10 @@
   					<strong>Error</strong> <b>{!! Session::get('error') !!}</b>
 				</div>
 				@endif
+
 			</div>
+			<?php $login_usr_type=2;
+			Session::put('login_type',$login_usr_type); ?>
 				<div class="col-xs-12 sign_form">
 					{{ Form::open(array('url' => 'clientregisterwithoutrequest','class'=>'form-horizontal')) }}
 					
@@ -67,6 +70,12 @@
 								{{ Form::submit('SIGN-UP',array('class' => 'btn btn-default btn-lg btn-block sign_btn', 'id' => 'signup_client')) }}
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-9">
+								<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign Up with Facebook</a>
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
 								<a href="<?php echo url('/');?>" class="btn btn-default btn-lg btn-block sign_btn">SKIP <i class="fa fa-share"></i>

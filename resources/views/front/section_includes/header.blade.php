@@ -84,11 +84,15 @@
 					@endif
 				><a href="{{url('/contact-us')}}">Contact-Us</a></li>
 				@if($client!=0)
-				<li><a href="{{url('/client_sign_out')}}">Logout</a></li>
+				<li>
+				<a href="{{url('/client_sign_out')}}">Logout</a>
+				</li>
 				@endif
+				
 			  </ul>
 			</div>
 		  </div> 
 		</nav> 
 
 	</header> 
+

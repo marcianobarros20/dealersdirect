@@ -13,6 +13,8 @@
 			</div>
 		@endforeach
 	@endif -->
+<?php $login_usr_type=1;
+Session::put('login_type',$login_usr_type); ?>
 
 	@if(Session::get('error1'))
 			<div class="container">
@@ -40,11 +42,17 @@
 								{{ Form::password('password',['class'=>'form-control', 'required' => 'required']) }}
 							</div>
 					</div>
+
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
 							{{ Form::submit('SIGN IN',array('class' => 'btn btn-default btn-lg btn-block sign_btn')) }}
 						</div>
 					</div>
+					<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-9">
+									<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign In With Facebook</a>
+									</div>
+									</div>
 				{!! Form::close() !!}
 				<p class="dealer_option">WANT A DEALER ACCOUNT? <a href="<?php echo url('/');?>/dealer-signup">SIGN UP NOW!</a></p>
 			</div>	<!-- /col-xs-12 col-sm-6 col-md-6 -->	

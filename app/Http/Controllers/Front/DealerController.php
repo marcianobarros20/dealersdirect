@@ -168,6 +168,17 @@ class DealerController extends BaseController {
         return view('front.dealer.dealer_signup',compact('Makes','client','State'),array('title'=>'DEALERSDIRECT | Dealers Signup'));
     }
     public function signout(){
+            $token=Session::get('fb_user_token');
+            $site_url=url('/');
+            //$url ="http://www.facebook.com/logout.php?next=".$site_url."&access_token=".$token."";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL,"http://www.facebook.com/logout.php?next=".$site_url."&access_token=".$token."");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_exec($ch);
+            curl_close($ch);
+            session::forget('fb_user_token');
             Session::forget('dealer_userid');
             Session::forget('dealer_email');
             Session::forget('dealer_name');
