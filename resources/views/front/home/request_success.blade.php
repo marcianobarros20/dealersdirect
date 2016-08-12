@@ -76,8 +76,13 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
-								<a class='btn btn-default btn-lg btn-block sign_btn' href="{{url('/')}}/redirect">FB Login</a>
+								<a class='btn btn-default btn-lg btn-block sign_btn' href="{{url('/')}}/redirect">Sign Up With Facebook <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>
 							</div>
+						</div>
+						<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-9">
+						<a class='btn btn-default btn-lg btn-block sign_btn' href="{{ route('social.redirect', ['provider' => 'google']) }}">Sign Up With Google <i class="fa fa-google-plus-square fa-lg" aria-hidden="true"> </i></a>
+						</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">

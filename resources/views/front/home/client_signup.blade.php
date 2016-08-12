@@ -72,10 +72,14 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
-								<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign Up with Facebook</a>
+								<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign Up with Facebook <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>
 							</div>
 						</div>
-						
+						<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-9">
+						<a class='btn btn-default btn-lg btn-block sign_btn' href="{{ route('social.redirect', ['provider' => 'google']) }}">Sign Up With Google <i class="fa fa-google-plus-square fa-lg" aria-hidden="true"> </i></a>
+						</div>
+						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-9">
 								<a href="<?php echo url('/');?>" class="btn btn-default btn-lg btn-block sign_btn">SKIP <i class="fa fa-share"></i>

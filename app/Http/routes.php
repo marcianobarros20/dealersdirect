@@ -273,8 +273,11 @@ Route::get('dealers/analyticsone', ['uses' => 'Front\DealerController@DealerAnal
 /* Socal Login */
 Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
-//Route::get('/redirect-with-Request/{req_id}', 'SocialAuthController@redirect_with_Request');
-//Route::get('/FbloginWithRequest', 'SocialAuthController@redirect_with_Request_callback');
+//google plus 
+
+$s = 'social.';
+Route::get('/social/redirect/{provider}',['as' => $s . 'redirect',   'uses' => 'SocialAuthController@getSocialRedirect']);
+Route::get('/social/handle/{provider}',['as' => $s . 'handle',     'uses' => 'SocialAuthController@getSocialHandle']);
 
 
 /*

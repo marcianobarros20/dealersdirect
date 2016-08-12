@@ -34,11 +34,15 @@
 										</div>
 									</div>
 									<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-9">
-									<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign In With Facebook</a>
+										<div class="col-sm-offset-2 col-sm-9">
+											<a class='btn btn-default btn-lg btn-block sign_btn' href="redirect">Sign In With Facebook <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> </a>
+										</div>
 									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-9">
+											<a class='btn btn-default btn-lg btn-block sign_btn' href="{{ route('social.redirect', ['provider' => 'google']) }}"> Sign In With Google <i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i> </a>
+										</div>
 									</div>
-
 								{!! Form::close() !!}
 							
 							</div>	<!-- /col-xs-12 col-sm-6 col-md-6 -->	

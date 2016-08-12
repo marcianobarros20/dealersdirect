@@ -747,17 +747,13 @@ OPTIONS GALLERY AJAX CALL END
                 $Client_pass = $Client->password;
                 // check for password
                 if(Hash::check($password, $Client_pass)){
-
-                   
                     
                     $nam=ucfirst($Client->first_name)." ".ucfirst($Client->last_name);
                     Session::put('client_userid', $Client->id);
                     Session::put('client_email', $Client->email);
                     Session::put('client_name', $nam);
                     
-                    
                     Session::save();
-
 
                     $make_search=$cachedata['make_search'];
                     $model_search=$cachedata['model_search'];

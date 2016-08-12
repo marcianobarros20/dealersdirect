@@ -87,8 +87,8 @@
 								</div>
 							<button type="submit" class="btn btn-warning btn-lg btn-block" id="sign_up">SIGN UP</button>
 							<!-- <p class="dealer_option">WANT A DEALER ACCOUNT? SIGN UP NOW!</p> -->
-							<a href="redirect" class="btn btn-warning btn-lg btn-block">Sign Up With Facebook</a>
-							
+							<a href="redirect" class="btn btn-warning btn-lg btn-block">Sign Up With Facebook <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i></a>
+							<a class='btn btn-warning btn-lg btn-block' href="{{ route('social.redirect', ['provider' => 'google']) }}">Sign Up With Google <i class="fa fa-google-plus-square fa-lg" aria-hidden="true"> </i></a>
 							</div>
 						{!! Form::close() !!}
 					</div>
